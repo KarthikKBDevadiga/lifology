@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
     BellIcon,
@@ -22,14 +22,13 @@ import {
     OfficeBuildingIcon,
     SearchIcon,
 } from '@heroicons/react/solid'
-import styles from '../styles/Ce.module.css'
+import styles from '../styles/Profile.module.css'
 import { queryGraph } from '../helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '../helpers/GraphQLSchemes'
 import Constants from '../helpers/Constants.js'
 import useLocalStorage from '../components/useLocalStorage'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 
 const navigation = [
     { name: 'Home', href: '#', icon: HomeIcon, current: true },
@@ -52,19 +51,12 @@ function classNames(...classes) {
 }
 
 
-const client = new ApolloClient({
-    uri: Constants.baseUrl + "/api/career",
-    cache: new InMemoryCache(),
-    headers: {
-        Authorization: "Bearer ",
-    },
-});
-export default function Example({ profile }) {
+
+export default function JobFamilies({ profile }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-    // loadData();
-    console.log('abc ' + authToken);
+
     return (
         <>
             <div className="h-screen flex overflow-hidden bg-gray-100">
@@ -219,13 +211,9 @@ export default function Example({ profile }) {
                                                 query: { token: authToken }
                                             })
                                         }}
-                                        style={{
-                                            background: '#085CA4',
-                                            color: 'white'
-                                        }}
                                         className={styles.navButton}
                                     >
-                                        <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="white">
+                                        <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
                                             <g>
                                                 <path fill="none" d="M0 0h24v24H0z" />
                                                 <path d="M21 18H6a1 1 0 0 0 0 2h15v2H6a3 3 0 0 1-3-3V4a2 2 0 0 1 2-2h16v16zm-5-9V7H8v2h8z" />
@@ -274,25 +262,15 @@ export default function Example({ profile }) {
                         {/* Search bar */}
                         <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
                             <div className="flex-1 flex">
-                                <form className="w-full flex md:ml-0" action="#" method="GET">
-                                    <label htmlFor="search_field" className="sr-only">
-                                        Search
-                                    </label>
-                                    <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                                        <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none" aria-hidden="true">
-                                            <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                                        </div>
-                                        <input
-                                            id="search_field"
-                                            name="search_field"
-                                            className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
-                                            placeholder="Search transactions"
-                                            type="search"
-                                        />
-                                    </div>
-                                </form>
+                                <div style={{ alignSelf: 'center', fontWeight: 'bold' }} >
+                                    <h2 className="text-xl ">Profile / Edit Profile</h2>
+                                </div>
                             </div>
                             <div className="ml-4 flex items-center md:ml-6">
+                                <button className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" style={{ marginRight: '8px' }}>
+                                    <span className="sr-only">Search</span>
+                                    <SearchIcon className="h-6 w-6" aria-hidden="true" />
+                                </button>
                                 <button className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
                                     <span className="sr-only">View notifications</span>
                                     <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -348,16 +326,12 @@ export default function Example({ profile }) {
                                                                 )}
                                                                 style={{ display: 'flex' }}
                                                             >
-                                                                {/* <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
-                                                                    <g>
-                                                                        <path fill="none" d="M0 0h24v24H0z" />
-                                                                        <path d="M5.636 12.707l1.828 1.829L8.88 13.12 7.05 11.293l1.414-1.414 1.829 1.828 1.414-1.414L9.88 8.464l1.414-1.414L13.12 8.88l1.415-1.415-1.829-1.828 2.829-2.828a1 1 0 0 1 1.414 0l4.242 4.242a1 1 0 0 1 0 1.414L8.464 21.192a1 1 0 0 1-1.414 0L2.808 16.95a1 1 0 0 1 0-1.414l2.828-2.829zm8.485 5.656l4.243-4.242L21 16.757V21h-4.242l-2.637-2.637zM5.636 9.878L2.807 7.05a1 1 0 0 1 0-1.415l2.829-2.828a1 1 0 0 1 1.414 0L9.88 5.635 5.636 9.878z" />
-                                                                    </g>
-                                                                </svg> */}
                                                                 <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
                                                                     <g>
-                                                                        <path fill="none" d="M0 0h24v24H0z" />
-                                                                        <path d="M9.954 2.21a9.99 9.99 0 0 1 4.091-.002A3.993 3.993 0 0 0 16 5.07a3.993 3.993 0 0 0 3.457.261A9.99 9.99 0 0 1 21.5 8.876 3.993 3.993 0 0 0 20 12c0 1.264.586 2.391 1.502 3.124a10.043 10.043 0 0 1-2.046 3.543 3.993 3.993 0 0 0-3.456.261 3.993 3.993 0 0 0-1.954 2.86 9.99 9.99 0 0 1-4.091.004A3.993 3.993 0 0 0 8 18.927a3.993 3.993 0 0 0-3.457-.26A9.99 9.99 0 0 1 2.5 15.121 3.993 3.993 0 0 0 4 11.999a3.993 3.993 0 0 0-1.502-3.124 10.043 10.043 0 0 1 2.046-3.543A3.993 3.993 0 0 0 8 5.071a3.993 3.993 0 0 0 1.954-2.86zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                                                        <path
+                                                                            id="path"
+                                                                            d="M 12 22 C 9.349 22 6.804 20.946 4.929 19.071 C 3.054 17.196 2 14.651 2 12 C 2 9.349 3.054 6.804 4.929 4.929 C 6.804 3.054 9.349 2 12 2 C 14.651 2 17.196 3.054 19.071 4.929 C 20.946 6.804 22 9.349 22 12 C 22 13.755 21.538 15.48 20.66 17 C 19.783 18.52 18.52 19.783 17 20.66 C 15.48 21.538 13.755 22 12 22 Z M 7 12 C 7 13.326 7.527 14.598 8.464 15.536 C 9.402 16.473 10.674 17 12 17 C 13.326 17 14.598 16.473 15.536 15.536 C 16.473 14.598 17 13.326 17 12 L 15 12 C 15 12.795 14.684 13.559 14.121 14.121 C 13.559 14.684 12.795 15 12 15 C 11.205 15 10.441 14.684 9.879 14.121 C 9.316 13.559 9 12.795 9 12 Z"
+                                                                            strokeWidth="1" />
                                                                     </g>
                                                                 </svg>
 
@@ -481,39 +455,116 @@ export default function Example({ profile }) {
                         <div className="mt-8" style={{ margin: '16px' }}>
 
                             {/* Activity table (small breakpoint and up) */}
-                            <div className="max-w-6xl mx-auto">
+                            <div className="max-w-6xl mx-auto shadow"
+                                style={{ padding: '16px', background: 'white', height: '100%' }}>
                                 <div className="flex flex-col mt-2">
-                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
+                                    <div className="align-middle min-w-full overflow-x-auto  overflow-hidden sm:rounded-lg"
                                         style={{ padding: '16px', background: 'white' }}>
-                                        <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                                            {/* Card */}
-                                            {cards.map((card) => (
-                                                <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg"
-                                                    style={{ backgroundImage: 'url(\'/img/test.png\')', height: '200px', position: 'relative' }}
-                                                >
-                                                    <img src="/img/bg.png" />
-                                                    <div className="p-5" style={{ position: 'absolute', top: '0' }}>
-                                                        <div style={{ fontSize: '22px', color: 'white', width: '70%', fontWeight: '500' }}>{card.name}</div>
+                                        <div className="mt-2">
+                                            <div className="sm:flex" style={{ height: '100%' }}>
+                                                <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8  " >
+                                                    <div style={{ position: 'relative', width: '140px', height: '140px' }}>
+                                                        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '100%', height: '100%' }}>
+                                                            <img src="../img/upload.svg" alt="" style={{ width: '100%', height: '100%' }} />
+                                                        </div>
+                                                        <input type="file" style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', opacity: 0 }} />
                                                     </div>
-                                                    <div className="p-5" style={{ position: 'absolute', bottom: '0', right: '0' }}>
-                                                        <a href="#" onClick={() => {
+                                                    <div style={{ padding: '20px 0px', fontSize: '17px' }}>Upload New Photo</div>
+                                                </div>
+                                                <div style={{ width: '100%' }}>
+                                                    <div style={{ paddingTop: '10px', float: 'right', width: '100%' }}>
+                                                        <div style={{ paddingBottom: '20px' }}>
+                                                            <label style={{ fontSize: '18px', paddingBottom: '10px', color: '#000', display: 'block' }}>Full Name</label>
+                                                            <input type="text" placeholder="Juliana Dsoza"
+                                                                className={styles.inputField} defaultValue={profile.name} />
+                                                        </div>
+                                                        <div style={{ paddingBottom: '20px' }}>
 
-                                                            router.push({
-                                                                pathname: card.href,
-                                                                query: { token: authToken }
-                                                            })
-                                                        }}>
-                                                            <div style={{ color: 'white', background: '#FFC400', padding: '0.25rem 0.75rem', borderRadius: '30px', width: 'fit-content', marginTop: '16px' }}>Explore</div>
-                                                        </a>
-
+                                                            <label style={{ fontSize: '18px', paddingBottom: '10px', color: '#000', display: 'block' }}>Phone Number</label>
+                                                            <div style={{ position: 'relative' }}>
+                                                                <div className="absolute inset-y-0 left-0 pl-3 pr-3 flex items-center pointer-events-none"
+                                                                    style={{
+                                                                        backgroundColor: '#F2F2F2',
+                                                                        borderTopLeftRadius: 60,
+                                                                        borderBottomLeftRadius: 60,
+                                                                        margin: 1,
+                                                                    }}
+                                                                >
+                                                                    <span className="text-gray-500 sm:text-sm">+91</span>
+                                                                </div>
+                                                                <input type="text" placeholder="9999999999"
+                                                                    maxLength="10"
+                                                                    className={styles.inputField}
+                                                                    style={{ paddingLeft: '3.75rem' }} defaultValue={profile.mobile_number} />
+                                                                <div className="absolute inset-y-0 right-0 pl-3 pr-3 flex items-center pointer-events-none"
+                                                                    style={{
+                                                                        // backgroundColor: '#F2F2F2',
+                                                                        // borderTopLeftRadius: 60,
+                                                                        // borderBottomLeftRadius: 60,
+                                                                        margin: 1,
+                                                                    }}
+                                                                >
+                                                                    <svg
+                                                                        viewBox="0 0 32 32"
+                                                                        width="16" height="16"
+                                                                        style={{
+                                                                            display: 'initial',
+                                                                            verticalAlign: 'text-bottom',
+                                                                            marginRight: '8px'
+                                                                        }}
+                                                                    >
+                                                                        <path
+                                                                            id="path"
+                                                                            d="M 16 0 C 11.758 0 7.686 1.687 4.686 4.686 C 1.687 7.686 0 11.758 0 16 C 0 20.242 1.687 24.314 4.686 27.314 C 7.686 30.313 11.758 32 16 32 C 20.242 32 24.314 30.313 27.314 27.314 C 30.313 24.314 32 20.242 32 16 C 32 11.758 30.313 7.686 27.314 4.686 C 24.314 1.687 20.242 0 16 0 Z"
+                                                                            fill="#02c77d"
+                                                                            strokeWidth="1" />
+                                                                        <path
+                                                                            id="path_1"
+                                                                            d="M 14.046 18.686 L 21.805 10.926 L 22.999 12.12 L 14.046 21.073 L 8.674 15.701 L 9.868 14.508 Z"
+                                                                            fill="#ffffff"
+                                                                            strokeWidth="1" />
+                                                                    </svg>
+                                                                    <span style={{ display: 'inline-block', alignSelf: 'center', fontSize: '14px' }}>Verified</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style={{ paddingBottom: '20px' }}>
+                                                            <label style={{ fontSize: '18px', paddingBottom: '10px', color: '#000', display: 'block' }}>Email</label>
+                                                            <input type="text" placeholder="julianadsoza@gmail.com"
+                                                                className={styles.inputField} defaultValue={profile.email} />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            ))}
+                                            </div>
+                                        </div>
+                                        <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense" style={{ width: 'fit-content' }}>
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
+
+                                                style={{ borderRadius: 60, width: 'fit-content', backgroundColor: '#085CA4' }}
+                                            >
+                                                Save Profile
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+
+                                                style={{ borderRadius: 60, width: 'fit-content', marginLeft: 'auto', color: '#085CA4', borderColor: '#085CA4' }}
+                                            >
+                                                Cancel
+                                            </button>
                                         </div>
 
                                     </div>
                                 </div>
+
+
+
+
                             </div>
+
+
 
                         </div>
 
@@ -528,24 +579,28 @@ export default function Example({ profile }) {
         </>
     )
 }
+// JobFamilies.getInitialProps = async (context) => {
+// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
+// }
 
 export async function getServerSideProps(context) {
     const { token } = context.query;
-
-    const profileClient = new ApolloClient({
+    // console.log('getServerSideProps' + token)
+    const client = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
         headers: {
             Authorization: "Bearer " + token,
         },
     });
-    const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
+    const profile = await queryGraph(client, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
             // console.log(networkErr);
         });
+    // console.log(families.length)
     return {
         props: { profile }
     }

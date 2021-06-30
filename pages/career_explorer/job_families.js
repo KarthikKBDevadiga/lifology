@@ -25,9 +25,10 @@ import {
 import styles from '../../styles/Ce.module.css'
 import { queryGraph } from '../../helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetCareerFamilies, SchemeGetGrades } from '../../helpers/GraphQLSchemes'
+import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '../../helpers/GraphQLSchemes'
 import Constants from '../../helpers/Constants.js'
 import useLocalStorage from '../../components/useLocalStorage'
+import { useRouter } from 'next/router'
 
 const navigation = [
     { name: 'Home', href: '#', icon: HomeIcon, current: true },
@@ -51,7 +52,8 @@ function classNames(...classes) {
 
 
 
-export default function JobFamilies({ families }) {
+export default function JobFamilies({ families, profile }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -203,13 +205,15 @@ export default function JobFamilies({ families }) {
                                     </a>
                                     <a
                                         href="#"
-                                        style={{
-                                            background: '#085CA4',
-                                            color: 'white'
+                                        onClick={() => {
+                                            router.push({
+                                                pathname: '../career_explorer',
+                                                query: { token: authToken }
+                                            })
                                         }}
                                         className={styles.navButton}
                                     >
-                                        <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="white">
+                                        <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
                                             <g>
                                                 <path fill="none" d="M0 0h24v24H0z" />
                                                 <path d="M21 18H6a1 1 0 0 0 0 2h15v2H6a3 3 0 0 1-3-3V4a2 2 0 0 1 2-2h16v16zm-5-9V7H8v2h8z" />
@@ -258,23 +262,6 @@ export default function JobFamilies({ families }) {
                         {/* Search bar */}
                         <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
                             <div className="flex-1 flex">
-                                {/* <form className="w-full flex md:ml-0" action="#" method="GET">
-                                    <label htmlFor="search_field" className="sr-only">
-                                        Search
-                                    </label>
-                                    <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                                        <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none" aria-hidden="true">
-                                            <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                                        </div>
-                                        <input
-                                            id="search_field"
-                                            name="search_field"
-                                            className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
-                                            placeholder="Search transactions"
-                                            type="search"
-                                        />
-                                    </div>
-                                </form> */}
                             </div>
                             <div className="ml-4 flex items-center md:ml-6">
                                 <button className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" style={{ marginRight: '8px' }}>
@@ -298,7 +285,7 @@ export default function JobFamilies({ families }) {
                                                         alt=""
                                                     />
                                                     <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
-                                                        <span className="sr-only">Open user menu for </span>Emilia Birch
+                                                        <span className="sr-only">Open user menu for </span>{profile.name}
                                                     </span>
                                                     <ChevronDownIcon
                                                         className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block"
@@ -324,18 +311,18 @@ export default function JobFamilies({ families }) {
                                                         {({ active }) => (
                                                             <a
                                                                 href="#"
+                                                                onClick={() => {
+                                                                    router.push({
+                                                                        pathname: '../profile',
+                                                                        query: { token: authToken }
+                                                                    })
+                                                                }}
                                                                 className={classNames(
                                                                     active ? 'bg-gray-100' : '',
                                                                     'block px-4 py-2 text-sm text-gray-700'
                                                                 )}
                                                                 style={{ display: 'flex' }}
                                                             >
-                                                                {/* <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
-                                                                    <g>
-                                                                        <path fill="none" d="M0 0h24v24H0z" />
-                                                                        <path d="M5.636 12.707l1.828 1.829L8.88 13.12 7.05 11.293l1.414-1.414 1.829 1.828 1.414-1.414L9.88 8.464l1.414-1.414L13.12 8.88l1.415-1.415-1.829-1.828 2.829-2.828a1 1 0 0 1 1.414 0l4.242 4.242a1 1 0 0 1 0 1.414L8.464 21.192a1 1 0 0 1-1.414 0L2.808 16.95a1 1 0 0 1 0-1.414l2.828-2.829zm8.485 5.656l4.243-4.242L21 16.757V21h-4.242l-2.637-2.637zM5.636 9.878L2.807 7.05a1 1 0 0 1 0-1.415l2.829-2.828a1 1 0 0 1 1.414 0L9.88 5.635 5.636 9.878z" />
-                                                                    </g>
-                                                                </svg> */}
                                                                 <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
                                                                     <g>
                                                                         <path
@@ -507,26 +494,35 @@ export default function JobFamilies({ families }) {
 
 export async function getServerSideProps(context) {
     const { token } = context.query;
-    console.log('getServerSideProps' + token)
-    const client = new ApolloClient({
+    const familiesClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
         cache: new InMemoryCache(),
         headers: {
             Authorization: "Bearer " + token,
         },
     });
-    const families = await queryGraph(client, {}, SchemeGetCareerFamilies)
+    const families = await queryGraph(familiesClient, {}, SchemeGetCareerFamilies)
         .then((res) => {
-            console.log('asd ' + res);
             return res.careerPools
         }).catch((networkErr) => {
-            console.log('data')
             return [];
+        });
+    const profileClient = new ApolloClient({
+        uri: Constants.baseUrl + "/api/user",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    });
+    const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
+        .then((res) => {
+            return res.profile
+        }).catch((networkErr) => {
+            return {};
             // console.log(networkErr);
         });
-    console.log(families.length)
     return {
-        props: { families }
+        props: { families, profile }
     }
 }
 

@@ -77,3 +77,29 @@ mutation signup($mobile_number: String!, $email:String!, $name:String!, $child_n
   }
 }
 `;
+
+export const SchemeGetProfile = gql`
+query{
+  profile{
+    id
+    email
+    signup_type
+    social_id
+    auth_token
+    time_zone
+    name
+    profile_image
+    country_code
+    mobile_number
+    child_details{
+      id
+      grade
+      child_name
+      user_id
+      gender
+      stream
+    }
+    
+  }
+}
+`;
