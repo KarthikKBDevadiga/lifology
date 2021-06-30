@@ -1,0 +1,79 @@
+import { gql } from "@apollo/client";
+
+export const SchemeSendOTP = gql`
+  mutation SendOTP($country_code: String!, $mobile_number: String!) {
+    sendOtp(country_code: $country_code, mobile_number: $mobile_number)
+  }
+`;
+
+export const SchemeVerifyOTP = gql`
+query otpVerification($country_code: String!, $mobile_number: String!, $otp: String!){
+  otpVerification(country_code: $country_code, mobile_number: $mobile_number, otp: $otp){
+    is_user_exist
+    auth_token
+  }
+}
+`;
+
+export const SchemeGetGrades = gql`
+query{
+  grades{
+    id
+    grade
+    streams {
+        id
+        stream
+    }
+  }
+}
+`;
+
+export const SchemeGetPref = gql`
+query{
+  preferences{
+      id
+      title
+      description
+      image
+  }
+}
+`;
+
+export const SchemeGetCareerFamilies = gql`
+query {
+  careerPools(lang_id:1,filter:{fitment:true,order:"myfitment"}){
+    id
+    name
+    image
+    one_liner
+    description
+    video
+    thumbnail
+    percentage
+    personality_match
+    orientation_match
+    }
+}
+`;
+
+export const SchemeSignUp = gql`
+mutation signup($mobile_number: String!, $email:String!, $name:String!, $child_name:String!, $gender: String!, $grade : String!, $stream_id:Int, $preferences:String!){
+  signup(country_abbr:"IN",country_code:"91",mobile_number:$mobile_number,email:$email,name:$name,child_name:$child_name,gender:$gender,grade:$grade,stream:null,stream_id:$stream_id,preferences:$preferences,signup_type:"NORMAL",social_id:"",time_zone:"asia/kolkata") {
+   id
+    email
+    country_code
+    mobile_number
+    signup_type
+    social_id
+    auth_token
+    time_zone
+    name
+    child_details {
+      id
+      user_id
+      child_name
+      gender
+    },
+  }
+}
+`;
