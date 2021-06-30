@@ -103,3 +103,31 @@ query{
   }
 }
 `;
+
+export const SchemeEditProfile = gql`
+mutation editProfile($email: String!,$name: String!){
+  editProfile(editProfileInput:{email:$email,name:$name}){
+    id
+    country_abbr
+    email
+    name
+    signup_type
+    social_id
+    auth_token
+    time_zone
+    name
+    profile_image
+    country_code
+    mobile_number
+    child_details{
+      id
+      user_id
+      child_name
+      gender
+      grade
+      stream
+      school_name
+    }
+  }
+}
+`;
