@@ -82,6 +82,7 @@ export const SchemeGetProfile = gql`
 query{
   profile{
     id
+    country_abbr
     email
     signup_type
     social_id
@@ -98,6 +99,8 @@ query{
       user_id
       gender
       stream
+      stream_id
+      school_name
     }
     
   }
@@ -105,8 +108,8 @@ query{
 `;
 
 export const SchemeEditProfile = gql`
-mutation editProfile($email: String!,$name: String!){
-  editProfile(editProfileInput:{email:$email,name:$name}){
+mutation editProfile($country_abbr:String!, $email:String!$country_code:String!,$mobile_number:String!, $name:String!, $child_name:String!, $gender:String!, $grade:String!, $stream:String!, $school_name:String!, $stream_id:Int!){
+  editProfile(editProfileInput:{country_abbr:$country_abbr,email:$email,country_code:$country_code,mobile_number:$mobile_number,name:$name,child_name:$child_name,gender:$gender,grade:$grade,stream:$stream,school_name:$school_name,stream_id:$stream_id}){
     id
     country_abbr
     email

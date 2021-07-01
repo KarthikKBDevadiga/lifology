@@ -10,7 +10,8 @@ import {
     SearchIcon,
 } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
-import useLocalStorage from './useLocalStorage'
+import useLocalStorage from '../helpers/useLocalStorage'
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }

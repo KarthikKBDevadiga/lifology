@@ -6,11 +6,14 @@ import {
     ScaleIcon,
     UserGroupIcon,
 } from '@heroicons/react/outline'
+import {
+    SearchIcon,
+} from '@heroicons/react/solid'
 import { queryGraph } from '../../helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '../../helpers/GraphQLSchemes'
 import Constants from '../../helpers/Constants.js'
-import useLocalStorage from '../../components/useLocalStorage'
+import useLocalStorage from '../../helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
@@ -60,13 +63,44 @@ export default function JobFamilies({ families, profile }) {
                                 <div className="flex flex-col mt-2">
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
                                         style={{ padding: '16px', background: 'white' }}>
+                                        <div className="flex-1 flex">
+                                            <div style={{ alignSelf: 'center', fontWeight: '500', fontSize: '16px', width: '100%' }} >
+                                                <h2 className="text-xl ">Explore Lists of all Job families & Career Fields</h2>
+                                            </div>
+                                            <form className="w-full flex md:ml-0" action="#" method="GET">
+                                                <label htmlFor="search_field" className="sr-only">
+                                                    Search
+                                                </label>
+                                                <div className="relative w-full text-gray-400 focus-within:text-gray-600">
+                                                    <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none" aria-hidden="true">
+                                                        <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                                    </div>
+                                                    <input
+                                                        id="search_field"
+                                                        name="search_field"
+                                                        className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
+                                                        placeholder="Search transactions"
+                                                        type="search"
+                                                    />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="max-w-6xl mx-auto">
+                                <div className="flex flex-col mt-2">
+                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
+                                        style={{ padding: '16px', background: 'white' }}>
                                         <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                                             {/* Card */}
                                             {families.map((card) => (
                                                 <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg"
                                                     style={{ backgroundImage: `url(${card.image})`, height: '200px', position: 'relative' }}
                                                 >
-                                                    <img src="/img/bg_vertical.png" style={{ position: 'absolute', bottom: '0px' }} />
+                                                    {/* <img src="/img/bg_vertical.png" style={{ position: 'absolute', bottom: '0px' }} /> */}
+                                                    <div style={{ position: 'absolute', height: '50%', width: '100%', bottom: '0px', backgroundImage: 'linear-gradient(to top,#085CA4,#085CA4, transparent)' }} >
+                                                    </div>
                                                     <div className="p-5" style={{ position: 'absolute', bottom: '0' }}>
                                                         <div style={{ fontSize: '16px', color: 'white', width: '100%', fontWeight: '500' }}>{card.name}</div>
                                                         <div style={{ width: '40px', height: '2px', background: '#FFC400', borderRadius: '1px', marginTop: '8px' }}></div>
@@ -98,6 +132,14 @@ export default function JobFamilies({ families, profile }) {
 
 export async function getServerSideProps(context) {
     const { token } = context.query;
+    if (token == null || token == '') {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/login"
+            }
+        }
+    }
     const familiesClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
         cache: new InMemoryCache(),

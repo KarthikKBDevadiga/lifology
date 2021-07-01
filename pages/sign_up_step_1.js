@@ -2,7 +2,7 @@ import styles from '../styles/Signup.module.css'
 import DownloadLayout from '../components/DownloadLayout';
 import { Fragment, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import useLocalStorage from '../components/useLocalStorage';
+import useLocalStorage from '../helpers/useLocalStorage';
 import Step from '../components/Step';
 
 export default function SignUpStep1() {

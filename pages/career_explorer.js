@@ -7,7 +7,7 @@ import { queryGraph } from '../helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '../helpers/GraphQLSchemes'
 import Constants from '../helpers/Constants.js'
-import useLocalStorage from '../components/useLocalStorage'
+import useLocalStorage from '../helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '../components/NavigationLayout'
 import HeaderLayout from '../components/HeaderLayout'
@@ -55,9 +55,11 @@ export default function CareerExplorer({ profile }) {
                                                 <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg"
                                                     style={{ backgroundImage: 'url(\'/img/test.png\')', height: '200px', position: 'relative' }}
                                                 >
-                                                    <img src="/img/bg.png" />
+                                                    <div style={{ position: 'absolute', height: '100%', width: '60%', backgroundImage: 'linear-gradient(to right,#085CA4,#085CA4, transparent)' }} >
+                                                    </div>
                                                     <div className="p-5" style={{ position: 'absolute', top: '0' }}>
                                                         <div style={{ fontSize: '22px', color: 'white', width: '70%', fontWeight: '500' }}>{card.name}</div>
+                                                        <div style={{ width: '40px', height: '2px', background: '#FFC400', borderRadius: '1px', marginTop: '8px' }}></div>
                                                     </div>
                                                     <div className="p-5" style={{ position: 'absolute', bottom: '0', right: '0' }}>
                                                         <a href="#" onClick={() => {
@@ -93,12 +95,17 @@ export default function CareerExplorer({ profile }) {
     )
 }
 
+
 export async function getServerSideProps(context) {
     const { token } = context.query;
-
-
-
-
+    if (token == null || token == '') {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/login"
+            }
+        }
+    }
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),

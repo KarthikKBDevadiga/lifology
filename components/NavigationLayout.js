@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 import styles from '../styles/Navigation.module.css'
-import useLocalStorage from './useLocalStorage'
+import useLocalStorage from '../helpers/useLocalStorage'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import {

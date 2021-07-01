@@ -11,7 +11,7 @@ import styles from '../styles/Signup.module.css'
 import { useRouter } from 'next/router'
 import Step from '../components/Step'
 import ProgressBar from '../components/ProgressBar'
-import useLocalStorage from '../components/useLocalStorage'
+import useLocalStorage from '../helpers/useLocalStorage'
 
 const schools = [
 

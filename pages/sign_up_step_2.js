@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router'
 import styles from '../styles/Signup.module.css'
 import DownloadLayout from '../components/DownloadLayout';
-import useLocalStorage from '../components/useLocalStorage';
+import useLocalStorage from '../helpers/useLocalStorage';
 import Step from '../components/Step';
 
 function classNames(...classes) {

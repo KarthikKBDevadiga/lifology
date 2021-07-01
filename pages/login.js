@@ -13,7 +13,7 @@ import ProgressBar from '../components/ProgressBar'
 import PhoneNumberTab from '../components/login/PhoneNumberTab'
 import OTPVerifyTab from '../components/login/OTPVerifyTab'
 import DownloadLayout from '../components/DownloadLayout'
-import useLocalStorage from '../components/useLocalStorage'
+import useLocalStorage from '../helpers/useLocalStorage'
 
 const client = new ApolloClient({
     uri: Constants.baseUrl + "/api/auth",
