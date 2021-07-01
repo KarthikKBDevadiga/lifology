@@ -6,7 +6,7 @@ import { mutateGraph, queryGraph } from '../helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeEditProfile, SchemeGetProfile } from '../helpers/GraphQLSchemes'
 import Constants from '../helpers/Constants.js'
-import useLocalStorage from '../components/useLocalStorage'
+import useLocalStorage from '../helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '../components/NavigationLayout'
 import HeaderLayout from '../components/HeaderLayout'
@@ -21,28 +21,39 @@ export default function Profiles({ profile }) {
 
     const submit = async (event) => {
         event.preventDefault()
-        var formData = new FormData()
-        formData.append('file', event.target.file.files[0])
-
         setLoadingDialog(true)
         var profilePic = "";
-        await fetch(Constants.baseUrl + '/api/fileUploading', {
-            method: 'POST',
-            body: formData,
-            headers: new Headers({
-                'Authorization': 'Bearer ' + authToken,
-                'Accept': 'application/json'
+        if (event.target.file.files[0] != undefined) {
+            var formData = new FormData()
+            formData.append('file', event.target.file.files[0])
+            await fetch(Constants.baseUrl + '/api/fileUploading', {
+                method: 'POST',
+                body: formData,
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + authToken,
+                    'Accept': 'application/json'
+                })
+            }).then(function (res) {
+                return res.json();
+            }).then(function (data) {
+                profilePic = data.url
+            }).catch(function (error) {
+                console.log('error');
             })
-        }).then(function (res) {
-            return res.json();
-        }).then(function (data) {
-            profilePic = data.url
-        }).catch(function (error) {
-            console.log('error');
-        })
+        }
+
         console.log('ProfilePic ' + profilePic)
         console.log('Name ' + event.target.name.value)
         console.log('Email ' + event.target.email.value)
+        console.log('country_abbr ' + profile.country_abbr)
+        console.log('country_code ' + profile.country_code)
+        console.log('mobile_number ' + profile.mobile_number)
+        console.log('child_name ' + profile.child_details.child_name)
+        console.log('gender ' + profile.child_details.gender)
+        console.log('grade ' + profile.child_details.grade)
+        console.log('stream ' + profile.child_details.stream)
+        console.log('school_name ' + profile.child_details.school_name);
+        console.log('stream_id ' + profile.child_details.stream_id)
         const client = new ApolloClient({
             uri: Constants.baseUrl + "/api/user",
             cache: new InMemoryCache(),
@@ -53,12 +64,20 @@ export default function Profiles({ profile }) {
         await mutateGraph(client,
             {
                 name: event.target.name.value,
-                email: event.target.email.value
+                email: event.target.email.value,
+                country_abbr: '91',
+                country_code: profile.country_code,
+                mobile_number: profile.mobile_number,
+                child_name: profile.child_details.child_name,
+                gender: profile.child_details.gender,
+                grade: profile.child_details.grade,
+                stream: profile.child_details.stream,
+                school_name: '',
+                stream_id: profile.child_details.stream_id
             }, SchemeEditProfile)
             .then((res) => {
-                console.log(res)
+                console.log('Response' + res)
             }).catch((networkErr) => {
-
                 console.log('error')
             });
         setLoadingDialog(false)
@@ -248,6 +267,14 @@ export default function Profiles({ profile }) {
 
 export async function getServerSideProps(context) {
     const { token } = context.query;
+    if (token == null || token == '') {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/login"
+            }
+        }
+    }
     const client = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
