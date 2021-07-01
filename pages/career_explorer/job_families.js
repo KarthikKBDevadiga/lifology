@@ -47,7 +47,7 @@ export default function JobFamilies({ families, profile }) {
 
     return (
         <>
-            <div className="h-screen flex overflow-hidden bg-gray-100">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
@@ -64,35 +64,43 @@ export default function JobFamilies({ families, profile }) {
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
                                         style={{ padding: '16px', background: 'white' }}>
                                         <div className="flex-1 flex">
-                                            <div style={{ alignSelf: 'center', fontWeight: '500', fontSize: '16px', width: '100%' }} >
-                                                <h2 className="text-xl ">Explore Lists of all Job families & Career Fields</h2>
-                                            </div>
-                                            <form className="w-full flex md:ml-0" action="#" method="GET">
-                                                <label htmlFor="search_field" className="sr-only">
-                                                    Search
-                                                </label>
-                                                <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                                                    <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none" aria-hidden="true">
-                                                        <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                            <div className="sm:flex" style={{ height: '100%', width: '100%' }}>
+                                                <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8  " >
+                                                    <div style={{ alignSelf: 'center', fontWeight: '500', fontSize: '16px', width: '100%' }} >
+                                                        <h2 className="text-xl ">Explore Lists of all Job families & Career Fields</h2>
                                                     </div>
-                                                    <input
-                                                        id="search_field"
-                                                        name="search_field"
-                                                        className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
-                                                        placeholder="Search transactions"
-                                                        type="search"
-                                                    />
                                                 </div>
-                                            </form>
+                                                <div style={{ width: '100%' }}>
+                                                    <form className="w-full flex md:ml-0" action="#" method="GET">
+                                                        <label htmlFor="search_field" className="sr-only">
+                                                            Search
+                                                        </label>
+                                                        <div className="relative w-full text-gray-400 focus-within:text-gray-600" style={{ background: '#F8F8F8', borderRadius: '4px' }}>
+                                                            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none" aria-hidden="true">
+                                                                <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                                            </div>
+                                                            <input
+                                                                id="search_field"
+                                                                name="search_field"
+                                                                className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
+                                                                placeholder="Search Job Families"
+                                                                type="search"
+                                                                style={{ background: 'transparent' }}
+                                                            />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="max-w-6xl mx-auto">
+                            <div className="max-w-6xl mx-auto" style={{ marginTop: '16px' }}>
                                 <div className="flex flex-col mt-2">
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
                                         style={{ padding: '16px', background: 'white' }}>
-                                        <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                                             {/* Card */}
                                             {families.map((card) => (
                                                 <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg"

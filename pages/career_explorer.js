@@ -16,7 +16,7 @@ const cards = [
     { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Course and University', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Scholarship Program', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Magazine', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
+    { name: 'Magazine', href: 'career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Career Videos', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
     // More items...
 ]
@@ -34,7 +34,7 @@ export default function CareerExplorer({ profile }) {
 
     return (
         <>
-            <div className="h-screen flex overflow-hidden bg-gray-100">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
                 <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
@@ -49,7 +49,7 @@ export default function CareerExplorer({ profile }) {
                                 <div className="flex flex-col mt-2">
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
                                         style={{ padding: '16px', background: 'white' }}>
-                                        <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                                             {/* Card */}
                                             {cards.map((card) => (
                                                 <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg"

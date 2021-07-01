@@ -84,7 +84,7 @@ export default function Profiles({ profile }) {
     }
     return (
         <>
-            <div className="h-screen flex overflow-hidden bg-gray-100">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
@@ -96,8 +96,8 @@ export default function Profiles({ profile }) {
 
                         <div className="mt-8" style={{ margin: '16px' }}>
 
-                            <div className="max-w-6xl mx-auto shadow"
-                                style={{ padding: '16px', background: 'white', height: '100%' }}>
+                            <div className="max-w-6xl mx-auto shadow p-4"
+                                style={{ background: 'white', height: '100%' }}>
                                 <form onSubmit={submit}>
                                     <div className="flex flex-col mt-2">
                                         <div className="align-middle min-w-full overflow-x-auto  overflow-hidden sm:rounded-lg"
@@ -112,17 +112,16 @@ export default function Profiles({ profile }) {
                                                             </div>
                                                             <input id="file" name="file" type="file" style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', opacity: 0 }} />
                                                         </div>
-                                                        <div style={{ padding: '20px 0px', fontSize: '17px' }}>Upload New Photo</div>
+                                                        <div className="pt-4" style={{ fontSize: '17px' }}>Upload New Photo</div>
                                                     </div>
                                                     <div style={{ width: '100%' }}>
-                                                        <div style={{ paddingTop: '10px', float: 'right', width: '100%' }}>
-                                                            <div style={{ paddingBottom: '20px' }}>
+                                                        <div className="pt-4" style={{ float: 'right', width: '100%' }}>
+                                                            <div className="pb-4" >
                                                                 <label style={{ fontSize: '18px', paddingBottom: '10px', color: '#000', display: 'block' }}>Full Name</label>
                                                                 <input id="name" name="name" type="text" placeholder="Juliana Dsoza"
                                                                     className={styles.inputField} defaultValue={profile.name} />
                                                             </div>
-                                                            <div style={{ paddingBottom: '20px' }}>
-
+                                                            <div className="pb-4" >
                                                                 <label style={{ fontSize: '18px', paddingBottom: '10px', color: '#000', display: 'block' }}>Phone Number</label>
                                                                 <div style={{ position: 'relative' }}>
                                                                     <div className="absolute inset-y-0 left-0 pl-3 pr-3 flex items-center pointer-events-none"
