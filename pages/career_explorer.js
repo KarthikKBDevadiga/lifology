@@ -3,14 +3,14 @@ import {
     ScaleIcon,
 } from '@heroicons/react/outline'
 
-import { queryGraph } from '../helpers/GraphQLCaller'
+import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetProfile } from '../helpers/GraphQLSchemes'
-import Constants from '../helpers/Constants.js'
-import useLocalStorage from '../helpers/useLocalStorage'
+import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import Constants from '/helpers/Constants.js'
+import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
-import NavigationLayout from '../components/NavigationLayout'
-import HeaderLayout from '../components/HeaderLayout'
+import NavigationLayout from '/components/NavigationLayout'
+import HeaderLayout from '/components/HeaderLayout'
 
 const cards = [
     { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },

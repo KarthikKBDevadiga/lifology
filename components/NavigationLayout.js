@@ -281,10 +281,10 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen }) => {
                                 <div className="px-2 space-y-1 text-center">
                                     <span className="px-2 bg-white text-center text-gray-900 font-bold">Download Our App</span>
                                     <a href="#" >
-                                        <img className="mt-4 ml-auto mr-auto w-3/5" src="../img/play-store.png" />
+                                        <img className="mt-4 ml-auto mr-auto w-3/5" src="/img/play-store.png" />
                                     </a>
                                     <a href="#">
-                                        <img className="mt-4 ml-auto mr-auto w-3/5" src="../img/app-store.png" />
+                                        <img className="mt-4 ml-auto mr-auto w-3/5" src="/img/app-store.png" />
                                     </a>
                                 </div>
                             </div>

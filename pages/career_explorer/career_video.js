@@ -55,7 +55,7 @@ function classNames(...classes) {
 
 
 
-export default function JobFamilies({ videoCats, profile }) {
+export default function CareerVideo({ videoCats, profile }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
@@ -92,7 +92,7 @@ export default function JobFamilies({ videoCats, profile }) {
                                                                 id="search_field"
                                                                 name="search_field"
                                                                 className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
-                                                                placeholder="Search Job Families"
+                                                                placeholder="Search Any Videos"
                                                                 type="search"
                                                             />
                                                         </div>
@@ -167,10 +167,9 @@ export default function JobFamilies({ videoCats, profile }) {
                                                     {videoCat.name}
                                                 </div>
 
-                                                <div className="text-right text-indigo-700 mx-2 ">
+                                                <div className="text-sm text-right text-indigo-700 mx-2 ">
                                                     View All
                                                 </div>
-
                                             </div>
                                             <div className="flex flex-col mt-2">
                                                 <Carousel
@@ -189,89 +188,96 @@ export default function JobFamilies({ videoCats, profile }) {
                                                     itemClass="carousel-item-padding-40-px"
                                                 >
                                                     {videoCat.videos.map((card) => (
-                                                        <div className="relative shadow mx-2 rounded m-1" style={{}}>
-                                                            <div>
-                                                                <img className=" rounded" src={card.thumbnail} />
-                                                                <div className="flex-1 flex items-center justify-between truncate">
-                                                                    <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                        <a href="#" className="mt-2 text-gray-900 font-medium hover:text-gray-600">
-                                                                            {card.title}
-                                                                        </a>
-                                                                        <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
+                                                        <a href="#" onClick={() => {
+                                                            router.push({
+                                                                pathname: 'career_video/career_video_detail',
+                                                                query: { token: authToken }
+                                                            })
+                                                        }}>
+                                                            <div className="relative shadow mx-2 rounded m-1" style={{}}>
+                                                                <div>
+                                                                    <img className=" rounded" src={card.thumbnail} />
+                                                                    <div className="flex-1 flex items-center justify-between truncate">
+                                                                        <div className="flex-1 px-4 py-2 text-sm truncate">
+                                                                            <a href="#" className="mt-2 text-gray-900 font-medium hover:text-gray-600">
+                                                                                {card.title}
+                                                                            </a>
+                                                                            <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
-                                                                {({ open }) => (
-                                                                    <>
-                                                                        <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none m-2">
-                                                                            <span className="sr-only">Open options</span>
-                                                                            <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
-                                                                        </Menu.Button>
-                                                                        <Transition
-                                                                            show={open}
-                                                                            as={Fragment}
-                                                                            enter="transition ease-out duration-100"
-                                                                            enterFrom="transform opacity-0 scale-95"
-                                                                            enterTo="transform opacity-100 scale-100"
-                                                                            leave="transition ease-in duration-75"
-                                                                            leaveFrom="transform opacity-100 scale-100"
-                                                                            leaveTo="transform opacity-0 scale-95"
-                                                                        >
-                                                                            <Menu.Items
-                                                                                static
-                                                                                className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
+                                                                <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
+                                                                    {({ open }) => (
+                                                                        <>
+                                                                            <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none m-2">
+                                                                                <span className="sr-only">Open options</span>
+                                                                                <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
+                                                                            </Menu.Button>
+                                                                            <Transition
+                                                                                show={open}
+                                                                                as={Fragment}
+                                                                                enter="transition ease-out duration-100"
+                                                                                enterFrom="transform opacity-0 scale-95"
+                                                                                enterTo="transform opacity-100 scale-100"
+                                                                                leave="transition ease-in duration-75"
+                                                                                leaveFrom="transform opacity-100 scale-100"
+                                                                                leaveTo="transform opacity-0 scale-95"
                                                                             >
-                                                                                <div className="py-1">
-                                                                                    <Menu.Item>
-                                                                                        {({ active }) => (
-                                                                                            <a
-                                                                                                href="#"
-                                                                                                className={classNames(
-                                                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                    'block px-4 py-2 text-sm'
-                                                                                                )}
-                                                                                            >
-                                                                                                View
-                                                                                            </a>
-                                                                                        )}
-                                                                                    </Menu.Item>
-                                                                                </div>
-                                                                                <div className="py-1">
-                                                                                    <Menu.Item>
-                                                                                        {({ active }) => (
-                                                                                            <a
-                                                                                                href="#"
-                                                                                                className={classNames(
-                                                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                    'block px-4 py-2 text-sm'
-                                                                                                )}
-                                                                                            >
-                                                                                                Removed from pinned
-                                                                                            </a>
-                                                                                        )}
-                                                                                    </Menu.Item>
-                                                                                    <Menu.Item>
-                                                                                        {({ active }) => (
-                                                                                            <a
-                                                                                                href="#"
-                                                                                                className={classNames(
-                                                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                    'block px-4 py-2 text-sm'
-                                                                                                )}
-                                                                                            >
-                                                                                                Share
-                                                                                            </a>
-                                                                                        )}
-                                                                                    </Menu.Item>
-                                                                                </div>
-                                                                            </Menu.Items>
-                                                                        </Transition>
-                                                                    </>
-                                                                )}
-                                                            </Menu>
-                                                        </div>
+                                                                                <Menu.Items
+                                                                                    static
+                                                                                    className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
+                                                                                >
+                                                                                    <div className="py-1">
+                                                                                        <Menu.Item>
+                                                                                            {({ active }) => (
+                                                                                                <a
+                                                                                                    href="#"
+                                                                                                    className={classNames(
+                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                    )}
+                                                                                                >
+                                                                                                    View
+                                                                                                </a>
+                                                                                            )}
+                                                                                        </Menu.Item>
+                                                                                    </div>
+                                                                                    <div className="py-1">
+                                                                                        <Menu.Item>
+                                                                                            {({ active }) => (
+                                                                                                <a
+                                                                                                    href="#"
+                                                                                                    className={classNames(
+                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                    )}
+                                                                                                >
+                                                                                                    Removed from pinned
+                                                                                                </a>
+                                                                                            )}
+                                                                                        </Menu.Item>
+                                                                                        <Menu.Item>
+                                                                                            {({ active }) => (
+                                                                                                <a
+                                                                                                    href="#"
+                                                                                                    className={classNames(
+                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                    )}
+                                                                                                >
+                                                                                                    Share
+                                                                                                </a>
+                                                                                            )}
+                                                                                        </Menu.Item>
+                                                                                    </div>
+                                                                                </Menu.Items>
+                                                                            </Transition>
+                                                                        </>
+                                                                    )}
+                                                                </Menu>
+                                                            </div>
+                                                        </a>
                                                     ))}
 
                                                 </Carousel>
@@ -318,13 +324,6 @@ export async function getServerSideProps(context) {
     });
     const videoCats = await queryGraph(videosClient, {}, SchemeGetVideos)
         .then((res) => {
-            // res.videos.map(videoCat => {
-            //     videoCat.videos.map(v => {
-
-            //         console.log(v.thumbnail)
-            //     })
-            // })
-            // console.log(res)
             return res.videos;
         }).catch((networkErr) => {
             return [];
@@ -341,7 +340,6 @@ export async function getServerSideProps(context) {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
         });
     return {
         props: { videoCats, profile }
