@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { Dialog, Transition } from '@headlessui/react'
-import styles from '../styles/Profile.module.css'
 import { mutateGraph, queryGraph } from '../helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeEditProfile, SchemeGetProfile } from '../helpers/GraphQLSchemes'
@@ -94,66 +93,46 @@ export default function Profiles({ profile }) {
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
-                        <div className="mt-8" style={{ margin: '16px' }}>
+                        <div className="m-4">
 
-                            <div className="max-w-6xl mx-auto shadow p-4"
-                                style={{ background: 'white', height: '100%' }}>
+                            <div className="max-w-6xl mx-auto shadow p-4 bg-white h-full">
                                 <form onSubmit={submit}>
-                                    <div className="flex flex-col mt-2">
-                                        <div className="align-middle min-w-full overflow-x-auto  overflow-hidden sm:rounded-lg"
-                                            style={{ padding: '16px', background: 'white' }}>
-
-                                            <div className="mt-2">
-                                                <div className="sm:flex" style={{ height: '100%' }}>
+                                    <div className="flex flex-col">
+                                        <div className="align-middle min-w-full overflow-x-auto  overflow-hidden sm:rounded-lg p-4 bg-white">
+                                            <div className="">
+                                                <div className="sm:flex h-full">
                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8  " >
-                                                        <div style={{ position: 'relative', width: '140px', height: '140px' }}>
-                                                            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '100%', height: '100%' }}>
-                                                                <img src="../img/upload.svg" alt="" style={{ width: '100%', height: '100%' }} />
+                                                        <div className="relative" style={{ width: '140px', height: '140px' }}>
+                                                            <div className="absolute top-2/4 left-2/4 w-full h-full" style={{ transform: 'translate(-50%,-50%)' }}>
+                                                                <img width="w-full h-full" src="../img/upload.svg" alt="" />
                                                             </div>
-                                                            <input id="file" name="file" type="file" style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', opacity: 0 }} />
+                                                            <input className="absolute left-0 top-0 w-full h-full opacity-0" id="file" name="file" type="file" />
                                                         </div>
-                                                        <div className="pt-4" style={{ fontSize: '17px' }}>Upload New Photo</div>
+                                                        <div className="pt-4 text-base text-center">Upload New Photo</div>
                                                     </div>
-                                                    <div style={{ width: '100%' }}>
-                                                        <div className="pt-4" style={{ float: 'right', width: '100%' }}>
+                                                    <div className="w-full">
+                                                        <div className="pt-4 w-full float-right">
                                                             <div className="pb-4" >
-                                                                <label style={{ fontSize: '18px', paddingBottom: '10px', color: '#000', display: 'block' }}>Full Name</label>
+                                                                <label className="text-black pb-2 block text-xl">Full Name</label>
                                                                 <input id="name" name="name" type="text" placeholder="Juliana Dsoza"
-                                                                    className={styles.inputField} defaultValue={profile.name} />
+                                                                    className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500" defaultValue={profile.name} />
                                                             </div>
                                                             <div className="pb-4" >
-                                                                <label style={{ fontSize: '18px', paddingBottom: '10px', color: '#000', display: 'block' }}>Phone Number</label>
-                                                                <div style={{ position: 'relative' }}>
-                                                                    <div className="absolute inset-y-0 left-0 pl-3 pr-3 flex items-center pointer-events-none"
-                                                                        style={{
-                                                                            backgroundColor: '#F2F2F2',
-                                                                            borderTopLeftRadius: 60,
-                                                                            borderBottomLeftRadius: 60,
-                                                                            margin: 1,
-                                                                        }}
+                                                                <label className="text-black pb-2 block text-xl">Phone Number</label>
+                                                                <div className="relative" >
+                                                                    <div className="absolute inset-y-0 left-0 pl-3 pr-3 flex items-center pointer-events-none rounded-l-full bg-gray-200 m-px"
                                                                     >
                                                                         <span className="text-gray-500 sm:text-sm">+91</span>
                                                                     </div>
                                                                     <input type="text" placeholder="9999999999"
                                                                         maxLength="10"
-                                                                        className={styles.inputField}
-                                                                        style={{ paddingLeft: '3.75rem' }} defaultValue={profile.mobile_number} />
-                                                                    <div className="absolute inset-y-0 right-0 pl-3 pr-3 flex items-center pointer-events-none"
-                                                                        style={{
-                                                                            // backgroundColor: '#F2F2F2',
-                                                                            // borderTopLeftRadius: 60,
-                                                                            // borderBottomLeftRadius: 60,
-                                                                            margin: 1,
-                                                                        }}
-                                                                    >
+                                                                        className="rounded-full bg-gray-100 px-3 py-2 pl-14 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
+                                                                        defaultValue={profile.mobile_number} />
+                                                                    <div className="absolute inset-y-0 right-0 pl-3 pr-3 flex items-center pointer-events-none m-px">
                                                                         <svg
+                                                                            className="mr-2 align-text-bottom initial"
                                                                             viewBox="0 0 32 32"
                                                                             width="16" height="16"
-                                                                            style={{
-                                                                                display: 'initial',
-                                                                                verticalAlign: 'text-bottom',
-                                                                                marginRight: '8px'
-                                                                            }}
                                                                         >
                                                                             <path
                                                                                 id="path"
@@ -166,32 +145,32 @@ export default function Profiles({ profile }) {
                                                                                 fill="#ffffff"
                                                                                 strokeWidth="1" />
                                                                         </svg>
-                                                                        <span style={{ display: 'inline-block', alignSelf: 'center', fontSize: '14px' }}>Verified</span>
+                                                                        <span className="self-center inline-block text-sm">Verified</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div style={{ paddingBottom: '20px' }}>
-                                                                <label style={{ fontSize: '18px', paddingBottom: '10px', color: '#000', display: 'block' }}>Email</label>
+                                                            <div>
+                                                                <label className="text-black pb-2 block text-xl">Email</label>
                                                                 <input id="email" name="email" type="email" placeholder="something@lifology.com"
-                                                                    className={styles.inputField} defaultValue={profile.email} />
+                                                                    className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500" defaultValue={profile.email} />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense" style={{ width: 'fit-content' }}>
+                                            <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense w-min" style={{ width: 'fit-content' }}>
                                                 <button
                                                     type="submit"
-                                                    className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
-                                                    style={{ borderRadius: 60, width: 'fit-content', backgroundColor: '#085CA4' }}
+                                                    className="inline-flex justify-center rounded-full border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
+                                                    style={{ width: 'fit-content', backgroundColor: '#085CA4' }}
                                                 >
                                                     Save Profile
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    className="mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
-                                                    style={{ borderRadius: 60, width: 'fit-content', marginLeft: 'auto', color: '#085CA4', borderColor: '#085CA4' }}
+                                                    className="mt-3 ml-auto inline-flex justify-center rounded-full border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+                                                    style={{ width: 'fit-content', color: '#085CA4', borderColor: '#085CA4' }}
                                                 >
                                                     Cancel
                                                 </button>
@@ -203,8 +182,8 @@ export default function Profiles({ profile }) {
                             </div>
                         </div>
 
-                        <footer style={{ boxShadow: '0 0 0.5rem rgba(0, 0, 0, 0.3)', padding: '16px' }}>
-                            <div style={{ textAlign: 'center', fontWeight: '500' }}>Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
+                        <footer className="shadow p-4 bg-white">
+                            <div className="text-center font-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
                         </footer>
                     </main>
                 </div>
@@ -241,11 +220,9 @@ export default function Profiles({ profile }) {
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
                             <div
-                                className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
-                                style={{ width: 'fit-content' }}
-                            >
+                                className="w-min inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle  sm:p-6">
 
-                                <div className="sm:flex sm:items-start" style={{ margin: '16px' }}>
+                                <div className="sm:flex sm:items-start m-4">
 
                                     <div className="mt-3 text-center sm:mt-0 sm:text-left">
                                         {/* <Step /> */}

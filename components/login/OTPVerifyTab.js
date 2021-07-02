@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from '../../styles/Login.module.css'
 import { useRef } from 'react'
 
 const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
@@ -14,7 +13,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
             <form onSubmit={verifyOTP} className="space-y-6">
                 <div>
                     <div className="mt-1">
-                        <div className="mt-1 grid grid-cols-6 gap-2" style={{ marginTop: 16, marginLeft: 'auto', marginRight: 'auto' }}>
+                        <div className="mt-1 grid grid-cols-6 gap-2 mt-4 ml-auto mr-auto">
 
                             <input
                                 ref={oneRef}
@@ -29,15 +28,8 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 name="one"
                                 type="phone"
                                 required
-                                className={styles.inputField}
+                                className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                                 maxLength="1"
-                                style={{
-                                    marginTop: 0,
-                                    borderRadius: 60,
-                                    height: 40,
-                                    width: 40,
-                                    textAlign: 'center'
-                                }}
                             />
                             <input
                                 ref={twoRef}
@@ -52,15 +44,8 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 name="two"
                                 type="phone"
                                 required
-                                className={styles.inputField}
+                                className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                                 maxLength="1"
-                                style={{
-                                    marginTop: 0,
-                                    borderRadius: 60,
-                                    height: 40,
-                                    width: 40,
-                                    textAlign: 'center'
-                                }}
                             />
                             <input
                                 ref={threeRef}
@@ -75,15 +60,8 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 name="three"
                                 type="phone"
                                 required
-                                className={styles.inputField}
+                                className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                                 maxLength="1"
-                                style={{
-                                    marginTop: 0,
-                                    borderRadius: 60,
-                                    height: 40,
-                                    width: 40,
-                                    textAlign: 'center'
-                                }}
                             />
                             <input
                                 ref={fourRef}
@@ -98,15 +76,8 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 name="four"
                                 type="phone"
                                 required
-                                className={styles.inputField}
+                                className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                                 maxLength="1"
-                                style={{
-                                    marginTop: 0,
-                                    borderRadius: 60,
-                                    height: 40,
-                                    width: 40,
-                                    textAlign: 'center'
-                                }}
                             />
                             <input
                                 ref={fiveRef}
@@ -121,15 +92,8 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 name="five"
                                 type="phone"
                                 required
-                                className={styles.inputField}
+                                className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                                 maxLength="1"
-                                style={{
-                                    marginTop: 0,
-                                    borderRadius: 60,
-                                    height: 40,
-                                    width: 40,
-                                    textAlign: 'center'
-                                }}
                             />
                             <input
                                 ref={sixRef}
@@ -144,32 +108,25 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 name="six"
                                 type="phone"
                                 required
-                                className={styles.inputField}
+                                className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                                 maxLength="1"
-                                style={{
-                                    marginTop: 0,
-                                    borderRadius: 60,
-                                    height: 40,
-                                    width: 40,
-                                    textAlign: 'center'
-                                }}
                             />
                         </div>
                     </div>
                 </div>
 
-                <div style={{ marginTop: 16 }}>
+                <div className="mt-4">
                     <div className="mt-1 grid grid-cols-2 gap-2">
                         <div>
                             00:{timeLeft.toString().length == 1 ? '0' + timeLeft : timeLeft} seconds
                         </div>
 
-                        <div style={{ textAlign: 'end' }}>
+                        <div className="text-right">
                             {
                                 timeLeft == 0 ?
                                     <a
                                         onClick={resendOTP}
-                                        className="font-medium text-indigo-600 hover:text-indigo-500" style={{ verticalAlign: 'middle', cursor: 'pointer' }}>
+                                        className="font-medium text-indigo-600 hover:text-indigo-500 align-middle cursor-pointer">
                                         Resend Code
                                     </a> : <></>
                             }
@@ -181,10 +138,8 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                 <div>
                     <button
                         type="submit"
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        style={{
-                            borderRadius: 60
-                        }}
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+
                     >
                         Verify OTP
                     </button>
@@ -193,22 +148,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                 <div>
                     <a
                         onClick={selectTab}
-                        className=""
-                        style={{
-                            borderRadius: 60,
-                            borderWidth: '1px',
-                            borderColor: '#085CA4',
-                            background: 'white',
-                            color: '#085CA4',
-                            paddingTop: '0.5rem',
-                            paddingBottom: '0.5rem',
-                            paddingLeft: '1rem',
-                            paddingRight: '1rem',
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            cursor: 'pointer'
-                        }}
+                        className="flex cursor-pointer w-full px-4 py-2 bg-white rounded-full justify-center border border-indigo-700 text-indigo-700"
                     >
                         Back To Login
                     </a>

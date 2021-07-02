@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import styles from '../styles/Login.module.css'
 import { ApolloClient, InMemoryCache } from "@apollo/client"
 import Constants from '../helpers/Constants'
 import { SchemeSendOTP, SchemeVerifyOTP } from '../helpers/GraphQLSchemes'
@@ -114,39 +113,33 @@ export default function Login() {
                 <title>Login</title>
             </Head>
             <div className="min-h-screen bg-white flex font-roboto" >
-                <div className="hidden lg:block relative w-0 flex-1 leftloginbg" style={{ background: '#21AAED', overflow: 'hidden' }}>
+                <div className="hidden lg:block relative w-0 flex-1 leftloginbg overflow-hidden" style={{ background: '#21AAED' }}>
 
-                    <div className="mx-auto w-full" style={{ height: "25%" }}>
-                        <div className="mt-1" style={{ width: 'fit-content', marginTop: 32, marginLeft: 'auto', marginRight: 'auto', display: 'flex' }}>
-                            <img src="img/logoWhite.png" alt="Lifology" width="48px" style={{ marginLeft: 'auto', marginRight: 'auto' }} />
-                            <span style={{
-                                alignSelf: 'center', color: 'white',
-                                fontWeight: 'bold',
-                                letterSpacing: '4px',
-                                fontSize: '20px',
-                                paddingLeft: '16px'
-                            }}>LIFOLOGY</span>
+                    <div className="mx-auto w-full h-1/4" >
+                        <div className="mt-8 ml-auto mr-auto w-min flex">
+                            <img src="img/logoWhite.png" alt="Lifology" width="48px" className="ml-auto mr-auto" />
+                            <span className="self-center text-white font-bold pl-4 text-xl tracking-widest">LIFOLOGY</span>
                         </div>
-                        <p className="text-center text-white text-xl" style={{ marginTop: 32 }}>Building the world's best Super Parent Community</p>
+                        <p className="text-center text-white text-xl mt-8" >Building the world's best Super Parent Community</p>
                     </div>
-                    <div className="text-center flex-1 flex flex-col " style={{ marginTop: 'auto', marginLeft: 'auto', marginRight: 'auto', height: '75%', alignItems: 'center' }}>
+                    <div className="text-center flex-1 flex flex-col mt-auto ml-auto mr-auto h-3/4 items-center" >
 
                         {
                             tab === 1 ?
-                                <img className="absolute glsignimg" src="img/login-left-view.png" alt="" style={{ height: "70%" }} /> :
-                                <img className="absolute glsignimg" src="img/otp-left-view.png" alt="" style={{ height: "70%" }} />
+                                <img className="absolute glsignimg h-3/4" src="img/login-left-view.png" alt="" /> :
+                                <img className="absolute glsignimg h-3/4" src="img/otp-left-view.png" alt="" />
                         }
                     </div>
 
                 </div>
 
-                <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+                <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 h-screen">
 
                     <div className="mx-auto w-full max-w-sm lg:w-96">
                         <div>
-                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto" style={{ textAlign: 'center' }}>{tab === 1 ? 'Welcome to Lifology' : 'Enter Code Sent To On Your Mobile Number'}</h2>
-                            <p className="mt-2 text-sm text-gray-600 font-roboto" style={{ textAlign: 'center' }}>
-                                {tab === 1 ? <span>The World\'s leading career guidance platform</span> : <span>We sent it to the number +91 {phoneNumber}</span>}
+                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto text-center">{tab === 1 ? 'Welcome to Lifology' : 'Enter Code Sent To On Your Mobile Number'}</h2>
+                            <p className="mt-2 text-sm text-gray-600 font-roboto text-center">
+                                {tab === 1 ? <span>The World's leading career guidance platform</span> : <span>We sent it to the number +91 {phoneNumber}</span>}
                             </p>
                         </div>
 
@@ -173,35 +166,36 @@ export default function Login() {
                                         <span className="px-2 bg-white text-gray-500">Or Login with</span>
                                     </div>
                                 </div>
-                                <div style={{ marginTop: 16 }}>
-                                    <div className="mt-1 grid grid-cols-2 gap-2">
+                                <div className="mt-0">
+                                    <div className="mt-4 grid grid-cols-2 gap-2">
                                         <div>
                                             <a
                                                 href="#"
-                                                className={styles.socialMediaButton}
+                                                className="w-full rounded-full border border-gray-200 bg-gray-100 inline-flex px-4 py-2 justify-center text-gray-400 hover:border-indigo-700 hover:bg-indigo-700 hover:text-white duration-500"
+                                            // className={styles.socialMediaButton}
                                             >
                                                 <span className="sr-only">Sign in with Facebook</span>
-                                                <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" style={{ width: '1rem', height: '1rem', alignSelf: 'center' }}>
+                                                <svg className="w-4 h-4 self-center" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                                     <path
                                                         fillRule="evenodd"
                                                         d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z"
                                                         clipRule="evenodd"
                                                     />
                                                 </svg>
-                                                <p style={{ marginLeft: 16 }}>Facebook</p>
+                                                <p className="ml-4" >Facebook</p>
                                             </a>
                                         </div>
 
                                         <div>
                                             <a
                                                 href="#"
-                                                className={styles.socialMediaButton}
+                                                className="w-full rounded-full border border-gray-200 bg-gray-100 inline-flex px-4 py-2 justify-center text-gray-400 hover:border-indigo-700 hover:bg-indigo-700 hover:text-white duration-500"
                                             >
                                                 <span className="sr-only">Sign in with Twitter</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 640 640" style={{ width: '1rem', height: '1rem', alignSelf: 'center' }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 640 640" className="self-center w-4 h-4" >
                                                     <path d="M326.331 274.255v109.761h181.49c-7.37 47.115-54.886 138.002-181.49 138.002-109.242 0-198.369-90.485-198.369-202.006 0-111.509 89.127-201.995 198.369-201.995 62.127 0 103.761 26.516 127.525 49.359l86.883-83.635C484.99 31.512 412.741-.012 326.378-.012 149.494-.012 6.366 143.116 6.366 320c0 176.884 143.128 320.012 320.012 320.012 184.644 0 307.256-129.876 307.256-312.653 0-21-2.244-36.993-5.008-52.997l-302.248-.13-.047.024z" />
                                                 </svg>
-                                                <p style={{ marginLeft: 16 }}>Google</p>
+                                                <p className="ml-4" >Google</p>
                                             </a>
                                         </div>
 
@@ -246,11 +240,9 @@ export default function Login() {
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
                             <div
-                                className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
-                                style={{ width: 'fit-content' }}
-                            >
+                                className="w-min inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle  sm:p-6">
 
-                                <div className="sm:flex sm:items-start" style={{ margin: '16px' }}>
+                                <div className="sm:flex sm:items-start m-4">
 
                                     <div className="mt-3 text-center sm:mt-0 sm:text-left">
                                         {/* <Step /> */}
@@ -306,11 +298,8 @@ export default function Login() {
                                 </div>
                                 <div className="mt-5 sm:mt-6">
                                     <button
-                                        style={{
-                                            borderRadius: 60
-                                        }}
                                         type="button"
-                                        className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                                        className="rounded-full inline-flex justify-center w-full border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
                                         onClick={() => {
                                             setSuccessDialog(false)
                                             router.push({
@@ -369,11 +358,8 @@ export default function Login() {
                                 </div>
                                 <div className="mt-5 sm:mt-6">
                                     <button
-                                        style={{
-                                            borderRadius: 60
-                                        }}
                                         type="button"
-                                        className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+                                        className="rounded-full inline-flex justify-center w-full border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
                                         onClick={() => {
                                             setErrorDialog(false)
                                             setTab(1)
@@ -441,7 +427,7 @@ export default function Login() {
                                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
                                     <button
                                         type="button"
-                                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
+                                        className="rounded-full w-full inline-flex justify-center border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
                                         onClick={() => {
                                             setSignupDialog(false)
                                             setMobile(phoneNumber)
@@ -449,19 +435,17 @@ export default function Login() {
                                                 pathname: 'sign_up_step_1',
                                             })
                                         }}
-                                        style={{ borderRadius: 60 }}
                                     >
                                         Signup
                                     </button>
                                     <button
                                         type="button"
-                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+                                        className="rounded-full mt-3 w-full inline-flex justify-center border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
                                         onClick={() => {
                                             setSignupDialog(false)
                                             setTab(1)
                                             setTimeLeft(0)
                                         }}
-                                        style={{ borderRadius: 60 }}
                                     >
                                         Login
                                     </button>

@@ -1,5 +1,3 @@
-import { RadioGroup } from '@headlessui/react'
-import { useState } from 'react';
 import { useRouter } from 'next/router'
 import styles from '../styles/Signup.module.css'
 import DownloadLayout from '../components/DownloadLayout';
@@ -32,23 +30,19 @@ export default function SignUpStep2() {
 
     return (
         <div className="min-h-screen bg-white flex font-roboto" >
-            <div className="hidden lg:block relative w-0 flex-1 leftloginbg" style={{ background: '#21AAED', overflow: 'hidden' }}>
+            <div className="hidden lg:block relative w-0 flex-1 leftloginbg overflow-hidden" style={{ background: '#21AAED' }}>
 
-                <div className="mx-auto w-full" style={{ height: "25%" }}>
-                    <div className="mt-1" style={{ width: 'fit-content', marginTop: 32, marginLeft: 'auto', marginRight: 'auto', display: 'flex' }}>
-                        <img src="img/logoWhite.png" alt="Lifology" width="48px" style={{ marginLeft: 'auto', marginRight: 'auto' }} />
-                        <span style={{
-                            alignSelf: 'center', color: 'white',
-                            fontWeight: 'bold',
-                            letterSpacing: '4px',
-                            fontSize: '20px',
-                            paddingLeft: '16px'
-                        }}>LIFOLOGY</span>
+                <div className="mx-auto w-full h-1/4" >
+                    <div className="mt-8 ml-auto mr-auto w-min flex">
+                        <img src="img/logoWhite.png" alt="Lifology" width="48px" className="ml-auto mr-auto" />
+                        <span className="self-center text-white font-bold pl-4 text-xl tracking-widest">LIFOLOGY</span>
                     </div>
-                    <p className="text-center text-white text-xl" style={{ marginTop: 32 }}>Building the world's best Super Parent Community</p>
+                    <p className="text-center text-white text-xl mt-8" >Building the world's best Super Parent Community</p>
                 </div>
-                <div className="text-center flex-1 flex flex-col " style={{ marginTop: 'auto', marginLeft: 'auto', marginRight: 'auto', height: '75%', alignItems: 'center' }}>
-                    <img className="absolute glsignimg" src="img/signup-left-view.png" alt="" style={{ height: "70%" }} />
+                <div className="text-center flex-1 flex flex-col mt-auto ml-auto mr-auto h-3/4 items-center" >
+
+                    <img className="absolute glsignimg h-3/4" src="img/signup-left-view.png" alt="" /> :
+
                 </div>
 
             </div>
@@ -57,7 +51,7 @@ export default function SignUpStep2() {
 
                 <div className="mx-auto w-full max-w-sm lg:w-96">
                     <div>
-                        <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto" style={{ textAlign: 'center' }}>Complete your profile</h2>
+                        <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto text-center">Complete your profile</h2>
 
                         <Step index="2" />
                     </div>
@@ -68,13 +62,13 @@ export default function SignUpStep2() {
                         <div className="mt-6">
 
                             <div>
-                                <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto" style={{ fontSize: 18 }}>2. Child Detail</h2>
-                                <p className="mt-2 text-sm text-gray-600 font-roboto" style={{ fontSize: 14 }}>
+                                <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto text-xl">2. Child Detail</h2>
+                                <p className="mt-2 text-sm text-gray-600 font-roboto text-sm">
                                     Please enter the following details
                                 </p>
                             </div>
 
-                            <form onSubmit={submit} className="space-y-6" style={{ marginTop: 16 }}>
+                            <form onSubmit={submit} className="space-y-6 mt-4">
                                 <div>
                                     <div className="mt-1">
                                         <input
@@ -84,12 +78,12 @@ export default function SignUpStep2() {
                                             autoComplete="name"
                                             placeholder="Child Full Name"
                                             required
-                                            className={styles.inputField}
+                                            className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <h2 className="mt-6 text-xl text-gray-900 text-align-center font-roboto" style={{ fontSize: 16 }}>Gender</h2>
+                                    <h2 className="mt-6 text-xl text-gray-900 text-align-center font-roboto text-base">Gender</h2>
                                     <div>
                                         <label htmlFor="male" className={styles.radioField}>
                                             <input type="radio" id="male" name="selector" tabIndex="1" value="Male" />
@@ -105,7 +99,7 @@ export default function SignUpStep2() {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="mt-1 grid grid-cols-2 gap-2" style={{ marginTop: 16 }}>
+                                <div className="mt-1 grid grid-cols-2 gap-2 mt-4" >
 
                                     <button
                                         onClick={() => {
@@ -113,31 +107,12 @@ export default function SignUpStep2() {
                                                 pathname: 'sign_up_step_1',
                                             });
                                         }}
-                                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                        style={{
-                                            borderRadius: 60,
-                                            borderWidth: '1px',
-                                            borderColor: '#085CA4',
-                                            background: 'white',
-                                            color: '#085CA4',
-                                            paddingTop: '0.5rem',
-                                            paddingBottom: '0.5rem',
-                                            paddingLeft: '1rem',
-                                            paddingRight: '1rem',
-                                            width: '100%',
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            cursor: 'pointer'
-                                        }}
-                                    >
+                                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-indigo-700 cursor-pointer duration-500">
                                         Previous
                                     </button>
                                     <button
                                         type="submit"
-                                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                        style={{
-                                            borderRadius: 60
-                                        }}
+                                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
                                         Next
                                     </button>

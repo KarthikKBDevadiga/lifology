@@ -17,7 +17,7 @@ const cards = [
     { name: 'Course and University', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Scholarship Program', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Magazine', href: 'career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Career Videos', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
+    { name: 'Career Videos', href: 'career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
     // More items...
 ]
 
@@ -42,26 +42,24 @@ export default function CareerExplorer({ profile }) {
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
-                        <div className="mt-8" style={{ margin: '16px' }}>
+                        <div className="m-4">
 
                             {/* Activity table (small breakpoint and up) */}
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col mt-2">
-                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
-                                        style={{ padding: '16px', background: 'white' }}>
+                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg bg-white p-4">
                                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                                             {/* Card */}
                                             {cards.map((card) => (
-                                                <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg"
-                                                    style={{ backgroundImage: 'url(\'/img/test.png\')', height: '200px', position: 'relative' }}
+                                                <div key={card.name} className="relative bg-white overflow-hidden shadow rounded-lg"
+                                                    style={{ backgroundImage: 'url(\'/img/test.png\')', height: '200px', }}
                                                 >
-                                                    <div style={{ position: 'absolute', height: '100%', width: '60%', backgroundImage: 'linear-gradient(to right,#085CA4,#085CA4, transparent)' }} >
+                                                    <div className="absolute h-full w-7/12 bg-gradient-to-r from-indigo-800 via-indigo-800 to-transparent"  >
                                                     </div>
-                                                    <div className="p-5" style={{ position: 'absolute', top: '0' }}>
-                                                        <div style={{ fontSize: '22px', color: 'white', width: '70%', fontWeight: '500' }}>{card.name}</div>
-                                                        <div style={{ width: '40px', height: '2px', background: '#FFC400', borderRadius: '1px', marginTop: '8px' }}></div>
+                                                    <div className="absolute p-5 top-0">
+                                                        <div className="text-white w-9/12 font-medium text-xl">{card.name}</div>
                                                     </div>
-                                                    <div className="p-5" style={{ position: 'absolute', bottom: '0', right: '0' }}>
+                                                    <div className="absolute p-5 bottom-0 right-0">
                                                         <a href="#" onClick={() => {
 
                                                             router.push({
@@ -69,7 +67,7 @@ export default function CareerExplorer({ profile }) {
                                                                 query: { token: authToken }
                                                             })
                                                         }}>
-                                                            <div style={{ color: 'white', background: '#FFC400', padding: '0.25rem 0.75rem', borderRadius: '30px', width: 'fit-content', marginTop: '16px' }}>Explore</div>
+                                                            <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-yellow-400">Explore</div>
                                                         </a>
 
                                                     </div>
@@ -83,8 +81,8 @@ export default function CareerExplorer({ profile }) {
 
                         </div>
 
-                        <footer style={{ boxShadow: '0 0 0.5rem rgba(0, 0, 0, 0.3)', padding: '16px' }}>
-                            <div style={{ textAlign: 'center', fontWeight: '500' }}>Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
+                        <footer className="shadow p-4 bg-white">
+                            <div className="text-center font-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
                         </footer>
                     </main>
                 </div>

@@ -25,6 +25,27 @@ import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import styles from '../../styles/Magazine.module.css'
 
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
+const responsive = {
+    desktop: {
+        breakpoint: { max: 3000, min: 1024 },
+        items: 3,
+        slidesToSlide: 3 // optional, default to 1.
+    },
+    tablet: {
+        breakpoint: { max: 1024, min: 464 },
+        items: 2,
+        slidesToSlide: 2 // optional, default to 1.
+    },
+    mobile: {
+        breakpoint: { max: 464, min: 0 },
+        items: 1,
+        slidesToSlide: 1 // optional, default to 1.
+    }
+}
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -106,49 +127,46 @@ export default function Magazine({ profile }) {
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
-                        <div className="mt-8" style={{ margin: '16px' }}>
+                        <div className="m-4">
 
-                            <div className="max-w-6xl mx-auto" style={{ marginTop: '16px' }}>
+                            <div className="max-w-6xl mx-auto mt-4">
                                 <div className="flex flex-col mt-2">
-                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
-                                        style={{ padding: '16px', background: 'white' }}>
-                                        <div className="sm:flex" style={{ height: '100%', width: '100%' }}>
-                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8 ">
-                                                <img src="/img/test.png" style={{ borderRadius: '8px' }} />
+                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg bg-white p-4">
+                                        <div className="sm:flex h-full w-full">
+                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8">
+                                                <img src="/img/test.png" className="rounded-lg" />
                                             </div>
-                                            <div style={{ width: '100%', alignSelf: 'center' }}>
-                                                <div style={{ fontSize: '14px' }}>Zulie Rane in The Startup</div>
-                                                <div style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '8px' }}>Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open</div>
-                                                <div style={{ fontSize: '14px', marginTop: '8px' }}>I’ve Never Been Much Of A “Ritual” Person When It Comes To Writing. If I Need To, I Can Write Anywhere, Anytime, About Anything.</div>
-                                                <div style={{ fontSize: '14px', color: '#9A9A9A', marginTop: '8px' }}>May 25 . 5 min read</div>
+                                            <div className="w-full self-center">
+                                                <div className="text-sm">Zulie Rane in The Startup</div>
+                                                <div className="font-bold mt-2 text-xl" >Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open</div>
+                                                <div className="mt-2 text-sm" >I’ve Never Been Much Of A “Ritual” Person When It Comes To Writing. If I Need To, I Can Write Anywhere, Anytime, About Anything.</div>
+                                                <div className="mt-2 text-sm text-gray-400">May 25 . 5 min read</div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4"
-                                        style={{ padding: '16px', background: 'white' }}>
-                                        <div className="sm:flex" style={{ height: '100%', width: '100%' }}>
+                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
+                                        <div className="sm:flex h-full w-full">
                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8  " >
-                                                <div style={{ alignSelf: 'center', fontWeight: '500', fontSize: '16px', width: '100%' }} >
+                                                <div className="self-center font-medium text-base w-full">
                                                     <h2 className="text-xl ">Trending Magazines</h2>
                                                 </div>
                                             </div>
-                                            <div style={{ width: '100%' }}>
+                                            <div className="w-full">
                                                 <form className="w-full flex md:ml-0" action="#" method="GET">
                                                     <label htmlFor="search_field" className="sr-only">
                                                         Search
                                                     </label>
-                                                    <div className="relative w-full text-gray-400 focus-within:text-gray-600" style={{ background: '#F8F8F8', borderRadius: '4px' }}>
+                                                    <div className="relative w-full text-gray-400 focus-within:text-gray-600 rounded bg-gray-100">
                                                         <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none" aria-hidden="true">
                                                             <SearchIcon className="h-5 w-5" aria-hidden="true" />
                                                         </div>
                                                         <input
                                                             id="search_field"
                                                             name="search_field"
-                                                            className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
+                                                            className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
                                                             placeholder="Search Job Families"
                                                             type="search"
-                                                            style={{ background: 'transparent' }}
                                                         />
                                                     </div>
                                                 </form>
@@ -157,13 +175,12 @@ export default function Magazine({ profile }) {
 
                                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 mt-4">
                                             {cards.map((card) => (
-                                                <div className="bg-white overflow-hidden" style={{ position: 'relative', display: 'flex' }}
-                                                >
-                                                    <img src={card.image} width="80px" height="80px" style={{ margin: '8px', borderRadius: '16px', width: '80px', height: '80px' }} />
-                                                    <div style={{ top: '0', marginTop: '16px', marginBottom: '16px' }}>
-                                                        <div style={{ fontSize: '14px' }}>{card.subheading}</div>
-                                                        <div style={{ marginTop: '8px', fontWeight: 'bold' }}>{card.heading}</div>
-                                                        <div style={{ marginTop: '8px', fontSize: '14px', color: '#9A9A9A' }}>{card.date} . {card.read}</div>
+                                                <div className="bg-white overflow-hidden flex relative">
+                                                    <img className="m-2 rounded-2xl w-20 h-20" src={card.image} />
+                                                    <div className="top-0 mt-4 mb-4">
+                                                        <div className="text-sm">{card.subheading}</div>
+                                                        <div className="mt-2 font-bold">{card.heading}</div>
+                                                        <div className="mt-2 text-sm text-gray-400">{card.date} . {card.read}</div>
                                                     </div>
                                                 </div>
                                             ))}
@@ -175,14 +192,35 @@ export default function Magazine({ profile }) {
                                         <div className="space-y-6 lg:col-start-1 lg:col-span-2">
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
-                                                <div className="bg-white shadow sm:rounded-lg" style={{ padding: '16px' }}>
+                                                <div className="bg-white shadow sm:rounded-lg p-4">
                                                     <ul className={styles.topicGroup}>
-                                                        <li className={styles.topicItem} style={{ background: '#085CA4', color: 'white' }}>All</li>
-                                                        <li className={styles.topicItem}>General</li>
-                                                        <li className={styles.topicItem}>Parenting</li>
-                                                        <li className={styles.topicItem}>Career</li>
-                                                        <li className={styles.topicItem}>Trending Career</li>
+                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 text-white bg-indigo-700">All</li>
+                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">General</li>
+                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Parenting</li>
+                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Career</li>
+                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Trending Career</li>
                                                     </ul>
+
+                                                    <Carousel
+                                                        swipeable={false}
+                                                        draggable={false}
+                                                        responsive={responsive}
+                                                        ssr={true} // means to render carousel on server-side.
+                                                        infinite={true}
+                                                        autoPlaySpeed={1000}
+                                                        keyBoardControl={true}
+                                                        customTransition="all .5"
+                                                        transitionDuration={500}
+                                                        containerClass="carousel-container"
+                                                        removeArrowOnDeviceType={["tablet", "mobile"]}
+                                                        dotListClass="custom-dot-list-style"
+                                                        itemClass="carousel-item-padding-40-px"
+                                                    >
+                                                        <div className="bg-red-100" style={{ height: '300px', }}>Item 1</div>
+                                                        <div className="bg-red-200" style={{ height: '300px', }}>Item 2</div>
+                                                        <div className="bg-red-300" style={{ height: '300px', }}>Item 3</div>
+                                                        <div className="bg-red-400" style={{ height: '300px', }}>Item 4</div>
+                                                    </Carousel>
                                                 </div>
                                             </section>
 
@@ -194,25 +232,25 @@ export default function Magazine({ profile }) {
                                                     Discover More Topics
                                                 </h2>
 
-                                                <h3 style={{ fontSize: '16px', marginTop: '16px' }}>
+                                                <h3 className="text-base mt-4">
                                                     Career Pools
                                                 </h3>
                                                 <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    <li className={styles.topicItem}>Data Analytics, Mathematics, & Statistics</li>
-                                                    <li className={styles.topicItem}>Architecture</li>
-                                                    <li className={styles.topicItem}>Armed Forces and Security</li>
-                                                    <li className={styles.topicItem}>Language & Linguistics</li>
-                                                    <li className={styles.topicItem}>More</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Data Analytics, Mathematics, & Statistics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Architecture</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Armed Forces and Security</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Language & Linguistics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">More</li>
                                                 </ul>
 
-                                                <h3 style={{ fontSize: '16px', marginTop: '16px' }}>
+                                                <h3 className="text-base mt-4">
                                                     Career Fields
                                                 </h3>
                                                 <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    <li className={styles.topicItem}>Computer Science and Applications</li>
-                                                    <li className={styles.topicItem}>Statisctics</li>
-                                                    <li className={styles.topicItem}>Data analysis</li>
-                                                    <li className={styles.topicItem}>Mathematics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Computer Science and Applications</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Statisctics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Data analysis</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Mathematics</li>
                                                 </ul>
                                             </div>
                                         </section>
@@ -221,8 +259,8 @@ export default function Magazine({ profile }) {
                             </div>
                         </div>
 
-                        <footer style={{ boxShadow: '0 0 0.5rem rgba(0, 0, 0, 0.3)', padding: '16px' }}>
-                            <div style={{ textAlign: 'center', fontWeight: '500' }}>Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
+                        <footer className="shadow p-4 bg-white">
+                            <div className="text-center front-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
                         </footer>
                     </main>
                 </div>

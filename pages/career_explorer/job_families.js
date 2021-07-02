@@ -56,36 +56,34 @@ export default function JobFamilies({ families, profile }) {
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
-                        <div className="mt-8" style={{ margin: '16px' }}>
+                        <div className="m-4" >
 
                             {/* Activity table (small breakpoint and up) */}
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col mt-2">
-                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
-                                        style={{ padding: '16px', background: 'white' }}>
+                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="flex-1 flex">
-                                            <div className="sm:flex" style={{ height: '100%', width: '100%' }}>
+                                            <div className="sm:flex h-full w-full p-4">
                                                 <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8  " >
-                                                    <div style={{ alignSelf: 'center', fontWeight: '500', fontSize: '16px', width: '100%' }} >
+                                                    <div className="w-full self-center text-base font-medium" >
                                                         <h2 className="text-xl ">Explore Lists of all Job families & Career Fields</h2>
                                                     </div>
                                                 </div>
-                                                <div style={{ width: '100%' }}>
+                                                <div className="w-full">
                                                     <form className="w-full flex md:ml-0" action="#" method="GET">
                                                         <label htmlFor="search_field" className="sr-only">
                                                             Search
                                                         </label>
-                                                        <div className="relative w-full text-gray-400 focus-within:text-gray-600" style={{ background: '#F8F8F8', borderRadius: '4px' }}>
+                                                        <div className="relative w-full text-gray-400 focus-within:text-gray-600 rounded bg-gray-100">
                                                             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none" aria-hidden="true">
                                                                 <SearchIcon className="h-5 w-5" aria-hidden="true" />
                                                             </div>
                                                             <input
                                                                 id="search_field"
                                                                 name="search_field"
-                                                                className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
+                                                                className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
                                                                 placeholder="Search Job Families"
                                                                 type="search"
-                                                                style={{ background: 'transparent' }}
                                                             />
                                                         </div>
                                                     </form>
@@ -96,22 +94,21 @@ export default function JobFamilies({ families, profile }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="max-w-6xl mx-auto" style={{ marginTop: '16px' }}>
+                            <div className="max-w-6xl mx-auto mt-4">
                                 <div className="flex flex-col mt-2">
-                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg"
-                                        style={{ padding: '16px', background: 'white' }}>
+                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg bg-white p-4">
                                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                                             {/* Card */}
                                             {families.map((card) => (
-                                                <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg"
-                                                    style={{ backgroundImage: `url(${card.image})`, height: '200px', position: 'relative' }}
+                                                <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg relative"
+                                                    style={{ backgroundImage: `url(${card.image})`, height: '200px', }}
                                                 >
                                                     {/* <img src="/img/bg_vertical.png" style={{ position: 'absolute', bottom: '0px' }} /> */}
-                                                    <div style={{ position: 'absolute', height: '50%', width: '100%', bottom: '0px', backgroundImage: 'linear-gradient(to top,#085CA4,#085CA4, transparent)' }} >
+                                                    <div className="absolute h-3/6 w-full bottom-0 bg-gradient-to-t from-indigo-800 via-indigo-800 to-transparent">
                                                     </div>
-                                                    <div className="p-5" style={{ position: 'absolute', bottom: '0' }}>
-                                                        <div style={{ fontSize: '16px', color: 'white', width: '100%', fontWeight: '500' }}>{card.name}</div>
-                                                        <div style={{ width: '40px', height: '2px', background: '#FFC400', borderRadius: '1px', marginTop: '8px' }}></div>
+                                                    <div className="p-5 absolute bottom-0">
+                                                        <div className="text-base text-white w-full font-medium" >{card.name}</div>
+                                                        <div className="mt-2 w-12 h-1 rounded bg-yellow-400"></div>
                                                     </div>
                                                 </div>
                                             ))}
@@ -123,8 +120,8 @@ export default function JobFamilies({ families, profile }) {
 
                         </div>
 
-                        <footer style={{ boxShadow: '0 0 0.5rem rgba(0, 0, 0, 0.3)', padding: '16px' }}>
-                            <div style={{ textAlign: 'center', fontWeight: '500' }}>Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
+                        <footer className="shadow p-4 bg-white">
+                            <div className="text-center font-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
                         </footer>
                     </main>
                 </div>

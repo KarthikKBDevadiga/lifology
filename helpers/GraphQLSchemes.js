@@ -134,3 +134,33 @@ mutation editProfile($country_abbr:String!, $email:String!$country_code:String!,
   }
 }
 `;
+
+export const SchemeGetVideos = gql`
+query{
+  videos(lang_id:1){
+    id
+    name
+    videos{
+    id
+    lang_id
+    title
+    description
+    category_id
+    tags
+    views
+    video
+    thumbnail
+    watch_later_status
+    favorite_status
+      chapters{
+        id
+        video_id
+        title
+        video
+        thumbnail
+      }
+    }
+  }
+}
+`;
+

@@ -17,11 +17,11 @@ function classNames(...classes) {
 }
 
 const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
-    console.log(profile.profile_image);
+    // console.log(profile.profile_image);
     const router = useRouter()
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     return (
-        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none" style={{ boxShadow: '0 0 0.5rem rgba(0, 0, 0, 0.3)' }}>
+        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none shadow" >
             <button
                 className="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden"
                 onClick={() => setSidebarOpen(true)}
@@ -31,13 +31,13 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
             </button>
             {/* Search bar */}
             <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
-                <div className="flex-1 flex">
-                    <div style={{ alignSelf: 'center', fontWeight: 'bold' }} >
+                <div className="flex-1 flex font-bold self-center">
+                    <div >
                         <h2 className="text-xl ">{title}</h2>
                     </div>
                 </div>
                 <div className="ml-4 flex items-center md:ml-6">
-                    <button className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" style={{ marginRight: '8px' }}>
+                    <button className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mr-2">
                         <span className="sr-only">Search</span>
                         <SearchIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
@@ -51,7 +51,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                         {({ open }) => (
                             <>
                                 <div>
-                                    <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
+                                    <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm outline-none focus:outline-none lg:p-2 lg:rounded-md lg:hover:bg-gray-200 lg:bg-gray-100 duration-500">
                                         <img
                                             className="h-8 w-8 rounded-full"
                                             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -92,11 +92,10 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     }}
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',
-                                                        'block px-4 py-2 text-sm text-gray-700'
+                                                        'block px-4 py-2 text-sm text-gray-700 flex'
                                                     )}
-                                                    style={{ display: 'flex' }}
                                                 >
-                                                    <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
+                                                    <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
                                                         <g>
                                                             <path
                                                                 id="path"
@@ -115,11 +114,10 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     href="#"
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',
-                                                        'block px-4 py-2 text-sm text-gray-700'
+                                                        'block px-4 py-2 text-sm text-gray-700 flex'
                                                     )}
-                                                    style={{ display: 'flex' }}
                                                 >
-                                                    <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
+                                                    <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
                                                         <g>
                                                             <path fill="none" d="M0 0h24v24H0z" />
                                                             <path d="M5 2h14a1 1 0 0 1 1 1v19.143a.5.5 0 0 1-.766.424L12 18.03l-7.234 4.536A.5.5 0 0 1 4 22.143V3a1 1 0 0 1 1-1z" />
@@ -135,11 +133,10 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     href="#"
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',
-                                                        'block px-4 py-2 text-sm text-gray-700'
+                                                        'block px-4 py-2 text-sm text-gray-700 flex'
                                                     )}
-                                                    style={{ display: 'flex' }}
                                                 >
-                                                    <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
+                                                    <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
                                                         <g>
                                                             <path fill="none" d="M0 0H24V24H0z" />
                                                             <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12h2c0 4.418 3.582 8 8 8s8-3.582 8-8-3.582-8-8-8C9.536 4 7.332 5.114 5.865 6.865L8 9H2V3l2.447 2.446C6.28 3.336 8.984 2 12 2zm1 5v4.585l3.243 3.243-1.415 1.415L11 12.413V7h2z" />
@@ -155,11 +152,10 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     href="#"
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',
-                                                        'block px-4 py-2 text-sm text-gray-700'
+                                                        'block px-4 py-2 text-sm text-gray-700 flex'
                                                     )}
-                                                    style={{ display: 'flex' }}
                                                 >
-                                                    <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
+                                                    <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
                                                         <g>
                                                             <path fill="none" d="M0 0h24v24H0z" />
                                                             <path d="M12 7a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm0 3.5l-1.323 2.68-2.957.43 2.14 2.085-.505 2.946L12 17.25l2.645 1.39-.505-2.945 2.14-2.086-2.957-.43L12 10.5zm1-8.501L18 2v3l-1.363 1.138A9.935 9.935 0 0 0 13 5.049L13 2zm-2 0v3.05a9.935 9.935 0 0 0-3.636 1.088L6 5V2l5-.001z" />
@@ -176,12 +172,11 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     href="#"
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',
-                                                        'block px-4 py-2 text-sm text-gray-700'
+                                                        'block px-4 py-2 text-sm text-gray-700 flex'
                                                     )}
-                                                    style={{ display: 'flex' }}
                                                 >
 
-                                                    <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#085CA4">
+                                                    <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
                                                         <g>
                                                             <path fill="none" d="M0 0h24v24H0z" />
                                                             <path d="M9.954 2.21a9.99 9.99 0 0 1 4.091-.002A3.993 3.993 0 0 0 16 5.07a3.993 3.993 0 0 0 3.457.261A9.99 9.99 0 0 1 21.5 8.876 3.993 3.993 0 0 0 20 12c0 1.264.586 2.391 1.502 3.124a10.043 10.043 0 0 1-2.046 3.543 3.993 3.993 0 0 0-3.456.261 3.993 3.993 0 0 0-1.954 2.86 9.99 9.99 0 0 1-4.091.004A3.993 3.993 0 0 0 8 18.927a3.993 3.993 0 0 0-3.457-.26A9.99 9.99 0 0 1 2.5 15.121 3.993 3.993 0 0 0 4 11.999a3.993 3.993 0 0 0-1.502-3.124 10.043 10.043 0 0 1 2.046-3.543A3.993 3.993 0 0 0 8 5.071a3.993 3.993 0 0 0 1.954-2.86zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -197,7 +192,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     href="#"
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',
-                                                        'block px-4 py-2 text-sm text-gray-700'
+                                                        'block px-4 py-2 text-sm text-yellow-400 flex'
                                                     )}
                                                     onClick={() => {
                                                         setAuthToken('')
@@ -205,9 +200,8 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                             pathname: '/login',
                                                         })
                                                     }}
-                                                    style={{ display: 'flex', color: '#FFC400' }}
                                                 >
-                                                    <svg viewBox="0 0 24 24" width="20" height="20" style={{ marginRight: '1rem' }} fill="#FFC400">
+                                                    <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="#FFC400">
                                                         <g>
                                                             <path fill="none" d="M0 0h24v24H0z" />
                                                             <path d="M5 2h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm4 9V8l-5 4 5 4v-3h6v-2H9z" />
