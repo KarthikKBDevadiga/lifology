@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react'
 import {
     DotsVerticalIcon,
     SearchIcon,
+    ArrowRightIcon
 } from '@heroicons/react/solid'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { queryGraph } from '../../helpers/GraphQLCaller'
@@ -35,15 +36,18 @@ const responsive = {
 
 const headerSlide = [
     {
+        id: 1,
         image: "/img/test.png",
         title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open 1"
     },
     {
+        id: 2,
         image: "/img/test.png",
         title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open 2"
     },
 
     {
+        id: 3,
         image: "/img/test.png",
         title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open 3"
     }
@@ -123,7 +127,7 @@ export default function CareerVideo({ videoCats, profile }) {
                                                 slidesToSlide: 1 // optional, default to 1.
                                             }
                                         }}
-                                        ssr={true} // means to render carousel on server-side.
+                                        ssr={true}
                                         infinite={false}
                                         autoPlaySpeed={1000}
                                         keyBoardControl={true}
@@ -135,23 +139,14 @@ export default function CareerVideo({ videoCats, profile }) {
                                         itemClass="carousel-item-padding-40-px"
                                     >
                                         {headerSlide.map((card) => (
-                                            <div className="m-px">
+                                            <div key={card.id} className="m-px">
                                                 <div className="mt-4 py-4 px-4 align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-indigo-700">
-                                                    {/* <img src={card.image} className="rounded absolute left-0 top-0 bottom-0 h-full w-2/4" />
-                                                    <div className="absolute top-0 bottom-0 right-0 h-full w-2/4 text-right">
-                                                        <div>
-                                                            {card.title}
-                                                        </div>
-                                                    </div> */}
                                                     <div className="sm:flex">
                                                         <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                             <img src={card.image} className="rounded " />
                                                         </div>
                                                         <div className="self-center">
                                                             <h4 className="text-lg font-bold text-white">{card.title}</h4>
-                                                            {/* <p className="mt-1">
-                                                                {card.title}
-                                                            </p> */}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -173,6 +168,12 @@ export default function CareerVideo({ videoCats, profile }) {
                                             </div>
                                             <div className="flex flex-col mt-2">
                                                 <Carousel
+                                                    // customLeftArrow={<CustomLeftArrow />}
+                                                    // customRightArrow={<CustomRightArrow />}
+                                                    // renderButtonGroupOutside={true}
+                                                    // customButtonGroup={<ButtonGroup />}
+                                                    // arrows={false}
+
                                                     swipeable={false}
                                                     draggable={false}
                                                     responsive={responsive}
@@ -188,7 +189,7 @@ export default function CareerVideo({ videoCats, profile }) {
                                                     itemClass="carousel-item-padding-40-px"
                                                 >
                                                     {videoCat.videos.map((card) => (
-                                                        <a href="#" onClick={() => {
+                                                        <a key={card.id} href="#" onClick={() => {
                                                             router.push({
                                                                 pathname: 'career_video/career_video_detail',
                                                                 query: { token: authToken }
@@ -210,7 +211,7 @@ export default function CareerVideo({ videoCats, profile }) {
                                                                 <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
                                                                     {({ open }) => (
                                                                         <>
-                                                                            <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none m-2">
+                                                                            <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none hover:bg-white hover:bg-opacity-30 rounded-full p-2 duration-500">
                                                                                 <span className="sr-only">Open options</span>
                                                                                 <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
                                                                             </Menu.Button>
@@ -301,9 +302,44 @@ export default function CareerVideo({ videoCats, profile }) {
         </>
     )
 }
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
+
+function CustomRightArrow({ handleClick }) {
+    return (
+        <button
+            className="absolute right-0 bg-black rounded-full p-2"
+            style={{ top: '31.5% !important' }}
+            onClick={handleClick}>
+            <ArrowRightIcon className="h-5 w-5 text-white" aria-hidden="true" />
+        </ button>
+        // <button
+        //     onClick={handleClick}
+        //     aria-label="Go to next slide"
+        //     className="react-multiple-carousel__arrow react-multiple-carousel__arrow--right"
+        // />
+    );
+}
+
+function CustomLeftArrow({ handleClick }) {
+
+    return (
+        <button
+            onClick={handleClick}
+            aria-label="Go to previous slide"
+            className="react-multiple-carousel__arrow react-multiple-carousel__arrow--left"
+        />
+    );
+}
+
+const ButtonGroup = ({ next, previous }) => {
+    return (
+        <div className="carousel-button-group">
+            <CustomLeftArrow
+                handleClick={() => previous()}
+            />
+            <CustomRightArrow handleClick={() => next()} />
+        </div>
+    );
+}
 
 export async function getServerSideProps(context) {
     const { token } = context.query;

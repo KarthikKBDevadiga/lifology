@@ -1,24 +1,12 @@
 import { useState } from 'react'
 import {
-    CreditCardIcon,
-    ScaleIcon,
-    UserGroupIcon,
     ThumbUpIcon,
     ThumbDownIcon,
     ClockIcon,
 } from '@heroicons/react/outline'
-import {
-    ArrowNarrowLeftIcon,
-    CheckIcon,
-    HomeIcon,
-    PaperClipIcon,
-    QuestionMarkCircleIcon,
-    SearchIcon,
-    UserIcon,
-} from '@heroicons/react/solid'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
@@ -26,91 +14,23 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import styles from '/styles/Magazine.module.css'
 
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-const responsive = {
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 3,
-        slidesToSlide: 3 // optional, default to 1.
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2,
-        slidesToSlide: 2 // optional, default to 1.
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1,
-        slidesToSlide: 1 // optional, default to 1.
-    }
-}
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const cards = [
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
+const popularVideos = [
+    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
+    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
+    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
+    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
+    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
+    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
     // More items...
 ]
-const attachments = [
-    { name: 'resume_front_end_developer.pdf', href: '#' },
-    { name: 'coverletter_front_end_developer.pdf', href: '#' },
-]
-const eventTypes = {
-    applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
-    advanced: { icon: ThumbUpIcon, bgColorClass: 'bg-blue-500' },
-    completed: { icon: CheckIcon, bgColorClass: 'bg-green-500' },
-}
-const timeline = [
-    {
-        id: 1,
-        type: eventTypes.applied,
-        content: 'Applied to',
-        target: 'Front End Developer',
-        date: 'Sep 20',
-        datetime: '2020-09-20',
-    },
-    {
-        id: 2,
-        type: eventTypes.advanced,
-        content: 'Advanced to phone screening by',
-        target: 'Bethany Blake',
-        date: 'Sep 22',
-        datetime: '2020-09-22',
-    },
-    {
-        id: 3,
-        type: eventTypes.completed,
-        content: 'Completed phone screening with',
-        target: 'Martha Gardner',
-        date: 'Sep 28',
-        datetime: '2020-09-28',
-    },
-    {
-        id: 4,
-        type: eventTypes.advanced,
-        content: 'Advanced to interview by',
-        target: 'Bethany Blake',
-        date: 'Sep 30',
-        datetime: '2020-09-30',
-    },
-    {
-        id: 5,
-        type: eventTypes.completed,
-        content: 'Completed interview with',
-        target: 'Katherine Snyder',
-        date: 'Oct 4',
-        datetime: '2020-10-04',
-    },
-]
+
 
 export default function CareerVideoDetail({ profile }) {
     const router = useRouter()
@@ -133,7 +53,7 @@ export default function CareerVideoDetail({ profile }) {
                             <div className="max-w-6xl mx-auto mt-4">
                                 <div className="flex flex-col mt-2">
 
-                                    <div className="mt-4 max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+                                    <div className="max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
                                         <div className="space-y-6 lg:col-start-1 lg:col-span-2">
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
@@ -186,7 +106,20 @@ export default function CareerVideoDetail({ profile }) {
                                                     <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">General</li>
                                                     <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Mathematics</li>
                                                 </ul>
-
+                                                {popularVideos.map((card) => (
+                                                    <div className="flex">
+                                                        <div className="mr-4 flex-shrink-0 self-start">
+                                                            <img className="h-16 w-16 m-2 rounded object-cover" src={card.image} />
+                                                        </div>
+                                                        <div className="self-center">
+                                                            <h4 className="text-sm font-bold">{card.heading}</h4>
+                                                            <p className="mt-1 text-xs">
+                                                                {card.subheading}
+                                                            </p>
+                                                            <div className="mt-2 text-xs text-gray-400">May 25 . 5 min read</div>
+                                                        </div>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </section>
                                     </div>

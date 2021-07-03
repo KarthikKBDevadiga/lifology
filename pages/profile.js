@@ -12,7 +12,7 @@ import HeaderLayout from '../components/HeaderLayout'
 import ProgressBar from '../components/ProgressBar'
 import { Fragment } from 'react'
 
-export default function Profiles({ profile }) {
+export default function Profile({ profile }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)

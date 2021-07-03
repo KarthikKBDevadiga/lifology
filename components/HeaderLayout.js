@@ -174,6 +174,12 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                         active ? 'bg-gray-100' : '',
                                                         'block px-4 py-2 text-sm text-gray-700 flex'
                                                     )}
+                                                    onClick={() => {
+                                                        router.push({
+                                                            pathname: '/aboutus',
+                                                            query: { token: authToken }
+                                                        })
+                                                    }}
                                                 >
 
                                                     <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
