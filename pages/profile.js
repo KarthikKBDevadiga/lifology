@@ -13,7 +13,7 @@ import ProgressBar from '../components/ProgressBar'
 import { Fragment } from 'react'
 import MetaLayout from '../components/MetaLayout'
 
-export default function Profile({ profile }) {
+export default function Profile({ profile, token }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -85,13 +85,13 @@ export default function Profile({ profile }) {
     return (
         <>
             <MetaLayout title="Profile" description="Profile" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
 
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Profile / Edit Profile" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Profile / Edit Profile" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -267,6 +267,6 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile }
+        props: { profile, token }
     }
 }

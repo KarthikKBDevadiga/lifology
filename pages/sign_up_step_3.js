@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition, Dialog } from '@headlessui/react'
-import { CheckIcon, SelectorIcon, ExclamationIcon } from '@heroicons/react/solid'
+import { CheckIcon, SelectorIcon, ExclamationIcon, ChevronDownIcon } from '@heroicons/react/solid'
 import DownloadLayout from '../components/DownloadLayout'
 import { ApolloClient, InMemoryCache } from "@apollo/client"
 import Constants from '../helpers/Constants'
@@ -41,13 +41,13 @@ export default function SignUpStep3({ grades, prefs }) {
     const [mobile, setMobile] = useLocalStorage("mobile", "");
 
     const router = useRouter()
-    const [selected, setSelected] = useState({})
     const [selectedGrade, setSelectedGrade] = useState(grades[0])
     const [streams, setStreams] = useState([]);
     const [selectedStream, setSelectedStream] = useState(selectedGrade.streams.length == 0 ? {} : selectedGrade.streams[0])
     const [prefsList, setPrefsList] = useState([])
 
     const [prefDialog, setPrefDialog] = useState(false)
+
 
     const submit = event => {
         event.preventDefault()
@@ -80,6 +80,7 @@ export default function SignUpStep3({ grades, prefs }) {
                 setAuthToken(res.signup.auth_token)
                 router.push({
                     pathname: 'career_explorer',
+                    query: { token: res.signup.auth_token }
                 })
                 // if (res.sendOtp) {
                 //     setLoadingDialog(false)
@@ -116,22 +117,19 @@ export default function SignUpStep3({ grades, prefs }) {
 
     return (
         <>
-
             <MetaLayout title="Sign Up" description="Sign Up" />
-            <div className="min-h-screen bg-white flex font-roboto" >
+            <div className="min-h-screen bg-white flex font-proxima" >
                 <div className="hidden lg:block relative w-0 flex-1 leftloginbg overflow-hidden" style={{ background: '#21AAED' }}>
 
                     <div className="mx-auto w-full h-1/4" >
-                        <div className="mt-8 ml-auto mr-auto w-min flex">
-                            <img src="img/logoWhite.png" alt="Lifology" width="48px" className="ml-auto mr-auto" />
-                            <span className="self-center text-white font-bold pl-4 text-xl tracking-widest">LIFOLOGY</span>
+                        <div className="mt-8 ml-auto mr-auto flex w-max">
+                            <img src="img/logoWhite.png" alt="Lifology" width="48px" height="48px" />
+                            <span className="self-center text-white font-medium pl-4 text-xl tracking-widest">LIFOLOGY</span>
                         </div>
                         <p className="text-center text-white text-xl mt-8" >Building the world's best Super Parent Community</p>
                     </div>
                     <div className="text-center flex-1 flex flex-col mt-auto ml-auto mr-auto h-3/4 items-center" >
-
-                        <img className="absolute glsignimg h-3/4" src="img/signup-left-view.png" alt="" /> :
-
+                        <img className="absolute glsignimg h-3/4" src="img/signup-left-view.png" alt="" />
                     </div>
 
                 </div>
@@ -140,7 +138,7 @@ export default function SignUpStep3({ grades, prefs }) {
 
                     <div className="mx-auto w-full max-w-sm lg:w-96">
                         <div>
-                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto text-center">Complete your profile</h2>
+                            <h2 className="mt-6 text-xl font-bold text-gray-900 text-align-center text-center">Complete your profile</h2>
 
                             <Step index="3" />
 
@@ -152,85 +150,23 @@ export default function SignUpStep3({ grades, prefs }) {
                             <div className="mt-6">
 
 
-                                <form onSubmit={submit} className="space-y-6 mt-4" >
+                                <form onSubmit={submit} className="mt-4" >
 
-                                    <Listbox value={selected} onChange={setSelected}>
-                                        {({ open }) => (
-                                            <>
-                                                <div>
-                                                    <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto text-base">3. Add Your School</h2>
-                                                </div>
-                                                <div className="mt-1 relative mt-2">
-                                                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" style={{ borderRadius: 30, height: 40, backgroundColor: '#F8F8F8', borderColor: '#F2F2F2' }}>
-                                                        <span className="block truncate">{selected.name}</span>
-                                                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                            <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                        </span>
-                                                    </Listbox.Button>
+                                    <div className="mt-1">
 
-                                                    <Transition
-                                                        show={open}
-                                                        as={Fragment}
-                                                        leave="transition ease-in duration-100"
-                                                        leaveFrom="opacity-100"
-                                                        leaveTo="opacity-0"
-                                                    >
-                                                        <Listbox.Options
-                                                            static
-                                                            className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                                                        >
-                                                            {
-                                                                schools.length > 0 ?
-                                                                    schools.map((person) => (
-                                                                        <Listbox.Option
-                                                                            key={person.id}
-                                                                            className={({ active }) =>
-                                                                                classNames(
-                                                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                                                                                    'cursor-default select-none relative py-2 pl-8 pr-4'
-                                                                                )
-                                                                            }
-                                                                            value={person}
-                                                                        >
-                                                                            {({ selected, active }) => (
-                                                                                <>
-                                                                                    <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                                                                        {person.name}
-                                                                                    </span>
-
-                                                                                    {selected ? (
-                                                                                        <span
-                                                                                            className={classNames(
-                                                                                                active ? 'text-white' : 'text-indigo-600',
-                                                                                                'absolute inset-y-0 left-0 flex items-center pl-1.5'
-                                                                                            )}
-                                                                                        >
-                                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                                                                        </span>
-                                                                                    ) : null}
-                                                                                </>
-                                                                            )}
-                                                                        </Listbox.Option>
-                                                                    )) : <Listbox.Option
-                                                                        key='no_data'
-                                                                        className={({ active }) =>
-                                                                            classNames(
-                                                                                active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                                                                                'cursor-default select-none relative py-2 pl-8 pr-4'
-                                                                            )
-                                                                        }
-                                                                        value="No Data">
-                                                                        <span className={classNames('font-normal', 'block truncate')}>
-                                                                            No Data
-                                                                        </span>
-                                                                    </Listbox.Option>
-                                                            }
-                                                        </Listbox.Options>
-                                                    </Transition>
-                                                </div>
-                                            </>
-                                        )}
-                                    </Listbox>
+                                        <div className="mt-4 font-semibold text-gray-900 text-align-center text-base">
+                                            3. Add Your School
+                                        </div>
+                                        <input
+                                            id="schoolName"
+                                            name="schoolName"
+                                            type="name"
+                                            autoComplete="name"
+                                            placeholder="School"
+                                            required
+                                            className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500 mt-2"
+                                        />
+                                    </div>
 
                                     <Listbox value={selectedGrade} onChange={(grade) => {
                                         setSelectedGrade(grade)
@@ -239,14 +175,14 @@ export default function SignUpStep3({ grades, prefs }) {
                                     }}>
                                         {({ open }) => (
                                             <>
-                                                <div>
-                                                    <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto text-base">4. Choose Grade / Year</h2>
+                                                <div className="mt-4 font-semibold text-gray-900 text-align-center text-base">
+                                                    4. Choose Grade / Year
                                                 </div>
-                                                <div className="mt-1 relative mt-2">
-                                                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" style={{ borderRadius: 30, height: 40, backgroundColor: '#F8F8F8', borderColor: '#F2F2F2' }}>
+                                                <div className="mt-2 relative">
+                                                    <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-200 " >
                                                         <span className="block truncate">{selectedGrade.grade}</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                            <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                            <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                                         </span>
                                                     </Listbox.Button>
 
@@ -299,17 +235,17 @@ export default function SignUpStep3({ grades, prefs }) {
                                         )}
                                     </Listbox>
 
-                                    <Listbox value={selectedStream} onChange={setSelectedStream}>
+                                    {streams.length > 0 ? <Listbox value={selectedStream} onChange={setSelectedStream}>
                                         {({ open }) => (
                                             <>
-                                                <div>
-                                                    <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto text-base">5. Choose Stream</h2>
+                                                <div className="mt-4 font-semibold text-gray-900 text-align-center text-base">
+                                                    5. Choose Stream
                                                 </div>
-                                                <div className="mt-1 relative mt-2">
-                                                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" style={{ borderRadius: 30, height: 40, backgroundColor: '#F8F8F8', borderColor: '#F2F2F2' }}>
+                                                <div className="mt-2 relative">
+                                                    <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-200 " >
                                                         <span className="block truncate">{selectedStream.stream}</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                            <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                            <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                                         </span>
                                                     </Listbox.Button>
 
@@ -367,8 +303,9 @@ export default function SignUpStep3({ grades, prefs }) {
                                             </>
                                         )}
                                     </Listbox>
+                                        : <></>}
 
-                                    <div className="mt-1 grid grid-cols-2 gap-2 mt-4">
+                                    <div className="grid grid-cols-2 gap-2 mt-4">
 
                                         <button
                                             onClick={() => {

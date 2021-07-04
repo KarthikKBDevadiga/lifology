@@ -33,21 +33,22 @@ const popularVideos = [
 ]
 
 
-export default function CareerVideoDetail({ profile }) {
+export default function CareerVideoDetail({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
+
 
     return (
         <>
 
             <MetaLayout title="Career Videos Details" description="Career Videos Details" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career VideCareer Explorer / Career Videos / Career Videos Details" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career VideCareer Explorer / Career Videos / Career Videos Details" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -171,7 +172,7 @@ export async function getServerSideProps(context) {
             // console.log(networkErr);
         });
     return {
-        props: { profile }
+        props: { profile, token }
     }
 }
 

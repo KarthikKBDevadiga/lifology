@@ -41,20 +41,21 @@ function classNames(...classes) {
 
 
 
-export default function JobFamilies({ families, profile }) {
+export default function JobFamilies({ families, profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
+
     return (
         <>
             <MetaLayout title="Job Families & Career Fields" description="Job Families & Career Fields" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Job Families & Career Fields" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Job Families & Career Fields" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -175,7 +176,7 @@ export async function getServerSideProps(context) {
             // console.log(networkErr);
         });
     return {
-        props: { families, profile }
+        props: { families, profile, token }
     }
 }
 

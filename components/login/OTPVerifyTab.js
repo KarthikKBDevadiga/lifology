@@ -24,6 +24,9 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                         twoRef.current.focus()
                                     }
                                 }}
+                                onFocus={(event) => {
+                                    event.target.select()
+                                }}
                                 id="one"
                                 name="one"
                                 type="phone"
@@ -39,6 +42,9 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     } else {
                                         threeRef.current.focus()
                                     }
+                                }}
+                                onFocus={(event) => {
+                                    event.target.select()
                                 }}
                                 id="two"
                                 name="two"
@@ -56,6 +62,9 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                         fourRef.current.focus()
                                     }
                                 }}
+                                onFocus={(event) => {
+                                    event.target.select()
+                                }}
                                 id="three"
                                 name="three"
                                 type="phone"
@@ -71,6 +80,9 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     } else {
                                         fiveRef.current.focus()
                                     }
+                                }}
+                                onFocus={(event) => {
+                                    event.target.select()
                                 }}
                                 id="four"
                                 name="four"
@@ -88,6 +100,9 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                         sixRef.current.focus()
                                     }
                                 }}
+                                onFocus={(event) => {
+                                    event.target.select()
+                                }}
                                 id="five"
                                 name="five"
                                 type="phone"
@@ -103,6 +118,9 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     } else {
                                         // sixRef.current.focus()
                                     }
+                                }}
+                                onFocus={(event) => {
+                                    event.target.select()
                                 }}
                                 id="six"
                                 name="six"

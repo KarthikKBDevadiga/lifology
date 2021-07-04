@@ -97,6 +97,14 @@ export default function Login() {
                 setLoadingDialog(false)
                 if (res.otpVerification.is_user_exist) {
                     setSuccessDialog(true)
+                    setTimeout(() => {
+
+                        setSuccessDialog(false)
+                        router.push({
+                            pathname: 'career_explorer',
+                            query: { token: res.otpVerification.auth_token }
+                        })
+                    }, 2000);
                     setAuthToken(res.otpVerification.auth_token);
                 } else {
                     setSignupDialog(true)
@@ -112,7 +120,7 @@ export default function Login() {
         <>
 
             <MetaLayout title="Login" description="Login" />
-            <div className="min-h-screen bg-white flex font-roboto" >
+            <div className="min-h-screen bg-white flex font-proxima" >
                 <div className="hidden lg:block relative w-0 flex-1 leftloginbg overflow-hidden" style={{ background: '#21AAED' }}>
 
                     <div className="mx-auto w-full h-1/4" >
@@ -137,8 +145,8 @@ export default function Login() {
 
                     <div className="mx-auto w-full max-w-sm lg:w-96">
                         <div>
-                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center font-roboto text-center">{tab === 1 ? 'Welcome to Lifology' : 'Enter Code Sent To On Your Mobile Number'}</h2>
-                            <p className="mt-2 text-sm text-gray-600 font-roboto text-center">
+                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center text-center">{tab === 1 ? 'Welcome to Lifology' : 'Enter Code Sent To On Your Mobile Number'}</h2>
+                            <p className="mt-2 text-sm text-gray-600 text-center">
                                 {tab === 1 ? <span>The World's leading career guidance platform</span> : <span>We sent it to the number +91 {phoneNumber}</span>}
                             </p>
                         </div>
@@ -294,22 +302,8 @@ export default function Login() {
                                         <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
                                             Login successful
                                         </Dialog.Title>
+                                        <button className="h-0 w-0 overflow-hidden" />
                                     </div>
-                                </div>
-                                <div className="mt-5 sm:mt-6">
-                                    <button
-                                        type="button"
-                                        className="rounded-full inline-flex justify-center w-full border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-                                        onClick={() => {
-                                            setSuccessDialog(false)
-                                            router.push({
-                                                pathname: 'career_explorer',
-                                                query: { token: authToken }
-                                            })
-                                        }}
-                                    >
-                                        Go Home
-                                    </button>
                                 </div>
                             </div>
                         </Transition.Child>

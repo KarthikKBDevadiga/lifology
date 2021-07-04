@@ -8,8 +8,8 @@ module.exports = {
     extend: {
       fontFamily: {
 
-        roboto: ['Roboto']
-
+        roboto: ['Roboto'],
+        proxima: ['ProximaNova']
       },
     },
   },

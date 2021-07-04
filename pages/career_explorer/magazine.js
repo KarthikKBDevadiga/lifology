@@ -111,7 +111,7 @@ const timeline = [
     },
 ]
 
-export default function Magazine({ profile }) {
+export default function Magazine({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
@@ -119,12 +119,12 @@ export default function Magazine({ profile }) {
     return (
         <>
             <MetaLayout title="Magazine" description="Magazine" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Magazines" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Magazines" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -195,16 +195,14 @@ export default function Magazine({ profile }) {
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white shadow sm:rounded-lg p-4">
                                                     <ul className={styles.topicGroup}>
-                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 text-white bg-indigo-700">All</li>
-                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">General</li>
-                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Parenting</li>
-                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Career</li>
-                                                        <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Trending Career</li>
+                                                        <li key="all" className="float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer text-white bg-indigo-700 duration-500">All</li>
+                                                        <li key="general" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">General</li>
+                                                        <li key="parenting" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Parenting</li>
+                                                        <li key="career" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Career</li>
+                                                        <li key="trending_career" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Trending Career</li>
                                                     </ul>
-
                                                 </div>
                                             </section>
-
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
@@ -217,21 +215,21 @@ export default function Magazine({ profile }) {
                                                     Career Pools
                                                 </h3>
                                                 <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Data Analytics, Mathematics, & Statistics</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Architecture</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Armed Forces and Security</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Language & Linguistics</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">More</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="dams">Data Analytics, Mathematics, & Statistics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="architecture">Architecture</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="afs">Armed Forces and Security</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="ll">Language & Linguistics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="more">More</li>
                                                 </ul>
 
                                                 <h3 className="text-base mt-4">
                                                     Career Fields
                                                 </h3>
                                                 <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Computer Science and Applications</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Statisctics</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Data analysis</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Mathematics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="csa">Computer Science and Applications</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="s">Statisctics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="da">Data analysis</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700" key="m">Mathematics</li>
                                                 </ul>
                                             </div>
                                         </section>
@@ -281,7 +279,7 @@ export async function getServerSideProps(context) {
             // console.log(networkErr);
         });
     return {
-        props: { profile }
+        props: { profile, token }
     }
 }
 

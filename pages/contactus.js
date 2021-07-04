@@ -76,7 +76,7 @@ const userTypes = [
 ];
 
 
-export default function ContactUs({ profile }) {
+export default function ContactUs({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
@@ -88,12 +88,12 @@ export default function ContactUs({ profile }) {
     return (
         <>
             <MetaLayout title="Contact Us" description="Contact Us" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Settings / Contact Us" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Settings / Contact Us" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -703,7 +703,7 @@ export async function getServerSideProps(context) {
             // console.log(networkErr);
         });
     return {
-        props: { profile }
+        props: { profile, token }
     }
 }
 

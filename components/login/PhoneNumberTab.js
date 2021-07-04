@@ -16,7 +16,7 @@ const PhoneNumberTab = ({ submit, error, setError }) => {
                             type="tel"
                             required
                             maxLength="10"
-                            placeholder="9999999999"
+                            placeholder="Enter Mobile number"
                             className="rounded-full bg-gray-100 px-3 py-2 pl-14 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                             onKeyPress={() => {
                                 setError('')

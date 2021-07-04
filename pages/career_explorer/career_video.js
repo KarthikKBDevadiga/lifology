@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Fragment, useState } from 'react'
 import {
     DotsVerticalIcon,
@@ -60,7 +61,7 @@ function classNames(...classes) {
 
 
 
-export default function CareerVideo({ videoCats, profile }) {
+export default function CareerVideo({ videoCats, profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
@@ -69,12 +70,12 @@ export default function CareerVideo({ videoCats, profile }) {
         <>
 
             <MetaLayout title="Career Videos" description="Career Videos" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -192,96 +193,96 @@ export default function CareerVideo({ videoCats, profile }) {
                                                     itemClass="carousel-item-padding-40-px"
                                                 >
                                                     {videoCat.videos.map((card) => (
-                                                        <a key={card.id} href="#" onClick={() => {
-                                                            router.push({
-                                                                pathname: 'career_video/career_video_detail',
-                                                                query: { token: authToken }
-                                                            })
-                                                        }}>
-                                                            <div className="relative shadow mx-2 rounded m-1" style={{}}>
-                                                                <div>
-                                                                    <img className=" rounded" src={card.thumbnail} />
-                                                                    <div className="flex-1 flex items-center justify-between truncate">
-                                                                        <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                            <a href="#" className="mt-2 text-gray-900 font-medium hover:text-gray-600">
-                                                                                {card.title}
-                                                                            </a>
-                                                                            <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
+                                                        <Link href={{
+                                                            pathname: 'career_video/career_video_detail',
+                                                            query: { token: authToken }
+                                                        }} key={card.id}>
+                                                            <a>
+                                                                <div className="relative shadow mx-2 rounded m-1" style={{}}>
+                                                                    <div>
+                                                                        <img className=" rounded" src={card.thumbnail} />
+                                                                        <div className="flex-1 flex items-center justify-between truncate">
+                                                                            <div className="flex-1 px-4 py-2 text-sm truncate">
+                                                                                <div className="mt-2 text-gray-900 font-medium hover:text-gray-600">
+                                                                                    {card.title}
+                                                                                </div>
+                                                                                <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
 
-                                                                <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
-                                                                    {({ open }) => (
-                                                                        <>
-                                                                            <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none hover:bg-white hover:bg-opacity-30 rounded-full p-2 duration-500">
-                                                                                <span className="sr-only">Open options</span>
-                                                                                <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
-                                                                            </Menu.Button>
-                                                                            <Transition
-                                                                                show={open}
-                                                                                as={Fragment}
-                                                                                enter="transition ease-out duration-100"
-                                                                                enterFrom="transform opacity-0 scale-95"
-                                                                                enterTo="transform opacity-100 scale-100"
-                                                                                leave="transition ease-in duration-75"
-                                                                                leaveFrom="transform opacity-100 scale-100"
-                                                                                leaveTo="transform opacity-0 scale-95"
-                                                                            >
-                                                                                <Menu.Items
-                                                                                    static
-                                                                                    className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
+                                                                    <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
+                                                                        {({ open }) => (
+                                                                            <>
+                                                                                <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none hover:bg-white hover:bg-opacity-30 rounded-full p-2 duration-500">
+                                                                                    <span className="sr-only">Open options</span>
+                                                                                    <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
+                                                                                </Menu.Button>
+                                                                                <Transition
+                                                                                    show={open}
+                                                                                    as={Fragment}
+                                                                                    enter="transition ease-out duration-100"
+                                                                                    enterFrom="transform opacity-0 scale-95"
+                                                                                    enterTo="transform opacity-100 scale-100"
+                                                                                    leave="transition ease-in duration-75"
+                                                                                    leaveFrom="transform opacity-100 scale-100"
+                                                                                    leaveTo="transform opacity-0 scale-95"
                                                                                 >
-                                                                                    <div className="py-1">
-                                                                                        <Menu.Item>
-                                                                                            {({ active }) => (
-                                                                                                <a
-                                                                                                    href="#"
-                                                                                                    className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
-                                                                                                    )}
-                                                                                                >
-                                                                                                    View
-                                                                                                </a>
-                                                                                            )}
-                                                                                        </Menu.Item>
-                                                                                    </div>
-                                                                                    <div className="py-1">
-                                                                                        <Menu.Item>
-                                                                                            {({ active }) => (
-                                                                                                <a
-                                                                                                    href="#"
-                                                                                                    className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
-                                                                                                    )}
-                                                                                                >
-                                                                                                    Removed from pinned
-                                                                                                </a>
-                                                                                            )}
-                                                                                        </Menu.Item>
-                                                                                        <Menu.Item>
-                                                                                            {({ active }) => (
-                                                                                                <a
-                                                                                                    href="#"
-                                                                                                    className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
-                                                                                                    )}
-                                                                                                >
-                                                                                                    Share
-                                                                                                </a>
-                                                                                            )}
-                                                                                        </Menu.Item>
-                                                                                    </div>
-                                                                                </Menu.Items>
-                                                                            </Transition>
-                                                                        </>
-                                                                    )}
-                                                                </Menu>
-                                                            </div>
-                                                        </a>
+                                                                                    <Menu.Items
+                                                                                        static
+                                                                                        className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
+                                                                                    >
+                                                                                        <div className="py-1">
+                                                                                            <Menu.Item>
+                                                                                                {({ active }) => (
+                                                                                                    <a
+                                                                                                        href="#"
+                                                                                                        className={classNames(
+                                                                                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                            'block px-4 py-2 text-sm'
+                                                                                                        )}
+                                                                                                    >
+                                                                                                        View
+                                                                                                    </a>
+                                                                                                )}
+                                                                                            </Menu.Item>
+                                                                                        </div>
+                                                                                        <div className="py-1">
+                                                                                            <Menu.Item>
+                                                                                                {({ active }) => (
+                                                                                                    <a
+                                                                                                        href="#"
+                                                                                                        className={classNames(
+                                                                                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                            'block px-4 py-2 text-sm'
+                                                                                                        )}
+                                                                                                    >
+                                                                                                        Removed from pinned
+                                                                                                    </a>
+                                                                                                )}
+                                                                                            </Menu.Item>
+                                                                                            <Menu.Item>
+                                                                                                {({ active }) => (
+                                                                                                    <a
+                                                                                                        href="#"
+                                                                                                        className={classNames(
+                                                                                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                            'block px-4 py-2 text-sm'
+                                                                                                        )}
+                                                                                                    >
+                                                                                                        Share
+                                                                                                    </a>
+                                                                                                )}
+                                                                                            </Menu.Item>
+                                                                                        </div>
+                                                                                    </Menu.Items>
+                                                                                </Transition>
+                                                                            </>
+                                                                        )}
+                                                                    </Menu>
+                                                                </div>
+                                                            </a>
+                                                        </Link>
                                                     ))}
 
                                                 </Carousel>
@@ -381,7 +382,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { videoCats, profile }
+        props: { videoCats, profile, token }
     }
 }
 

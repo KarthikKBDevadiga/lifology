@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useState } from 'react'
 import {
     ScaleIcon,
@@ -22,26 +23,26 @@ const cards = [
     // More items...
 ]
 
-export default function CareerExplorer({ profile }) {
+export default function CareerExplorer({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-
-    // if (authToken === '') {
+    // if (authToken == "") {
     //     router.push({
     //         pathname: '/login',
     //     })
     // }
 
+
     return (
         <>
 
             <MetaLayout title="Career Explorer" description="Career Explorer" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
-                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
+                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -65,15 +66,15 @@ export default function CareerExplorer({ profile }) {
                                                         <div className="text-white w-9/12 font-medium text-xl">{card.name}</div>
                                                     </div>
                                                     <div className="absolute p-5 bottom-0 right-0">
-                                                        <a href="#" onClick={() => {
-
-                                                            router.push({
+                                                        <Link
+                                                            href={{
                                                                 pathname: card.href,
                                                                 query: { token: authToken }
-                                                            })
-                                                        }}>
-                                                            <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-yellow-400">Explore</div>
-                                                        </a>
+                                                            }}>
+                                                            <a>
+                                                                <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-yellow-400">Explore</div>
+                                                            </a>
+                                                        </Link>
 
                                                     </div>
                                                 </div>
@@ -124,6 +125,7 @@ export async function getServerSideProps(context) {
             // console.log(networkErr);
         });
     return {
-        props: { profile }
+        props: { profile, token }
     }
 }
+
