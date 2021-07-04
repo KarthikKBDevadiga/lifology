@@ -1,9 +1,4 @@
 import { useState } from 'react'
-import {
-    ThumbUpIcon,
-    ThumbDownIcon,
-    ClockIcon,
-} from '@heroicons/react/outline'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
@@ -12,9 +7,9 @@ import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import styles from '/styles/Magazine.module.css'
 
 import "react-multi-carousel/lib/styles.css";
+import MetaLayout from '../components/MetaLayout'
 
 
 function classNames(...classes) {
@@ -40,6 +35,7 @@ export default function AboutUs({ profile }) {
     const index = 1;
     return (
         <>
+            <MetaLayout title="About Us" description="About Us" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />

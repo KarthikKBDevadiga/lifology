@@ -13,6 +13,7 @@ import useLocalStorage from '../../helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
+import MetaLayout from '../../components/MetaLayout'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -66,6 +67,8 @@ export default function CareerVideo({ videoCats, profile }) {
 
     return (
         <>
+
+            <MetaLayout title="Career Videos" description="Career Videos" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />

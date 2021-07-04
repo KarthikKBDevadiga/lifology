@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../styles/Step.module.css'
 
-const ProgressBar = ({ index }) => {
+const Step = ({ index }) => {
     return (
         <nav className={styles.formSteps}>
             <div className={
@@ -40,4 +40,4 @@ const ProgressBar = ({ index }) => {
     )
 }
 
-export default ProgressBar
+export default Step

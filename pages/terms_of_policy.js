@@ -1,9 +1,4 @@
 import { useState } from 'react'
-import {
-    ThumbUpIcon,
-    ThumbDownIcon,
-    ClockIcon,
-} from '@heroicons/react/outline'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
@@ -12,7 +7,7 @@ import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import styles from '/styles/Magazine.module.css'
+import MetaLayout from '../components/MetaLayout'
 
 import "react-multi-carousel/lib/styles.css";
 
@@ -40,6 +35,7 @@ export default function TermsOfPolicy({ profile }) {
     const index = 3;
     return (
         <>
+            <MetaLayout title="Terms Of Policy" description="Terms Of Policy" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />

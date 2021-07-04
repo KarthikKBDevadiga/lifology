@@ -11,6 +11,7 @@ import NavigationLayout from '../components/NavigationLayout'
 import HeaderLayout from '../components/HeaderLayout'
 import ProgressBar from '../components/ProgressBar'
 import { Fragment } from 'react'
+import MetaLayout from '../components/MetaLayout'
 
 export default function Profile({ profile }) {
     const router = useRouter()
@@ -83,6 +84,7 @@ export default function Profile({ profile }) {
     }
     return (
         <>
+            <MetaLayout title="Profile" description="Profile" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />

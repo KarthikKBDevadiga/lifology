@@ -17,6 +17,7 @@ import useLocalStorage from '../../helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
+import MetaLayout from '../../components/MetaLayout'
 
 const navigation = [
     { name: 'Home', href: '#', icon: HomeIcon, current: true },
@@ -47,6 +48,7 @@ export default function JobFamilies({ families, profile }) {
 
     return (
         <>
+            <MetaLayout title="Job Families & Career Fields" description="Job Families & Career Fields" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />

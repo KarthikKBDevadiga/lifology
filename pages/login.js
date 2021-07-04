@@ -13,6 +13,7 @@ import PhoneNumberTab from '../components/login/PhoneNumberTab'
 import OTPVerifyTab from '../components/login/OTPVerifyTab'
 import DownloadLayout from '../components/DownloadLayout'
 import useLocalStorage from '../helpers/useLocalStorage'
+import MetaLayout from '../components/MetaLayout'
 
 const client = new ApolloClient({
     uri: Constants.baseUrl + "/api/auth",
@@ -109,9 +110,8 @@ export default function Login() {
 
     return (
         <>
-            <Head>
-                <title>Login</title>
-            </Head>
+
+            <MetaLayout title="Login" description="Login" />
             <div className="min-h-screen bg-white flex font-roboto" >
                 <div className="hidden lg:block relative w-0 flex-1 leftloginbg overflow-hidden" style={{ background: '#21AAED' }}>
 

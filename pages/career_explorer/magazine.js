@@ -24,7 +24,7 @@ import { useRouter } from 'next/router'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import styles from '../../styles/Magazine.module.css'
-
+import MetaLayout from '../../components/MetaLayout'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -118,6 +118,7 @@ export default function Magazine({ profile }) {
 
     return (
         <>
+            <MetaLayout title="Magazine" description="Magazine" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
@@ -201,26 +202,6 @@ export default function Magazine({ profile }) {
                                                         <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Trending Career</li>
                                                     </ul>
 
-                                                    <Carousel
-                                                        swipeable={false}
-                                                        draggable={false}
-                                                        responsive={responsive}
-                                                        ssr={true} // means to render carousel on server-side.
-                                                        infinite={true}
-                                                        autoPlaySpeed={1000}
-                                                        keyBoardControl={true}
-                                                        customTransition="all .5"
-                                                        transitionDuration={500}
-                                                        containerClass="carousel-container"
-                                                        removeArrowOnDeviceType={["tablet", "mobile"]}
-                                                        dotListClass="custom-dot-list-style"
-                                                        itemClass="carousel-item-padding-40-px"
-                                                    >
-                                                        <div className="bg-red-100" style={{ height: '300px', }}>Item 1</div>
-                                                        <div className="bg-red-200" style={{ height: '300px', }}>Item 2</div>
-                                                        <div className="bg-red-300" style={{ height: '300px', }}>Item 3</div>
-                                                        <div className="bg-red-400" style={{ height: '300px', }}>Item 4</div>
-                                                    </Carousel>
                                                 </div>
                                             </section>
 

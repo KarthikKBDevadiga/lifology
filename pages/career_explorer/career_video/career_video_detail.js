@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import styles from '/styles/Magazine.module.css'
+import MetaLayout from '../../../components/MetaLayout'
 
 import "react-multi-carousel/lib/styles.css";
 
@@ -39,12 +40,14 @@ export default function CareerVideoDetail({ profile }) {
 
     return (
         <>
+
+            <MetaLayout title="Career Videos Details" description="Career Videos Details" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Magazines" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career VideCareer Explorer / Career Videos / Career Videos Details" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 

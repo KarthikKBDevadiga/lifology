@@ -11,6 +11,7 @@ import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
+import MetaLayout from '../components/MetaLayout'
 
 const cards = [
     { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
@@ -34,6 +35,8 @@ export default function CareerExplorer({ profile }) {
 
     return (
         <>
+
+            <MetaLayout title="Career Explorer" description="Career Explorer" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
                 <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
@@ -54,8 +57,10 @@ export default function CareerExplorer({ profile }) {
                                                 <div key={card.name} className="relative bg-white overflow-hidden shadow rounded-lg"
                                                     style={{ backgroundImage: 'url(\'/img/test.png\')', height: '200px', }}
                                                 >
+
                                                     <div className="absolute h-full w-7/12 bg-gradient-to-r from-indigo-800 via-indigo-800 to-transparent"  >
                                                     </div>
+                                                    <img src="/img/test.png" className="rounded-lg" />
                                                     <div className="absolute p-5 top-0">
                                                         <div className="text-white w-9/12 font-medium text-xl">{card.name}</div>
                                                     </div>
