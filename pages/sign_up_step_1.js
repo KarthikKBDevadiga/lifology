@@ -98,6 +98,7 @@ export default function SignUpStep1() {
                                                     type="name"
                                                     autoComplete="name"
                                                     placeholder="Your Full Name"
+                                                    defaultValue={parentName}
                                                     className={
                                                         classNames(
                                                             parentNameError == "" ? "border-gray-200 focus:border-indigo-700" : "border-red-700",
@@ -134,6 +135,7 @@ export default function SignUpStep1() {
                                                     type="email"
                                                     autoComplete="email"
                                                     placeholder="Email address"
+                                                    defaultValue={parentEmail}
                                                     className={
                                                         classNames(
                                                             parentEmailError == "" ? "border-gray-200 focus:border-indigo-700" : "border-red-700",
@@ -164,7 +166,7 @@ export default function SignUpStep1() {
                                     <div>
                                         <button
                                             type="submit"
-                                            className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">
                                             Next
                                         </button>
                                     </div>

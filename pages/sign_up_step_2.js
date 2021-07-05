@@ -27,13 +27,13 @@ export default function SignUpStep2() {
             setChildNameError("Child Name Can Not Be Empty")
             valid = false
         }
-        if (event.target.selector.value == "") {
+        if (event.target.gender.value == "") {
             setChildGenderError("Please Select Child's Gender")
             valid = false
         }
         if (valid) {
             setChildName(event.target.name.value)
-            setChildGender(event.target.selector.value)
+            setChildGender(event.target.gender.value)
             router.push({
                 pathname: 'sign_up_step_3',
             });
@@ -94,6 +94,7 @@ export default function SignUpStep2() {
                                                 type="name"
                                                 autoComplete="name"
                                                 placeholder="Child Full Name"
+                                                defaultValue={childName}
                                                 className={
                                                     classNames(
                                                         childNameError == "" ? "border-gray-200 focus:border-indigo-700" : "border-red-700",
@@ -123,15 +124,15 @@ export default function SignUpStep2() {
                                         <h2 className="mt-4 font-semibold text-gray-900 text-align-center text-base">Gender</h2>
                                         <div>
                                             <label htmlFor="male" className={styles.radioField}>
-                                                <input type="radio" id="male" name="selector" tabIndex="1" value="Male" onClick={(event) => setChildGenderError("")} />
+                                                <input type="radio" id="male" name="gender" tabIndex="1" value="Male" onClick={(event) => setChildGenderError("")} />
                                                 <span>Male</span>
                                             </label>
                                             <label htmlFor="female" className={styles.radioField}>
-                                                <input type="radio" id="female" name="selector" tabIndex="2" value="Female" onClick={(event) => setChildGenderError("")} />
+                                                <input type="radio" id="female" name="gender" tabIndex="2" value="Female" onClick={(event) => setChildGenderError("")} />
                                                 <span>Female</span>
                                             </label>
                                             <label htmlFor="other" className={styles.radioField}>
-                                                <input type="radio" id="other" name="selector" tabIndex="3" value="Other" onClick={(event) => setChildGenderError("")} />
+                                                <input type="radio" id="other" name="gender" tabIndex="3" value="Other" onClick={(event) => setChildGenderError("")} />
                                                 <span>Other</span>
                                             </label>
                                         </div>
