@@ -164,3 +164,28 @@ query{
 }
 `;
 
+export const SchemeGetUniversityCountry = gql`
+query{
+  universityCountry{
+      country
+  }
+}
+`;
+
+export const SchemeGetAllUniversity = gql`
+query{
+  allUniversity(lang_id:1,filter:{pool_id:1,field_id:1,ranking:"Times Rank"}){
+    title
+    university{
+    id
+    name
+    description
+    website
+    logo
+    city
+    state
+    country
+    }
+  }
+}
+`;

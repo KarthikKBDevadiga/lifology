@@ -195,11 +195,11 @@ export default function Magazine({ profile, token }) {
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white shadow sm:rounded-lg p-4">
                                                     <ul className={styles.topicGroup}>
-                                                        <li key="all" className="float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer text-white bg-indigo-700 duration-500">All</li>
-                                                        <li key="general" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">General</li>
-                                                        <li key="parenting" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Parenting</li>
-                                                        <li key="career" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Career</li>
-                                                        <li key="trending_career" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Trending Career</li>
+                                                        <li key="all" className="float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer text-white bg-lblue duration-500">All</li>
+                                                        <li key="general" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">General</li>
+                                                        <li key="parenting" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">Parenting</li>
+                                                        <li key="career" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">Career</li>
+                                                        <li key="trending_career" className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">Trending Career</li>
                                                     </ul>
                                                 </div>
                                             </section>

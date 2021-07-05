@@ -107,11 +107,11 @@ export default function JobFamilies({ families, profile, token }) {
                                                     style={{ backgroundImage: `url(${card.image})`, height: '200px', }}
                                                 >
                                                     {/* <img src="/img/bg_vertical.png" style={{ position: 'absolute', bottom: '0px' }} /> */}
-                                                    <div className="absolute h-3/6 w-full bottom-0 bg-gradient-to-t from-indigo-800 via-indigo-800 to-transparent">
+                                                    <div className="absolute h-3/6 w-full bottom-0 bg-gradient-to-t from-lblue via-lblue to-transparent">
                                                     </div>
                                                     <div className="p-5 absolute bottom-0">
                                                         <div className="text-base text-white w-full font-medium" >{card.name}</div>
-                                                        <div className="mt-2 w-12 h-1 rounded bg-yellow-400"></div>
+                                                        <div className="mt-2 w-12 h-1 rounded bg-lyellow"></div>
                                                     </div>
                                                 </div>
                                             ))}

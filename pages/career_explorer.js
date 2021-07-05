@@ -16,7 +16,7 @@ import MetaLayout from '../components/MetaLayout'
 
 const cards = [
     { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Course and University', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
+    { name: 'Course and University', href: 'career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Scholarship Program', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Magazine', href: 'career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Career Videos', href: 'career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
@@ -59,7 +59,7 @@ export default function CareerExplorer({ profile, token }) {
                                                     style={{ backgroundImage: 'url(\'/img/test.png\')', height: '200px', }}
                                                 >
 
-                                                    <div className="absolute h-full w-7/12 bg-gradient-to-r from-indigo-800 via-indigo-800 to-transparent"  >
+                                                    <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent"  >
                                                     </div>
                                                     <img src="/img/test.png" className="rounded-lg" />
                                                     <div className="absolute p-5 top-0">
@@ -72,7 +72,7 @@ export default function CareerExplorer({ profile, token }) {
                                                                 query: { token: authToken }
                                                             }}>
                                                             <a>
-                                                                <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-yellow-400">Explore</div>
+                                                                <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-lyellow">Explore</div>
                                                             </a>
                                                         </Link>
 

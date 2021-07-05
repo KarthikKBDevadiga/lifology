@@ -105,10 +105,10 @@ export default function CareerVideoDetail({ profile, token }) {
                                                     Popular Videos
                                                 </h2>
                                                 <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">All</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Science</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">General</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-indigo-700">Mathematics</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">All</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">Science</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">General</li>
+                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">Mathematics</li>
                                                 </ul>
                                                 {popularVideos.map((card) => (
                                                     <div className="flex">

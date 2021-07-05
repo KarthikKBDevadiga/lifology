@@ -9,6 +9,20 @@ module.exports = {
       fontFamily: {
         roboto: ['Roboto'],
       },
+      colors: {
+        lblue: {
+          light: '#21AAED',
+          DEFAULT: '#085CA4',
+        },
+        lgrey: {
+          DEFAULT: '#F8F8F8',
+          bg: '#F8F8F8',
+          border: '#F2F2F2',
+        },
+        lyellow: {
+          DEFAULT: '#FFC400'
+        }
+      }
     },
   },
   variants: {

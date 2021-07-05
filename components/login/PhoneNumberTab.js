@@ -55,7 +55,7 @@ const PhoneNumberTab = ({ submit, error, setError }) => {
                 <div>
                     <button
                         type="submit"
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-lblue hover:bg-indigo-700 focus:outline-none">
                         Login with OTP
                     </button>
                 </div>
