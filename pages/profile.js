@@ -85,7 +85,7 @@ export default function Profile({ profile, token }) {
     return (
         <>
             <MetaLayout title="Profile" description="Profile" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 

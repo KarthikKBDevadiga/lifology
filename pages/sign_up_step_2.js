@@ -44,7 +44,7 @@ export default function SignUpStep2() {
         <>
 
             <MetaLayout title="Sign Up" description="Sign Up" />
-            <div className="min-h-screen bg-white flex font-proxima" >
+            <div className="min-h-screen bg-white flex font-roboto" >
                 <div className="hidden lg:block relative w-0 flex-1 leftloginbg overflow-hidden" style={{ background: '#21AAED' }}>
 
 

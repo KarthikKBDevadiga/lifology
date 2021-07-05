@@ -37,7 +37,7 @@ export default function AboutUs({ profile, token }) {
     return (
         <>
             <MetaLayout title="About Us" description="About Us" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 

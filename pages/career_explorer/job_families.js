@@ -50,7 +50,7 @@ export default function JobFamilies({ families, profile, token }) {
     return (
         <>
             <MetaLayout title="Job Families & Career Fields" description="Job Families & Career Fields" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 

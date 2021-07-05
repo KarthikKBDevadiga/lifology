@@ -38,7 +38,7 @@ export default function CareerExplorer({ profile, token }) {
         <>
 
             <MetaLayout title="Career Explorer" description="Career Explorer" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-proxima">
+            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
                 <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
