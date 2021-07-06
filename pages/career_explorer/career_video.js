@@ -144,7 +144,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                     >
                                         {headerSlide.map((card) => (
                                             <div key={card.id} className="m-px">
-                                                <div className="mt-4 py-4 px-4 align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-indigo-700">
+                                                <div className="mt-4 py-4 px-4 align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-lblue">
                                                     <div className="sm:flex">
                                                         <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                             <img src={card.image} className="rounded " />
@@ -194,7 +194,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                 >
                                                     {videoCat.videos.map((card) => (
                                                         <Link href={{
-                                                            pathname: 'career_video/career_video_detail',
+                                                            pathname: 'career_video/' + card.id,
                                                             query: { token: authToken }
                                                         }} key={card.id}>
                                                             <a>

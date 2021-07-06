@@ -189,3 +189,85 @@ query{
   }
 }
 `;
+
+export const SchemeGetUniversity = gql`
+query universityDetails($id: Int!){
+  universityDetails(id:$id,lang_id:1){
+    id
+    name
+    description
+    website
+    logo
+    city
+    state
+    country
+    qs_ranking
+    times_ranking
+    guardian_ranking
+    approval
+    established
+    ownership
+    type
+    bookmark_status
+    career_courses {
+      id
+      name
+      college_id
+      duration
+      eligibility
+      fee
+      fee_unit
+      seats
+    }
+  }
+}
+`;
+
+export const SchemeGetVideo = gql`
+query videoDetails($id:Int!){
+  videoDetails(id:$id){
+    id
+    lang_id
+    title
+    description
+    category_id
+    tags
+    views
+    video
+    thumbnail
+    watch_later_status
+    favorite_status
+    chapters{
+      id
+      video_id
+      title
+      video
+      thumbnail
+    }
+  }
+}
+`;
+export const SchemeGetRecommendedVideos = gql`
+query{
+  recommendedVideo{
+    id
+    lang_id
+    title
+    description
+    category_id
+    tags
+    views
+    video
+    thumbnail
+    watch_later_status
+    favorite_status
+    chapters{
+      id
+      video_id
+      title
+      video
+      thumbnail
+    }
+  }
+}
+`;

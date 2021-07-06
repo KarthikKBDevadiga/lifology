@@ -25,6 +25,7 @@ import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import styles from '../../styles/Magazine.module.css'
 import MetaLayout from '../../components/MetaLayout'
+import Link from 'next/link'
 
 
 
@@ -93,7 +94,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                         <div className="sm:flex h-full w-full">
                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8" >
                                                 <div className="self-center font-medium text-base w-full">
-                                                    <h2 className="text-xl ">Trending Magazines</h2>
+                                                    <h2 className="text-xl ">Explore Lists of all Universities</h2>
                                                 </div>
                                             </div>
                                             <div className="w-full">
@@ -109,7 +110,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                             id="search_field"
                                                             name="search_field"
                                                             className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
-                                                            placeholder="Search Job Families"
+                                                            placeholder="Search University"
                                                             type="search"
                                                         />
                                                     </div>
@@ -119,18 +120,23 @@ export default function CourceAndUniversity({ profile, countries, universities, 
 
                                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mt-4">
                                             {universities.map((u) => (
-                                                <div className="bg-white overflow-hidden shadow rounded p-4">
-                                                    <img className="rounded-2xl w-fill ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
-                                                    <div className="top-0 mt-4 text-center">
-                                                        <div className="text-sm font-bold">{u.name}</div>
-                                                        <div className="text-xs mt-2">{u.city}, {u.state}, {u.country}</div>
-                                                    </div>
-                                                </div>
+                                                <Link href={{
+                                                    pathname: 'course_and_university/' + u.id,
+                                                    query: { token: authToken }
+                                                }}>
+                                                    <a>
+                                                        <div className="bg-white overflow-hidden shadow rounded p-4">
+                                                            <img className="rounded-2xl w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
+                                                            <div className="top-0 mt-4 text-center">
+                                                                <div className="text-sm font-bold">{u.name}</div>
+                                                                <div className="text-xs mt-2">{u.city}, {u.state}, {u.country}</div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </Link>
                                             ))}
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>

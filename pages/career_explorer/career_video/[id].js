@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useState } from 'react'
 import {
     ThumbUpIcon,
@@ -16,6 +17,7 @@ import styles from '/styles/Magazine.module.css'
 import MetaLayout from '../../../components/MetaLayout'
 
 import "react-multi-carousel/lib/styles.css";
+import { SchemeGetRecommendedVideos, SchemeGetVideo } from '../../../helpers/GraphQLSchemes'
 
 
 function classNames(...classes) {
@@ -32,8 +34,16 @@ const popularVideos = [
     // More items...
 ]
 
-
-export default function CareerVideoDetail({ profile, token }) {
+function getVideoId(url) {
+    // var url = "http://www.vimeo.com/7058755";
+    var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
+    var match = url.match(regExp);
+    if (match) {
+        return match[2];
+    }
+    return '';
+}
+export default function CareerVideoDetail({ profile, video, recommended, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
@@ -42,13 +52,13 @@ export default function CareerVideoDetail({ profile, token }) {
     return (
         <>
 
-            <MetaLayout title="Career Videos Details" description="Career Videos Details" />
+            <MetaLayout title={video.title} description={video.description} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career VideCareer Explorer / Career Videos / Career Videos Details" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos / Career Videos Details" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -62,13 +72,17 @@ export default function CareerVideoDetail({ profile, token }) {
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white shadow sm:rounded-lg p-4">
-                                                    <img src="/img/test.png" className="rounded w-full" />
+                                                    <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
+                                                        <iframe title="vimeo-player" src={"https://player.vimeo.com/video/" + getVideoId(video.video)} className="absolute rounded-lg top-0 left-0 w-full h-full" frameborder="0" allowfullscreen>
+
+                                                        </iframe>
+                                                    </div>
 
                                                     <div className="sm:flex mt-4">
-                                                        <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                            Career In Veterinary Science
+                                                        <div className="font-bold mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                            {video.title}
                                                         </div>
-                                                        <div className="self-center grid grid-cols-3 gap-4 ml-auto">
+                                                        <div className="self-center grid grid-cols-3 ml-auto">
                                                             <div className="flex">
                                                                 <ThumbUpIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                                                                 Like
@@ -85,11 +99,11 @@ export default function CareerVideoDetail({ profile, token }) {
                                                     </div>
                                                     <div className="w-full h-px bg-gray-200 my-4"></div>
                                                     <div>
-                                                        <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                        <div className="font-bold mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                             Description
                                                         </div>
-                                                        <div className="mb-4 text-sm text-justify flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At varius vel pharetra vel turpis nunc eget lorem. Massa vitae tortor condimentum lacinia. Sed blandit libero volutpat sed cras ornare arcu dui vivamus. Pellentesque nec nam aliquam sem et tortor consequat id.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At varius vel pharetra vel turpis nunc eget lorem. Massa vitae tortor condimentum lacinia. Sed blandit libero volutpat sed cras ornare arcu dui vivamus. Pellentesque nec nam aliquam sem et tortor consequat id.
+                                                        <div className="mt-2 mb-4 text-sm text-justify flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                            {video.description}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -102,27 +116,28 @@ export default function CareerVideoDetail({ profile, token }) {
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
                                             <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
-                                                    Popular Videos
+                                                    Recommended Videos
                                                 </h2>
-                                                <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">All</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">Science</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">General</li>
-                                                    <li className="float-left bg-gray-200 px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 hover:text-white hover:bg-lblue">Mathematics</li>
-                                                </ul>
-                                                {popularVideos.map((card) => (
-                                                    <div className="flex">
-                                                        <div className="mr-4 flex-shrink-0 self-start">
-                                                            <img className="h-16 w-16 m-2 rounded object-cover" src={card.image} />
-                                                        </div>
-                                                        <div className="self-center">
-                                                            <h4 className="text-sm font-bold">{card.heading}</h4>
-                                                            <p className="mt-1 text-xs">
-                                                                {card.subheading}
-                                                            </p>
-                                                            <div className="mt-2 text-xs text-gray-400">May 25 . 5 min read</div>
-                                                        </div>
-                                                    </div>
+                                                {recommended.map((r) => (
+                                                    <Link
+                                                        href={{
+                                                            pathname: '' + r.id,
+                                                            query: { token: token }
+                                                        }}>
+                                                        <a>
+                                                            <div className="flex my-4">
+                                                                <div className="mr-4 mt-2 flex-shrink-0 self-start">
+                                                                    <img className="w-20 rounded object-cover" src={r.thumbnail} />
+                                                                </div>
+                                                                <div className="self-center">
+                                                                    <h4 className="text-sm font-bold">{r.title}</h4>
+                                                                    <p className="mt-1 text-xs">
+                                                                        {r.description}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </Link>
                                                 ))}
                                             </div>
                                         </section>
@@ -157,6 +172,28 @@ export async function getServerSideProps(context) {
         }
     }
 
+    const videoClient = new ApolloClient({
+        uri: Constants.baseUrl + "/api/career",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    });
+    const video = await queryGraph(videoClient, { id: parseInt(context.params.id) }, SchemeGetVideo)
+        .then((res) => {
+            return res.videoDetails
+        }).catch((networkErr) => {
+            return {};
+            // console.log(networkErr);
+        });
+    const recommended = await queryGraph(videoClient, {}, SchemeGetRecommendedVideos)
+        .then((res) => {
+            return res.recommendedVideo
+        }).catch((networkErr) => {
+            return [];
+            // console.log(networkErr);
+        });
+    console.log(recommended);
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -172,7 +209,7 @@ export async function getServerSideProps(context) {
             // console.log(networkErr);
         });
     return {
-        props: { profile, token }
+        props: { profile, video, recommended, token }
     }
 }
 
