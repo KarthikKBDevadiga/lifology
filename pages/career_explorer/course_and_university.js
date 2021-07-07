@@ -125,7 +125,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                     query: { token: authToken }
                                                 }}>
                                                     <a>
-                                                        <div className="bg-white overflow-hidden shadow rounded p-4">
+                                                        <div className="bg-white overflow-hidden shadow rounded p-4 hover:shadow-xl duration-500">
                                                             <img className="rounded-2xl w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
                                                             <div className="top-0 mt-4 text-center">
                                                                 <div className="text-sm font-bold">{u.name}</div>

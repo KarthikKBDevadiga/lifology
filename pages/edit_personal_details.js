@@ -13,7 +13,7 @@ import ProgressBar from '../components/ProgressBar'
 import { Fragment } from 'react'
 import MetaLayout from '../components/MetaLayout'
 
-export default function Profile({ profile, token }) {
+export default function EditPersonalDetails({ profile, token }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -63,6 +63,7 @@ export default function Profile({ profile, token }) {
         });
         await mutateGraph(client,
             {
+                profile_image: profilePic == "" ? profilePic.profile_image : profilePic,
                 name: event.target.name.value,
                 email: event.target.email.value,
                 country_abbr: '91',
@@ -97,16 +98,31 @@ export default function Profile({ profile, token }) {
 
                         <div className="m-4">
 
-                            <div className="max-w-6xl mx-auto shadow p-4 bg-white h-full">
+                            <div className="max-w-6xl mx-auto shadow  py-4 px-6  bg-white h-full">
                                 <form onSubmit={submit}>
                                     <div className="flex flex-col">
-                                        <div className="align-middle min-w-full overflow-x-auto  overflow-hidden sm:rounded-lg p-4 bg-white">
+                                        <div className="align-middle min-w-full overflow-x-auto  overflow-hidden sm:rounded-lg bg-white">
                                             <div className="">
                                                 <div className="sm:flex h-full">
                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8  " >
                                                         <div className="relative" style={{ width: '140px', height: '140px' }}>
                                                             <div className="absolute top-2/4 left-2/4 w-full h-full" style={{ transform: 'translate(-50%,-50%)' }}>
-                                                                <img width="w-full h-full" src="../img/upload.svg" alt="" />
+                                                                <img className="w-full h-full rounded-full" src={
+                                                                    (profile.profile_image == null || profile.profile_image == "") ?
+                                                                        "../img/upload.svg" : profile.profile_image
+                                                                } alt="" />
+                                                            </div>
+                                                            <div className="absolute top-2/4 left-2/4 w-full h-full" style={{ transform: 'translate(-50%,-50%)', background: 'rgb(255 255 255 / 50%)' }}>
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    viewBox="0 0 122 122"
+                                                                    id="vector">
+                                                                    <path
+                                                                        id="path_2"
+                                                                        d="M 52 68 L 70 68 L 70 70 L 52 70 Z M 62 54.828 L 62 66 L 60 66 L 60 54.828 L 53.929 60.9 L 52.515 59.486 L 61 51 L 69.485 59.485 L 68.071 60.9 L 62 54.83 Z"
+                                                                        fill="#191919"
+                                                                        stroke-width="1" />
+                                                                </svg>
                                                             </div>
                                                             <input className="absolute left-0 top-0 w-full h-full opacity-0" id="file" name="file" type="file" />
                                                         </div>
@@ -170,6 +186,9 @@ export default function Profile({ profile, token }) {
                                                     Save Profile
                                                 </button>
                                                 <button
+                                                    onClick={(event) => {
+                                                        router.back()
+                                                    }}
                                                     type="button"
                                                     className="mt-3 ml-auto inline-flex justify-center rounded-full border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
                                                     style={{ width: 'fit-content', color: '#085CA4', borderColor: '#085CA4' }}
@@ -266,6 +285,7 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {};
         });
+    console.log(profile);
     return {
         props: { profile, token }
     }

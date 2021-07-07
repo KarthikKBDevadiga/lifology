@@ -104,7 +104,7 @@ export default function Profile({ profile, token }) {
                                     <label className="text-black pb-2 block text-xl left-0 absolute">Personal Details</label>
                                     <Link href={{
                                         pathname: 'edit_personal_details',
-                                        query: { token: authToken }
+                                        query: { token: token }
                                     }}>
                                         <a
                                             className="py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none absolute right-0  duration-500">
@@ -114,8 +114,13 @@ export default function Profile({ profile, token }) {
 
                                 </div>
                                 <div className="mt-12 w-12 h-0.5 rounded bg-lblue"></div>
-                                <div className="mt-6 flex">
-                                    <img width="w-32 h-32" src="../img/upload.svg" alt="" />
+                                <div className=" w-32 h-32 rounded-full  mt-6 flex">
+                                    <img className="w-32 h-32 rounded-full"
+                                        src={
+                                            (profile.profile_image == null || profile.profile_image == "") ?
+                                                "../img/upload.svg" : profile.profile_image
+                                        }
+                                        alt="" />
                                     <div className="self-center">
                                         <div className="text-base font-bold ml-4">{profile.name}</div>
                                         <div className="flex mt-2">

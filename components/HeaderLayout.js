@@ -54,7 +54,12 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                     <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm outline-none focus:outline-none lg:p-2 lg:rounded-md lg:hover:bg-gray-200 lg:bg-gray-100 duration-500">
                                         <img
                                             className="h-8 w-8 rounded-full"
-                                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            src={
+                                                (profile.profile_image == null || profile.profile_image == "") ?
+                                                    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" :
+                                                    profile.profile_image
+                                            }
+
                                             alt=""
                                         />
                                         <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">

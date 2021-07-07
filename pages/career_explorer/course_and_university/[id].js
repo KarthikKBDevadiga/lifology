@@ -122,7 +122,7 @@ export default function University({ profile, university, token }) {
                                                 </div>
                                                 <div className="mt-4">
                                                     {university.career_courses.map((u) => (
-                                                        <div className="rounded shadow p-4 my-4">
+                                                        <div className="rounded shadow p-4 my-4 hover:shadow-xl duration-500">
                                                             <div className="flex">
                                                                 <div className="relative w-20 h-20 rounded-lg overflow-hidden">
                                                                     <img src="/img/university_img.jpg" alt="University" className="w-20 h-20 rounded-lg absolute top-0 left-0 bottom-0 right-0 object-cover" />
