@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useState } from 'react'
 import {
     ClockIcon,
@@ -28,22 +29,12 @@ import styles from '/styles/Magazine.module.css'
 import MetaLayout from '/components/MetaLayout'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { SchemeCareerPools, SchemeGetUniversity } from '../../../helpers/GraphQLSchemes'
+import { SchemeCareerPools, SchemeGetUniversity } from '/helpers/GraphQLSchemes'
 
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-
-const cards = [
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    // More items...
-]
 
 export default function JobFamily({ profile, jobFamily, token }) {
     const router = useRouter()
@@ -90,17 +81,25 @@ export default function JobFamily({ profile, jobFamily, token }) {
                                                     Career Fields
                                                 </h2>
                                                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-4 lg:grid-cols-4">
-                                                    <div className="relative rounded shadow p-4 hover:shadow-xl duration-500 h-40" style={{ background: '#FF7A66' }}>
-                                                        <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                        <div className="text-white text-opacity-20 text-7xl font-bold">A</div>
-                                                        <div className="absolute bottom-4">
-                                                            <div className="text-sm text-white w-full font-medium" >Accounting</div>
-                                                            <div className="mt-2 w-8 h-px rounded bg-white"></div>
-                                                        </div>
-                                                        <svg className="absolute h-5 w-5 bottom-4 right-4" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                        </svg>
-                                                    </div>
+                                                    <Link
+                                                        href={{
+                                                            pathname: '/accounting',
+                                                            query: { token: token }
+                                                        }}>
+                                                        <a>
+                                                            <div className="relative rounded shadow p-4 hover:shadow-xl duration-500 h-40" style={{ background: '#FF7A66' }}>
+                                                                <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
+                                                                <div className="text-white text-opacity-20 text-7xl font-bold">A</div>
+                                                                <div className="absolute bottom-4">
+                                                                    <div className="text-sm text-white w-full font-medium" >Accounting</div>
+                                                                    <div className="mt-2 w-8 h-px rounded bg-white"></div>
+                                                                </div>
+                                                                <svg className="absolute h-5 w-5 bottom-4 right-4" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
+                                                    </Link>
                                                     <div className="relative rounded shadow p-4  hover:shadow-xl duration-500 h-40" style={{ background: '#9366FF' }}>
                                                         <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
                                                         <div className="text-white text-opacity-20 text-7xl font-bold">B</div>
