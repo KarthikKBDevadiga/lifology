@@ -21,6 +21,9 @@ module.exports = {
         },
         lyellow: {
           DEFAULT: '#FFC400'
+        },
+        lgreen: {
+          DEFAULT: '#02C77D'
         }
       }
     },

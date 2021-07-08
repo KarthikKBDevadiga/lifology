@@ -247,6 +247,7 @@ query videoDetails($id:Int!){
   }
 }
 `;
+
 export const SchemeGetRecommendedVideos = gql`
 query{
   recommendedVideo{
@@ -268,6 +269,23 @@ query{
       video
       thumbnail
     }
+  }
+}
+`;
+
+export const SchemeCareerPools = gql`
+query{
+  careerPools(lang_id:1,filter:{fitment:true,order:"myfitment"}){
+    id
+    name
+    image
+    one_liner
+    description
+    video
+    thumbnail
+    percentage
+    personality_match
+    orientation_match
   }
 }
 `;

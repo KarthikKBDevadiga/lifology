@@ -112,7 +112,7 @@ export default function EditPersonalDetails({ profile, token }) {
                                                                         "../img/upload.svg" : profile.profile_image
                                                                 } alt="" />
                                                             </div>
-                                                            <div className="absolute top-2/4 left-2/4 w-full h-full" style={{ transform: 'translate(-50%,-50%)', background: 'rgb(255 255 255 / 50%)' }}>
+                                                            <div style={{ transform: 'translate(-50%,-50%)', }} className="absolute top-2/4 left-2/4 w-full h-full bg-white bg-opacity-50">
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     viewBox="0 0 122 122"
