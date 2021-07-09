@@ -207,7 +207,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                             query: { token: authToken }
                                                         }} key={card.id}>
                                                             <a>
-                                                                <div className="relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:mt-1 hover:mb-3 duration-500" style={{}}>
+                                                                <div className="relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl duration-500" style={{}}>
                                                                     <div>
                                                                         <img className=" rounded-t" src={card.thumbnail} />
                                                                         <div className="flex-1 flex items-center justify-between truncate">

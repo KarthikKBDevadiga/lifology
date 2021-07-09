@@ -65,7 +65,25 @@ export default function JobFamilyAccount({ profile, jobFamily, token }) {
                                                         <img className="object-contain rounded" src={jobFamily.image} style={{ maxHeight: '14rem', maxWidth: '14rem' }} />
                                                     </div>
                                                     <div className="w-full self-center text-left">
-                                                        <div className="font-bold text-xl mt-12" >Accounting</div>
+
+                                                        <div className="flex">
+                                                            <div className="py-2 font-bold text-xl w-2/4" >Accounting
+
+                                                            </div>
+
+                                                            <div className="relative w-2/4">
+                                                                <div className="absolute text-sm py-2 flex items-center right-0">
+                                                                    <BookmarkIcon className="w-5 h-5 mr-2" />
+                                                                    Add to bookmark
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+
+
+
                                                         <div className="mt-2 text-sm text-justify" >{jobFamily.one_liner}</div>
                                                     </div>
                                                 </div>
@@ -78,10 +96,7 @@ export default function JobFamilyAccount({ profile, jobFamily, token }) {
                                                 </h2>
                                                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-4 lg:grid-cols-4">
                                                     <Link
-                                                        href={{
-                                                            pathname: jobFamily.id + '/accounting',
-                                                            query: { token: token }
-                                                        }}>
+                                                        href="#">
                                                         <a>
                                                             <div className="relative rounded shadow p-4 hover:shadow-xl duration-500 h-40" style={{ background: '#FF7A66' }}>
                                                                 <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />

@@ -31,6 +31,7 @@ import MetaLayout from '/components/MetaLayout'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { SchemeCareerPools, SchemeGetUniversity } from '/helpers/GraphQLSchemes'
+import VideoDialog from '../../../../components/dialog/VideoDialog'
 
 
 function classNames(...classes) {
@@ -90,52 +91,51 @@ export default function JobFamily({ profile, jobFamily, token }) {
                                                         href={{
                                                             pathname: '/career_explorer/job_families/' + jobFamily.id + '/accounting',
                                                             query: { token: token }
-                                                        }}
-                                                    >
+                                                        }}>
                                                         <a>
-                                                            <div className="relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#FF7A66' }}>
+                                                            <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#FF7A66' }}>
                                                                 <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                                <div className="text-white text-opacity-20 text-7xl font-bold select-none">A</div>
+                                                                <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">A</div>
                                                                 <div className="absolute bottom-4">
                                                                     <div className="text-sm text-white w-full font-medium" >Accounting</div>
-                                                                    <div className="mt-2 w-8 h-px rounded bg-white"></div>
+                                                                    <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
                                                                 </div>
-                                                                <svg className=" absolute h-5 w-5 bottom-4 right-4" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                <svg className="hover:animate-hbounce absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                                                 </svg>
                                                             </div>
                                                         </a>
                                                     </Link>
-                                                    <div className="relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#9366FF' }}>
+                                                    <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#9366FF' }}>
                                                         <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none">B</div>
+                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">B</div>
                                                         <div className="absolute bottom-4">
                                                             <div className="text-sm text-white w-full font-medium" >Banking</div>
-                                                            <div className="mt-2 w-8 h-px rounded bg-white"></div>
+                                                            <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
                                                         </div>
-                                                        <svg className="absolute h-5 w-5 bottom-4 right-4" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                        <svg className="hover:animate-hbounce absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                                         </svg>
                                                     </div>
-                                                    <div className="relative rounded shadow p-4  hover:shadow-xl duration-500 h-40" style={{ background: '#6ED96E' }}>
+                                                    <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#6ED96E' }}>
                                                         <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none">C</div>
+                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">C</div>
                                                         <div className="absolute bottom-4">
                                                             <div className="text-sm text-white w-full font-medium" >CA</div>
-                                                            <div className="mt-2 w-8 h-px rounded bg-white"></div>
+                                                            <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
                                                         </div>
-                                                        <svg className="absolute h-5 w-5 bottom-4 right-4" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                        <svg className="hover:animate-hbounce absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                                         </svg>
                                                     </div>
-                                                    <div className="relative rounded shadow p-4  hover:shadow-xl duration-500 h-40" style={{ background: '#66BDFF' }}>
+                                                    <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#66BDFF' }}>
                                                         <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none">F</div>
+                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">F</div>
                                                         <div className="absolute bottom-4">
                                                             <div className="text-sm text-white w-full font-medium" >Finance</div>
-                                                            <div className="mt-2 w-8 h-px rounded bg-white"></div>
+                                                            <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
                                                         </div>
-                                                        <svg className="absolute h-5 w-5 bottom-4 right-4" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                        <svg className="hover:animate-hbounce absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                                         </svg>
                                                     </div>
@@ -213,60 +213,9 @@ export default function JobFamily({ profile, jobFamily, token }) {
                         </footer>
                     </main>
                 </div>
-
-
             </div >
-            <Transition.Root show={openVideo} as={Fragment}>
-                <Dialog as="div" static className="fixed z-10 inset-0 overflow-y-auto" open={openVideo} onClose={setOpenVideo}>
-                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                        >
-                            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                        </Transition.Child>
 
-                        {/* This element is to trick the browser into centering the modal contents. */}
-                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                            &#8203;
-                        </span>
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                            enterTo="opacity-100 translate-y-0 sm:scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        >
-                            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full sm:p-4">
-                                <div>
-                                    <div className="text-center">
-                                        <video className="w-full rounded" controls>
-                                            <source src={jobFamily.video} type="video/mp4" />
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </div>
-                                </div>
-                                <div className="mt-4 sm:mt-4">
-                                    <button
-                                        type="button"
-                                        className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:text-sm"
-                                        onClick={() => setOpenVideo(false)}
-                                    >
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                        </Transition.Child>
-                    </div>
-                </Dialog>
-            </Transition.Root>
+            <VideoDialog showDialog={openVideo} setShowDialog={setOpenVideo} url={jobFamily.video} />
         </>
     )
 }

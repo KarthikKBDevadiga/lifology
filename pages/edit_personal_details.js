@@ -105,14 +105,14 @@ export default function EditPersonalDetails({ profile, token }) {
                                             <div className="">
                                                 <div className="sm:flex h-full">
                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8  " >
-                                                        <div className="relative" style={{ width: '140px', height: '140px' }}>
+                                                        <div className="group relative" style={{ width: '140px', height: '140px' }}>
                                                             <div className="absolute top-2/4 left-2/4 w-full h-full" style={{ transform: 'translate(-50%,-50%)' }}>
                                                                 <img className="w-full h-full rounded-full" src={
                                                                     (profile.profile_image == null || profile.profile_image == "") ?
                                                                         "../img/upload.svg" : profile.profile_image
                                                                 } alt="" />
                                                             </div>
-                                                            <div style={{ transform: 'translate(-50%,-50%)', }} className="absolute top-2/4 left-2/4 w-full h-full bg-white bg-opacity-50">
+                                                            <div style={{ transform: 'translate(-50%,-50%)', }} className="absolute rounded-full top-2/4 left-2/4 w-full h-full bg-black bg-opacity-20 group-hover:bg-opacity-70 duration-500 text-black group-hover:text-white">
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     viewBox="0 0 122 122"
@@ -120,7 +120,7 @@ export default function EditPersonalDetails({ profile, token }) {
                                                                     <path
                                                                         id="path_2"
                                                                         d="M 52 68 L 70 68 L 70 70 L 52 70 Z M 62 54.828 L 62 66 L 60 66 L 60 54.828 L 53.929 60.9 L 52.515 59.486 L 61 51 L 69.485 59.485 L 68.071 60.9 L 62 54.83 Z"
-                                                                        fill="#191919"
+                                                                        fill="currentColor"
                                                                         stroke-width="1" />
                                                                 </svg>
                                                             </div>

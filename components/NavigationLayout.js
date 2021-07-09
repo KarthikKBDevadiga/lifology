@@ -218,7 +218,10 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                     </a>
                                 </Link>
                                 <Link
-                                    href="#">
+                                    href={{
+                                        pathname: '/my_child',
+                                        query: { token: authToken }
+                                    }}>
                                     <a
                                         className={classNames(
                                             index == 2 ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100',

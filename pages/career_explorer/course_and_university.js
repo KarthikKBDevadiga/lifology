@@ -196,18 +196,18 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
-                            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full sm:p-6">
+                            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
                                 <div className="sm:flex sm:items-start">
-                                    <div className="text-center sm:text-left">
-                                        <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900 text-center">
+                                    <div className="text-center sm:text-left w-full">
+                                        <Dialog.Title as="h3" className="w-full text-lg leading-6 font-medium text-gray-900 text-center">
                                             Filter
                                         </Dialog.Title>
                                         <div className="mt-2">
-                                            <ul className={styles.topicGroup}>
+                                            {/* <ul className={styles.topicGroup}>
                                                 {countries.map((c) => (
                                                     <li key={c.country} className="float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer bg-lgrey-bg border border-lgrey-border duration-500 hover:bg-lblue hover:text-white">{c.country}</li>
                                                 ))}
-                                            </ul>
+                                            </ul> */}
 
                                             <Listbox value={selectedCountry} onChange={setSelectedCountry}>
                                                 {({ open }) => (
@@ -220,7 +220,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                                 </span>
                                                             </Listbox.Button>
 
-                                                            <Transition
+                                                            <Transition className="sticky"
                                                                 show={open}
                                                                 as={Fragment}
                                                                 leave="transition ease-in duration-100"
@@ -229,7 +229,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                             >
                                                                 <Listbox.Options
                                                                     static
-                                                                    className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                                                                    className=" sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                                                                 >
                                                                     {
                                                                         countries.length > 0 ?
@@ -274,7 +274,6 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                     </>
                                                 )}
                                             </Listbox>
-
                                         </div>
                                     </div>
                                 </div>
