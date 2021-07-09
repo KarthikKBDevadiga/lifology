@@ -32,13 +32,15 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { SchemeCareerPools, SchemeGetUniversity } from '/helpers/GraphQLSchemes'
 import VideoDialog from '../../../../components/dialog/VideoDialog'
+import { SchemeCareerFields } from '../../../../helpers/GraphQLSchemes'
 
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function JobFamily({ profile, jobFamily, token }) {
+const colors = ['red', 'blue', 'pink', 'green', 'purple', 'yellow', 'gray']
+export default function JobFamily({ profile, jobFamily, careerFields, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
@@ -87,60 +89,28 @@ export default function JobFamily({ profile, jobFamily, token }) {
                                                     Career Fields
                                                 </h2>
                                                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-4 lg:grid-cols-4">
-                                                    <Link
-                                                        href={{
-                                                            pathname: '/career_explorer/job_families/' + jobFamily.id + '/accounting',
-                                                            query: { token: token }
-                                                        }}>
-                                                        <a>
-                                                            <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#FF7A66' }}>
-                                                                <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                                <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">A</div>
-                                                                <div className="absolute bottom-4">
-                                                                    <div className="text-sm text-white w-full font-medium" >Accounting</div>
-                                                                    <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
+                                                    {careerFields.map((cf) => (
+                                                        <Link
+                                                            href={{
+                                                                pathname: '/career_explorer/job_families/' + jobFamily.id + '/accounting',
+                                                                query: { token: token }
+                                                            }}>
+                                                            <a>
+                                                                <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: getColor() }}>
+                                                                    <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
+                                                                    <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">{cf.name.charAt(0)}</div>
+                                                                    <div className="absolute bottom-4 mr-12">
+                                                                        <div className="text-sm text-white w-full font-medium" >{cf.name}</div>
+                                                                        <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
+                                                                    </div>
+                                                                    <svg className="absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                                    </svg>
                                                                 </div>
-                                                                <svg className="hover:animate-hbounce absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                                </svg>
-                                                            </div>
-                                                        </a>
-                                                    </Link>
-                                                    <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#9366FF' }}>
-                                                        <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">B</div>
-                                                        <div className="absolute bottom-4">
-                                                            <div className="text-sm text-white w-full font-medium" >Banking</div>
-                                                            <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
-                                                        </div>
-                                                        <svg className="hover:animate-hbounce absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                        </svg>
-                                                    </div>
-                                                    <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#6ED96E' }}>
-                                                        <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">C</div>
-                                                        <div className="absolute bottom-4">
-                                                            <div className="text-sm text-white w-full font-medium" >CA</div>
-                                                            <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
-                                                        </div>
-                                                        <svg className="hover:animate-hbounce absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                        </svg>
-                                                    </div>
-                                                    <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: '#66BDFF' }}>
-                                                        <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
-                                                        <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">F</div>
-                                                        <div className="absolute bottom-4">
-                                                            <div className="text-sm text-white w-full font-medium" >Finance</div>
-                                                            <div className="mt-2 w-4 h-0.5 rounded bg-white group-hover:w-full duration-500" ></div>
-                                                        </div>
-                                                        <svg className="hover:animate-hbounce absolute h-5 w-5 bottom-4 right-4 " fill="none" viewBox="0 0 24 24" stroke="white">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                        </svg>
-                                                    </div>
+                                                            </a>
+                                                        </Link>
+                                                    ))}
                                                 </div>
-
                                             </div>
 
                                         </div>
@@ -219,6 +189,11 @@ export default function JobFamily({ profile, jobFamily, token }) {
         </>
     )
 }
+
+const getColor = () => {
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    return "#" + randomColor;
+}
 // JobFamilies.getInitialProps = async (context) => {
 // const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 // }
@@ -247,6 +222,13 @@ export async function getServerSideProps(context) {
             return {}
         });
     const jobFamily = datas.filter(x => x.id == context.params.id)[0];
+    const careerFields = await queryGraph(careerClient, { pool_id: parseInt(context.params.id) }, SchemeCareerFields)
+        .then((res) => {
+            console.log(res.careerFields);
+            return res.careerFields
+        }).catch((networkErr) => {
+            return {}
+        });
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -262,7 +244,7 @@ export async function getServerSideProps(context) {
             // console.log(networkErr);
         });
     return {
-        props: { profile, jobFamily, token }
+        props: { profile, jobFamily, careerFields, token }
     }
 }
 

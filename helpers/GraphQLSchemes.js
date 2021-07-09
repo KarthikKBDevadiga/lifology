@@ -289,3 +289,32 @@ query{
   }
 }
 `;
+
+export const SchemeCareerFields = gql`
+query careerFields($pool_id:Int!){
+  careerFields(lang_id:1,pool_id:$pool_id){
+    id
+    pool_id
+    name
+    image
+    description
+    video
+    thumbnail
+    topics
+    {
+        name
+        image
+    }
+    skills
+    {
+        name
+        image
+    }
+    employment_areas
+    {
+        name
+        image
+    }
+  }
+}
+`;

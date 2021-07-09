@@ -63,19 +63,19 @@ export default function MyChild({ profile, token }) {
                                                     {/* <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent"  >
                                                     </div> */}
                                                     <img src={card.bg} className="rounded-lg w-full object-cover group-hover:scale-150 group-hover:rotate-12 duration-500" style={{ height: '200px' }} />
-                                                    <div className="absolute p-4 top-0">
-                                                        <div className="text-white w-9/12 font-medium text-xl">{card.title}</div>
+                                                    <div className="absolute p-4 top-0 w-full">
+                                                        <div className="text-white w-9/12 font-medium text-xl ">{card.title}</div>
                                                         <div className="text-white w-9/12 text-sm mt-2">{card.subtitle}</div>
-                                                        <div className="mt-2 w-0 h-0.5 rounded bg-white group-hover:w-full duration-500"></div>
+                                                        <div className="mt-2 w-0 h-0.5 rounded bg-white group-hover:w-3/4 duration-500"></div>
                                                     </div>
-                                                    <div className="absolute p-4 bottom-0">
+                                                    <div className="absolute p-4 bottom-0 w-full">
                                                         <Link
                                                             href={{
                                                                 pathname: card.href,
-                                                                query: { token: authToken }
+                                                                query: { token: token }
                                                             }}>
                                                             <a>
-                                                                <div className="mt-4 w-min rounded-full py-2 px-8 bg-white text-sm">Start</div>
+                                                                <div className="mt-4 w-min rounded-full py-2 px-8 bg-white text-sm ">Start</div>
                                                             </a>
                                                         </Link>
 
