@@ -5,20 +5,24 @@
 
 
 .group li::before {
-    content: "•";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: #02C77D; /* Change the color */
-    font-weight: bold; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 1em; /* Also needed for space (tweak if needed) */
-    margin-left: 1rem; /* Also needed for space (tweak if needed) */
+    content: "•";
+    color: #02C77D; 
+    font-weight: bold; 
+    display: inline-block; 
+    width: 1em; 
+    margin-left: 1rem; 
     margin-top: 1rem;
+    font-size: 20px;
+    vertical-align: sub;
 }
 
 .subgroup li::before{
-    content: "•";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: #878787; /* Change the color */
-    font-weight: bold; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 1em; /* Also needed for space (tweak if needed) */
-    margin-left: 3rem; /* Also needed for space (tweak if needed) */
+    content: "•"; 
+    color: #878787;
+    font-weight: bold; 
+    display: inline-block; 
+    width: 1em; 
+    margin-left: 3rem; 
+    font-size: 20px;
+    vertical-align: sub;
 }

@@ -40,7 +40,7 @@ export default function MTIAssessment({ profile, token }) {
 
                                     <div className="max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
                                         <div className="lg:col-start-1 lg:col-span-2">
-                                            <div className="bg-white align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg p-4">
+                                            <div className="bg-white align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg px-8 py-4">
                                                 <div className="font-bold text-xl" >Assesment / MTI Assesment</div>
 
                                                 <div className="mt-4 text-sm text-justify leading-loose">
