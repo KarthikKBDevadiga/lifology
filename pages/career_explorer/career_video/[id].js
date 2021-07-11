@@ -10,7 +10,6 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
-import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import styles from '/styles/Magazine.module.css'
@@ -19,32 +18,15 @@ import MetaLayout from '../../../components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
 import { SchemeGetRecommendedVideos, SchemeGetVideo } from '../../../helpers/GraphQLSchemes'
 
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-const popularVideos = [
-    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
-    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
-    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
-    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
-    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
-    { heading: 'Career In Veterinary Science', subheading: 'Lorem ipsum dolor sit amet, sectetur.', image: '/img/test.png', date: 'May 25', read: '5 min read' },
-    // More items...
-]
-
 function getVideoId(url) {
-    // var url = "http://www.vimeo.com/7058755";
-    var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
+    var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
     var match = url.match(regExp);
     if (match) {
-        return match[2];
+        return match[2]
     }
-    return '';
+    return ''
 }
 export default function CareerVideoDetail({ profile, video, recommended, token }) {
-    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -162,7 +144,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
 // }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -178,36 +160,32 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const video = await queryGraph(videoClient, { id: parseInt(context.params.id) }, SchemeGetVideo)
         .then((res) => {
             return res.videoDetails
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
-        });
+        })
     const recommended = await queryGraph(videoClient, {}, SchemeGetRecommendedVideos)
         .then((res) => {
             return res.recommendedVideo
         }).catch((networkErr) => {
-            return [];
-            // console.log(networkErr);
-        });
-    console.log(recommended);
+            return []
+        })
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
-        });
+        })
     return {
         props: { profile, video, recommended, token }
     }

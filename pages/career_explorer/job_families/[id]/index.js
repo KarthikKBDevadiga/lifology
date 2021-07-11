@@ -1,51 +1,23 @@
 import Link from 'next/link'
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import {
-    ClockIcon,
-    CreditCardIcon,
-    ScaleIcon,
-    UserGroupIcon,
-    BookmarkIcon
-} from '@heroicons/react/outline'
-import {
-    ArrowNarrowLeftIcon,
-    CheckIcon,
-    HomeIcon,
-    PaperClipIcon,
-    QuestionMarkCircleIcon,
-    SearchIcon,
-    ThumbUpIcon,
-    UserIcon,
-} from '@heroicons/react/solid'
+import { useState } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
-import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import styles from '/styles/Magazine.module.css'
 import MetaLayout from '/components/MetaLayout'
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { SchemeCareerPools, SchemeGetUniversity } from '/helpers/GraphQLSchemes'
+import { SchemeCareerPools } from '/helpers/GraphQLSchemes'
 import VideoDialog from '../../../../components/dialog/VideoDialog'
 import { SchemeCareerFields } from '../../../../helpers/GraphQLSchemes'
 
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-const colors = ['red', 'blue', 'pink', 'green', 'purple', 'yellow', 'gray']
 export default function JobFamily({ profile, jobFamily, careerFields, token }) {
-    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
-    console.log(jobFamily)
     const [openVideo, setOpenVideo] = useState(false)
 
     return (
@@ -92,7 +64,7 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                                                     {careerFields.map((cf) => (
                                                         <Link
                                                             href={{
-                                                                pathname: '/career_explorer/job_families/' + jobFamily.id + '/accounting',
+                                                                pathname: '/career_explorer/job_families/' + jobFamily.id + '/career_field/' + cf.id,
                                                                 query: { token: token }
                                                             }}>
                                                             <a>
@@ -191,15 +163,12 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
 }
 
 const getColor = () => {
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    return "#" + randomColor;
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16)
+    return "#" + randomColor
 }
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -224,7 +193,6 @@ export async function getServerSideProps(context) {
     const jobFamily = datas.filter(x => x.id == context.params.id)[0];
     const careerFields = await queryGraph(careerClient, { pool_id: parseInt(context.params.id) }, SchemeCareerFields)
         .then((res) => {
-            console.log(res.careerFields);
             return res.careerFields
         }).catch((networkErr) => {
             return {}
@@ -235,13 +203,12 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
         });
     return {
         props: { profile, jobFamily, careerFields, token }

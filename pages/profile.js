@@ -20,69 +20,6 @@ export default function Profile({ profile, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
-    const submit = async (event) => {
-        event.preventDefault()
-        setLoadingDialog(true)
-        var profilePic = "";
-        if (event.target.file.files[0] != undefined) {
-            var formData = new FormData()
-            formData.append('file', event.target.file.files[0])
-            await fetch(Constants.baseUrl + '/api/fileUploading', {
-                method: 'POST',
-                body: formData,
-                headers: new Headers({
-                    'Authorization': 'Bearer ' + authToken,
-                    'Accept': 'application/json'
-                })
-            }).then(function (res) {
-                return res.json();
-            }).then(function (data) {
-                profilePic = data.url
-            }).catch(function (error) {
-                console.log('error');
-            })
-        }
-
-        console.log('ProfilePic ' + profilePic)
-        console.log('Name ' + event.target.name.value)
-        console.log('Email ' + event.target.email.value)
-        console.log('country_abbr ' + profile.country_abbr)
-        console.log('country_code ' + profile.country_code)
-        console.log('mobile_number ' + profile.mobile_number)
-        console.log('child_name ' + profile.child_details.child_name)
-        console.log('gender ' + profile.child_details.gender)
-        console.log('grade ' + profile.child_details.grade)
-        console.log('stream ' + profile.child_details.stream)
-        console.log('school_name ' + profile.child_details.school_name);
-        console.log('stream_id ' + profile.child_details.stream_id)
-        const client = new ApolloClient({
-            uri: Constants.baseUrl + "/api/user",
-            cache: new InMemoryCache(),
-            headers: {
-                Authorization: "Bearer " + authToken,
-            },
-        });
-        await mutateGraph(client,
-            {
-                name: event.target.name.value,
-                email: event.target.email.value,
-                country_abbr: '91',
-                country_code: profile.country_code,
-                mobile_number: profile.mobile_number,
-                child_name: profile.child_details.child_name,
-                gender: profile.child_details.gender,
-                grade: profile.child_details.grade,
-                stream: profile.child_details.stream,
-                school_name: '',
-                stream_id: profile.child_details.stream_id
-            }, SchemeEditProfile)
-            .then((res) => {
-                console.log('Response' + res)
-            }).catch((networkErr) => {
-                console.log('error')
-            });
-        setLoadingDialog(false)
-    }
     return (
         <>
             <MetaLayout title="Profile" description="Profile" />
@@ -208,7 +145,7 @@ export default function Profile({ profile, token }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -230,7 +167,6 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {};
         });
-    console.log(profile)
     return {
         props: { profile, token }
     }

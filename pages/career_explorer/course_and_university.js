@@ -23,32 +23,14 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetAllUniversity, SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile, SchemeGetUniversityCountry } from '../../helpers/GraphQLSchemes'
 import Constants from '../../helpers/Constants.js'
 import useLocalStorage from '../../helpers/useLocalStorage'
-import { useRouter } from 'next/router'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import styles from '../../styles/Magazine.module.css'
 import MetaLayout from '../../components/MetaLayout'
 import Link from 'next/link'
-
-
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-const cards = [
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    // More items...
-]
-
+import classNames from '../../helpers/classNames'
 
 export default function CourceAndUniversity({ profile, countries, universities, token }) {
-    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -301,12 +283,9 @@ export default function CourceAndUniversity({ profile, countries, universities, 
         </>
     )
 }
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -321,20 +300,19 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const countries = await queryGraph(careerClient, {}, SchemeGetUniversityCountry)
         .then((res) => {
             return res.universityCountry
         }).catch((networkErr) => {
             return [];
-            // console.log(networkErr);
-        });
+        })
     const universities = await queryGraph(careerClient, {}, SchemeGetAllUniversity)
         .then((res) => {
             return res.allUniversity[0].university
         }).catch((networkErr) => {
             return []
-        });
+        })
 
     console.log(countries);
 
@@ -344,14 +322,13 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
-        });
+        })
     return {
         props: { profile, countries, universities, token }
     }

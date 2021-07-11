@@ -491,7 +491,6 @@ export async function getServerSideProps(context) {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
         });
     return {
         props: { profile, token }

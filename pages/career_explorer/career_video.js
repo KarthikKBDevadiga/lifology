@@ -11,12 +11,12 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile, SchemeGetVideos } from '../../helpers/GraphQLSchemes'
 import Constants from '../../helpers/Constants.js'
 import useLocalStorage from '../../helpers/useLocalStorage'
-import { useRouter } from 'next/router'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import MetaLayout from '../../components/MetaLayout'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import classNames from '../../helpers/classNames'
 
 const responsive = {
     desktop: {
@@ -55,14 +55,7 @@ const headerSlide = [
     }
 ]
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-
-
 export default function CareerVideo({ videoCats, profile, token }) {
-    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -207,12 +200,13 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                             query: { token: authToken }
                                                         }} key={card.id}>
                                                             <a>
-                                                                <div className="relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl duration-500" style={{}}>
+                                                                <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                     <div>
-                                                                        <img className=" rounded-t" src={card.thumbnail} />
+                                                                        <img className=" rounded-t filter grayscale group-hover:filter-none duration-500" src={card.thumbnail} />
+                                                                        {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                                                         <div className="flex-1 flex items-center justify-between truncate">
                                                                             <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                                <div className="mt-2 text-gray-900 font-medium hover:text-gray-600">
+                                                                                <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
                                                                                     {card.title}
                                                                                 </div>
                                                                                 <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
@@ -324,11 +318,6 @@ function CustomRightArrow({ handleClick }) {
             onClick={handleClick}>
             <ArrowRightIcon className="h-5 w-5 text-white" aria-hidden="true" />
         </ button>
-        // <button
-        //     onClick={handleClick}
-        //     aria-label="Go to next slide"
-        //     className="react-multiple-carousel__arrow react-multiple-carousel__arrow--right"
-        // />
     );
 }
 
@@ -355,7 +344,7 @@ const ButtonGroup = ({ next, previous }) => {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -370,26 +359,26 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const videoCats = await queryGraph(videosClient, {}, SchemeGetVideos)
         .then((res) => {
-            return res.videos;
+            return res.videos
         }).catch((networkErr) => {
-            return [];
-        });
+            return []
+        })
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
-        });
+        })
     return {
         props: { videoCats, profile, token }
     }

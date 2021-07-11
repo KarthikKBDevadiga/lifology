@@ -20,19 +20,12 @@ const cards = [
     { name: 'Scholarship Program', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Magazine', href: 'career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Career Videos', href: 'career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
-    // More items...
 ]
 
 export default function CareerExplorer({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-    // if (authToken == "") {
-    //     router.push({
-    //         pathname: '/login',
-    //     })
-    // }
-
 
     return (
         <>
@@ -122,7 +115,6 @@ export async function getServerSideProps(context) {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
         });
     return {
         props: { profile, token }

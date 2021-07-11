@@ -22,22 +22,13 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
-import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import styles from '/styles/Magazine.module.css'
 import MetaLayout from '/components/MetaLayout'
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { SchemeCareerPools, SchemeGetUniversity } from '/helpers/GraphQLSchemes'
-
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
+import { SchemeCareerPools } from '/helpers/GraphQLSchemes'
 
 export default function JobFamilyAccount({ profile, jobFamily, token }) {
-    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     return (
@@ -205,12 +196,8 @@ export default function JobFamilyAccount({ profile, jobFamily, token }) {
         </>
     )
 }
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
-
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -231,7 +218,7 @@ export async function getServerSideProps(context) {
             return res.careerPools
         }).catch((networkErr) => {
             return {}
-        });
+        })
     const jobFamily = datas.filter(x => x.id == context.params.id)[0];
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
@@ -239,14 +226,13 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
-        });
+        })
     return {
         props: { profile, jobFamily, token }
     }

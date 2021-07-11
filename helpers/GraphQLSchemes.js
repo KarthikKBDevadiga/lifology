@@ -318,3 +318,21 @@ query careerFields($pool_id:Int!){
   }
 }
 `;
+
+export const SchemeGetUniversities = gql`
+query allUniversity($pool_id:Int!,$field_id:Int!){
+  allUniversity(lang_id:1,filter:{pool_id:$pool_id,field_id:$field_id,ranking:"Times Rank"}){
+    title
+    university{
+    id
+    name
+    description
+    website
+    logo
+    city
+    state
+    country
+    }
+  }
+}
+`;

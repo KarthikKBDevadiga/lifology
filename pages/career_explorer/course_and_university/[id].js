@@ -1,52 +1,22 @@
 import { useState } from 'react'
 import {
-    ClockIcon,
-    CreditCardIcon,
-    ScaleIcon,
-    UserGroupIcon,
     BookmarkIcon
 } from '@heroicons/react/outline'
 import {
-    ArrowNarrowLeftIcon,
-    CheckIcon,
-    HomeIcon,
-    PaperClipIcon,
-    QuestionMarkCircleIcon,
     SearchIcon,
-    ThumbUpIcon,
-    UserIcon,
 } from '@heroicons/react/solid'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
-import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import styles from '/styles/Magazine.module.css'
 import MetaLayout from '/components/MetaLayout'
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { SchemeGetUniversity } from '../../../helpers/GraphQLSchemes'
 
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-const cards = [
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
-    // More items...
-]
-
 export default function University({ profile, university, token }) {
-    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -304,9 +274,6 @@ export default function University({ profile, university, token }) {
         </>
     )
 }
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
 
 export async function getServerSideProps(context) {
     const { token } = context.query;
@@ -330,22 +297,20 @@ export async function getServerSideProps(context) {
             return res.universityDetails[0]
         }).catch((networkErr) => {
             return {}
-        });
-    console.log(university)
+        })
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
-        });
+        })
     return {
         props: { profile, university, token }
     }

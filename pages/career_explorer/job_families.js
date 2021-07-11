@@ -1,13 +1,6 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import {
-    ClockIcon,
-    CreditCardIcon,
-    HomeIcon,
-    ScaleIcon,
-    UserGroupIcon,
-} from '@heroicons/react/outline'
-import {
     SearchIcon,
 } from '@heroicons/react/solid'
 import { queryGraph } from '../../helpers/GraphQLCaller'
@@ -19,28 +12,6 @@ import { useRouter } from 'next/router'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import MetaLayout from '../../components/MetaLayout'
-
-const navigation = [
-    { name: 'Home', href: '#', icon: HomeIcon, current: true },
-    { name: 'My Child', href: '#', icon: ClockIcon, current: false },
-    { name: 'Services', href: '#', icon: ScaleIcon, current: false },
-    { name: 'Career Explorer', href: '#', icon: CreditCardIcon, current: false },
-    { name: 'Lifology Hub', href: '#', icon: UserGroupIcon, current: false },
-]
-const cards = [
-    { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Course and University', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Scholarship Program', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Magazine', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Career Videos', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
-    // More items...
-]
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-
 
 export default function JobFamilies({ families, profile, token }) {
     const router = useRouter()
@@ -143,9 +114,6 @@ export default function JobFamilies({ families, profile, token }) {
         </>
     )
 }
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
 
 export async function getServerSideProps(context) {
     const { token } = context.query;

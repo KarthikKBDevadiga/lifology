@@ -103,7 +103,7 @@ export default function Login() {
                             pathname: 'career_explorer',
                             query: { token: res.otpVerification.auth_token }
                         })
-                    }, 2000);
+                    }, 1000)
                     setAuthToken(res.otpVerification.auth_token);
                 } else {
                     setSignupDialog(true)
@@ -248,7 +248,7 @@ export default function Login() {
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
-                            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-4">
                                 <div>
                                     <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
                                         <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
@@ -257,7 +257,7 @@ export default function Login() {
                                         <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
                                             Login successful
                                         </Dialog.Title>
-                                        <button className="h-0 w-0 overflow-hidden" />
+                                        <button className="absolute h-0 w-0 overflow-hidden" />
                                     </div>
                                 </div>
                             </div>
@@ -408,12 +408,3 @@ export default function Login() {
         </>
     )
 }
-
-// export async function getStaticProps({ params }) {
-//     const req = await fetch('http://localhost:3000/api/hello');
-//     const data = await req.json();
-//     return {
-//         props: { r: data }
-//     }
-// }
-//getServerSideProps, getStaticPaths

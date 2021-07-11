@@ -42,10 +42,10 @@ const VideoDialog = ({ url, showDialog, setShowDialog }) => {
                                     </video>
                                 </div>
                             </div>
-                            <div className="absolute shadow w-8 h-8 top-0 right-0">
+                            <div className="absolute w-8 h-8 top-0 right-0">
                                 <button
                                     type="button"
-                                    className="bg-white rounded-full w-full h-full focus:outline-none"
+                                    className="shadow hover:shadow-xl active:shadow-sm bg-gray-200 hover:bg-gray-300 rounded-bl-2xl w-full h-full focus:outline-none duration-500"
                                     onClick={() => setShowDialog(false)}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

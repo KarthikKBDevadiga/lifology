@@ -10,14 +10,14 @@ import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
-import NavigationLayout from '/components/NavigationLayout'
-import HeaderLayout from '/components/HeaderLayout'
+import NavigationLayout from '../components/NavigationLayout'
+import HeaderLayout from '../components/HeaderLayout'
 import MetaLayout from '../components/MetaLayout'
 
 const cards = [
     { title: 'Face', subtitle: 'Core Behaviour', href: '#', bg: '/img/my_child/face.png' },
     { title: 'MIO', subtitle: 'Intelligence Orientation', href: '#', bg: '/img/my_child/mio.png' },
-    { title: 'MTI', subtitle: 'Environmental Interaction', href: '#', bg: '/img/my_child/mti.png' },
+    { title: 'MTI', subtitle: 'Environmental Interaction', href: '/my_child/mti_assessment', bg: '/img/my_child/mti.png' },
     { title: 'VAK', subtitle: 'Learning Style', href: '#', bg: '/img/my_child/vak.png' },
     { title: 'Care', subtitle: 'Learning Preferences', href: '#', bg: '/img/my_child/care.png' },
     { title: 'GRIT', subtitle: 'Passion & Perseverence', href: '#', bg: '/img/my_child/grit.png' },
@@ -29,19 +29,11 @@ export default function MyChild({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-    // if (authToken == "") {
-    //     router.push({
-    //         pathname: '/login',
-    //     })
-    // }
-
-
     return (
         <>
-
             <MetaLayout title="Career Explorer" description="Career Explorer" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
-                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" authToken={token} setAuthToken={setAuthToken} />
@@ -57,30 +49,29 @@ export default function MyChild({ profile, token }) {
                                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-5 lg:grid-cols-5">
                                             {/* Card */}
                                             {cards.map((card) => (
-                                                <div key={card.name} className="group relative bg-white overflow-hidden shadow hover:shadow-xl active:shadow-sm rounded-lg bg-cover duration-500"
-                                                    style={{ backgroundImage: 'url(\'' + '\')', height: '200px', }}
-                                                >
-                                                    {/* <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent"  >
-                                                    </div> */}
-                                                    <img src={card.bg} className="rounded-lg w-full object-cover group-hover:scale-150 group-hover:rotate-12 duration-500" style={{ height: '200px' }} />
-                                                    <div className="absolute p-4 top-0 w-full">
-                                                        <div className="text-white w-9/12 font-medium text-xl ">{card.title}</div>
-                                                        <div className="text-white w-9/12 text-sm mt-2">{card.subtitle}</div>
-                                                        <div className="mt-2 w-0 h-0.5 rounded bg-white group-hover:w-3/4 duration-500"></div>
-                                                    </div>
-                                                    <div className="absolute p-4 bottom-0 w-full">
-                                                        <Link
-                                                            href={{
-                                                                pathname: card.href,
-                                                                query: { token: token }
-                                                            }}>
-                                                            <a>
-                                                                <div className="mt-4 w-min rounded-full py-2 px-8 bg-white text-sm ">Start</div>
-                                                            </a>
-                                                        </Link>
-
-                                                    </div>
-                                                </div>
+                                                <Link
+                                                    href={{
+                                                        pathname: card.href,
+                                                        query: { token: token }
+                                                    }}>
+                                                    <a>
+                                                        <div key={card.name} className="group relative bg-white overflow-hidden shadow hover:shadow-xl hover:scale-105 active:shadow-sm rounded-lg bg-cover duration-500 "
+                                                            style={{ height: '200px', }}
+                                                        >
+                                                            <img src={card.bg} className="rounded-lg w-full object-cover group-hover:scale-150 group-hover:rotate-12 duration-500" style={{ height: '200px' }} />
+                                                            <div className="absolute p-4 top-0 w-full">
+                                                                <div className="text-white w-9/12 font-medium text-xl ">{card.title}</div>
+                                                                <div className="text-white w-9/12 text-sm mt-2">{card.subtitle}</div>
+                                                                <div className="mt-4 w-0 h-0.5 rounded bg-white group-hover:w-3/4 duration-500"></div>
+                                                            </div>
+                                                            <div className="absolute bottom-4 right-4 scale-0 group-hover:scale-100 duration-500 translate-x-full group-hover:translate-x-0">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 20 20" fill="white">
+                                                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </Link>
                                             ))}
                                         </div>
 
@@ -104,7 +95,7 @@ export default function MyChild({ profile, token }) {
 
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -119,14 +110,13 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
-            return {};
-            // console.log(networkErr);
-        });
+            return {}
+        })
     return {
         props: { profile, token }
     }

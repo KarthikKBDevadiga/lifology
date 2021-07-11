@@ -263,7 +263,7 @@ export default function EditPersonalDetails({ profile, token }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -285,7 +285,6 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {};
         });
-    console.log(profile);
     return {
         props: { profile, token }
     }
