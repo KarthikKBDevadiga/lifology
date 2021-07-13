@@ -123,7 +123,7 @@ const SettingNavigationLayout = ({ index, authToken }) => {
                 Follow Us on
             </h2>
             <div className="flex">
-                <a href="#" className="text-gray-400 hover:text-blue-600 duration-500">
+                <a href="#" className="text-gray-400 hover:text-blue-600 hover:scale-110 active:scale-100 duration-500">
                     <svg
                         className="w-7 h-7 mt-2"
                         viewBox="0 0 43 43">
@@ -139,7 +139,7 @@ const SettingNavigationLayout = ({ index, authToken }) => {
                             strokeWidth="1" />
                     </svg>
                 </a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 duration-500">
+                <a href="#" className="text-gray-400 hover:text-blue-400 hover:scale-110 active:scale-100 duration-500">
                     <svg
                         className="w-7 h-7 mt-2 ml-2"
                         viewBox="0 0 44 43">
@@ -155,7 +155,7 @@ const SettingNavigationLayout = ({ index, authToken }) => {
                             strokeWidth="1" />
                     </svg>
                 </a>
-                <a href="#" className="text-gray-400 hover:text-yellow-500 duration-500">
+                <a href="#" className="text-gray-400 hover:text-yellow-500 hover:scale-110 active:scale-100 duration-500">
                     <svg
                         className="w-7 h-7 mt-2 ml-2"
                         viewBox="0 0 44 43">
@@ -171,7 +171,7 @@ const SettingNavigationLayout = ({ index, authToken }) => {
                             strokeWidth="1" />
                     </svg>
                 </a>
-                <a href="#" className="text-gray-400 hover:text-indigo-900 duration-500">
+                <a href="#" className="text-gray-400 hover:text-indigo-900 hover:scale-110 active:scale-100 duration-500">
                     <svg
                         className="w-7 h-7 mt-2 ml-2"
                         viewBox="0 0 43 43">
@@ -188,7 +188,7 @@ const SettingNavigationLayout = ({ index, authToken }) => {
                     </svg>
                 </a>
 
-                <a href="#" className="text-gray-400 hover:text-red-500 duration-500">
+                <a href="#" className="text-gray-400 hover:text-red-500 hover:scale-110 active:scale-100 duration-500">
                     <svg
                         className="w-7 h-7 mt-2 ml-2"
                         viewBox="0 0 43 43">

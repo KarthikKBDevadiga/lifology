@@ -88,15 +88,15 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
-                                                <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
-                                                    University Video
-                                                </h2>
-                                                <div className="relative">
-                                                    <img className=" rounded mt-2" src={jobFamily.thumbnail} />
-                                                    <a href="#" onClick={(event) => { setOpenVideo(true) }}>
+                                            <a href="#" onClick={(event) => { setOpenVideo(true) }}>
+                                                <div className=" bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                                    <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
+                                                        University Video
+                                                    </h2>
+                                                    <div className="group relative shadow hover:shadow-xl hover:scale-110 hover:rotate-6 duration-500">
+                                                        <img className="rounded mt-2 duration-500" src={jobFamily.thumbnail} />
                                                         <svg
-                                                            className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 hover:h-14 hover:w-14  duration-500"
+                                                            className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 duration-500"
                                                             viewBox="0 0 24 24"
                                                             id="vector">
                                                             <path
@@ -109,10 +109,9 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                                                                 d="M 9.5 14.67 L 9.5 9.33 C 9.5 8.54 10.38 8.06 11.04 8.49 L 15.19 11.16 C 15.8 11.55 15.8 12.45 15.19 12.84 L 11.04 15.51 C 10.38 15.94 9.5 15.46 9.5 14.67 Z"
                                                                 fill="#ffffff" />
                                                         </svg>
-                                                    </a>
-
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                             <div className="mt-4 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     Your Fitment

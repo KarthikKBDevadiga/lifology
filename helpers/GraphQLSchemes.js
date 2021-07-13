@@ -336,3 +336,86 @@ query allUniversity($pool_id:Int!,$field_id:Int!){
   }
 }
 `;
+
+export const SchemeGetAssessments = gql`
+query{
+  assessments{
+    id
+    title
+    subtitle
+    dash_cards_image
+    mychild_image
+    instruction
+    icon
+    lang_id
+    assessment_type
+    description
+    assessment_status
+    total_questions
+    attempted_questions
+    questions_count
+    reports{
+      id
+      title
+      image
+      description
+      label_query{
+        id
+        label
+        query
+        description
+      }
+    }
+  }
+}
+`;
+
+export const SchemeGetAssessment = gql`
+query assessmentDetails($id: Int!){
+  assessmentDetails(id : $id){
+    id
+    title
+    subtitle
+    dash_cards_image
+    mychild_image
+    instruction
+    icon
+    lang_id
+    assessment_type
+    description
+    assessment_status
+    total_questions
+    attempted_questions
+    questions_count
+    reports{
+      id
+      title
+      image
+      description
+      label_query{
+        id
+        label
+        query
+        description
+      }
+    }
+  }
+}
+`;
+
+export const SchemeGetAssessmentQuestion = gql`
+query assessmentQuestions($assessment_type:Int!, $assessment_id:Int!){
+  assessmentQuestions(assessment_type:$assessment_type,lang_id:1,assessment_id:$assessment_id){
+    id,
+    assessment_id
+    lang_id
+    question_title
+    total_questions
+    attempted_questions
+    score_options{
+      label
+      score
+    }
+  }
+}
+`;
