@@ -54,6 +54,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
     })
 
     const answer = event => {
+        if (selectedOption.score == null) return
         console.log('answer')
         const assessmentClient = new ApolloClient({
             uri: Constants.baseUrl + "/api/assessment",
