@@ -405,7 +405,7 @@ query assessmentDetails($id: Int!){
 
 export const SchemeGetAssessmentQuestion = gql`
 query assessmentQuestions($assessment_type:Int!, $assessment_id:Int!){
-  assessmentQuestions(assessment_type:$assessment_type,lang_id:1,assessment_id:$assessment_id){
+  assessmentQuestions(assessment_type:$assessment_type,lang_id:1,assessment_id:$assessment_id,platform:"WEB"){
     id,
     assessment_id
     lang_id
