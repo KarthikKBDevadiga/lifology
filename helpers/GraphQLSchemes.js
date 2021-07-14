@@ -419,3 +419,9 @@ query assessmentQuestions($assessment_type:Int!, $assessment_id:Int!){
   }
 }
 `;
+
+export const SchemeAnswerAssessmentQuestion = gql`
+mutation assessmentAnswer($assessment_type:Int!, $assessment_id: Int!, $question_id: Int!, $scores: [Int!]!){
+  assessmentAnswer(assessment_type:$assessment_type,assessment_id:$assessment_id,lang_id:1,question_id:$question_id,scores:$scores)
+}
+`;

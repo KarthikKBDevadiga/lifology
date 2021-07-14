@@ -5,9 +5,9 @@ import {
     ScaleIcon,
 } from '@heroicons/react/outline'
 
-import { queryGraph } from '/helpers/GraphQLCaller'
+import { queryGraph, mutateGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetProfile, SchemeGetAssessmentQuestion } from '/helpers/GraphQLSchemes'
+import { SchemeGetProfile, SchemeGetAssessmentQuestion, SchemeAnswerAssessmentQuestion, SchemeGetAssessment } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
 import classNames from '../../../helpers/classNames'
@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import { SchemeGetAssessment } from '../../../helpers/GraphQLSchemes'
+import LoadingDialog from '/components/dialog/LoadingDialog'
 
 
 import 'keen-slider/keen-slider.min.css'
@@ -31,10 +31,13 @@ const cards = [
 
 export default function Assessment({ profile, assessment, questions, token }) {
     const router = useRouter()
+    const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [questionNo, setQuestionNo] = useState(1)
     const [percentageCompleted, setPercentageCompleted] = useState(1 / questions.length)
+
+    const [selectedQuestion, setSelectedQuestion] = useState({})
     const [selectedOption, setSelectedOption] = useState({})
 
     const [currentSlide, setCurrentSlide] = useState(0)
@@ -45,19 +48,49 @@ export default function Assessment({ profile, assessment, questions, token }) {
         slideChanged(s) {
             setCurrentSlide(s.details().relativeSlide)
             setQuestionNo(s.details().relativeSlide + 1)
-            setPercentageCompleted((s.details().relativeSlide + 1) / assessment.total_questions)
+            setPercentageCompleted((s.details().relativeSlide) / questions.length)
+            setSelectedQuestion(questions[s.details().relativeSlide])
         },
     })
+
+    const answer = event => {
+        console.log('answer')
+        const assessmentClient = new ApolloClient({
+            uri: Constants.baseUrl + "/api/assessment",
+            cache: new InMemoryCache(),
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        })
+        setLoadingDialog(true)
+
+        mutateGraph(assessmentClient,
+            {
+                assessment_type: 2,
+                assessment_id: parseInt(assessment.id),
+                question_id: parseInt(selectedQuestion.id),
+                scores: [parseInt(selectedOption.score)]
+            },
+            SchemeAnswerAssessmentQuestion)
+            .then((res) => {
+                setLoadingDialog(false)
+                slider.next()
+                console.log('Success')
+            }).catch((networkErr) => {
+                setLoadingDialog(false)
+                console.log('Error')
+            });
+    }
 
     return (
         <>
 
-            <MetaLayout title="Career Explorer" description="Career Explorer" />
+            <MetaLayout title={"My Child / " + assessment.title + " Assesment"} description={"My Child / " + assessment.title + " Assesment"} />
             <div className="min-h-screen flex overflow-hidden bg-gray-100 font-roboto">
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={"My Child / " + assessment.title + " Assesment"} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -94,7 +127,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                 ></circle>
                                             </svg>
                                             <div className="absolute flex top-0 left-0 w-full h-full items-center justify-center font-bold text-sm">
-                                                {questionNo}/{assessment.total_questions}
+                                                {questionNo}/{questions.length}
                                             </div>
                                         </div>
 
@@ -114,32 +147,28 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                                             <RadioGroup.Option
                                                                                 key={option.label}
                                                                                 value={option}
-                                                                                className={({ active }) =>
-                                                                                    classNames(
-                                                                                        active ? ' shadow-xl' : 'shadow',
-                                                                                        'mb-4 relative block rounded-lg px-4 py-4 cursor-pointer hover:shadow-xl sm:flex focus:outline-none duration-500'
-                                                                                    )
-                                                                                }
+                                                                                className="my-4 cursor-pointer"
+                                                                            // className={({ active }) =>
+                                                                            //     classNames(
+                                                                            //         active ? ' bg-lgreen' : 'bg-white',
+                                                                            //         'my-4 cursor-pointer '
+                                                                            //     )
+                                                                            // }
                                                                             >
                                                                                 {({ checked }) => (
                                                                                     <>
-                                                                                        <div className="flex items-center">
+                                                                                        <div className={
+                                                                                            classNames(
+                                                                                                checked ? 'bg-lgreen shadow-xl text-white' : 'bg-white shadow text-gray-900',
+                                                                                                "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
+                                                                                            )
+                                                                                        }>
                                                                                             <div className="text-sm z-50">
-                                                                                                <RadioGroup.Label as="p" className=
-                                                                                                    {
-                                                                                                        classNames(checked ? 'text-white' : 'text-gray-900', ' font-medium text-center')
-                                                                                                    }
+                                                                                                <RadioGroup.Label as="div" className=
+                                                                                                    "font-medium text-center"
                                                                                                 >
                                                                                                     {option.label}
                                                                                                 </RadioGroup.Label>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                className={classNames(
-                                                                                                    checked ? 'bg-lgreen shadow-xl' : 'shadow',
-                                                                                                    'absolute -inset-px rounded-lg pointer-events-none'
-                                                                                                )}
-                                                                                                aria-hidden="true"
-                                                                                            >
                                                                                             </div>
                                                                                         </div>
                                                                                     </>
@@ -156,9 +185,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                         </div>
 
                                         <a
-                                            onClick={(e) => {
-                                                slider.next()
-                                            }}
+                                            onClick={answer}
                                             className="w-max mt-4 ml-auto flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-lblue hover:bg-indigo-700 focus:outline-none">
                                             Submit
                                         </a>
@@ -176,9 +203,12 @@ export default function Assessment({ profile, assessment, questions, token }) {
                 </div>
 
             </div >
+            <LoadingDialog showDialog={loadingDialog} setShowDialog={setLoadingDialog} />
+
         </>
     )
 }
+
 
 
 export async function getServerSideProps(context) {
@@ -207,7 +237,6 @@ export async function getServerSideProps(context) {
     console.log(assessment)
     const questions = await queryGraph(assessmentClient, { assessment_type: 2, assessment_id: parseInt(context.params.id) }, SchemeGetAssessmentQuestion)
         .then((res) => {
-            console.log(res.assessmentQuestions)
             return res.assessmentQuestions
         }).catch((networkErr) => {
             return []
