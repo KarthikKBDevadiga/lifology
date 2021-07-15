@@ -21,6 +21,9 @@ import LoadingDialog from '/components/dialog/LoadingDialog'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
+import { DragDropContext, Droppable, Draggable, resetServerContext } from "react-beautiful-dnd";
+
+
 const cards = [
     { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Course and University', href: 'career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
@@ -37,6 +40,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
     const [questionNo, setQuestionNo] = useState(1)
     const [percentageCompleted, setPercentageCompleted] = useState(1 / questions.length)
 
+    const [orderedOptions, setOrderedOptions] = useState(questions)
     const [selectedQuestion, setSelectedQuestion] = useState({})
     const [selectedOption, setSelectedOption] = useState({})
 
@@ -50,12 +54,13 @@ export default function Assessment({ profile, assessment, questions, token }) {
             setQuestionNo(s.details().relativeSlide + 1)
             setPercentageCompleted((s.details().relativeSlide) / questions.length)
             setSelectedQuestion(questions[s.details().relativeSlide])
+            setOrderedOptions(questions[s.details().relativeSlide].score_options)
         },
     })
 
     const answer = event => {
         if (selectedOption.score == null) return
-        console.log('answer')
+        if (assessment.assessment_type == 1) return
         const assessmentClient = new ApolloClient({
             uri: Constants.baseUrl + "/api/assessment",
             cache: new InMemoryCache(),
@@ -64,7 +69,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
             },
         })
         setLoadingDialog(true)
-
         mutateGraph(assessmentClient,
             {
                 assessment_type: 2,
@@ -82,6 +86,45 @@ export default function Assessment({ profile, assessment, questions, token }) {
                 console.log('Error')
             });
     }
+    const getListStyle = isDraggingOver => ({
+        background: isDraggingOver ? "lightblue" : "lightgrey",
+        padding: 8,
+        width: 250
+    });
+    const getItemStyle = (isDragging, draggableStyle) => ({
+        // some basic styles to make the items look a bit nicer
+        userSelect: "none",
+        padding: 16,
+        margin: `0 0 8px 0`,
+
+        // change background colour if dragging
+        background: isDragging ? "lightgreen" : "grey",
+
+        // styles we need to apply on draggables
+        ...draggableStyle
+    });
+    const reorder = (list, startIndex, endIndex) => {
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+
+        return result;
+    };
+    const onDragEnd = (result) => {
+        // dropped outside the list
+        if (!result.destination) {
+            return;
+        }
+
+        const items = reorder(
+            orderedOptions,
+            result.source.index,
+            result.destination.index
+        );
+
+        setOrderedOptions(items)
+    }
+    resetServerContext()
 
     return (
         <>
@@ -141,43 +184,68 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                                 <div className="mb-8">
                                                                     <div className="font-bold text-lg">{question.question_title}</div>
                                                                 </div>
-                                                                <RadioGroup value={selectedOption} onChange={setSelectedOption}>
-                                                                    <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
-                                                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                                                                        {question.score_options.map((option) => (
-                                                                            <RadioGroup.Option
-                                                                                key={option.label}
-                                                                                value={option}
-                                                                                className="my-4 cursor-pointer"
-                                                                            // className={({ active }) =>
-                                                                            //     classNames(
-                                                                            //         active ? ' bg-lgreen' : 'bg-white',
-                                                                            //         'my-4 cursor-pointer '
-                                                                            //     )
-                                                                            // }
-                                                                            >
-                                                                                {({ checked }) => (
-                                                                                    <>
-                                                                                        <div className={
-                                                                                            classNames(
-                                                                                                checked ? 'bg-lgreen shadow-xl text-white' : 'bg-white shadow text-gray-900',
-                                                                                                "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
-                                                                                            )
-                                                                                        }>
-                                                                                            <div className="text-sm z-50">
-                                                                                                <RadioGroup.Label as="div" className=
-                                                                                                    "font-medium text-center"
-                                                                                                >
-                                                                                                    {option.label}
-                                                                                                </RadioGroup.Label>
+                                                                {
+                                                                    assessment.assessment_type == 2 ? <RadioGroup value={selectedOption} onChange={setSelectedOption}>
+                                                                        <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+                                                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+                                                                            {question.score_options.map((option) => (
+                                                                                <RadioGroup.Option
+                                                                                    key={option.label}
+                                                                                    value={option}
+                                                                                    className="my-4 cursor-pointer"
+                                                                                >
+                                                                                    {({ checked }) => (
+                                                                                        <>
+                                                                                            <div className={
+                                                                                                classNames(
+                                                                                                    checked ? 'bg-lgreen shadow-xl text-white' : 'bg-white shadow text-gray-900',
+                                                                                                    "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
+                                                                                                )
+                                                                                            }>
+                                                                                                <div className="text-base z-50">
+                                                                                                    <RadioGroup.Label as="div" className=
+                                                                                                        "font-medium text-center"
+                                                                                                    >
+                                                                                                        {option.label}
+                                                                                                    </RadioGroup.Label>
+                                                                                                </div>
                                                                                             </div>
+                                                                                        </>
+                                                                                    )}
+                                                                                </RadioGroup.Option>
+                                                                            ))}
+                                                                        </div>
+                                                                    </RadioGroup>
+                                                                        : <>
+                                                                            <DragDropContext onDragEnd={onDragEnd}>
+                                                                                <Droppable droppableId="droppable">
+                                                                                    {(provided, snapshot) => (
+                                                                                        <div
+                                                                                            className=" "
+                                                                                            {...provided.droppableProps}
+                                                                                            ref={provided.innerRef}
+                                                                                        >
+                                                                                            {orderedOptions.map((item, index) => (
+                                                                                                <Draggable key={item.label} draggableId={item.label + "" + item.score + "" + index} index={index}>
+                                                                                                    {(provided, snapshot) => (
+                                                                                                        <div
+                                                                                                            className="shadow p-4 mb-4 bg-white"
+                                                                                                            ref={provided.innerRef}
+                                                                                                            {...provided.draggableProps}
+                                                                                                            {...provided.dragHandleProps}
+                                                                                                        >
+                                                                                                            {item.label}
+                                                                                                        </div>
+                                                                                                    )}
+                                                                                                </Draggable>
+                                                                                            ))}
+                                                                                            {provided.placeholder}
                                                                                         </div>
-                                                                                    </>
-                                                                                )}
-                                                                            </RadioGroup.Option>
-                                                                        ))}
-                                                                    </div>
-                                                                </RadioGroup>
+                                                                                    )}
+                                                                                </Droppable>
+                                                                            </DragDropContext>
+                                                                        </>
+                                                                }
                                                             </div>
                                                         )
                                                     })
@@ -236,7 +304,7 @@ export async function getServerSideProps(context) {
             return {}
         })
     console.log(assessment)
-    const questions = await queryGraph(assessmentClient, { assessment_type: 2, assessment_id: parseInt(context.params.id) }, SchemeGetAssessmentQuestion)
+    const questions = await queryGraph(assessmentClient, { assessment_type: assessment.assessment_type, assessment_id: parseInt(context.params.id) }, SchemeGetAssessmentQuestion)
         .then((res) => {
             return res.assessmentQuestions
         }).catch((networkErr) => {

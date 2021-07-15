@@ -56,7 +56,7 @@ export default function MTIAssessment({ profile, assessment, token }) {
                                                     <li className="text-sm">Arrange the choices based on your preference with respect to given scale</li>
                                                     <li className="text-sm">Move the choices using either drag and drop or up down the buttons in the right side of the choices</li>
                                                     <li className="text-sm">The Scale contains four parameters
-                                                        <ul className={styles.subgroup} >
+                                                        <ul className={styles.subgroup}  >
                                                             <li className="text-sm">Most like me</li>
                                                             <li className="text-sm">Tends to be like me</li>
                                                             <li className="text-sm">Tends to be less like me</li>
