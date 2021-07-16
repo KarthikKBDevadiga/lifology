@@ -21,40 +21,24 @@ import classNames from '../../helpers/classNames'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
-const responsive = {
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 4,
-        slidesToSlide: 3 // optional, default to 1.
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 3,
-        slidesToSlide: 2 // optional, default to 1.
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1,
-        slidesToSlide: 1 // optional, default to 1.
-    }
-}
+
 
 const headerSlide = [
     {
         id: 1,
         image: "/img/test.png",
-        title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open 1"
+        title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open"
     },
     {
         id: 2,
         image: "/img/test.png",
-        title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open 2"
+        title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open"
     },
 
     {
         id: 3,
         image: "/img/test.png",
-        title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open 3"
+        title: "Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open"
     }
 ]
 
@@ -81,15 +65,12 @@ export default function CareerVideo({ videoCats, profile, token }) {
         breakpoints: {
             "(min-width: 464px)": {
                 slidesPerView: 1,
-                mode: "free-snap",
             },
             "(min-width: 768px)": {
                 slidesPerView: 2,
-                mode: "free-snap",
             },
             "(min-width: 1200px)": {
                 slidesPerView: 4,
-                mode: "free-snap",
             },
         },
     })
@@ -171,7 +152,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col">
-                                    <div className="m-4 align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+                                    <div className="m-4 align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="flex-1 flex">
                                             <div className="sm:flex h-full w-full p-4">
 
@@ -293,7 +274,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                 </div>
                                             </a>
                                             <div className="navigation-wrapper w-full">
-                                                <div ref={sliderRef1} className="keen-slider px-2">
+                                                <div ref={sliderRef1} className="keen-slider">
                                                     {videoCats[0].videos.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
@@ -430,7 +411,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                 </div>
                                             </a>
                                             <div className="navigation-wrapper w-full">
-                                                <div ref={sliderRef2} className="keen-slider px-2">
+                                                <div ref={sliderRef2} className="keen-slider">
                                                     {videoCats[1].videos.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
@@ -565,7 +546,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                 </div>
                                             </a>
                                             <div className="navigation-wrapper w-full">
-                                                <div ref={sliderRef3} className="keen-slider px-2">
+                                                <div ref={sliderRef3} className="keen-slider">
                                                     {videoCats[2].videos.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
@@ -700,7 +681,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                 </div>
                                             </a>
                                             <div className="navigation-wrapper w-full">
-                                                <div ref={sliderRef4} className="keen-slider px-2">
+                                                <div ref={sliderRef4} className="keen-slider">
                                                     {videoCats[3].videos.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
