@@ -195,7 +195,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                 src="/img/logoBlue.png"
                                 alt="Lifology Logo"
                             />
-                            <span className="text-white self-center font-bold pl-4 text-xl tracking-wide text-lblue">LIFOLOGY</span>
+                            <span className="text-white self-center font-bold pl-2 text-xl tracking-wide text-lblue">LIFOLOGY</span>
                         </div>
                         <nav className="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto relative" aria-label="Sidebar">
                             <div className="px-4 space-y-1 mt-4">

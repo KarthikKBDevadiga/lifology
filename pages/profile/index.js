@@ -2,17 +2,17 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 import { Dialog, Transition } from '@headlessui/react'
-import { mutateGraph, queryGraph } from '../helpers/GraphQLCaller'
+import { mutateGraph, queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeEditProfile, SchemeGetProfile } from '../helpers/GraphQLSchemes'
-import Constants from '../helpers/Constants.js'
-import useLocalStorage from '../helpers/useLocalStorage'
+import { SchemeEditProfile, SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import Constants from '/helpers/Constants.js'
+import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
-import NavigationLayout from '../components/NavigationLayout'
-import HeaderLayout from '../components/HeaderLayout'
-import ProgressBar from '../components/ProgressBar'
+import NavigationLayout from '/components/NavigationLayout'
+import HeaderLayout from '/components/HeaderLayout'
+import ProgressBar from '/components/ProgressBar'
 import { Fragment } from 'react'
-import MetaLayout from '../components/MetaLayout'
+import MetaLayout from '/components/MetaLayout'
 
 export default function Profile({ profile, token }) {
     const router = useRouter()
@@ -40,7 +40,7 @@ export default function Profile({ profile, token }) {
                                 <div className="relative">
                                     <label className="text-black pb-2 block text-xl left-0 absolute">Personal Details</label>
                                     <Link href={{
-                                        pathname: 'edit_personal_details',
+                                        pathname: 'profile/edit_personal_details',
                                         query: { token: token }
                                     }}>
                                         <a
@@ -107,10 +107,15 @@ export default function Profile({ profile, token }) {
 
                                 <div className="relative mt-4">
                                     <label className="text-black pb-2 block text-xl left-0 absolute">Child Details</label>
-                                    <button
-                                        className="py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none absolute right-0 duration-500">
-                                        Edit
-                                    </button>
+                                    <Link href={{
+                                        pathname: 'profile/edit_child_details',
+                                        query: { token: token }
+                                    }}>
+                                        <a
+                                            className="py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none absolute right-0 duration-500">
+                                            Edit
+                                        </a>
+                                    </Link>
                                 </div>
 
                                 <div className="mt-16 w-12 h-0.5 rounded bg-lblue"></div>

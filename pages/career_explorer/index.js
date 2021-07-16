@@ -12,7 +12,7 @@ import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import MetaLayout from '../components/MetaLayout'
+import MetaLayout from '/components/MetaLayout'
 
 const cards = [
     { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },

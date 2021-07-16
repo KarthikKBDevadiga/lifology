@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 import {
     DotsVerticalIcon,
     SearchIcon,
@@ -46,16 +46,41 @@ export default function CareerVideo({ videoCats, profile, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
-    const [currentHeaderSlide, setCurrentHeaderSlide] = useState(0)
+    const [openFilter, setOpenFilter] = useState(false)
+
+    const [headerPause, setHeaderPause] = useState(false)
+    const timer = useRef()
+
     const [headerSliderRef, headerSlider] = useKeenSlider({
         initial: 0,
         loop: true,
         controls: true,
-        duration: 500,
-        slideChanged(s) {
-            setCurrentHeaderSlide(s.details().relativeSlide)
+        duration: 1000,
+        dragStart: () => {
+            setHeaderPause(true)
+        },
+        dragEnd: () => {
+            setHeaderPause(false)
         },
     })
+    useEffect(() => {
+        headerSliderRef.current.addEventListener("mouseover", () => {
+            setHeaderPause(true)
+        })
+        headerSliderRef.current.addEventListener("mouseout", () => {
+            setHeaderPause(false)
+        })
+    }, [headerSliderRef])
+    useEffect(() => {
+        timer.current = setInterval(() => {
+            if (!headerPause && headerSlider) {
+                headerSlider.next()
+            }
+        }, 2000)
+        return () => {
+            clearInterval(timer.current)
+        }
+    }, [headerPause, headerSlider])
 
     const [sliderRef1, slider1] = useKeenSlider({
         initial: 0,
@@ -82,15 +107,12 @@ export default function CareerVideo({ videoCats, profile, token }) {
         breakpoints: {
             "(min-width: 464px)": {
                 slidesPerView: 1,
-                mode: "free-snap",
             },
             "(min-width: 768px)": {
                 slidesPerView: 2,
-                mode: "free-snap",
             },
             "(min-width: 1200px)": {
                 slidesPerView: 4,
-                mode: "free-snap",
             },
         },
     })
@@ -102,15 +124,12 @@ export default function CareerVideo({ videoCats, profile, token }) {
         breakpoints: {
             "(min-width: 464px)": {
                 slidesPerView: 1,
-                mode: "free-snap",
             },
             "(min-width: 768px)": {
                 slidesPerView: 2,
-                mode: "free-snap",
             },
             "(min-width: 1200px)": {
                 slidesPerView: 4,
-                mode: "free-snap",
             },
         },
     })
@@ -122,15 +141,12 @@ export default function CareerVideo({ videoCats, profile, token }) {
         breakpoints: {
             "(min-width: 464px)": {
                 slidesPerView: 1,
-                mode: "free-snap",
             },
             "(min-width: 768px)": {
                 slidesPerView: 2,
-                mode: "free-snap",
             },
             "(min-width: 1200px)": {
                 slidesPerView: 4,
-                mode: "free-snap",
             },
         },
     })
@@ -152,33 +168,40 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col">
-                                    <div className="m-4 align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
-                                        <div className="flex-1 flex">
-                                            <div className="sm:flex h-full w-full p-4">
 
-                                                <div className="w-full">
-                                                    <form className="w-full flex md:ml-0" action="#" method="GET">
-                                                        <label htmlFor="search_field" className="sr-only">
-                                                            Search
-                                                        </label>
-                                                        <div className="relative w-full text-gray-400 focus-within:text-gray-600 rounded bg-gray-100">
-                                                            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none" aria-hidden="true">
-                                                                <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                                                            </div>
-                                                            <input
-                                                                id="search_field"
-                                                                name="search_field"
-                                                                className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
-                                                                placeholder="Search Any Videos"
-                                                                type="search"
-                                                            />
-                                                        </div>
-                                                    </form>
+                                    <div className="sm:flex sm:items-start sm:justify-between m-4">
+                                        <div className="w-full rounded shadow h-full text-sm bg-white">
+                                            <div className="flex left-4  right-24 focus-within:text-gray-600 ">
+                                                <div className="p-3 items-center pointer-events-none" aria-hidden="true">
+                                                    <SearchIcon className="h-5 w-5" aria-hidden="true" />
                                                 </div>
+                                                <input
+                                                    id="search_field"
+                                                    name="search_field"
+                                                    className="block w-full h-full p-3 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
+                                                    placeholder="Search Any Videos"
+                                                    type="search"
+                                                />
                                             </div>
-
+                                        </div>
+                                        <div className="mt-4 sm:mt-0 sm:ml-4 sm:flex-shrink-0 sm:flex sm:items-center">
+                                            <a onClick={(event) => {
+                                                setOpenFilter(true)
+                                            }}>
+                                                <div
+                                                    className="cursor-pointer inline-flex items-center p-3 border border-transparent shadow-sm font-medium rounded-md text-white bg-lblue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                                                >
+                                                    <div>Filter</div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                                    </svg>
+                                                </div>
+                                            </a>
                                         </div>
                                     </div>
+
+
+
 
                                     <div className="relative flex items-center w-full">
 
@@ -798,6 +821,73 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
 
             </div >
+            <Transition.Root show={openFilter} as={Fragment}>
+                <Dialog
+                    as="div"
+                    static
+                    className="fixed z-10 inset-0 overflow-y-auto"
+                    open={openFilter}
+                    onClose={setOpenFilter}
+                >
+                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                        </Transition.Child>
+
+                        {/* This element is to trick the browser into centering the modal contents. */}
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                            &#8203;
+                        </span>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            enterTo="opacity-100 translate-y-0 sm:scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                            <div className="inline-block align-bottom bg-white rounded-lg  text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-4">
+                                <div className="sm:flex sm:items-start">
+                                    <div className="text-center sm:text-left w-full">
+                                        <Dialog.Title as="h3" className="w-full text-lg leading-6 font-medium text-gray-900 text-center">
+                                            Filter
+                                        </Dialog.Title>
+                                        <div className="mt-2">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-5 sm:mt-4 sm:flex">
+                                    <button
+                                        type="button"
+                                        className="flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-700 hover:text-white focus:outline-none border border-indigo-700 cursor-pointer duration-500"
+                                        onClick={() => setOpenFilter(false)}
+                                    >
+                                        Clear
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="ml-4 flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
+                                        onClick={() => setOpenFilter(false)}
+                                    >
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </Transition.Child>
+                    </div>
+                </Dialog>
+            </Transition.Root>
         </>
     )
 }

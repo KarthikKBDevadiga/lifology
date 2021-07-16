@@ -1,17 +1,17 @@
 import { useState } from 'react'
 
 import { Dialog, Transition } from '@headlessui/react'
-import { mutateGraph, queryGraph } from '../helpers/GraphQLCaller'
+import { mutateGraph, queryGraph } from '../../helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeEditProfile, SchemeGetProfile } from '../helpers/GraphQLSchemes'
-import Constants from '../helpers/Constants.js'
-import useLocalStorage from '../helpers/useLocalStorage'
+import { SchemeEditProfile, SchemeGetProfile } from '../../helpers/GraphQLSchemes'
+import Constants from '../../helpers/Constants.js'
+import useLocalStorage from '../../helpers/useLocalStorage'
 import { useRouter } from 'next/router'
-import NavigationLayout from '../components/NavigationLayout'
-import HeaderLayout from '../components/HeaderLayout'
-import ProgressBar from '../components/ProgressBar'
+import NavigationLayout from '../../components/NavigationLayout'
+import HeaderLayout from '../../components/HeaderLayout'
+import ProgressBar from '../../components/ProgressBar'
 import { Fragment } from 'react'
-import MetaLayout from '../components/MetaLayout'
+import MetaLayout from '../../components/MetaLayout'
 
 export default function EditPersonalDetails({ profile, token }) {
     const router = useRouter()
@@ -63,7 +63,7 @@ export default function EditPersonalDetails({ profile, token }) {
         });
         await mutateGraph(client,
             {
-                profile_image: profilePic == "" ? profilePic.profile_image : profilePic,
+                profile_image: profilePic == "" ? profile.profile_image : profilePic,
                 name: event.target.name.value,
                 email: event.target.email.value,
                 country_abbr: '91',
