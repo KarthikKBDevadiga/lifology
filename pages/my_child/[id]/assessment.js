@@ -149,6 +149,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                             <div className="w-2/4 font-bold text-sm text-right" >View Instructions</div>
                                         </div>
 
+
                                         <div className="relative w-14 h-14 z-50 ml-auto">
                                             <svg className="w-full h-full" >
                                                 <circle cx="24" cy="24" r="24" style={{
@@ -175,6 +176,8 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                             </div>
                                         </div>
 
+
+
                                         <div className="navigation-wrapper">
                                             <div ref={sliderRef} className="keen-slider">
                                                 {
@@ -182,74 +185,86 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                         return (
                                                             <div className="keen-slider__slide number-slide1 py-4 px-2">
                                                                 <div className="mb-8">
-                                                                    <div className="font-bold text-lg">{question.question_title}</div>
+                                                                    <div className="font-bold text-lg ml-5">{question.question_title}</div>
                                                                 </div>
-                                                                {
-                                                                    assessment.assessment_type == 2 ? <RadioGroup value={selectedOption} onChange={setSelectedOption}>
-                                                                        <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
-                                                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                                                                            {question.score_options.map((option) => (
-                                                                                <RadioGroup.Option
-                                                                                    key={option.label}
-                                                                                    value={option}
-                                                                                    className="my-4 cursor-pointer"
-                                                                                >
-                                                                                    {({ checked }) => (
-                                                                                        <>
-                                                                                            <div className={
-                                                                                                classNames(
-                                                                                                    checked ? 'bg-lgreen shadow-xl text-white' : 'bg-white shadow text-gray-900',
-                                                                                                    "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
-                                                                                                )
-                                                                                            }>
-                                                                                                <div className="text-base z-50">
-                                                                                                    <RadioGroup.Label as="div" className=
-                                                                                                        "font-medium text-center"
-                                                                                                    >
-                                                                                                        {option.label}
-                                                                                                    </RadioGroup.Label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </>
-                                                                                    )}
-                                                                                </RadioGroup.Option>
-                                                                            ))}
-                                                                        </div>
-                                                                    </RadioGroup>
-                                                                        : <>
-                                                                            <DragDropContext onDragEnd={onDragEnd}>
-                                                                                <Droppable droppableId="droppable">
-                                                                                    {(provided, snapshot) => (
-                                                                                        <div
-                                                                                            className=" "
-                                                                                            {...provided.droppableProps}
-                                                                                            ref={provided.innerRef}
-                                                                                        >
-                                                                                            {orderedOptions.map((item, index) => (
-                                                                                                <Draggable key={item.label} draggableId={item.label + "" + item.score + "" + index} index={index}>
-                                                                                                    {(provided, snapshot) => (
-                                                                                                        <div
-                                                                                                            className="shadow p-4 mb-4 bg-white"
-                                                                                                            ref={provided.innerRef}
-                                                                                                            {...provided.draggableProps}
-                                                                                                            {...provided.dragHandleProps}
-                                                                                                        >
-                                                                                                            {item.label}
+                                                                <div className="flex">
+                                                                    {
+                                                                        assessment.assessment_type == 2 ?
+                                                                            <>
+                                                                                <RadioGroup value={selectedOption} onChange={setSelectedOption}>
+                                                                                    <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+                                                                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+                                                                                        {question.score_options.map((option) => (
+                                                                                            <RadioGroup.Option
+                                                                                                key={option.label}
+                                                                                                value={option}
+                                                                                                className="my-4 cursor-pointer"
+                                                                                            >
+                                                                                                {({ checked }) => (
+                                                                                                    <>
+                                                                                                        <div className={
+                                                                                                            classNames(
+                                                                                                                checked ? 'bg-lgreen shadow-xl text-white' : 'bg-white shadow text-gray-900',
+                                                                                                                "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
+                                                                                                            )
+                                                                                                        }>
+                                                                                                            <div className="text-base z-50">
+                                                                                                                <RadioGroup.Label as="div" className=
+                                                                                                                    "font-medium text-center"
+                                                                                                                >
+                                                                                                                    {option.label}
+                                                                                                                </RadioGroup.Label>
+                                                                                                            </div>
                                                                                                         </div>
-                                                                                                    )}
-                                                                                                </Draggable>
-                                                                                            ))}
-                                                                                            {provided.placeholder}
-                                                                                        </div>
-                                                                                    )}
-                                                                                </Droppable>
-                                                                            </DragDropContext>
-                                                                        </>
-                                                                }
+                                                                                                    </>
+                                                                                                )}
+                                                                                            </RadioGroup.Option>
+                                                                                        ))}
+                                                                                    </div>
+                                                                                </RadioGroup>
+                                                                            </> : <>
+                                                                                <img className="mr-5 " src="/img/assessment_left.svg"></img>
+                                                                                <DragDropContext onDragEnd={onDragEnd}>
+                                                                                    <Droppable droppableId="droppable">
+                                                                                        {(provided, snapshot) => (
+                                                                                            <div
+                                                                                                className=" "
+                                                                                                {...provided.droppableProps}
+                                                                                                ref={provided.innerRef}
+                                                                                            >
+                                                                                                {orderedOptions.map((item, index) => (
+                                                                                                    <Draggable key={item.label} draggableId={item.label + "" + item.score + "" + index} index={index}>
+                                                                                                        {(provided, snapshot) => (
+                                                                                                            <div
+                                                                                                                className="shadow p-4 mb-4 bg-white"
+                                                                                                                ref={provided.innerRef}
+                                                                                                                {...provided.draggableProps}
+                                                                                                                {...provided.dragHandleProps}
+                                                                                                            >
+                                                                                                                {item.label}
+                                                                                                            </div>
+                                                                                                        )}
+                                                                                                    </Draggable>
+                                                                                                ))}
+                                                                                                {provided.placeholder}
+                                                                                            </div>
+                                                                                        )}
+                                                                                    </Droppable>
+                                                                                </DragDropContext>
+
+                                                                                <div className="flex flex-col">
+                                                                                    <img className="ml-32 mt-20 w-10 h-20" src="/img/assessment_right.svg"></img>
+                                                                                    <p className="mt-2 ml-20 text-xs font-light">Re Order (Drag & Drop) the choices bases <br /> on your preferences </p>
+                                                                                </div>
+                                                                            </>
+                                                                    }
+
+                                                                </div>
                                                             </div>
                                                         )
                                                     })
                                                 }
+
                                             </div>
                                         </div>
 
