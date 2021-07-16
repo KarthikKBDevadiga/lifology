@@ -152,7 +152,7 @@ export default function BlueZone({ profile, token }) {
                                                             </a>
                                                         </span>
                                                     </div>
-                                                    {openPurple && <div className="border mb-4 p-2 w-auto items-center font-medium text-sm block truncate">Purple Zone Data</div>}
+                                                    {openPurple && <div className="border p-2 w-auto items-center font-medium text-sm block truncate">Purple Zone Data</div>}
 
 
                                                 </div>

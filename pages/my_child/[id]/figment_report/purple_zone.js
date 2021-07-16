@@ -134,7 +134,7 @@ export default function PurpleZone({ profile, token }) {
 
 
                                                     <div className="relative w-full border rounded-md shadow-sm pl-3 pr-10 py-2 mt-4 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " style={{ background: '#9F2DC3' }}>
-                                                        <span className="font-medium block truncate">Purple Zone</span>
+                                                        <span className="font-medium block truncate text-white">Purple Zone</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
                                                             <a onClick={(event) => setPurpleOpen(!openPurple)}>
                                                                 <div className="p-1 bg-white  rounded-full">
@@ -152,7 +152,7 @@ export default function PurpleZone({ profile, token }) {
                                                             </a>
                                                         </span>
                                                     </div>
-                                                    {openPurple && <div className="border mb-4 p-2 w-auto items-center font-medium text-sm block truncate">Purple Zone Data</div>}
+                                                    {openPurple && <div className="border p-2 w-auto items-center font-medium text-sm block truncate">Purple Zone Data</div>}
 
 
                                                 </div>
@@ -164,32 +164,34 @@ export default function PurpleZone({ profile, token }) {
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-2">
 
                                             <div className="bg-white rounded-md shadow h-auto p-4">
-                                                <div className="text-white rounded-md mb-4" style={{ background: "#9F2DC3" }}>
-                                                    <p className="p-5"><span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 ">90%</span>Tourism & Hospitality</p>
-                                                    <p className="text-sm pl-5 pb-3">Personality Match</p>
-                                                    <div class="relative ml-5 mr-5  pt-1">
+                                                <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#9F2DC3" }}>
+                                                    <p className="p-4">
+                                                        <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">90%</span>Tourism & Hospitality
+                                                    </p>
+                                                    <p className="text-sm pl-4 pb-2">Personality Match</p>
+                                                    <div class="relative ml-4 mr-4">
                                                         <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-purple-900">
                                                             <div style={{ width: '30%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
                                                     </div>
-                                                    <p className="text-sm pl-5 pb-3">Orientation Match</p>
-                                                    <div class="relative ml-5 mr-5 pt-1 pb-2">
-                                                        <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-purple-900">
+                                                    <p className="text-sm pl-4 pb-2">Orientation Match</p>
+                                                    <div class="relative ml-4 mr-4">
+                                                        <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-900">
                                                             <div style={{ width: '70%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div className="text-white pb-4 rounded-md" style={{ background: "#9F2DC3" }}>
-                                                    <p className="p-4"><span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 ">90%</span>Tourism & Hospitality</p>
-                                                    <p className="text-sm pl-4 pb-3">Personality Match</p>
-                                                    <div class="relative ml-5 mr-5  pt-1">
+                                                    <p className="p-4"><span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">90%</span>Tourism & Hospitality</p>
+                                                    <p className="text-sm pl-4 pb-2">Personality Match</p>
+                                                    <div class="relative ml-4 mr-4">
                                                         <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-purple-900">
                                                             <div style={{ width: '30%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
                                                     </div>
-                                                    <p className="text-sm pl-5 pb-3">Orientation Match</p>
-                                                    <div class="relative ml-5  mr-5 pt-1">
+                                                    <p className="text-sm pl-4 pb-2">Orientation Match</p>
+                                                    <div class="relative ml-4 mr-4">
                                                         <div className="overflow-hidden h-2  text-xs flex rounded bg-purple-900">
                                                             <div style={{ width: '70%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
