@@ -172,6 +172,22 @@ query{
 }
 `;
 
+export const SchemeGetUniversityState = gql`
+query{
+  universityState(country:"India"){
+      state
+  }
+}
+`;
+
+export const SchemeGetUniversityCity = gql`
+query{
+  universityCity(state:"Uttar Pradesh"){
+      city
+  }
+}
+`;
+
 export const SchemeGetAllUniversity = gql`
 query{
   allUniversity(lang_id:1,filter:{pool_id:1,field_id:1,ranking:"Times Rank"}){
