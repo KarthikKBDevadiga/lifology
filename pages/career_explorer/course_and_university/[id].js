@@ -298,6 +298,7 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {}
         })
+    console.log(university)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
