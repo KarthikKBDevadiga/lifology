@@ -55,7 +55,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white shadow sm:rounded-lg p-4">
                                                     <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
-                                                        <iframe title="vimeo-player" src={"https://player.vimeo.com/video/" + getVideoId(video.video)} className="absolute rounded-lg top-0 left-0 w-full h-full" frameborder="0" allowfullscreen>
+                                                        <iframe title="vimeo-player" src={"https://player.vimeo.com/video/" + getVideoId(video.video)} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
 
                                                         </iframe>
                                                     </div>
@@ -102,14 +102,14 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4" style={{ height: '100vh', overflow: 'auto' }}  >
+                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4" style={{ height: '100vh', overflow: 'auto' }} >
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     Recommended Videos
                                                 </h2>
                                                 {recommended.map((r) => (
                                                     <Link
                                                         href={{
-                                                            pathname: '' + r.id,
+                                                            pathname: '/career_explorer/career_video/' + r.id,
                                                             query: { token: token }
                                                         }}>
                                                         <a>

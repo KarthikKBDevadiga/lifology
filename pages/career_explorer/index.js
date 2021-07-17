@@ -15,11 +15,11 @@ import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 
 const cards = [
-    { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Course and University', href: 'career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Scholarship Program', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Magazine', href: 'career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Career Videos', href: 'career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
+    { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
+    { name: 'Course and University', href: '/career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
+    { name: 'Scholarship Program', href: '/career_explorer', icon: ScaleIcon, amount: '$30,659.45' },
+    { name: 'Magazine', href: '/career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
+    { name: 'Career Videos', href: '/career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
 ]
 
 export default function CareerExplorer({ profile, token }) {
@@ -62,7 +62,7 @@ export default function CareerExplorer({ profile, token }) {
                                                         <Link
                                                             href={{
                                                                 pathname: card.href,
-                                                                query: { token: authToken }
+                                                                query: { token: token }
                                                             }}>
                                                             <a>
                                                                 <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-lyellow">Explore</div>

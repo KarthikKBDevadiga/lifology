@@ -248,7 +248,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                                                     id="path"
                                                                                     d="M 14 26 C 10.819 26 7.764 24.735 5.515 22.485 C 3.265 20.236 2 17.181 2 14 C 2 10.819 3.265 7.764 5.515 5.515 C 7.764 3.265 10.819 2 14 2 C 17.181 2 20.236 3.265 22.485 5.515 C 24.735 7.764 26 10.819 26 14 C 26 17.181 24.735 20.236 22.485 22.485 C 20.236 24.735 17.181 26 14 26 Z M 12.346 9.7 C 12.249 9.636 12.132 9.608 12.017 9.624 C 11.901 9.639 11.795 9.696 11.719 9.783 C 11.642 9.871 11.6 9.984 11.6 10.1 L 11.6 17.9 C 11.6 18.016 11.642 18.129 11.719 18.217 C 11.795 18.304 11.901 18.361 12.017 18.376 C 12.132 18.392 12.249 18.364 12.346 18.3 L 18.2 14.4 C 18.288 14.341 18.355 14.255 18.389 14.155 C 18.423 14.054 18.423 13.946 18.389 13.845 C 18.355 13.745 18.288 13.659 18.2 13.6 L 12.345 9.7 Z"
                                                                                     fill="#ffc400"
-                                                                                    stroke-width="1" />
+                                                                                    strokeWidth="1" />
                                                                             </svg>
 
                                                                             Watch Video
@@ -301,8 +301,8 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                     {videoCats[0].videos.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
-                                                                pathname: 'career_video/' + card.id,
-                                                                query: { token: authToken }
+                                                                pathname: '/career_explorer/career_video/' + card.id,
+                                                                query: { token: token }
                                                             }} key={card.id}>
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
@@ -438,8 +438,8 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                     {videoCats[1].videos.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
-                                                                pathname: 'career_video/' + card.id,
-                                                                query: { token: authToken }
+                                                                pathname: '/career_explorer/career_video/' + card.id,
+                                                                query: { token: token }
                                                             }} key={card.id}>
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
@@ -573,8 +573,8 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                     {videoCats[2].videos.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
-                                                                pathname: 'career_video/' + card.id,
-                                                                query: { token: authToken }
+                                                                pathname: '/career_explorer/career_video/' + card.id,
+                                                                query: { token: token }
                                                             }} key={card.id}>
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
@@ -708,8 +708,8 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                     {videoCats[3].videos.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
-                                                                pathname: 'career_video/' + card.id,
-                                                                query: { token: authToken }
+                                                                pathname: '/career_explorer/career_video/' + card.id,
+                                                                query: { token: token }
                                                             }} key={card.id}>
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
