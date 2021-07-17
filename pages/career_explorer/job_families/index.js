@@ -3,15 +3,15 @@ import { useState } from 'react'
 import {
     SearchIcon,
 } from '@heroicons/react/solid'
-import { queryGraph } from '../../helpers/GraphQLCaller'
+import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '../../helpers/GraphQLSchemes'
-import Constants from '../../helpers/Constants.js'
-import useLocalStorage from '../../helpers/useLocalStorage'
+import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import Constants from '/helpers/Constants.js'
+import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
-import NavigationLayout from '../../components/NavigationLayout'
-import HeaderLayout from '../../components/HeaderLayout'
-import MetaLayout from '../../components/MetaLayout'
+import NavigationLayout from '/components/NavigationLayout'
+import HeaderLayout from '/components/HeaderLayout'
+import MetaLayout from '/components/MetaLayout'
 
 export default function JobFamilies({ families, profile, token }) {
     const router = useRouter()

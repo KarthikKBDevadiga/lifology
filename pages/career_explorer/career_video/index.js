@@ -6,17 +6,17 @@ import {
     ArrowRightIcon
 } from '@heroicons/react/solid'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import { queryGraph } from '../../helpers/GraphQLCaller'
+import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile, SchemeGetVideos } from '../../helpers/GraphQLSchemes'
-import Constants from '../../helpers/Constants.js'
-import useLocalStorage from '../../helpers/useLocalStorage'
-import NavigationLayout from '../../components/NavigationLayout'
-import HeaderLayout from '../../components/HeaderLayout'
-import MetaLayout from '../../components/MetaLayout'
+import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile, SchemeGetVideos } from '/helpers/GraphQLSchemes'
+import Constants from '/helpers/Constants.js'
+import useLocalStorage from '/helpers/useLocalStorage'
+import NavigationLayout from '/components/NavigationLayout'
+import HeaderLayout from '/components/HeaderLayout'
+import MetaLayout from '/components/MetaLayout'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import classNames from '../../helpers/classNames'
+import classNames from '/helpers/classNames'
 
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'

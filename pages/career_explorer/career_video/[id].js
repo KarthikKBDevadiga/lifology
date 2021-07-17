@@ -102,7 +102,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4" style={{ height: '100vh', overflow: 'auto' }}  >
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     Recommended Videos
                                                 </h2>

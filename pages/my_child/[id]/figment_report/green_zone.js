@@ -57,9 +57,9 @@ export default function GreenZone({ profile, token }) {
                                                         <div className="bg-black w-20 rounded-md">
                                                             <p className="text-white p-2 px-2">CAREER FITMENT</p>
                                                         </div>
-                                                        <p className="ml-4 mr-4 font-medium">Career Fitment
-                                                            <h6 className="text-xs font-normal">Do you think your child has mastery over their immediate environment</h6>
-                                                        </p>
+                                                        <div className="ml-4 mr-4 font-medium">Career Fitment
+                                                            <div className="text-xs font-normal">Do you think your child has mastery over their immediate environment</div>
+                                                        </div>
                                                         <img src="/img/fitment.png" alt="fitment" width="75px" height="40px" />
                                                         {/* <div className="bg-yellow-400 w-20"><p className="text-white p-2">Image</p> </div> */}
                                                     </div>
@@ -169,13 +169,13 @@ export default function GreenZone({ profile, token }) {
                                                         <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">90%</span>Tourism & Hospitality
                                                     </p>
                                                     <p className="text-sm pl-4 pb-2">Personality Match</p>
-                                                    <div class="relative ml-4 mr-4">
+                                                    <div className="relative ml-4 mr-4">
                                                         <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-900">
                                                             <div style={{ width: '30%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
                                                     </div>
                                                     <p className="text-sm pl-4 pb-2">Orientation Match</p>
-                                                    <div class="relative ml-4 mr-4">
+                                                    <div className="relative ml-4 mr-4">
                                                         <div className="overflow-hidden h-2 text-xs flex rounded bg-green-900">
                                                             <div style={{ width: '70%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
@@ -185,13 +185,13 @@ export default function GreenZone({ profile, token }) {
                                                 <div className="text-white pb-4 rounded-md" style={{ background: "#5EB570" }}>
                                                     <p className="p-4"><span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">90%</span>Tourism & Hospitality</p>
                                                     <p className="text-sm pl-4 pb-2">Personality Match</p>
-                                                    <div class="relative ml-4 mr-4">
+                                                    <div className="relative ml-4 mr-4">
                                                         <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-900">
                                                             <div style={{ width: '30%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
                                                     </div>
                                                     <p className="text-sm pl-4 pb-2">Orientation Match</p>
-                                                    <div class="relative ml-4 mr-4">
+                                                    <div className="relative ml-4 mr-4">
                                                         <div className="overflow-hidden h-2  text-xs flex rounded bg-green-900">
                                                             <div style={{ width: '70%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>

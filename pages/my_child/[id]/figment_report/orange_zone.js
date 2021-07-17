@@ -57,9 +57,9 @@ export default function OrangeZone({ profile, token }) {
                                                         <div className="bg-black w-20 rounded-md">
                                                             <p className="text-white p-2 px-2">CAREER FITMENT</p>
                                                         </div>
-                                                        <p className="ml-4 mr-4 font-medium">Career Fitment
-                                                            <h6 className="text-xs font-normal">Do you think your child has mastery over their immediate environment</h6>
-                                                        </p>
+                                                        <div className="ml-4 mr-4 font-medium">Career Fitment
+                                                            <div className="text-xs font-normal">Do you think your child has mastery over their immediate environment</div>
+                                                        </div>
                                                         <img src="/img/fitment.png" alt="fitment" width="75px" height="40px" />
                                                         {/* <div className="bg-yellow-400 w-20"><p className="text-white p-2">Image</p> </div> */}
                                                     </div>
@@ -167,13 +167,13 @@ export default function OrangeZone({ profile, token }) {
                                                 <div className="text-white rounded-md mb-4" style={{ background: "#ED872F" }}>
                                                     <p className="p-5"><span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 ">90%</span>Tourism & Hospitality</p>
                                                     <p className="text-sm pl-5 pb-3">Personality Match</p>
-                                                    <div class="relative ml-5 mr-5  pt-1">
+                                                    <div className="relative ml-5 mr-5  pt-1">
                                                         <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-yellow-900">
                                                             <div style={{ width: '30%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
                                                     </div>
                                                     <p className="text-sm pl-5 pb-3">Orientation Match</p>
-                                                    <div class="relative ml-5 mr-5 pt-1 pb-2">
+                                                    <div className="relative ml-5 mr-5 pt-1 pb-2">
                                                         <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-yellow-900">
                                                             <div style={{ width: '70%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
@@ -183,13 +183,13 @@ export default function OrangeZone({ profile, token }) {
                                                 <div className="text-white pb-4 rounded-md" style={{ background: "#ED872F" }}>
                                                     <p className="p-4"><span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 ">90%</span>Tourism & Hospitality</p>
                                                     <p className="text-sm pl-4 pb-3">Personality Match</p>
-                                                    <div class="relative ml-5 mr-5  pt-1">
+                                                    <div className="relative ml-5 mr-5  pt-1">
                                                         <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-yellow-900">
                                                             <div style={{ width: '30%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
                                                     </div>
                                                     <p className="text-sm pl-5 pb-3">Orientation Match</p>
-                                                    <div class="relative ml-5  mr-5 pt-1">
+                                                    <div className="relative ml-5  mr-5 pt-1">
                                                         <div className="overflow-hidden h-2  text-xs flex rounded bg-yellow-900">
                                                             <div style={{ width: '70%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
                                                         </div>
