@@ -65,7 +65,8 @@ export default function MyChild({ profile, assessments, token }) {
                                                                 <div className="text-white w-9/12 text-sm mt-2">{card.subtitle}</div>
                                                                 <div className="mt-4 w-0 h-0.5 rounded bg-white group-hover:w-3/4 duration-500"></div>
                                                             </div>
-                                                            <div className="absolute bottom-4 right-4 scale-0 group-hover:scale-100 duration-500 translate-x-full group-hover:translate-x-0">
+                                                            <div className="flex absolute bottom-4 right-4 scale-0 group-hover:scale-100 duration-500 translate-x-full group-hover:translate-x-0">
+                                                                <div className="self-center font-medium text-lg text-white">View Report</div>
                                                                 <svg className="h-12 w-12" viewBox="0 0 20 20" fill="white">
                                                                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                                                                 </svg>

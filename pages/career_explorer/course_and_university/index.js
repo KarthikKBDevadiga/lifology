@@ -18,17 +18,17 @@ import {
     ThumbUpIcon,
     UserIcon,
 } from '@heroicons/react/solid'
-import { queryGraph } from '../../helpers/GraphQLCaller'
+import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetAllUniversity, SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile, SchemeGetUniversityCity, SchemeGetUniversityState, SchemeGetUniversityCountry } from '../../helpers/GraphQLSchemes'
-import Constants from '../../helpers/Constants.js'
-import useLocalStorage from '../../helpers/useLocalStorage'
-import NavigationLayout from '../../components/NavigationLayout'
-import HeaderLayout from '../../components/HeaderLayout'
-import styles from '../../styles/Magazine.module.css'
-import MetaLayout from '../../components/MetaLayout'
+import { SchemeGetAllUniversity, SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile, SchemeGetUniversityCity, SchemeGetUniversityState, SchemeGetUniversityCountry } from '/helpers/GraphQLSchemes'
+import Constants from '/helpers/Constants.js'
+import useLocalStorage from '/helpers/useLocalStorage'
+import NavigationLayout from '/components/NavigationLayout'
+import HeaderLayout from '/components/HeaderLayout'
+import styles from '/styles/Magazine.module.css'
+import MetaLayout from '/components/MetaLayout'
 import Link from 'next/link'
-import classNames from '../../helpers/classNames'
+import classNames from '/helpers/classNames'
 
 export default function CourceAndUniversity({ profile, countries, universities, token, state, city }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)

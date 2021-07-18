@@ -23,15 +23,6 @@ import { useKeenSlider } from 'keen-slider/react'
 
 import { DragDropContext, Droppable, Draggable, resetServerContext } from "react-beautiful-dnd";
 
-
-const cards = [
-    { name: 'Job Families & Career Fields', href: 'career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Course and University', href: 'career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Scholarship Program', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Magazine', href: 'career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Career Videos', href: 'career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
-]
-
 export default function Assessment({ profile, assessment, questions, token }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
@@ -59,8 +50,17 @@ export default function Assessment({ profile, assessment, questions, token }) {
     })
 
     const answer = event => {
-        if (selectedOption.score == null) return
-        if (assessment.assessment_type == 1) return
+        var scores = []
+
+        if (assessment.assessment_type == 1) {
+            orderedOptions.map((option) => {
+                scores.push(parseInt(option.score))
+            })
+        }
+        else if (assessment.assessment_type == 2) {
+            if (selectedOption.score == null) return
+            scores.push(parseInt(selectedOption.score))
+        }
         const assessmentClient = new ApolloClient({
             uri: Constants.baseUrl + "/api/assessment",
             cache: new InMemoryCache(),
@@ -71,10 +71,10 @@ export default function Assessment({ profile, assessment, questions, token }) {
         setLoadingDialog(true)
         mutateGraph(assessmentClient,
             {
-                assessment_type: 2,
+                assessment_type: assessment.assessment_type,
                 assessment_id: parseInt(assessment.id),
                 question_id: parseInt(selectedQuestion.id),
-                scores: [parseInt(selectedOption.score)]
+                scores: scores
             },
             SchemeAnswerAssessmentQuestion)
             .then((res) => {
@@ -86,23 +86,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                 console.log('Error')
             });
     }
-    const getListStyle = isDraggingOver => ({
-        background: isDraggingOver ? "lightblue" : "lightgrey",
-        padding: 8,
-        width: 250
-    });
-    const getItemStyle = (isDragging, draggableStyle) => ({
-        // some basic styles to make the items look a bit nicer
-        userSelect: "none",
-        padding: 16,
-        margin: `0 0 8px 0`,
 
-        // change background colour if dragging
-        background: isDragging ? "lightgreen" : "grey",
-
-        // styles we need to apply on draggables
-        ...draggableStyle
-    });
     const reorder = (list, startIndex, endIndex) => {
         const result = Array.from(list);
         const [removed] = result.splice(startIndex, 1);
@@ -270,7 +254,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
 
                                         <a
                                             onClick={answer}
-                                            className="w-max mt-4 ml-auto flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-lblue hover:bg-indigo-700 focus:outline-none">
+                                            className="w-max mt-4 ml-auto flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-lblue hover:bg-indigo-700 focus:outline-none cursor-pointer">
                                             Submit
                                         </a>
 

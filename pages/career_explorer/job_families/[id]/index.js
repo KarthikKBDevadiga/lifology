@@ -88,12 +88,13 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-                                            <a href="#" onClick={(event) => { setOpenVideo(true) }}>
-                                                <div className=" bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
-                                                    <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
-                                                        University Video
-                                                    </h2>
-                                                    <div className="group relative shadow hover:shadow-xl hover:scale-110 hover:rotate-6 duration-500">
+
+                                            <div className=" bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                                <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
+                                                    University Video
+                                                </h2>
+                                                <a href="#" onClick={(event) => { setOpenVideo(true) }}>
+                                                    <div className="group relative shadow hover:shadow-xl hover:scale-105 active:scale-100 duration-500">
                                                         <img className="rounded mt-2 duration-500" src={jobFamily.thumbnail} />
                                                         <svg
                                                             className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 duration-500"
@@ -110,8 +111,8 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                                                                 fill="#ffffff" />
                                                         </svg>
                                                     </div>
-                                                </div>
-                                            </a>
+                                                </a>
+                                            </div>
                                             <div className="mt-4 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     Your Fitment

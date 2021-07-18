@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import {
     BookmarkIcon
 } from '@heroicons/react/outline'
@@ -11,35 +11,66 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
-import { SchemeCareerPools, SchemeCareerFields, SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import { SchemeCareerPools, SchemeCareerFields, SchemeGetProfile, SchemeGetUniversities } from '/helpers/GraphQLSchemes'
 import VideoDialog from '/components/dialog/VideoDialog'
 import styles from '/styles/careerField.module.css'
-import { SchemeGetUniversities } from '../../../../../helpers/GraphQLSchemes'
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 
-const responsive = {
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 4,
-        slidesToSlide: 3 // optional, default to 1.
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 3,
-        slidesToSlide: 2 // optional, default to 1.
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1,
-        slidesToSlide: 1 // optional, default to 1.
-    }
-}
+import classNames from '/helpers/classNames'
+
+import 'keen-slider/keen-slider.min.css'
+import { useKeenSlider } from 'keen-slider/react'
+
+import Expand from 'react-expand-animated';
 
 export default function CareerFields({ profile, jobFamily, careerField, topics, skills, employment_areas, universities, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [openVideo, setOpenVideo] = useState(false)
+
+    const [openStudyTopic, setOpenStudyTopic] = useState(false)
+    const [openSkillRequired, setOpenSkillRequired] = useState(false)
+    const [openEmpAreas, setOpenEmpAreas] = useState(false)
+
+    const [sliderRef, slider] = useKeenSlider({
+        initial: 0,
+        loop: true,
+        controls: true,
+        duration: 500,
+        breakpoints: {
+            "(min-width: 464px)": {
+                slidesPerView: 1,
+            },
+            "(min-width: 768px)": {
+                slidesPerView: 2,
+            },
+            "(min-width: 1200px)": {
+                slidesPerView: 4,
+            },
+        },
+    })
+
+    const [pause, setPause] = useState(false)
+    const timer = useRef()
+
+    useEffect(() => {
+        sliderRef.current.addEventListener("mouseover", () => {
+            setPause(true)
+        })
+        sliderRef.current.addEventListener("mouseout", () => {
+            setPause(false)
+        })
+    }, [sliderRef])
+    useEffect(() => {
+        timer.current = setInterval(() => {
+            if (!pause && slider) {
+                slider.next()
+            }
+        }, 1000)
+        return () => {
+            clearInterval(timer.current)
+        }
+    }, [pause, slider])
+
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
@@ -75,49 +106,30 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
                                                                     Add to bookmark
                                                                 </div>
                                                             </div>
-
                                                         </div>
-
-
-
-
 
                                                         <div className="mt-2 text-sm text-justify" >{careerField.description}</div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
+                                            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
 
-                                                <h2 className="text-lg font-medium text-gray-900">
+                                                <h2 className="text-lg font-medium text-gray-900 m-4 ">
                                                     Universities
                                                 </h2>
-
-                                                <Carousel
-                                                    swipeable={false}
-                                                    draggable={false}
-                                                    responsive={responsive}
-                                                    ssr={true}
-                                                    infinite={false}
-                                                    autoPlaySpeed={1000}
-                                                    keyBoardControl={true}
-                                                    customTransition="all .5"
-                                                    transitionDuration={500}
-                                                    containerClass="carousel-container"
-                                                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                                                    dotListClass="custom-dot-list-style"
-                                                    itemClass="carousel-item-padding-40-px self-center"
-                                                >
-                                                    {universities.map((u) => {
-                                                        console.log(u)
-                                                        return (
-                                                            <div className="self-center">
-                                                                <img src={Constants.baseUrlImage + u.logo} />
+                                                <div className="navigation-wrapper w-full mb-4">
+                                                    <div ref={sliderRef} className="keen-slider">
+                                                        {universities.map((card) => (
+                                                            <div className="keen-slider__slide self-center">
+                                                                <div className="">
+                                                                    <img className="ml-auto mr-auto" src={Constants.baseUrlImage + card.logo} />
+                                                                </div>
                                                             </div>
-                                                        )
-                                                    })}
-                                                </Carousel>
-
+                                                        ))
+                                                        }
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -127,11 +139,11 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     University Video
                                                 </h2>
-                                                <div className="relative">
-                                                    <img className=" rounded mt-2" src={careerField.thumbnail} />
-                                                    <a href="#" onClick={(event) => { setOpenVideo(true) }}>
+                                                <a href="#" onClick={(event) => { setOpenVideo(true) }}>
+                                                    <div className="group relative shadow hover:shadow-xl hover:scale-105 active:scale-100 duration-500">
+                                                        <img className="rounded mt-2 duration-500" src={jobFamily.thumbnail} />
                                                         <svg
-                                                            className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 hover:h-14 hover:w-14  duration-500"
+                                                            className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 duration-500"
                                                             viewBox="0 0 24 24"
                                                             id="vector">
                                                             <path
@@ -144,65 +156,120 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
                                                                 d="M 9.5 14.67 L 9.5 9.33 C 9.5 8.54 10.38 8.06 11.04 8.49 L 15.19 11.16 C 15.8 11.55 15.8 12.45 15.19 12.84 L 11.04 15.51 C 10.38 15.94 9.5 15.46 9.5 14.67 Z"
                                                                 fill="#ffffff" />
                                                         </svg>
-                                                    </a>
-
-                                                </div>
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <div className="mt-4 bg-white p-2 shadow sm:rounded-lg">
-                                                <h2 id="timeline-title" className="text-lg font-medium text-gray-900 px-2 pt-2">
-                                                    Topics of Study
-                                                </h2>
+                                            <div className="mt-4 bg-white p-4 shadow sm:rounded-lg">
 
-                                                <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    {
-                                                        topics.map((t) => {
-                                                            return (
-                                                                <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + t.color + "-500 hover:bg-opacity-100 duration-500"} key={t.name}>
-                                                                    <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + t.color + "-500"} >
+                                                <a
+                                                    href="#"
+                                                    onClick={(event) => {
+                                                        setOpenStudyTopic(!openStudyTopic)
+                                                    }}>
+                                                    <div className="group relative w-full  rounded pl-3 pr-10 py-2 text-left cursor-pointer outline-none focus:outline-none sm:text-sm shadow hover:shadow-lg active:shadow duration-500" >
+                                                        <span className="block truncate text-base font-medium text-gray-900">Topics of Study</span>
+                                                        <span className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none duration-500">
+                                                            <svg className={classNames(openStudyTopic ? 'transform  -rotate-180' : '', "h-5 w-5")} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                </a>
+
+                                                <Expand open={openStudyTopic}>
+                                                    <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
+                                                        {
+                                                            topics.map((t) => {
+                                                                return (
+                                                                    <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + t.color + "-500 hover:bg-opacity-100 hover:text-white duration-500"} key={t.name}>
+                                                                        <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + t.color + "-500"} >
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                                            </svg>
+                                                                        </div>
+                                                                        <span className="self-center ml-2 mr-2 text-xs text-justify">{t.name}</span>
+                                                                    </li>
+                                                                )
+                                                            })
+                                                        }
+                                                    </ul>
+                                                </Expand>
+
+                                                <a
+                                                    href="#"
+                                                    onClick={(event) => {
+                                                        setOpenSkillRequired(!openSkillRequired)
+                                                    }}>
+                                                    <div className="relative w-full mt-4 rounded pl-3 pr-10 py-2 text-left cursor-pointer outline-none focus:outline-none sm:text-sm shadow hover:shadow-lg active:shadow duration-500" >
+                                                        <span className="block truncate text-base font-medium text-gray-900">Skills Required</span>
+                                                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                            <svg className={classNames(openSkillRequired ? 'transform  -rotate-180' : '', "h-5 w-5")} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                </a>
+
+                                                <Expand open={openSkillRequired}>
+                                                    <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
+                                                        {
+                                                            skills.map((s) => (
+                                                                <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + s.color + "-500 hover:bg-opacity-100 hover:text-white duration-500"} key={s.name}>
+                                                                    <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + s.color + "-500"} >
                                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
                                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                                         </svg>
                                                                     </div>
-                                                                    <span className="self-center ml-2 mr-2 text-xs text-justify">{t.name}</span>
+                                                                    <span className="self-center ml-2 mr-2 text-xs text-justify">{s.name}</span>
                                                                 </li>
-                                                            )
-                                                        })
-                                                    }
-                                                </ul>
-                                                <h2 id="timeline-title" className="pl-2 mt-4 text-lg font-medium text-gray-900">
-                                                    Skills Required
-                                                </h2>
-                                                <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    {
-                                                        skills.map((s) => (
-                                                            <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + s.color + "-500 hover:bg-opacity-100 duration-500"} key={s.name}>
-                                                                <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + s.color + "-500"} >
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                                    </svg>
-                                                                </div>
-                                                                <span className="self-center ml-2 mr-2 text-xs text-justify">{s.name}</span>
-                                                            </li>
-                                                        ))
-                                                    }
-                                                </ul>
-                                                <h2 id="timeline-title" className="p-2 mt-4 text-lg font-medium text-gray-900">
-                                                    Employment Areas
-                                                </h2>
-                                                <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
-                                                    {
-                                                        employment_areas.map((e) => (
-                                                            <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + e.color + "-500 hover:bg-opacity-100 duration-500"} key={e.name}>
-                                                                <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + e.color + "-500"} >
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                                    </svg>
-                                                                </div>
-                                                                <span className="self-center ml-2 mr-2 text-xs text-justify">{e.name}</span>
-                                                            </li>
-                                                        ))
-                                                    }
-                                                </ul>
+                                                            ))
+                                                        }
+                                                    </ul>
+                                                </Expand>
+
+                                                <a
+                                                    href="#"
+                                                    onClick={(event) => {
+                                                        setOpenEmpAreas(!openEmpAreas)
+                                                    }}>
+                                                    <div className="relative w-full mt-4 rounded pl-3 pr-10 py-2 text-left cursor-pointer outline-none focus:outline-none sm:text-sm shadow hover:shadow-lg active:shadow duration-500" >
+                                                        <span className="block truncate text-base font-medium text-gray-900">Employment Areas</span>
+                                                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                            <svg className={classNames(openEmpAreas ? 'transform  -rotate-180' : '', "h-5 w-5")} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                </a>
+
+                                                <Expand open={openEmpAreas}>
+                                                    <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
+                                                        {
+                                                            employment_areas.map((e) => (
+                                                                <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + e.color + "-500 hover:bg-opacity-100 hover:text-white duration-500"} key={e.name}>
+                                                                    <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + e.color + "-500"} >
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                                        </svg>
+                                                                    </div>
+                                                                    <span className="self-center ml-2 mr-2 text-xs text-justify">{e.name}</span>
+                                                                </li>
+                                                            ))
+                                                        }
+                                                    </ul>
+                                                </Expand>
+                                            </div>
+                                            <div className="mt-4 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                                <div className="text-lg font-medium text-gray-900 text-center">
+                                                    Get in Touch
+                                                </div>
+                                                <div className="mt-2 text-base font-medium text-gray-900 text-center">
+                                                    Book a Free Call with Advisor
+                                                </div>
+                                                <div
+                                                    className="w-max ml-auto mr-auto mt-4 py-2 px-4 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none duration-500">
+                                                    Connect with an Agent
+                                                </div>
                                             </div>
                                         </section>
                                     </div>
@@ -297,7 +364,6 @@ export async function getServerSideProps(context) {
             return {}
         })
     const universities = universitiesRaw[0].university
-    console.log(universitiesRaw)
 
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
