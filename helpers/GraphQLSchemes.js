@@ -441,3 +441,36 @@ mutation assessmentAnswer($assessment_type:Int!, $assessment_id: Int!, $question
   assessmentAnswer(assessment_type:$assessment_type,assessment_id:$assessment_id,lang_id:1,question_id:$question_id,scores:$scores)
 }
 `;
+
+export const SchemeGetMIOReport = gql`
+query{
+  intelligenceOrientation(lang_id:1)
+  {
+    spread_characteristics{
+      expert{
+        key
+        info
+      }
+      advanced
+      {
+        key
+        info
+      }
+       learner{
+        key
+        info
+      }
+      novice
+      {
+        key
+        info
+      }
+    }
+    orientation_details{
+      title
+      percentage
+      content
+    }
+  }
+}
+`;

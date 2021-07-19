@@ -32,6 +32,11 @@ export default function PurpleZone({ profile, token }) {
 
     const [openOD, setOpenOD] = useState(true)
     const [openSCR, setOpenSCR] = useState(false)
+
+    const [openLS, setOpenLS] = useState(true)
+    const [openWMY, setOpenWMY] = useState(true)
+    const [openDWTW, setOpenDWTW] = useState(false)
+
     const [openVisual, setOpenVisual] = useState(false)
 
     const chartData = {
@@ -62,7 +67,7 @@ export default function PurpleZone({ profile, token }) {
     const index = 4;
     return (
         <>
-            <MetaLayout title="Report" description="Report" />
+            <MetaLayout title="MIO Assement Reports" description="MIO Assement Reports" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
@@ -82,7 +87,7 @@ export default function PurpleZone({ profile, token }) {
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white rounded-md shadow h-30 p-4" style={{ height: "fit-content" }}>
-                                                    <p className="font-medium">Assesment/MTI Assesment</p>
+                                                    <p className="font-medium">Assesment/MIO Assesment</p>
                                                     <div className="flex mt-2">
                                                         <div className="bg-black w-20 rounded-md">
                                                             <p className="text-white p-2 px-2">CAREER FITMENT</p>
@@ -95,47 +100,90 @@ export default function PurpleZone({ profile, token }) {
                                                     </div>
                                                 </div>
 
-                                                <div className="bg-white rounded-md shadow mt-4 p-4">
-                                                    <Bar
-                                                        data={chartData}
-                                                        options={{
-                                                            title: {
-                                                                display: true,
-                                                                text: 'Largest Cities In City',
-                                                                fontSize: 25
-                                                            },
-                                                            legend: {
-                                                                display: true,
-                                                                position: 'right'
-                                                            }
-                                                        }}
-                                                    />
+                                                <div className="shadow bg-white mt-4 p-4 grid grid-cols-1 gap-4 sm:grid-cols-4 lg:grid-cols-5">
+                                                    <div>
+                                                        <div className="relative">
+                                                            <svg
+                                                                fill="#02C77D"
+                                                                viewBox="0 0 105 91">
+                                                                <path
+                                                                    id="path"
+                                                                    d="M 62 0 C 67.092 0 72.095 1.341 76.504 3.887 C 80.914 6.434 84.575 10.098 87.12 14.508 L 96.639 31.008 C 99.181 35.414 100.52 40.413 100.52 45.5 C 100.52 50.587 99.181 55.586 96.639 59.992 L 87.12 76.492 C 84.575 80.902 80.914 84.566 76.504 87.113 C 72.095 89.659 67.092 91 62 91 L 43 91 C 37.908 91 32.905 89.659 28.496 87.113 C 24.086 84.566 20.425 80.902 17.88 76.492 L 8.361 59.992 C 5.819 55.586 4.48 50.587 4.48 45.5 C 4.48 40.413 5.819 35.414 8.361 31.008 L 17.88 14.508 C 20.425 10.098 24.086 6.434 28.496 3.887 C 32.905 1.341 37.908 0 43 0 Z"
+                                                                    stroke-width="1" />
+                                                            </svg>
+                                                            <div className="text-lg text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">82%</div>
+                                                        </div>
+                                                        <div className="mt-2 text-sm text-center">FACT</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="relative">
+                                                            <svg
+                                                                fill="#FF2929"
+                                                                viewBox="0 0 105 91">
+                                                                <path
+                                                                    id="path"
+                                                                    d="M 62 0 C 67.092 0 72.095 1.341 76.504 3.887 C 80.914 6.434 84.575 10.098 87.12 14.508 L 96.639 31.008 C 99.181 35.414 100.52 40.413 100.52 45.5 C 100.52 50.587 99.181 55.586 96.639 59.992 L 87.12 76.492 C 84.575 80.902 80.914 84.566 76.504 87.113 C 72.095 89.659 67.092 91 62 91 L 43 91 C 37.908 91 32.905 89.659 28.496 87.113 C 24.086 84.566 20.425 80.902 17.88 76.492 L 8.361 59.992 C 5.819 55.586 4.48 50.587 4.48 45.5 C 4.48 40.413 5.819 35.414 8.361 31.008 L 17.88 14.508 C 20.425 10.098 24.086 6.434 28.496 3.887 C 32.905 1.341 37.908 0 43 0 Z"
+                                                                    stroke-width="1" />
+                                                            </svg>
+                                                            <div className="text-lg text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">82%</div>
+                                                        </div>
+                                                        <div className="mt-2 text-sm text-center">ACTION</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="relative">
+                                                            <svg
+                                                                fill="#2D75F2"
+                                                                viewBox="0 0 105 91">
+                                                                <path
+                                                                    id="path"
+                                                                    d="M 62 0 C 67.092 0 72.095 1.341 76.504 3.887 C 80.914 6.434 84.575 10.098 87.12 14.508 L 96.639 31.008 C 99.181 35.414 100.52 40.413 100.52 45.5 C 100.52 50.587 99.181 55.586 96.639 59.992 L 87.12 76.492 C 84.575 80.902 80.914 84.566 76.504 87.113 C 72.095 89.659 67.092 91 62 91 L 43 91 C 37.908 91 32.905 89.659 28.496 87.113 C 24.086 84.566 20.425 80.902 17.88 76.492 L 8.361 59.992 C 5.819 55.586 4.48 50.587 4.48 45.5 C 4.48 40.413 5.819 35.414 8.361 31.008 L 17.88 14.508 C 20.425 10.098 24.086 6.434 28.496 3.887 C 32.905 1.341 37.908 0 43 0 Z"
+                                                                    stroke-width="1" />
+                                                            </svg>
+                                                            <div className="text-lg text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">82%</div>
+                                                        </div>
+                                                        <div className="mt-2 text-sm text-center">CONCEPT</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="relative">
+                                                            <svg
+                                                                fill="#F8A11E"
+                                                                viewBox="0 0 105 91">
+                                                                <path
+                                                                    id="path"
+                                                                    d="M 62 0 C 67.092 0 72.095 1.341 76.504 3.887 C 80.914 6.434 84.575 10.098 87.12 14.508 L 96.639 31.008 C 99.181 35.414 100.52 40.413 100.52 45.5 C 100.52 50.587 99.181 55.586 96.639 59.992 L 87.12 76.492 C 84.575 80.902 80.914 84.566 76.504 87.113 C 72.095 89.659 67.092 91 62 91 L 43 91 C 37.908 91 32.905 89.659 28.496 87.113 C 24.086 84.566 20.425 80.902 17.88 76.492 L 8.361 59.992 C 5.819 55.586 4.48 50.587 4.48 45.5 C 4.48 40.413 5.819 35.414 8.361 31.008 L 17.88 14.508 C 20.425 10.098 24.086 6.434 28.496 3.887 C 32.905 1.341 37.908 0 43 0 Z"
+                                                                    stroke-width="1" />
+                                                            </svg>
+                                                            <div className="text-lg text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">82%</div>
+                                                        </div>
+                                                        <div className="mt-2 text-sm text-center">EMOTION</div>
+                                                    </div>
                                                 </div>
 
                                                 <div className="bg-white rounded-md shadow mt-4 p-4">
 
                                                     <div
                                                         onClick={(event) => {
-                                                            setOpenOD(true)
-                                                            setOpenSCR(false)
+                                                            setOpenLS(true)
+                                                            setOpenWMY(false)
+                                                            setOpenDWTW(false)
                                                         }}
                                                         className={
                                                             classNames(
-                                                                openOD ? 'bg-lgreen shadow-lg' : 'bg-white shadow',
-                                                                "cursor-pointer relative w-full rounded  hover:shadow-lg pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500"
+                                                                openLS ? 'bg-lgreen shadow-lg' : 'bg-white shadow',
+                                                                "cursor-pointer relative w-full rounded  hover:shadow-lg  px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500"
                                                             )
                                                         }
                                                     >
                                                         <span className=
                                                             {
-                                                                classNames(openOD ? 'text-white' : '',
+                                                                classNames(openLS ? 'text-white' : '',
                                                                     "font-medium block truncate")
                                                             }
-                                                        >Orientation Details</span>
+                                                        >Leadership Strength</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
                                                             <div className={
                                                                 classNames(
-                                                                    openOD ? 'bg-white text-lgreen' : 'bg-black text-white',
+                                                                    openLS ? 'bg-white text-lgreen' : 'bg-black text-white',
                                                                     "p-1 rounded-full"
                                                                 )
                                                             }
@@ -152,26 +200,27 @@ export default function PurpleZone({ profile, token }) {
 
                                                     <div
                                                         onClick={(event) => {
-                                                            setOpenOD(false)
-                                                            setOpenSCR(true)
+                                                            setOpenLS(false)
+                                                            setOpenWMY(true)
+                                                            setOpenDWTW(false)
                                                         }}
                                                         className={
                                                             classNames(
-                                                                openSCR ? 'bg-lgreen shadow-lg' : 'bg-white shadow',
-                                                                "cursor-pointer relative w-full rounded mt-4 hover:shadow-lg pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500"
+                                                                openWMY ? 'bg-lgreen shadow-lg' : 'bg-white shadow',
+                                                                "cursor-pointer relative w-full rounded mt-4 hover:shadow-lg px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500"
                                                             )
                                                         }
                                                     >
                                                         <span className=
                                                             {
-                                                                classNames(openSCR ? 'text-white' : '',
+                                                                classNames(openWMY ? 'text-white' : '',
                                                                     "font-medium block truncate")
                                                             }
-                                                        >Spread of Characteristics Reports</span>
+                                                        >What Motivates You</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
                                                             <div className={
                                                                 classNames(
-                                                                    openSCR ? 'bg-white text-lgreen' : 'bg-black text-white',
+                                                                    openWMY ? 'bg-white text-lgreen' : 'bg-black text-white',
                                                                     "p-1 rounded-full"
                                                                 )
                                                             }
@@ -184,6 +233,43 @@ export default function PurpleZone({ profile, token }) {
                                                             </div>
                                                         </span>
                                                     </div>
+
+                                                    <div
+                                                        onClick={(event) => {
+                                                            setOpenLS(false)
+                                                            setOpenWMY(false)
+                                                            setOpenDWTW(true)
+                                                        }}
+                                                        className={
+                                                            classNames(
+                                                                openDWTW ? 'bg-lgreen shadow-lg' : 'bg-white shadow',
+                                                                "cursor-pointer relative w-full rounded mt-4 hover:shadow-lg px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500"
+                                                            )
+                                                        }
+                                                    >
+                                                        <span className=
+                                                            {
+                                                                classNames(openDWTW ? 'text-white' : '',
+                                                                    "font-medium block truncate")
+                                                            }
+                                                        >Dealing With The World</span>
+                                                        <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                                                            <div className={
+                                                                classNames(
+                                                                    openDWTW ? 'bg-white text-lgreen' : 'bg-black text-white',
+                                                                    "p-1 rounded-full"
+                                                                )
+                                                            }
+                                                            >
+                                                                {
+                                                                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                                    </svg>
+                                                                }
+                                                            </div>
+                                                        </span>
+                                                    </div>
+
 
                                                 </div>
 
@@ -194,133 +280,15 @@ export default function PurpleZone({ profile, token }) {
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-2">
 
                                             {
-                                                openOD ? <div className="bg-white rounded-md shadow h-auto p-4">
+                                                openLS ? <div className="bg-white rounded-md shadow h-auto p-4">
 
                                                     <div onClick={(event) => {
                                                         setOpenVisual(!openVisual)
-                                                    }} className="cursor-pointer relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
-                                                        <div className="flex">
-                                                            <div className="w-1/3">Visual</div>
-                                                            <div className="w-2/3 relative self-center">
-                                                                <div className="overflow-hidden h-2 text-xs flex rounded" style={{ background: '#F3F3F3' }}>
-                                                                    <div style={{ width: '30%', background: '#02C77D' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-2">90%</div>
+                                                    }} className="cursor-pointer relative w-full bg-white text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
+                                                        <div className="text-base font-medium">Leadership Strength</div>
+                                                        <div className="text-sm mt-2">You demonstrate the leader in you considering these points</div>
 
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                            </svg>
-                                                        </div>
                                                     </div>
-                                                    <Expand open={openVisual}>
-                                                        <ul className={styles.group} style={{ fontSize: '14px', marginTop: '16px', textAlign: 'justify', lineHeight: '20px' }}>
-                                                            <li >
-                                                                You seem to be extremely good at interpreting visual images, pictorial representations & expressions
-                                                            </li>
-                                                            <li >
-                                                                You seem to be extremely good at interpreting visual images, pictorial representations & expressions
-                                                            </li>
-                                                        </ul>
-                                                    </Expand>
-
-
-                                                    <div className="mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
-                                                        <div className="flex">
-                                                            <div className="w-1/3">Kinesthetic</div>
-                                                            <div className="w-2/3 relative self-center">
-                                                                <div className="overflow-hidden h-2 text-xs flex rounded" style={{ background: '#F3F3F3' }}>
-                                                                    <div style={{ width: '30%', background: '#02C77D' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-2">90%</div>
-
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
-                                                        <div className="flex">
-                                                            <div className="w-1/3">Kinesthetic</div>
-                                                            <div className="w-2/3 relative self-center">
-                                                                <div className="overflow-hidden h-2 text-xs flex rounded" style={{ background: '#F3F3F3' }}>
-                                                                    <div style={{ width: '30%', background: '#02C77D' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-2">90%</div>
-
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
-                                                        <div className="flex">
-                                                            <div className="w-1/3">Logical</div>
-                                                            <div className="w-2/3 relative self-center">
-                                                                <div className="overflow-hidden h-2 text-xs flex rounded" style={{ background: '#F3F3F3' }}>
-                                                                    <div style={{ width: '30%', background: '#02C77D' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-2">90%</div>
-
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
-                                                        <div className="flex">
-                                                            <div className="w-1/3">Intrapersonal</div>
-                                                            <div className="w-2/3 relative self-center">
-                                                                <div className="overflow-hidden h-2 text-xs flex rounded" style={{ background: '#F3F3F3' }}>
-                                                                    <div style={{ width: '30%', background: '#02C77D' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-2">90%</div>
-
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
-                                                        <div className="flex">
-                                                            <div className="w-1/3">Linguistic</div>
-                                                            <div className="w-2/3 relative self-center">
-                                                                <div className="overflow-hidden h-2 text-xs flex rounded" style={{ background: '#F3F3F3' }}>
-                                                                    <div style={{ width: '30%', background: '#02C77D' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-2">90%</div>
-
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
-                                                        <div className="flex">
-                                                            <div className="w-1/3">Naturalistic</div>
-                                                            <div className="w-2/3 relative self-center">
-                                                                <div className="overflow-hidden h-2 text-xs flex rounded" style={{ background: '#F3F3F3' }}>
-                                                                    <div style={{ width: '30%', background: '#02C77D' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-2">90%</div>
-
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-
                                                 </div>
                                                     : <></>
                                             }
