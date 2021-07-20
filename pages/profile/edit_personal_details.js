@@ -170,7 +170,7 @@ export default function EditPersonalDetails({ profile, token }) {
                                                             <div>
                                                                 <label className="text-black pb-2 block text-xl">Email</label>
                                                                 <input id="email" name="email" type="email" placeholder="something@lifology.com"
-                                                                    className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500" defaultValue={profile.email} />
+                                                                    className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500" defaultValue={profile.email.toLowerCase()} />
                                                             </div>
                                                         </div>
                                                     </div>

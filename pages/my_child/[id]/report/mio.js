@@ -4,7 +4,7 @@ import {
 } from '@heroicons/react/solid'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import { SchemeGetProfile, SchemeGetAssessment, SchemeGetMIOReport } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
@@ -22,18 +22,14 @@ import Expand from 'react-expand-animated';
 import "react-multi-carousel/lib/styles.css";
 
 import { Bar, Line, Pie } from 'react-chartjs-2';
-import { SchemeGetAssessment, SchemeGetMIOReport } from '../../../helpers/GraphQLSchemes'
-
 
 export default function PurpleZone({ profile, assessment, report, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
-
     const [openOD, setOpenOD] = useState(true)
     const [openSCR, setOpenSCR] = useState(false)
-
 
     const [openKinesthetic, setOpenKinesthetic] = useState(false)
     const [openNaturalistic, setOpenNaturalistic] = useState(false)
@@ -43,9 +39,6 @@ export default function PurpleZone({ profile, assessment, report, token }) {
     const [openVisual, setOpenVisual] = useState(false)
     const [openRhythmic, setOpenRhythmic] = useState(false)
     const [openLinguistic, setOpenLinguistic] = useState(false)
-
-
-
 
     const [openB, setOpenB] = useState({
         kinesthetic: false,
@@ -110,12 +103,12 @@ export default function PurpleZone({ profile, assessment, report, token }) {
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white rounded-md shadow h-30 p-4" style={{ height: "fit-content" }}>
-                                                    <p className="font-medium">Assesment/MIO Assesment</p>
+                                                    <p className="font-medium">Assesment/VAK Assesment</p>
 
                                                     <div className="sm:flex mt-4">
                                                         <div className="relative flex-shrink-0 sm:mb-0 sm:mr-4">
                                                             <img className="w-24 h-24 rounded" src={assessment.dash_cards_image} />
-                                                            <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white font-medium text-lg">MIO</div>
+                                                            <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white font-medium text-lg">{assessment.title}</div>
                                                         </div>
                                                         <div className="flex">
                                                             <div>
@@ -233,6 +226,13 @@ export default function PurpleZone({ profile, assessment, report, token }) {
 
                                                     <div onClick={(event) => {
                                                         setOpenKinesthetic(!openKinesthetic)
+                                                        setOpenNaturalistic(false)
+                                                        setOpenInterpersonal(false)
+                                                        setOpenIntrapersonal(false)
+                                                        setOpenLogical(false)
+                                                        setOpenVisual(false)
+                                                        setOpenRhythmic(false)
+                                                        setOpenLinguistic(false)
                                                     }} className="cursor-pointer mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
                                                         <div className="sm:flex">
                                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4" style={{ minWidth: '20%' }}>
@@ -270,6 +270,14 @@ export default function PurpleZone({ profile, assessment, report, token }) {
 
                                                     <div onClick={(event) => {
                                                         setOpenNaturalistic(!openNaturalistic)
+
+                                                        setOpenKinesthetic(false)
+                                                        setOpenInterpersonal(false)
+                                                        setOpenIntrapersonal(false)
+                                                        setOpenLogical(false)
+                                                        setOpenVisual(false)
+                                                        setOpenRhythmic(false)
+                                                        setOpenLinguistic(false)
                                                     }} className="cursor-pointer mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
 
                                                         <div className="sm:flex">
@@ -309,6 +317,13 @@ export default function PurpleZone({ profile, assessment, report, token }) {
 
                                                     <div onClick={(event) => {
                                                         setOpenInterpersonal(!openInterpersonal)
+                                                        setOpenKinesthetic(false)
+                                                        setOpenNaturalistic(false)
+                                                        setOpenIntrapersonal(false)
+                                                        setOpenLogical(false)
+                                                        setOpenVisual(false)
+                                                        setOpenRhythmic(false)
+                                                        setOpenLinguistic(false)
                                                     }} className="cursor-pointer mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
                                                         <div className="sm:flex">
                                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4" style={{ minWidth: '20%' }}>
@@ -346,6 +361,13 @@ export default function PurpleZone({ profile, assessment, report, token }) {
 
                                                     <div onClick={(event) => {
                                                         setOpenIntrapersonal(!openIntrapersonal)
+                                                        setOpenKinesthetic(false)
+                                                        setOpenNaturalistic(false)
+                                                        setOpenInterpersonal(false)
+                                                        setOpenLogical(false)
+                                                        setOpenVisual(false)
+                                                        setOpenRhythmic(false)
+                                                        setOpenLinguistic(false)
                                                     }} className="cursor-pointer mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
                                                         <div className="sm:flex">
                                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4" style={{ minWidth: '20%' }}>
@@ -382,6 +404,13 @@ export default function PurpleZone({ profile, assessment, report, token }) {
 
                                                     <div onClick={(event) => {
                                                         setOpenLogical(!openLogical)
+                                                        setOpenKinesthetic(false)
+                                                        setOpenNaturalistic(false)
+                                                        setOpenInterpersonal(false)
+                                                        setOpenIntrapersonal(false)
+                                                        setOpenVisual(false)
+                                                        setOpenRhythmic(false)
+                                                        setOpenLinguistic(false)
                                                     }} className="cursor-pointer mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
                                                         <div className="sm:flex">
                                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4" style={{ minWidth: '20%' }}>
@@ -418,6 +447,13 @@ export default function PurpleZone({ profile, assessment, report, token }) {
 
                                                     <div onClick={(event) => {
                                                         setOpenVisual(!openVisual)
+                                                        setOpenKinesthetic(false)
+                                                        setOpenNaturalistic(false)
+                                                        setOpenInterpersonal(false)
+                                                        setOpenIntrapersonal(false)
+                                                        setOpenLogical(false)
+                                                        setOpenRhythmic(false)
+                                                        setOpenLinguistic(false)
                                                     }} className="cursor-pointer mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
                                                         <div className="sm:flex">
                                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4" style={{ minWidth: '20%' }}>
@@ -454,6 +490,13 @@ export default function PurpleZone({ profile, assessment, report, token }) {
 
                                                     <div onClick={(event) => {
                                                         setOpenRhythmic(!openRhythmic)
+                                                        setOpenKinesthetic(false)
+                                                        setOpenNaturalistic(false)
+                                                        setOpenInterpersonal(false)
+                                                        setOpenIntrapersonal(false)
+                                                        setOpenLogical(false)
+                                                        setOpenVisual(false)
+                                                        setOpenLinguistic(false)
                                                     }} className="cursor-pointer mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
                                                         <div className="sm:flex">
                                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4" style={{ minWidth: '20%' }}>
@@ -491,6 +534,13 @@ export default function PurpleZone({ profile, assessment, report, token }) {
 
                                                     <div onClick={(event) => {
                                                         setOpenLinguistic(!openLinguistic)
+                                                        setOpenKinesthetic(false)
+                                                        setOpenNaturalistic(false)
+                                                        setOpenInterpersonal(false)
+                                                        setOpenIntrapersonal(false)
+                                                        setOpenLogical(false)
+                                                        setOpenVisual(false)
+                                                        setOpenRhythmic(false)
                                                     }} className="cursor-pointer mt-4 relative w-full bg-white shadow hover:shadow-lg rounded px-4 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
                                                         <div className="sm:flex">
                                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4" style={{ minWidth: '20%' }}>

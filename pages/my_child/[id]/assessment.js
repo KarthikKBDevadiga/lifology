@@ -63,6 +63,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
         else if (assessment.assessment_type == 2) {
             if (selectedOption.score == null) return
             scores.push(parseInt(selectedOption.score))
+            setSelectedOption({})
         }
         const assessmentClient = new ApolloClient({
             uri: Constants.baseUrl + "/api/assessment",
@@ -82,12 +83,13 @@ export default function Assessment({ profile, assessment, questions, token }) {
             SchemeAnswerAssessmentQuestion)
             .then((res) => {
                 setLoadingDialog(false)
-                if (percentageCompleted == 1) {
+                console.log(questionNo + ' ' + questions.length)
+                if (questionNo == questions.length) {
                     setSuccessDialog(true)
                     setTimeout(() => {
                         setSuccessDialog(false)
                         router.push({
-                            pathname: '/mychild/' + assessment.id + '/mio_report',
+                            pathname: '/my_child/' + assessment.id + '/mio_report',
                             query: { token: authToken }
                         })
                     }, 1000)
