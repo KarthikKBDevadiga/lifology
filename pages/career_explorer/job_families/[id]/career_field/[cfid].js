@@ -11,7 +11,7 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
-import { SchemeCareerPools, SchemeCareerFields, SchemeGetProfile, SchemeGetUniversities } from '/helpers/GraphQLSchemes'
+import { SchemeCareerPools, SchemeCareerFields, SchemeGetProfile, SchemeGetUniversities, SchemeGetArticleData } from '/helpers/GraphQLSchemes'
 import VideoDialog from '/components/dialog/VideoDialog'
 import styles from '/styles/CareerField.module.css'
 
@@ -22,7 +22,7 @@ import { useKeenSlider } from 'keen-slider/react'
 
 import Expand from 'react-expand-animated';
 
-export default function CareerFields({ profile, jobFamily, careerField, topics, skills, employment_areas, universities, token }) {
+export default function CareerFields({ profile, jobFamily, careerField, universities, dashboard, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [openVideo, setOpenVideo] = useState(false)
@@ -31,9 +31,44 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
     const [openSkillRequired, setOpenSkillRequired] = useState(false)
     const [openEmpAreas, setOpenEmpAreas] = useState(false)
 
-    const [sliderRef, slider] = useKeenSlider({
+    const [universitySliderRef, universitySlider] = useKeenSlider({
         initial: 0,
         loop: true,
+        controls: true,
+        duration: 500,
+        breakpoints: {
+            "(min-width: 464px)": {
+                slidesPerView: 1,
+            },
+            "(min-width: 768px)": {
+                slidesPerView: 2,
+            },
+            "(min-width: 1200px)": {
+                slidesPerView: 4,
+            },
+        },
+    })
+
+    const [articleSliderRef, articleSlider] = useKeenSlider({
+        initial: 0,
+        loop: false,
+        controls: true,
+        duration: 500,
+        breakpoints: {
+            "(min-width: 464px)": {
+                slidesPerView: 1,
+            },
+            "(min-width: 768px)": {
+                slidesPerView: 2,
+            },
+            "(min-width: 1200px)": {
+                slidesPerView: 4,
+            },
+        },
+    })
+    const [videoSliderRef, videoSlider] = useKeenSlider({
+        initial: 0,
+        loop: false,
         controls: true,
         duration: 500,
         breakpoints: {
@@ -53,23 +88,23 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
     const timer = useRef()
 
     useEffect(() => {
-        sliderRef.current.addEventListener("mouseover", () => {
+        universitySliderRef.current.addEventListener("mouseover", () => {
             setPause(true)
         })
-        sliderRef.current.addEventListener("mouseout", () => {
+        universitySliderRef.current.addEventListener("mouseout", () => {
             setPause(false)
         })
-    }, [sliderRef])
+    }, [universitySliderRef])
     useEffect(() => {
         timer.current = setInterval(() => {
-            if (!pause && slider) {
-                slider.next()
+            if (!pause && universitySlider) {
+                universitySlider.next()
             }
         }, 1000)
         return () => {
             clearInterval(timer.current)
         }
-    }, [pause, slider])
+    }, [pause, universitySlider])
 
     return (
         <>
@@ -119,7 +154,7 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
                                                     Universities
                                                 </h2>
                                                 <div className="navigation-wrapper w-full mb-4">
-                                                    <div ref={sliderRef} className="keen-slider">
+                                                    <div ref={universitySliderRef} className="keen-slider">
                                                         {universities.map((card) => (
                                                             <div className="keen-slider__slide self-center">
                                                                 <div className="">
@@ -132,6 +167,50 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
                                                 </div>
                                             </div>
 
+
+                                            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
+
+                                                <h2 className="text-lg font-medium text-gray-900 m-4 ">
+                                                    Recommended Articles
+                                                </h2>
+                                                <div className="navigation-wrapper w-full mb-4">
+                                                    <div ref={articleSliderRef} className="keen-slider">
+                                                        {dashboard.magazines.map((card) => (
+                                                            <div className="keen-slider__slide self-center">
+                                                                <div className="px-2">
+                                                                    <img className="ml-auto mr-auto rounded" src={card.thumbnail} />
+                                                                </div>
+                                                                <h2 className="text-sm font-medium text-gray-900 px-2 mt-2 h-10 overflow-hidden" >
+                                                                    {card.title}
+                                                                </h2>
+                                                            </div>
+                                                        ))
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
+
+                                                <h2 className="text-lg font-medium text-gray-900 m-4 ">
+                                                    Recommended Videos
+                                                </h2>
+                                                <div className="navigation-wrapper w-full mb-4">
+                                                    <div ref={videoSliderRef} className="keen-slider">
+                                                        {dashboard.videos.map((card) => (
+                                                            <div className="keen-slider__slide self-center">
+                                                                <div className="px-2">
+                                                                    <img className="ml-auto mr-auto rounded" src={card.thumbnail} />
+                                                                </div>
+                                                                <h2 className="text-sm font-medium text-gray-900 px-2 mt-2 h-10 overflow-hidden" >
+                                                                    {card.title}
+                                                                </h2>
+                                                            </div>
+                                                        ))
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
@@ -179,10 +258,10 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
                                                 <Expand open={openStudyTopic}>
                                                     <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
                                                         {
-                                                            topics.map((t) => {
+                                                            careerField.topics.map((t) => {
                                                                 return (
-                                                                    <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + t.color + "-500 hover:bg-opacity-100 hover:text-white duration-500"} key={t.name}>
-                                                                        <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + t.color + "-500"} >
+                                                                    <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-gray-500 hover:bg-opacity-100 hover:text-white duration-500"} key={t.name}>
+                                                                        <div className={"self-center p-1 rounded-full h-6 w-6 bg-gray-500"} >
                                                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
                                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                                             </svg>
@@ -213,9 +292,9 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
                                                 <Expand open={openSkillRequired}>
                                                     <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
                                                         {
-                                                            skills.map((s) => (
-                                                                <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + s.color + "-500 hover:bg-opacity-100 hover:text-white duration-500"} key={s.name}>
-                                                                    <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + s.color + "-500"} >
+                                                            careerField.skills.map((s) => (
+                                                                <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-gray-500 hover:bg-opacity-100 hover:text-white duration-500"} key={s.name}>
+                                                                    <div className={"self-center p-1 rounded-full h-6 w-6 bg-gray-500"} >
                                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
                                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                                         </svg>
@@ -245,9 +324,9 @@ export default function CareerFields({ profile, jobFamily, careerField, topics, 
                                                 <Expand open={openEmpAreas}>
                                                     <ul className={styles.topicGroup} style={{ marginTop: '8px' }}>
                                                         {
-                                                            employment_areas.map((e) => (
-                                                                <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-" + e.color + "-500 hover:bg-opacity-100 hover:text-white duration-500"} key={e.name}>
-                                                                    <div className={"self-center p-1 rounded-full h-6 w-6 bg-" + e.color + "-500"} >
+                                                            careerField.employment_areas.map((e) => (
+                                                                <li className={"flex float-left px-1 py-1 text-xs rounded-full m-1 cursor-pointer bg-opacity-10 bg-gray-500 hover:bg-opacity-100 hover:text-white duration-500"} key={e.name}>
+                                                                    <div className={"self-center p-1 rounded-full h-6 w-6 bg-gray-500"} >
                                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
                                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                                         </svg>
@@ -306,6 +385,20 @@ export async function getServerSideProps(context) {
             }
         }
     }
+    const dashboardClient = new ApolloClient({
+        uri: Constants.baseUrl + "/api/dashboard",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    })
+    const dashboard = await queryGraph(dashboardClient, {}, SchemeGetArticleData)
+        .then((res) => {
+            return res.article_video
+        }).catch((networkErr) => {
+            return {}
+        })
+    console.log(dashboard)
     const careerClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
         cache: new InMemoryCache(),
@@ -328,34 +421,6 @@ export async function getServerSideProps(context) {
             return {}
         })
     const careerField = careerFields.filter(x => x.id == context.params.cfid)[0]
-
-    var topics = []
-    careerField.topics.map((t) => {
-        topics.push(
-            {
-                name: t.name,
-                color: getColor()
-            }
-        )
-    })
-    var skills = []
-    careerField.skills.map((s) => {
-        skills.push(
-            {
-                name: s.name,
-                color: getColor()
-            }
-        )
-    })
-    var employment_areas = []
-    careerField.employment_areas.map((ea) => {
-        employment_areas.push(
-            {
-                name: ea.name,
-                color: getColor()
-            }
-        )
-    })
 
     const universitiesRaw = await queryGraph(careerClient, { pool_id: parseInt(context.params.id), field_id: parseInt(context.params.cfid) }, SchemeGetUniversities)
         .then((res) => {
@@ -380,7 +445,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { profile, jobFamily, careerField, topics, skills, employment_areas, universities, token }
+        props: { profile, jobFamily, careerField, universities, dashboard, token }
     }
 }
 

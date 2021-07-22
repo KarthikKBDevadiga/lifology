@@ -1,7 +1,4 @@
-import { Fragment, useState } from 'react'
-import {
-    SelectorIcon
-} from '@heroicons/react/solid'
+import { useState } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
@@ -14,87 +11,31 @@ import MetaLayout from '/components/MetaLayout'
 
 import classNames from '/helpers/classNames'
 
-import { Listbox, Transition, Dialog } from '@headlessui/react'
-
-import styles from '/styles/Report.module.css'
-import Expand from 'react-expand-animated';
-
 import "react-multi-carousel/lib/styles.css";
 
-import { Bar, Line, Pie } from 'react-chartjs-2';
-
 import ReactCardCarousel from 'react-card-carousel';
+import { SchemeGetAssessment, SchemeGetMTIReport } from '../../../../helpers/GraphQLSchemes'
 
-export default function PurpleZone({ profile, token }) {
-    const router = useRouter()
+export default function MTIReport({ profile, assessment, report, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-
-
-    const [openOD, setOpenOD] = useState(true)
-    const [openSCR, setOpenSCR] = useState(false)
 
     const [openLS, setOpenLS] = useState(true)
     const [openWMY, setOpenWMY] = useState(false)
     const [openDWTW, setOpenDWTW] = useState(false)
 
-    const [openVisual, setOpenVisual] = useState(false)
-
-    const wmys = [
-        {
-            image: '/img/mti_report_wmy.png',
-            text: 'Freedom of expression'
-        },
-        {
-            image: '/img/mti_report_wmy.png',
-            text: 'Freedom of expression'
-        },
-        {
-            image: '/img/mti_report_wmy.png',
-            text: 'Freedom of expression'
-        }
-    ]
-    const lss = [
-        {
-            image: '/img/mti_report_ls.png',
-            text: 'You may be able to bring people together to achieve your goals'
-        },
-        {
-            image: '/img/mti_report_ls.png',
-            text: 'You may be able to bring people together to achieve your goals'
-        },
-        {
-            image: '/img/mti_report_ls.png',
-            text: 'You may be able to bring people together to achieve your goals'
-        }
-    ]
-    const dwtws = [
-        {
-            image: '/img/mti_report_dwtw.png',
-            text: 'You may like to keep the environment positive with your enthusiasm and positive sense of humor'
-        },
-        {
-            image: '/img/mti_report_dwtw.png',
-            text: 'You may like to keep the environment positive with your enthusiasm and positive sense of humor'
-        },
-        {
-            image: '/img/mti_report_dwtw.png',
-            text: 'You may like to keep the environment positive with your enthusiasm and positive sense of humor'
-        }
-    ]
-    const index = 4;
     var carouselLS;
     var carouselWMY;
     var carouselDWTW;
     return (
         <>
-            <MetaLayout title="MIO Assement Reports" description="MIO Assement Reports" />
+            <MetaLayout title="MTI Assement Reports" description="MTI Assement Reports" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="My Child / MIO Assesment" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="My Child / MTI Assesment" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -108,16 +49,21 @@ export default function PurpleZone({ profile, token }) {
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white rounded-md shadow h-30 p-4" style={{ height: "fit-content" }}>
-                                                    <p className="font-medium">Assesment/MIO Assesment</p>
-                                                    <div className="flex mt-2">
-                                                        <div className="bg-black w-20 rounded-md">
-                                                            <p className="text-white p-2 px-2">CAREER FITMENT</p>
+                                                    <p className="font-medium">Assesment/MTI Assesment</p>
+                                                    <div className="sm:flex mt-4">
+                                                        <div className="relative flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                            <img className="w-24 h-24 rounded" src={assessment.dash_cards_image} />
+                                                            <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white font-medium text-lg">{assessment.title}</div>
                                                         </div>
-                                                        <div className="ml-4 mr-4 font-medium">Career Fitment
-                                                            <div className="text-xs font-normal">Do you think your child has mastery over their immediate environment</div>
+                                                        <div className="flex">
+                                                            <div>
+                                                                <div className="text-base font-medium">{assessment.reports.title}</div>
+                                                                <div className="mt-1 text-xs font-normal text-justify">
+                                                                    {assessment.reports.description}
+                                                                </div>
+                                                            </div>
+                                                            <img className="ml-4 w-16 object-contain" src="/img/fitment.png" alt="fitment" />
                                                         </div>
-                                                        <img src="/img/fitment.png" alt="fitment" width="75px" height="40px" />
-                                                        {/* <div className="bg-yellow-400 w-20"><p className="text-white p-2">Image</p> </div> */}
                                                     </div>
                                                 </div>
 
@@ -318,7 +264,7 @@ export default function PurpleZone({ profile, token }) {
                                                     }}>
                                                         <ReactCardCarousel style={{ height: '200px' }}
                                                             ref={Carousel => carouselLS = Carousel}>
-                                                            {lss.map((card) => (
+                                                            {report.leadership_strength.map((card) => (
                                                                 <div style={{
                                                                     height: '100%',
                                                                     width: '250px',
@@ -385,7 +331,7 @@ export default function PurpleZone({ profile, token }) {
                                                     }}>
                                                         <ReactCardCarousel style={{ height: '200px' }}
                                                             ref={Carousel => carouselWMY = Carousel}>
-                                                            {wmys.map((card) => (
+                                                            {report.your_motivation.map((card) => (
                                                                 <div style={{
                                                                     height: '100%',
                                                                     width: '250px',
@@ -454,7 +400,7 @@ export default function PurpleZone({ profile, token }) {
                                                     }}>
                                                         <ReactCardCarousel style={{ height: '200px' }}
                                                             ref={Carousel => carouselDWTW = Carousel}>
-                                                            {dwtws.map((card) => (
+                                                            {report.world_dealing.map((card) => (
                                                                 <div style={{
                                                                     height: '100%',
                                                                     width: '250px',
@@ -534,7 +480,26 @@ export async function getServerSideProps(context) {
             }
         }
     }
-
+    const careerClient = new ApolloClient({
+        uri: Constants.baseUrl + "/api/assessment",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    });
+    const assessment = await queryGraph(careerClient, { id: parseInt(context.params.id) }, SchemeGetAssessment)
+        .then((res) => {
+            return res.assessmentDetails
+        }).catch((networkErr) => {
+            return {}
+        })
+    const report = await queryGraph(careerClient, {}, SchemeGetMTIReport)
+        .then((res) => {
+            return res.environmentalInteractions
+        }).catch((networkErr) => {
+            return {};
+        });
+    console.log(report)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -549,7 +514,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, token }
+        props: { profile, assessment, report, token }
     }
 }
 

@@ -23,7 +23,7 @@ import "react-multi-carousel/lib/styles.css";
 
 import { Bar, Line, Pie } from 'react-chartjs-2';
 
-export default function PurpleZone({ profile, assessment, report, token }) {
+export default function MIOReport({ profile, assessment, report, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")

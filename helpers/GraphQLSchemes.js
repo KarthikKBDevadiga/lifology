@@ -352,7 +352,28 @@ query allUniversity($pool_id:Int!,$field_id:Int!){
   }
 }
 `;
-
+export const SchemeGetArticleData = gql`
+query{
+  article_video(filter:{pool_id:1}){
+    magazines{
+      id
+      title
+      description
+      tags
+      video
+      thumbnail
+    }
+    videos{
+      id
+      title
+      description
+      tags
+      video
+      thumbnail
+    }
+  }
+}
+`;
 export const SchemeGetAssessments = gql`
 query{
   assessments{
@@ -470,6 +491,65 @@ query{
       title
       percentage
       content
+    }
+  }
+}
+`;
+
+export const SchemeGetMTIReport = gql`
+query{
+  environmentalInteractions(lang_id:1){
+    world_dealing
+    {
+        text
+        image
+    }
+    your_motivation
+    {
+        text
+        image
+    }
+    leadership_strength
+    {
+        text
+        image
+    }
+  }
+}
+`;
+
+export const SchemeGetFACEReport = gql`
+query{
+  coreBehaviour1(lang_id:1){
+    understanding_yourself
+    {
+        text
+        image
+    }
+    interpersonal_relation
+    {
+        text
+        image
+    }
+    others_view
+    {
+        text
+        image
+    }
+    decision_taking
+    {
+        text
+        image
+    }
+    associated_weakness
+    {
+        text
+        image
+    }
+    recommendation
+    {
+        text
+        image
     }
   }
 }
