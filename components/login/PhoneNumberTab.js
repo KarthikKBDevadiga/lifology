@@ -6,9 +6,38 @@ const PhoneNumberTab = ({ submit, error, setError }) => {
         <div className="mt-6">
             <form onSubmit={submit} className="space-y-6">
                 <div>
-                    <div className="mt-1 relative rounded-md shadow-sm">
+                    {/* <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute inset-y-0 left-0 pl-3 pr-3 flex items-center pointer-events-none rounded-l-full m-px bg-gray-200">
                             <span className="text-gray-500 sm:text-sm">+91</span>
+                        </div>
+                        <input
+                            id="phone1"
+                            name="phone1"
+                            type="tel"
+                            required
+                            maxLength="10"
+                            placeholder="Enter Mobile number"
+                            className=" rounded-full bg-gray-100 px-3 py-2 pl-14 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
+                            onKeyPress={() => {
+                                setError('')
+                            }}
+                        />
+                    </div> */}
+
+                    <div className="mt-1 relative rounded-md shadow-sm">
+                        <div className="absolute inset-y-0 left-0 flex items-center m-px">
+                            <label htmlFor="country" className="sr-only">
+                                Country
+                            </label>
+                            <select
+                                id="country"
+                                name="country"
+                                className="appearance-none bg-gray-200 h-full py-0 px-3 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-l-full outline-none"
+                            >
+                                <option>+91</option>
+                                <option>+92</option>
+                                <option>+93</option>
+                            </select>
                         </div>
                         <input
                             id="phone"
@@ -16,14 +45,14 @@ const PhoneNumberTab = ({ submit, error, setError }) => {
                             type="tel"
                             required
                             maxLength="10"
+                            className="bg-gray-100 block w-full px-3 py-2 pl-14 sm:text-sm rounded-full outline-none border focus:border-indigo-700 duration-500"
                             placeholder="Enter Mobile number"
-                            className="rounded-full bg-gray-100 px-3 py-2 pl-14 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
                             onKeyPress={() => {
                                 setError('')
-                                // clearError()
                             }}
                         />
                     </div>
+
                 </div>
                 {
                     error.length == 0 ? <></> :

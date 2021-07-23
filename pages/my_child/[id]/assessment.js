@@ -89,7 +89,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                     setTimeout(() => {
                         setSuccessDialog(false)
                         router.push({
-                            pathname: '/my_child/' + assessment.id + '/mio_report',
+                            pathname: '/my_child/' + assessment.id + '/report/' + assessment.title,
                             query: { token: authToken }
                         })
                     }, 1000)
@@ -324,7 +324,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                     </div>
                                     <div className="mt-3 text-center sm:mt-5">
                                         <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                                            Login successful
+                                            Assessment Completed
                                         </Dialog.Title>
                                         <button className="absolute h-0 w-0 overflow-hidden" />
                                     </div>

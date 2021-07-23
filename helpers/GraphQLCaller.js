@@ -42,7 +42,7 @@ export const queryGraph = function (apolloClient, vars = {}, scheme, fetch_Polic
       })
       .catch((err) => {
         clearTimeout(timeoutCall);
-        // reject(err.networkError.result.errors[0].message);
+        reject(err.networkError.result.errors[0].message);
       });
   });
 };

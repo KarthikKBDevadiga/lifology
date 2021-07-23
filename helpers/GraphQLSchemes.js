@@ -352,6 +352,7 @@ query allUniversity($pool_id:Int!,$field_id:Int!){
   }
 }
 `;
+
 export const SchemeGetArticleData = gql`
 query{
   article_video(filter:{pool_id:1}){
@@ -374,6 +375,7 @@ query{
   }
 }
 `;
+
 export const SchemeGetAssessments = gql`
 query{
   assessments{

@@ -13,6 +13,7 @@ import DownloadLayout from '../components/DownloadLayout'
 import useLocalStorage from '../helpers/useLocalStorage'
 import MetaLayout from '../components/MetaLayout'
 import LoadingDialog from '../components/dialog/LoadingDialog'
+import NextNprogress from 'nextjs-progressbar';
 
 const client = new ApolloClient({
     uri: Constants.baseUrl + "/api/auth",
@@ -24,6 +25,7 @@ export default function Login() {
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [successDialog, setSuccessDialog] = useState(false)
     const [errorDialog, setErrorDialog] = useState(false)
+    const [errorDialogString, setErrorDialogString] = useState('Login Failed')
     const [signupDialog, setSignupDialog] = useState(false)
     const [error, setError] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -101,7 +103,7 @@ export default function Login() {
                         setSuccessDialog(false)
                         router.push({
                             pathname: 'career_explorer',
-                            query: { token: res.otpVerification.auth_token }
+                            query: { token: res.otpVerification.auth_token },
                         })
                     }, 1000)
                     setAuthToken(res.otpVerification.auth_token);
@@ -111,7 +113,8 @@ export default function Login() {
             }).catch((networkErr) => {
                 setLoadingDialog(false)
                 setErrorDialog(true)
-                console.log(networkErr);
+                setErrorDialogString(networkErr)
+                console.log(networkErr)
             });
     }
 
@@ -144,9 +147,9 @@ export default function Login() {
 
                     <div className="mx-auto w-full max-w-sm lg:w-96">
                         <div>
-                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center text-center">{tab === 1 ? 'Welcome to Lifology' : 'Enter Code Sent To On Your Mobile Number'}</h2>
+                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center text-center">{tab === 1 ? 'Let’s get started' : 'Verify Your Mobile Number'}</h2>
                             <p className="mt-2 text-sm text-gray-600 text-center">
-                                {tab === 1 ? <span>The World's leading career guidance platform</span> : <span>We sent it to the number +91 {phoneNumber}</span>}
+                                {tab === 1 ? <span></span> : <span>We have sent a 6-digit OTP to {phoneNumber}. Enter it below</span>}
                             </p>
                         </div>
 
@@ -301,7 +304,7 @@ export default function Login() {
                                     </div>
                                     <div className="mt-3 text-center sm:mt-5">
                                         <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                                            Login Failed
+                                            {errorDialogString}
                                         </Dialog.Title>
                                     </div>
                                 </div>

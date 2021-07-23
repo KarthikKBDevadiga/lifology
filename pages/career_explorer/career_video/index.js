@@ -20,6 +20,7 @@ import classNames from '/helpers/classNames'
 
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
+import NextNProgress from 'nextjs-progressbar'
 
 
 
@@ -307,7 +308,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
-                                                                            <img className=" rounded-t filter grayscale group-hover:filter-none duration-500" src={card.thumbnail} />
+                                                                            <img className=" rounded-t duration-500" src={card.thumbnail} />
                                                                             {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                                                             <div className="flex-1 flex items-center justify-between truncate">
                                                                                 <div className="flex-1 px-4 py-2 text-sm truncate">
@@ -444,7 +445,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
-                                                                            <img className=" rounded-t filter grayscale group-hover:filter-none duration-500" src={card.thumbnail} />
+                                                                            <img className=" rounded-t duration-500" src={card.thumbnail} />
                                                                             {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                                                             <div className="flex-1 flex items-center justify-between truncate">
                                                                                 <div className="flex-1 px-4 py-2 text-sm truncate">
@@ -579,7 +580,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
-                                                                            <img className=" rounded-t filter grayscale group-hover:filter-none duration-500" src={card.thumbnail} />
+                                                                            <img className=" rounded-t duration-500" src={card.thumbnail} />
                                                                             {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                                                             <div className="flex-1 flex items-center justify-between truncate">
                                                                                 <div className="flex-1 px-4 py-2 text-sm truncate">

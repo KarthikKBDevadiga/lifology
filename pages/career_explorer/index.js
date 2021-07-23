@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
+import NextNProgress from 'nextjs-progressbar'
 
 const cards = [
     { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
@@ -62,7 +63,7 @@ export default function CareerExplorer({ profile, token }) {
                                                         <Link
                                                             href={{
                                                                 pathname: card.href,
-                                                                query: { token: token }
+                                                                query: { token: token },
                                                             }}>
                                                             <a>
                                                                 <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-lyellow">Explore</div>

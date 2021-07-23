@@ -17,6 +17,7 @@ import MetaLayout from '../../../components/MetaLayout'
 
 import "react-multi-carousel/lib/styles.css";
 import { SchemeGetRecommendedVideos, SchemeGetVideo } from '../../../helpers/GraphQLSchemes'
+import NextNProgress from 'nextjs-progressbar'
 
 function getVideoId(url) {
     var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/

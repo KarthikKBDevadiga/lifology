@@ -36,7 +36,11 @@ export default function Profile({ profile, token }) {
                         <div className="m-4 p-4 shadow rounded bg-white">
 
                             <div className="relative">
-                                <label className="text-black pb-2 block text-xl left-0 absolute">Personal Details</label>
+                                <div className="left-0 absolute">
+                                    <label className="text-black block text-base font-medium ">Personal Details</label>
+                                    <div className="mt-2 w-12 h-0.5 rounded bg-lblue"></div>
+                                </div>
+
                                 <Link href={{
                                     pathname: '/profile/edit_personal_details',
                                     query: { token: token }
@@ -48,10 +52,9 @@ export default function Profile({ profile, token }) {
                                 </Link>
                             </div>
 
-                            <div className="mt-10 w-12 h-0.5 rounded bg-lblue"></div>
-                            <div className="sm:flex mt-4">
+                            <div className="sm:flex mt-12">
                                 <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                    <img className="w-32 h-32 rounded-full"
+                                    <img className="w-24 h-24 rounded-full"
                                         src={
                                             (profile.profile_image == null || profile.profile_image == "") ?
                                                 "../img/upload.svg" : profile.profile_image
@@ -107,7 +110,10 @@ export default function Profile({ profile, token }) {
                             <div className="my-4 w-full h-0.5 rounded bg-lgrey-border"></div>
 
                             <div className="relative">
-                                <label className="text-black pb-2 block text-xl left-0 absolute">Child Details</label>
+                                <div className="left-0 absolute">
+                                    <label className="text-black block text-base font-medium ">Child Details</label>
+                                    <div className="mt-2 w-12 h-0.5 rounded bg-lblue"></div>
+                                </div>
                                 <Link href={{
                                     pathname: '/profile/edit_child_details',
                                     query: { token: token }
@@ -119,25 +125,25 @@ export default function Profile({ profile, token }) {
                                 </Link>
                             </div>
 
-                            <div className="mt-14 w-12 h-0.5 rounded bg-lblue"></div>
                             <div className="sm:flex mt-4">
-                                <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                    <img className="w-32 h-32 rounded-full"
+                                {/* <div className="mt-14 mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+                                    <img className="w-24 h-24 rounded-full"
                                         src={
                                             (profile.profile_image == null || profile.profile_image == "") ?
-                                                "../img/upload.svg" : profile.profile_image
+                                                "../img/upload.svg" : "../img/upload.svg"
                                         }
                                         alt="" />
-                                </div>
-                                <div className="self-center">
+                                </div> */}
+                                <div className="mt-12 self-center">
                                     <div className="text-base font-bold">{profile.child_details.child_name}</div>
-                                    <div className="text-sm mt-1 text-gray-400">{profile.child_details.gender} | {profile.child_details.grade} Class</div>
+                                    <div className="text-sm mt-1 text-gray-400">{profile.child_details.gender}</div>
+                                    <div className="text-sm mt-1 text-gray-400">{profile.child_details.grade} Class | {profile.child_details.school_name}</div>
                                 </div>
                             </div>
 
                             <div className="mt-4 w-full h-0.5 rounded bg-lgrey-border"></div>
 
-                            <label className="text-black mt-4 pb-2 block text-xl">Your Prefrences</label>
+                            <label className="text-black mt-4 pb-2 block text-base font-medium">Your Prefrences</label>
                             <div className="mt-1 w-12 h-0.5 rounded bg-lblue"></div>
 
                         </div>
