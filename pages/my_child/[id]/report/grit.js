@@ -169,7 +169,6 @@ export async function getServerSideProps(context) {
             return {};
         });
 
-    console.log(report)
 
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
