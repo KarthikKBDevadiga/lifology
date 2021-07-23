@@ -938,8 +938,11 @@ export async function getServerSideProps(context) {
         })
     const report = await queryGraph(careerClient, {}, SchemeGetFACEReport)
         .then((res) => {
+            console.log(res)
             return res.coreBehaviour1
         }).catch((networkErr) => {
+            console.log('error')
+            console.log(networkErr)
             return {};
         });
     console.log(report)

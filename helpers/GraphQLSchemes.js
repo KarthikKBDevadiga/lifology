@@ -567,3 +567,26 @@ query{
   }
 }
 `;
+
+export const SchemeGetLSReport = gql`
+query{
+  learningSuggestions(lang_id:1){
+    content{
+      image
+      text
+    }
+  }
+}
+`;
+
+export const SchemeGetCompetencyReport = gql`
+query{
+  competencies(lang_id:1){
+    image,
+    label,
+    text,
+    info,
+    score
+  }
+}
+`;

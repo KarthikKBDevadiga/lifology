@@ -53,7 +53,7 @@ export default function MyChild({ profile, assessments, token }) {
 
                                                 card.id == 8 ? <></> : <Link
                                                     href={{
-                                                        pathname: card.assessment_type == 3 ? '' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase(),
+                                                        pathname: card.assessment_type == 3 ? card.id == 9 ? '/my_child/' + card.id + '/report/la' : '' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase(),
                                                         query: { token: token }
                                                     }}>
                                                     <a>
