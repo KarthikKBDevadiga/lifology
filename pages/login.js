@@ -24,6 +24,7 @@ export default function Login() {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [successDialog, setSuccessDialog] = useState(false)
+    const [successDialogString, setSuccessDialogString] = useState('Login Successful')
     const [errorDialog, setErrorDialog] = useState(false)
     const [errorDialogString, setErrorDialogString] = useState('Login Failed')
     const [signupDialog, setSignupDialog] = useState(false)
@@ -61,7 +62,7 @@ export default function Login() {
                 if (res.sendOtp) {
                     setLoadingDialog(false)
                     setTab(2)
-                    setTimeLeft(30)
+                    setTimeLeft(15)
                 }
             }).catch((networkErr) => {
                 setLoadingDialog(false)
@@ -77,7 +78,9 @@ export default function Login() {
                 if (res.sendOtp) {
                     setLoadingDialog(false)
                     // setTab(2)
-                    setTimeLeft(30)
+                    setTimeLeft(15)
+                    setSuccessDialogString('OTP Sent Successful')
+                    setSuccessDialog(true)
                 }
             }).catch((networkErr) => {
                 setLoadingDialog(false)
@@ -97,9 +100,9 @@ export default function Login() {
                 console.log(res.otpVerification)
                 setLoadingDialog(false)
                 if (res.otpVerification.is_user_exist) {
+                    setSuccessDialogString('Login Successful')
                     setSuccessDialog(true)
                     setTimeout(() => {
-
                         setSuccessDialog(false)
                         router.push({
                             pathname: 'career_explorer',
@@ -258,7 +261,7 @@ export default function Login() {
                                     </div>
                                     <div className="mt-3 text-center sm:mt-5">
                                         <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                                            Login successful
+                                            {successDialogString}
                                         </Dialog.Title>
                                         <button className="absolute h-0 w-0 overflow-hidden" />
                                     </div>

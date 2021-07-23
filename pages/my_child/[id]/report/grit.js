@@ -14,6 +14,7 @@ import "react-multi-carousel/lib/styles.css";
 import { PieChart } from 'react-minimal-pie-chart';
 
 import 'keen-slider/keen-slider.min.css'
+import { SchemeGetGRITReport } from '../../../../helpers/GraphQLSchemes'
 
 
 export default function CareReport({ profile, assessment, report, token }) {
@@ -161,7 +162,7 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {}
         })
-    const report = await queryGraph(careerClient, {}, SchemeGetMIOReport)
+    const report = await queryGraph(careerClient, {}, SchemeGetGRITReport)
         .then((res) => {
             return res.intelligenceOrientation
         }).catch((networkErr) => {

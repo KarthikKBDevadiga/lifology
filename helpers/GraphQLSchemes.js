@@ -556,3 +556,14 @@ query{
   }
 }
 `;
+
+export const SchemeGetGRITReport = gql`
+query{
+  passionPerseverance(lang_id:1){
+   score
+    circle_text
+    quote_text
+    step_text
+  }
+}
+`;
