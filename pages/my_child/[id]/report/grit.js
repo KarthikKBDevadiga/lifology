@@ -184,7 +184,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, report, token }
+        props: { profile, assessment, token }
     }
 }
 
