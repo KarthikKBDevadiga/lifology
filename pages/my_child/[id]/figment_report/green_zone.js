@@ -70,7 +70,7 @@ export default function GreenZone({ profile, token }) {
                                                     <div className="relative w-full border rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " style={{ background: '#5EB570' }}>
                                                         <span className="font-medium block truncate text-white">Green Zone</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
-                                                            <a onClick={(event) => setGreenOpen(!openGreen)}>
+                                                            <a href="green_zone">
                                                                 <div className="p-1 bg-white rounded-full">
                                                                     {
                                                                         openGreen ?
@@ -93,7 +93,7 @@ export default function GreenZone({ profile, token }) {
                                                     <div className="relative w-full border rounded-md shadow-sm pl-3 pr-10 py-2 mt-4 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
                                                         <span className="font-medium block truncate">Blue Zone</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
-                                                            <a onClick={(event) => setBlueOpen(!openBlue)}>
+                                                            <a href="blue_zone">
                                                                 <div className="p-1 bg-black  rounded-full">
                                                                     {
                                                                         openBlue ?
@@ -114,7 +114,7 @@ export default function GreenZone({ profile, token }) {
                                                     <div className="relative w-full border rounded-md shadow-sm pl-3 pr-10 py-2 mt-4 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
                                                         <span className="font-medium block truncate">Orange Zone</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
-                                                            <a onClick={(event) => setOrangeOpen(!openOrange)}>
+                                                            <a href="orange_zone">
                                                                 <div className="p-1 bg-black  rounded-full">
                                                                     {
                                                                         openOrange ?
@@ -136,7 +136,7 @@ export default function GreenZone({ profile, token }) {
                                                     <div className="relative w-full border rounded-md shadow-sm pl-3 pr-10 py-2 mt-4 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
                                                         <span className="font-medium block truncate">Purple Zone</span>
                                                         <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
-                                                            <a onClick={(event) => setPurpleOpen(!openPurple)}>
+                                                            <a href="purple_zone">
                                                                 <div className="p-1 bg-black  rounded-full">
                                                                     {
                                                                         openPurple ?

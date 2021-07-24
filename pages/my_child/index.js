@@ -46,16 +46,18 @@ export default function MyChild({ profile, assessments, token }) {
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col mt-2">
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg bg-white p-4">
-                                        <div className="font-bold text-xl" >Assesment</div>
+                                        <div className="font-bold text-xl" >Assessment</div>
                                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-5 lg:grid-cols-5 mt-4">
                                             {/* Card */}
                                             {assessments.map((card) => (
 
-                                                card.id == 8 ? <></> : <Link
-                                                    href={{
-                                                        pathname: card.assessment_type == 3 ? card.id == 9 ? '/my_child/' + card.id + '/report/la' : '' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase(),
-                                                        query: { token: token }
-                                                    }}>
+                                                (card.id == 8 && !(assessments.find(a => a.id == 1).total_questions <= 0 &&
+                                                    assessments.find(a => a.id <= 4).total_questions <= 0 &&
+                                                    assessments.find(a => a.id <= 2).total_questions <= 0)) ? <></> : <Link
+                                                        href={{
+                                                            pathname: card.assessment_type == 3 ? card.id == 9 ? '/my_child/' + card.id + '/report/la' : '/my_child/' + card.id + '/figment_report/green_zone' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase(),
+                                                            query: { token: token }
+                                                        }}>
                                                     <a>
                                                         <div key={card.name} className="group relative bg-white overflow-hidden shadow hover:shadow-xl hover:scale-105 active:scale-100 active:shadow-sm rounded bg-cover duration-500 "
                                                             style={{ height: '200px', }}
@@ -120,8 +122,10 @@ export async function getServerSideProps(context) {
         .then((res) => {
             return res.assessments
         }).catch((networkErr) => {
-            return {}
+            return []
         })
+    console.log(assessments)
+
 
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
