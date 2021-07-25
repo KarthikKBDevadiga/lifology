@@ -189,23 +189,7 @@ export default function GreenZone({ profile, report, token }) {
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-2">
                                             {
                                                 index == 1 ? <div className="bg-white rounded-md shadow h-auto p-4">
-                                                    {/* <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#5EB570" }}>
-                                                        <p className="p-4">
-                                                            <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">90%</span>Tourism & Hospitality
-                                                        </p>
-                                                        <p className="text-sm pl-4 pb-2">Personality Match</p>
-                                                        <div className="relative ml-4 mr-4">
-                                                            <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-900">
-                                                                <div style={{ width: '30%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
-                                                            </div>
-                                                        </div>
-                                                        <p className="text-sm pl-4 pb-2">Orientation Match</p>
-                                                        <div className="relative ml-4 mr-4">
-                                                            <div className="overflow-hidden h-2 text-xs flex rounded bg-green-900">
-                                                                <div style={{ width: '70%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div> */}
+
                                                     {
                                                         report.green_zone.map((r) => {
                                                             return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#5EB570" }}>
