@@ -24,7 +24,8 @@ module.exports = {
           DEFAULT: '#FFC400'
         },
         lgreen: {
-          DEFAULT: '#02C77D'
+          DEFAULT: '#02C77D',
+          light: '#5EB570'
         }
       },
       animation: {

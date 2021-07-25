@@ -89,12 +89,12 @@ export default function Assessment({ profile, assessment, questions, token }) {
             .then((res) => {
                 setLoadingDialog(false)
                 console.log(questionNo + ' ' + questions.length)
-                if (questionNo == questions.length) {
+                if (questionNo == (assessment.attempted_questions + questions.length)) {
                     setSuccessDialog(true)
                     setTimeout(() => {
                         setSuccessDialog(false)
                         router.push({
-                            pathname: '/my_child/' + assessment.id + '/report/' + assessment.title,
+                            pathname: '/my_child/' + assessment.id + '/report/' + assessment.title.toLowerCase(),
                             query: { token: authToken }
                         })
                     }, 1000)
