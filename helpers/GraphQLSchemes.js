@@ -590,3 +590,75 @@ query{
   }
 }
 `;
+
+export const SchemeGetFigmentReport = gql`
+query{
+  careerFitment(lang_id:1){
+    green_zone {
+      career
+      one_liner
+      pool_id
+      percentage
+      personality_match
+      orientation_match
+      career_fields{
+          id
+          pool_id
+          name
+          image
+          video
+          description
+      }
+    }
+    blue_zone
+    {
+     career
+      one_liner
+      pool_id
+      percentage
+       personality_match
+      orientation_match
+      career_fields{
+          id
+          pool_id
+          name
+          image
+          video
+          description
+      }
+    }
+    orange_zone{
+        career
+      one_liner
+      pool_id
+      percentage
+      personality_match
+      orientation_match
+      career_fields{
+          id
+          pool_id
+          name
+          image
+          video
+          description
+      }
+    }
+    purple_zone{
+        career
+      one_liner
+      pool_id
+      percentage
+      personality_match
+      orientation_match
+      career_fields{
+          id
+          pool_id
+          name
+          image
+          video
+          description
+      }
+    }
+  }
+}
+`;

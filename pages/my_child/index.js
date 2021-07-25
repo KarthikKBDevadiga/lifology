@@ -55,7 +55,7 @@ export default function MyChild({ profile, assessments, token }) {
                                                     // assessments.find(a => a.id == 4).total_questions <= 0 &&
                                                     assessments.find(a => a.id == 2).total_questions <= 0)) ? <></> : <Link
                                                         href={{
-                                                            pathname: card.assessment_type == 3 ? card.id == 9 ? '/my_child/' + card.id + '/report/la' : '/my_child/' + card.id + '/figment_report/green_zone' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase(),
+                                                            pathname: card.assessment_type == 3 ? card.id == 9 ? '/my_child/' + card.id + '/report/la' : '/my_child/' + card.id + '/report/figment' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase(),
                                                             query: { token: token }
                                                         }}>
                                                     <a>
