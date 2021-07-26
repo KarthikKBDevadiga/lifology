@@ -14,6 +14,7 @@ import VideoDialog from '/components/dialog/VideoDialog'
 import { SchemeCareerFields } from '/helpers/GraphQLSchemes'
 import styles from '/styles/Mti.module.css'
 import { SchemeGetAssessment } from '../../../helpers/GraphQLSchemes'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 
 export default function MTIAssessment({ profile, assessment, token }) {
@@ -21,6 +22,18 @@ export default function MTIAssessment({ profile, assessment, token }) {
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [openVideo, setOpenVideo] = useState(false)
+
+    const pages = [
+        {
+            name: 'My Child', href: {
+                pathname: '/my_child/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Instructions', href: '#', current: true
+        },
+    ]
 
     return (
         <>
@@ -30,10 +43,10 @@ export default function MTIAssessment({ profile, assessment, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={"My Child / Instructions "} authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={"Instructions"} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">

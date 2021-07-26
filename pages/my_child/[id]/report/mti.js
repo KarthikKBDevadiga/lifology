@@ -15,6 +15,7 @@ import "react-multi-carousel/lib/styles.css";
 
 import ReactCardCarousel from 'react-card-carousel';
 import { SchemeGetAssessment, SchemeGetMTIReport } from '../../../../helpers/GraphQLSchemes'
+import Breadcrumbs from '../../../../components/Breadcrumbs'
 
 export default function MTIReport({ profile, assessment, report, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -27,6 +28,19 @@ export default function MTIReport({ profile, assessment, report, token }) {
     var carouselLS;
     var carouselWMY;
     var carouselDWTW;
+
+    const pages = [
+        {
+            name: 'My Child', href: {
+                pathname: '/my_child/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: assessment.title + ' Report', href: '#', current: true
+        },
+    ]
+
     return (
         <>
             <MetaLayout title="MTI Assement Reports" description="MTI Assement Reports" />
@@ -35,10 +49,10 @@ export default function MTIReport({ profile, assessment, report, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="My Child / MTI Assesment" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="MTI Report" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">

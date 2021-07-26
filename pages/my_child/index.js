@@ -14,6 +14,7 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import { SchemeGetAssessments } from '/helpers/GraphQLSchemes'
+import Breadcrumbs from '../../components/Breadcrumbs'
 
 const cards = [
     { title: 'Face', subtitle: 'Core Behaviour', href: '#', bg: '/img/my_child/face.png' },
@@ -25,7 +26,12 @@ const cards = [
     { title: 'Competancy', subtitle: '21st Century Skills', href: '#', bg: '/img/my_child/competancy.png' },
     // More items...
 ]
+const pages = [
+    {
+        name: 'My Child', href: '#', current: true
+    },
 
+]
 export default function MyChild({ profile, assessments, isCF, isLS, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -40,7 +46,7 @@ export default function MyChild({ profile, assessments, isCF, isLS, token }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="My Child" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
                             {/* Activity table (small breakpoint and up) */}
                             <div className="max-w-6xl mx-auto">

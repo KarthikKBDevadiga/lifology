@@ -34,6 +34,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                 <div className="flex-1 flex font-bold self-center">
                     <div >
                         <h2 className="text-xl ">{title}</h2>
+
                     </div>
                 </div>
                 <div className="ml-4 flex items-center md:ml-6">

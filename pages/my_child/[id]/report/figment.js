@@ -18,6 +18,7 @@ import "react-multi-carousel/lib/styles.css";
 
 import classNames from '/helpers/classNames'
 import { SchemeGetFigmentReport } from '../../../../helpers/GraphQLSchemes'
+import Breadcrumbs from '../../../../components/Breadcrumbs'
 
 
 export default function GreenZone({ profile, report, token }) {
@@ -32,7 +33,17 @@ export default function GreenZone({ profile, report, token }) {
     const [openPurple, setPurpleOpen] = useState(false)
 
     const [index, setIndex] = useState(1)
-
+    const pages = [
+        {
+            name: 'My Child', href: {
+                pathname: '/my_child/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Figment Report', href: '#', current: true
+        },
+    ]
     return (
         <>
             <MetaLayout title="Figment Report" description="Figment Report" />
@@ -41,10 +52,10 @@ export default function GreenZone({ profile, report, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="My Child / Career Fitment Report" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Fitment Report" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">

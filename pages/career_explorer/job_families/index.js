@@ -12,12 +12,24 @@ import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export default function JobFamilies({ families, profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
+    const pages = [
+        {
+            name: 'Career Explorer', href: {
+                pathname: '/career_explorer/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Job Families & Career Fields', href: '#', current: true
+        },
+    ]
 
     return (
         <>
@@ -27,10 +39,10 @@ export default function JobFamilies({ families, profile, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Job Families & Career Fields" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Job Families & Career Fields" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4" >
 
                             {/* Activity table (small breakpoint and up) */}

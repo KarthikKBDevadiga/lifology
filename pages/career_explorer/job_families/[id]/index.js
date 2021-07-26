@@ -12,6 +12,7 @@ import "react-multi-carousel/lib/styles.css";
 import { SchemeCareerPools } from '/helpers/GraphQLSchemes'
 import VideoDialog from '../../../../components/dialog/VideoDialog'
 import { SchemeCareerFields } from '../../../../helpers/GraphQLSchemes'
+import Breadcrumbs from '../../../../components/Breadcrumbs'
 
 
 export default function JobFamily({ profile, jobFamily, careerFields, token }) {
@@ -19,7 +20,23 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [openVideo, setOpenVideo] = useState(false)
-
+    const pages = [
+        {
+            name: 'Career Explorer', href: {
+                pathname: '/career_explorer/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Course & University', href: {
+                pathname: '/career_explorer/job_families',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Accounting and Finance', href: '#', current: true
+        },
+    ]
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
@@ -28,10 +45,10 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={"Career Explorer / Course & University / " + jobFamily.name} authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={jobFamily.name} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">

@@ -14,6 +14,7 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import NextNProgress from 'nextjs-progressbar'
+import Breadcrumbs from '../../components/Breadcrumbs'
 
 const cards = [
     { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
@@ -27,7 +28,11 @@ export default function CareerExplorer({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-
+    const pages = [
+        {
+            name: 'Career Explorer', href: '#', current: true
+        },
+    ]
     return (
         <>
 
@@ -39,7 +44,7 @@ export default function CareerExplorer({ profile, token }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             {/* Activity table (small breakpoint and up) */}

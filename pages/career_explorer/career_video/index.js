@@ -21,7 +21,7 @@ import classNames from '/helpers/classNames'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import NextNProgress from 'nextjs-progressbar'
-
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 
 const headerSlide = [
@@ -152,6 +152,17 @@ export default function CareerVideo({ videoCats, profile, token }) {
         },
     })
 
+    const pages = [
+        {
+            name: 'Career Explorer', href: {
+                pathname: '/career_explorer/',
+                query: { token: token }
+            }, current: false
+        },
+        { name: 'Career Videos', href: '#', current: true },
+    ]
+
+
     return (
         <>
 
@@ -161,7 +172,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Videos" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -169,8 +180,10 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col">
+                                    <Breadcrumbs pages={pages} />
+                                    <div className="sm:flex sm:items-start sm:justify-between mx-4">
 
-                                    <div className="sm:flex sm:items-start sm:justify-between m-4">
+
                                         <div className="w-full rounded shadow h-full text-sm bg-white">
                                             <div className="flex left-4  right-24 focus-within:text-gray-600 ">
                                                 <div className="p-3 items-center pointer-events-none" aria-hidden="true">
@@ -204,7 +217,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
 
 
-                                    <div className="relative flex items-center w-full">
+                                    <div className="relative flex items-center w-full mt-4">
 
                                         <a
                                             onClick={(event) => {

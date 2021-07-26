@@ -29,6 +29,7 @@ import styles from '/styles/Magazine.module.css'
 import MetaLayout from '/components/MetaLayout'
 import Link from 'next/link'
 import classNames from '/helpers/classNames'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export default function CourceAndUniversity({ profile, countries, universities, token, state, city }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -46,8 +47,17 @@ export default function CourceAndUniversity({ profile, countries, universities, 
         console.log("local country", value)
     }, [selectedCountry])
 
-    console.log(countries, "-----university----", universities, "==state===", state, "city", city);
-
+    const pages = [
+        {
+            name: 'Career Explorer', href: {
+                pathname: '/career_explorer/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Course & University', href: '#', current: true
+        },
+    ]
     return (
         <>
             <MetaLayout title="Magazine" description="Magazine" />
@@ -56,10 +66,10 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Course & University" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Course & University" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">

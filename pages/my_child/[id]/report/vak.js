@@ -17,6 +17,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
 import ReactCardCarousel from 'react-card-carousel';
+import Breadcrumbs from '../../../../components/Breadcrumbs'
 
 export default function VAKReport({ profile, assessment, report, token }) {
     const router = useRouter()
@@ -47,6 +48,19 @@ export default function VAKReport({ profile, assessment, report, token }) {
     ]
 
     var carousel;
+
+    const pages = [
+        {
+            name: 'My Child', href: {
+                pathname: '/my_child/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: assessment.title + ' Report', href: '#', current: true
+        },
+    ]
+
     return (
         <>
             <MetaLayout title="VAK Assement Reports" description="VAK Assement Reports" />
@@ -55,10 +69,10 @@ export default function VAKReport({ profile, assessment, report, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="My Child / VAK Assesment" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="VAK Report" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">

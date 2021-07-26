@@ -24,6 +24,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
 import { DragDropContext, Droppable, Draggable, resetServerContext } from "react-beautiful-dnd";
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export default function Assessment({ profile, assessment, questions, token }) {
     const router = useRouter()
@@ -53,7 +54,17 @@ export default function Assessment({ profile, assessment, questions, token }) {
             setOrderedOptions(questions[s.details().relativeSlide].score_options)
         },
     })
-
+    const pages = [
+        {
+            name: 'My Child', href: {
+                pathname: '/my_child/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: assessment.title + 'Assignment', href: '#', current: true
+        },
+    ]
     const answer = event => {
         var scores = []
 
@@ -142,7 +153,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={"My Child / " + assessment.title + " Assesment"} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             {/* Activity table (small breakpoint and up) */}

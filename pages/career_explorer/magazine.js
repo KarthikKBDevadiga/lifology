@@ -27,6 +27,7 @@ import styles from '../../styles/Magazine.module.css'
 import MetaLayout from '../../components/MetaLayout'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Breadcrumbs from '../../components/Breadcrumbs'
 
 const cards = [
     { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
@@ -43,6 +44,18 @@ export default function Magazine({ profile, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
+    const pages = [
+        {
+            name: 'Career Explorer', href: {
+                pathname: '/career_explorer/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Magazines', href: '#', current: true
+        },
+    ]
+
     return (
         <>
             <MetaLayout title="Magazine" description="Magazine" />
@@ -51,10 +64,10 @@ export default function Magazine({ profile, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Magazines" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Magazines" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">

@@ -18,6 +18,7 @@ import MetaLayout from '../../../components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
 import { SchemeGetRecommendedVideos, SchemeGetVideo } from '../../../helpers/GraphQLSchemes'
 import NextNProgress from 'nextjs-progressbar'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 function getVideoId(url) {
     var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
@@ -31,6 +32,24 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
+    const pages = [
+        {
+            name: 'Career Explorer', href: {
+                pathname: '/career_explorer/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Career Videos', href: {
+                pathname: '/career_explorer/career_video',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Career Videos Details', href: '#', current: true
+        },
+    ]
+
 
     return (
         <>
@@ -41,14 +60,17 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos / Career Videos Details" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={video.title} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
+
+                        <Breadcrumbs pages={pages} />
 
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">
                                 <div className="flex flex-col mt-2">
+
 
                                     <div className="max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
                                         <div className="space-y-6 lg:col-start-1 lg:col-span-2">

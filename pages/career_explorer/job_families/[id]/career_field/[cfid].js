@@ -21,6 +21,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
 import Expand from 'react-expand-animated';
+import Breadcrumbs from '../../../../../components/Breadcrumbs'
 
 export default function CareerFields({ profile, jobFamily, careerField, universities, dashboard, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -105,7 +106,29 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
             clearInterval(timer.current)
         }
     }, [pause, universitySlider])
-
+    const pages = [
+        {
+            name: 'Career Explorer', href: {
+                pathname: '/career_explorer/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Course & University', href: {
+                pathname: '/career_explorer/job_families',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: jobFamily.name, href: {
+                pathname: '/career_explorer/job_families/' + careerField.id,
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: careerField.name, href: '#', current: true
+        },
+    ]
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
@@ -114,10 +137,10 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={"Career Explorer / Course & University / " + jobFamily.name} authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={careerField.name} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">

@@ -1,30 +1,15 @@
 import React from 'react'
-import { XCircleIcon, XIcon } from '@heroicons/react/solid'
+import { XCircleIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { Fragment, useState } from 'react'
+import { Listbox, Transition } from '@headlessui/react'
+import classNames from '/helpers/classNames'
 
-const PhoneNumberTab = ({ submit, error, setError }) => {
+const PhoneNumberTab = ({ submit, error, setError, countries, selectedCountry, setSelectedCountry }) => {
     return (
         <div className="mt-6">
             <form onSubmit={submit} className="space-y-6">
                 <div>
                     {/* <div className="mt-1 relative rounded-md shadow-sm">
-                        <div className="absolute inset-y-0 left-0 pl-3 pr-3 flex items-center pointer-events-none rounded-l-full m-px bg-gray-200">
-                            <span className="text-gray-500 sm:text-sm">+91</span>
-                        </div>
-                        <input
-                            id="phone1"
-                            name="phone1"
-                            type="tel"
-                            required
-                            maxLength="10"
-                            placeholder="Enter Mobile number"
-                            className=" rounded-full bg-gray-100 px-3 py-2 pl-14 text-sm w-full outline-none border focus:border-indigo-700 duration-500"
-                            onKeyPress={() => {
-                                setError('')
-                            }}
-                        />
-                    </div> */}
-
-                    <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute inset-y-0 left-0 flex items-center m-px">
                             <label htmlFor="country" className="sr-only">
                                 Country
@@ -51,9 +36,92 @@ const PhoneNumberTab = ({ submit, error, setError }) => {
                                 setError('')
                             }}
                         />
-                    </div>
+                    </div> */}
+                    <div className="mt-1 relative rounded-md shadow-sm">
+                        <div className="absolute inset-y-0 left-0 flex items-center m-px">
+                            <Listbox value={selectedCountry} onChange={setSelectedCountry}>
+                                {({ open }) => (
+                                    <>
+                                        <div className="m-px relative h-full">
+                                            <Listbox.Button className="relative w-32 bg-gray-200 rounded-l-full pl-3 pr-10 py-0 h-full text-left cursor-default focus:outline-none sm:text-sm">
+                                                <span className="flex items-center">
+                                                    <img src={selectedCountry.flag} alt="" className="flex-shrink-0 h-6 w-6 rounded-full object-cover" />
+                                                    <span className="ml-3 block truncate">{selectedCountry.callingCodes}</span>
+                                                </span>
+                                                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                </span>
+                                            </Listbox.Button>
 
+                                            <Transition
+                                                show={open}
+                                                as={Fragment}
+                                                leave="transition ease-in duration-100"
+                                                leaveFrom="opacity-100"
+                                                leaveTo="opacity-0"
+                                            >
+                                                <Listbox.Options
+                                                    static
+                                                    className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                                                >
+                                                    {countries.map((person) => (
+                                                        <Listbox.Option
+                                                            key={person.id}
+                                                            className={({ active }) =>
+                                                                classNames(
+                                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                    'cursor-default select-none relative py-2 pl-3 pr-9'
+                                                                )
+                                                            }
+                                                            value={person}
+                                                        >
+                                                            {({ selected, active }) => (
+                                                                <>
+                                                                    <div className="flex items-center">
+                                                                        <img src={person.flag} alt="" className="flex-shrink-0 h-6 w-6 rounded-full object-cover" />
+                                                                        <span
+                                                                            className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                                                        >
+                                                                            {person.alpha2Code}
+                                                                        </span>
+                                                                    </div>
+
+                                                                    {selected ? (
+                                                                        <span
+                                                                            className={classNames(
+                                                                                active ? 'text-white' : 'text-indigo-600',
+                                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                            )}
+                                                                        >
+                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                        </span>
+                                                                    ) : null}
+                                                                </>
+                                                            )}
+                                                        </Listbox.Option>
+                                                    ))}
+                                                </Listbox.Options>
+                                            </Transition>
+                                        </div>
+                                    </>
+                                )}
+                            </Listbox>
+                        </div>
+                        <input
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            required
+                            maxLength="10"
+                            className="bg-gray-100 block w-full px-3 py-2 pl-36 sm:text-sm rounded-full outline-none border focus:border-indigo-700 duration-500"
+                            placeholder="Enter Mobile number"
+                            onKeyPress={() => {
+                                setError('')
+                            }}
+                        />
+                    </div>
                 </div>
+
                 {
                     error.length == 0 ? <></> :
                         <div className="rounded-md bg-red-50 p-4">

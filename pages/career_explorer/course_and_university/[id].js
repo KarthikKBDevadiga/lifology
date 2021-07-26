@@ -15,11 +15,28 @@ import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
 import { SchemeGetUniversity } from '../../../helpers/GraphQLSchemes'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export default function University({ profile, university, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-
+    const pages = [
+        {
+            name: 'Career Explorer', href: {
+                pathname: '/career_explorer/',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'Course & University', href: {
+                pathname: '/career_explorer/course_and_university',
+                query: { token: token }
+            }, current: false
+        },
+        {
+            name: 'University Details', href: '#', current: true
+        },
+    ]
     return (
         <>
             <MetaLayout title={university.name} description={university.description} />
@@ -28,10 +45,10 @@ export default function University({ profile, university, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Course & University / University Details" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={university.name} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">
