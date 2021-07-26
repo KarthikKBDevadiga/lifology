@@ -20,7 +20,8 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [openVideo, setOpenVideo] = useState(false)
-    const pages = [
+
+     const pages = [
         {
             name: 'Career Explorer', href: {
                 pathname: '/career_explorer/',
@@ -37,6 +38,7 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
             name: 'Accounting and Finance', href: '#', current: true
         },
     ]
+
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
@@ -48,6 +50,8 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={jobFamily.name} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
+
+
                         <Breadcrumbs pages={pages} />
                         <div className="m-4">
 

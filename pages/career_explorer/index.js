@@ -28,11 +28,13 @@ export default function CareerExplorer({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
+
     const pages = [
         {
             name: 'Career Explorer', href: '#', current: true
         },
     ]
+
     return (
         <>
 
@@ -44,6 +46,7 @@ export default function CareerExplorer({ profile, token }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
+
                         <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
@@ -87,13 +90,13 @@ export default function CareerExplorer({ profile, token }) {
                         </div>
 
                         <footer className="shadow p-4 bg-white">
-                            <div className="text-center font-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
+                            <div className="text-center font-medium"></div>
                         </footer>
                     </main>
                 </div>
 
 
-            </div >
+            </div>
         </>
     )
 }

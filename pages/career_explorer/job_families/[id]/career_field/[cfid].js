@@ -106,6 +106,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
             clearInterval(timer.current)
         }
     }, [pause, universitySlider])
+
     const pages = [
         {
             name: 'Career Explorer', href: {
@@ -129,6 +130,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
             name: careerField.name, href: '#', current: true
         },
     ]
+
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
@@ -140,6 +142,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={careerField.name} authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
+
                         <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
@@ -180,9 +183,17 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                                     <div ref={universitySliderRef} className="keen-slider">
                                                         {universities.map((card) => (
                                                             <div className="keen-slider__slide self-center">
-                                                                <div className="">
-                                                                    <img className="ml-auto mr-auto" src={Constants.baseUrlImage + card.logo} />
-                                                                </div>
+                                                                <Link href={{
+                                                                    pathname: '/career_explorer/course_and_university/' + card.id,
+                                                                    query: { token: token }
+                                                                }}>
+                                                                    <a>
+                                                                        <div className="">
+                                                                            <img className="ml-auto mr-auto" src={Constants.baseUrlImage + card.logo} />
+                                                                        </div>
+                                                                    </a>
+                                                                </Link>
+
                                                             </div>
                                                         ))
                                                         }

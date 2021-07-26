@@ -47,6 +47,8 @@ export default function CourceAndUniversity({ profile, countries, universities, 
         console.log("local country", value)
     }, [selectedCountry])
 
+    console.log(countries, "-----university----", universities, "==state===", state, "city", city);
+
     const pages = [
         {
             name: 'Career Explorer', href: {
@@ -58,6 +60,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
             name: 'Course & University', href: '#', current: true
         },
     ]
+
     return (
         <>
             <MetaLayout title="Magazine" description="Magazine" />
@@ -66,7 +69,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Course & University" authToken={token} setAuthToken={setAuthToken} />
+                                       <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Course & University" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -110,7 +113,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                     <input
                                                         id="search_field"
                                                         name="search_field"
-                                                        style={{ width: '300px' }}
+                                                        style={{ width: '360px' }}
                                                         className="block h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
                                                         placeholder="Search University"
                                                         type="search"
@@ -118,15 +121,19 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                     />
                                                 </div>
                                             </div>
-                                            <div>
+                                   
+                                                {/* 
+                                                         <div>
                                                 <button className=" flex p-2 w-20 absolute left-2 right-8 items-center bg-lblue rounded sm:text-sm text-white" style={{ marginLeft: "0.5rem", position: "sticky" }} aria-hidden="true"
                                                     onClick={(event) => {
                                                         setOpenFilter(true)
                                                     }}>
                                                     <div>Filter</div>
                                                     <img className="ml-2" src="/img/filter-icon.png" />
-                                                </button>
-                                            </div>
+                                                </button> 
+                                                 </div>
+                                                */}
+                                           
                                         </div>
 
                                         {/* <div className="sm:flex h-full w-full">
@@ -186,7 +193,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                             <img className="rounded-2xl w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
                                                             <div className="top-0 mt-4 text-center">
                                                                 <div className="text-sm font-bold">{u.name}</div>
-                                                                <div className="text-xs mt-2">{u.city}, {u.state}, {u.country}</div>
+                                                                <div className="text-xs mt-2">{u.state}, {u.country}</div>
                                                             </div>
                                                         </div>
                                                     </a>

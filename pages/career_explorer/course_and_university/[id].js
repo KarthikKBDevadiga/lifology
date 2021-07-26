@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     BookmarkIcon
 } from '@heroicons/react/outline'
@@ -14,12 +14,59 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
-import { SchemeGetUniversity } from '../../../helpers/GraphQLSchemes'
+import { SchemeGetUniversity, SchemeAddBookmark, SchemeVideoStatus } from '../../../helpers/GraphQLSchemes'
+import { mutateGraph } from '../../../helpers/GraphQLCaller'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export default function University({ profile, university, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
+    const [searchText, setSearchText] = useState("")
+    const [videoStatus, setVideoStatus] = useState([])
+
+    const client = new ApolloClient({
+        uri: Constants.baseUrl + "/api/career",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    });
+
+    const getVideoStatus = () => {
+        mutateGraph(client,
+            {
+                video_id: Number(university.id)
+            }, SchemeVideoStatus)
+            .then((res) => {
+                console.log("like status", res);
+                setVideoStatus(res.checkVideoStatus)
+
+            }).catch((networkErr) => {
+
+                console.log(networkErr)
+            });
+    }
+
+    useEffect(() => {
+        getVideoStatus();
+    }, [])
+
+    const addToBookmark = (id) => {
+        console.log(id)
+        mutateGraph(client,
+            {
+                video_id2: 17593, bookmark_type: "FAVORITE"
+            }, SchemeAddBookmark)
+            .then((res) => {
+                // setVideoStatus(res.checkVideoStatus);
+                console.log("FAVORITE  api", res);
+            }).catch((networkErr) => {
+
+                console.log(networkErr)
+            });
+        getVideoStatus();
+    }
+
     const pages = [
         {
             name: 'Career Explorer', href: {
@@ -47,6 +94,7 @@ export default function University({ profile, university, token }) {
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={university.name} authToken={token} setAuthToken={setAuthToken} />
 
+
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
                         <div className="m-4">
@@ -67,9 +115,9 @@ export default function University({ profile, university, token }) {
                                                                 <div className="bg-gray-200 px-4 py-2 text-xs rounded-full cursor-pointer duration-500 hover:text-white hover:bg-lblue">University</div>
                                                             </div>
 
-                                                            <div className="py-2 flex items-center absolute right-0">
-                                                                <BookmarkIcon className="w-5 h-5 mr-2" />
-                                                                Add to bookmark
+                                                            <div onClick={() => addToBookmark(university.id)} className="py-2 flex items-center absolute right-0">
+                                                                <BookmarkIcon className={videoStatus.favorite_status == true ? "w-5 h-5 mr-2 bg-blue text-blue-500" : "w-5 h-5 mr-2"} />
+
                                                             </div>
 
                                                         </div>
@@ -87,7 +135,7 @@ export default function University({ profile, university, token }) {
                                                             <h2 className="text-base">Course's Offered</h2>
                                                         </div>
                                                     </div>
-                                                    <div className="w-full">
+                                                    <div className="w-3/6 ml-auto">
                                                         <form className="w-full flex md:ml-0" action="#" method="GET">
                                                             <label htmlFor="search_field" className="sr-only">
                                                                 Search
@@ -102,13 +150,24 @@ export default function University({ profile, university, token }) {
                                                                     className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
                                                                     placeholder="Search Course"
                                                                     type="search"
+                                                                    onChange={(e) => { setSearchText(e.target.value) }}
                                                                 />
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                                 <div className="mt-4">
-                                                    {university.career_courses.map((u) => (
+                                                    {university.career_courses.filter((u) => {
+                                                        if (searchText.trim() === "") {
+
+                                                            return u;
+                                                        }
+                                                        if (u.name.toLowerCase().includes(searchText.toLowerCase())) {
+
+                                                            return u;
+                                                        }
+                                                        return "";
+                                                    }).map((u) => (
                                                         <div className="rounded shadow p-4 my-4 hover:shadow-xl duration-500">
                                                             <div className="flex">
                                                                 <div className="relative w-20 h-20 rounded-lg overflow-hidden">
@@ -287,7 +346,7 @@ export default function University({ profile, university, token }) {
                 </div>
 
 
-            </div >
+            </div>
         </>
     )
 }
@@ -315,7 +374,6 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {}
         })
-    console.log(university)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),

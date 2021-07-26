@@ -24,6 +24,7 @@ import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 
 
+
 const headerSlide = [
     {
         id: 1,
@@ -44,6 +45,8 @@ const headerSlide = [
 ]
 
 export default function CareerVideo({ videoCats, profile, token }) {
+
+    console.log("video cats",videoCats)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -64,24 +67,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
             setHeaderPause(false)
         },
     })
-    useEffect(() => {
-        headerSliderRef.current.addEventListener("mouseover", () => {
-            setHeaderPause(true)
-        })
-        headerSliderRef.current.addEventListener("mouseout", () => {
-            setHeaderPause(false)
-        })
-    }, [headerSliderRef])
-    useEffect(() => {
-        timer.current = setInterval(() => {
-            if (!headerPause && headerSlider) {
-                headerSlider.next()
-            }
-        }, 2000)
-        return () => {
-            clearInterval(timer.current)
-        }
-    }, [headerPause, headerSlider])
+
 
     const [sliderRef1, slider1] = useKeenSlider({
         initial: 0,
@@ -162,6 +148,9 @@ export default function CareerVideo({ videoCats, profile, token }) {
         { name: 'Career Videos', href: '#', current: true },
     ]
 
+    //const [hide,setHide]=useState(true);
+
+    const[searchText, setSearchText]=useState("");
 
     return (
         <>
@@ -180,7 +169,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col">
-                                    <Breadcrumbs pages={pages} />
+                                <Breadcrumbs pages={pages} />
                                     <div className="sm:flex sm:items-start sm:justify-between mx-4">
 
 
@@ -195,10 +184,11 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                     className="block w-full h-full p-3 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
                                                     placeholder="Search Any Videos"
                                                     type="search"
+                                                    onChange={(e)=>setSearchText(e.target.value)}
                                                 />
                                             </div>
                                         </div>
-                                        <div className="mt-4 sm:mt-0 sm:ml-4 sm:flex-shrink-0 sm:flex sm:items-center">
+                                        {/* <div className="mt-4 sm:mt-0 sm:ml-4 sm:flex-shrink-0 sm:flex sm:items-center">
                                             <a onClick={(event) => {
                                                 setOpenFilter(true)
                                             }}>
@@ -211,7 +201,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                     </svg>
                                                 </div>
                                             </a>
-                                        </div>
+                                        </div> */}
                                     </div>
 
 
@@ -279,14 +269,15 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                         </div>
                                     </div>
 
-                                    <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+                                    
+                                    {videoCats[0]!=undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="grid grid-cols-2 gap-2">
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[0].name}
                                             </div>
 
                                             <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                View All
+                                                <a href="#">View All</a>
                                             </div>
                                         </div>
                                         <div className="relative flex items-center">
@@ -312,7 +303,22 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                             </a>
                                             <div className="navigation-wrapper w-full">
                                                 <div ref={sliderRef1} className="keen-slider">
-                                                    {videoCats[0].videos.map((card) => (
+                                         {videoCats[0].videos.filter((card) => {
+                                                if(!videoCats[0])
+                                                {
+                                                    setHide(false);
+                                                }
+                                                if (searchText.trim() === "") {
+
+                                                    return card;
+                                                }
+                                                if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
+                                                    
+
+                                                    return card;
+                                                }
+                                                return "";
+                                            }).map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
                                                                 pathname: '/career_explorer/career_video/' + card.id,
@@ -321,7 +327,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
-                                                                            <img className=" rounded-t duration-500" src={card.thumbnail} />
+                                                                            <img className="rounded-t group-hover:filter-none duration-500" src={card.thumbnail} />
                                                                             {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                                                             <div className="flex-1 flex items-center justify-between truncate">
                                                                                 <div className="flex-1 px-4 py-2 text-sm truncate">
@@ -414,16 +420,17 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
                                         </div>
 
-                                    </div>
+                                    </div>}
+                                
 
-                                    <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+                                    {videoCats[1]!=undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="grid grid-cols-2 gap-2">
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[1].name}
                                             </div>
 
                                             <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                View All
+                                                <a href="#">View All</a>
                                             </div>
                                         </div>
                                         <div className="relative flex items-center">
@@ -449,7 +456,18 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                             </a>
                                             <div className="navigation-wrapper w-full">
                                                 <div ref={sliderRef2} className="keen-slider">
-                                                    {videoCats[1].videos.map((card) => (
+                                            {videoCats[1].videos.filter((card) => {
+                                                if (searchText.trim() === "") {
+
+                                                    return card;
+                                                }
+                                                if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
+                                                    
+
+                                                    return card;
+                                                }
+                                                return "";
+                                            }).map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
                                                                 pathname: '/career_explorer/career_video/' + card.id,
@@ -458,7 +476,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
-                                                                            <img className=" rounded-t duration-500" src={card.thumbnail} />
+                                                                            <img className=" rounded-t  group-hover:filter-none duration-500" src={card.thumbnail} />
                                                                             {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                                                             <div className="flex-1 flex items-center justify-between truncate">
                                                                                 <div className="flex-1 px-4 py-2 text-sm truncate">
@@ -549,16 +567,16 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>}
 
-                                    <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+                                    {videoCats[2]!=undefined &&  <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="grid grid-cols-2 gap-2">
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[2].name}
                                             </div>
 
                                             <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                View All
+                                                <a href="#">View All</a>
                                             </div>
                                         </div>
                                         <div className="relative flex items-center">
@@ -584,7 +602,18 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                             </a>
                                             <div className="navigation-wrapper w-full">
                                                 <div ref={sliderRef3} className="keen-slider">
-                                                    {videoCats[2].videos.map((card) => (
+                                            {videoCats[2].videos.filter((card) => {
+                                                if (searchText.trim() === "") {
+
+                                                    return card;
+                                                }
+                                                if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
+                                                    
+
+                                                    return card;
+                                                }
+                                                return "";
+                                            }).map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
                                                                 pathname: '/career_explorer/career_video/' + card.id,
@@ -593,7 +622,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
-                                                                            <img className=" rounded-t duration-500" src={card.thumbnail} />
+                                                                            <img className=" rounded-t  group-hover:filter-none duration-500" src={card.thumbnail} />
                                                                             {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                                                             <div className="flex-1 flex items-center justify-between truncate">
                                                                                 <div className="flex-1 px-4 py-2 text-sm truncate">
@@ -684,8 +713,153 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>}
 
+                                 {videoCats[3]!=undefined &&  <div className="m-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <div className="text-black mx-4 block text-base font-bold">
+                                                {videoCats[3].name}
+                                            </div>
+
+                                            <div className="text-sm text-right text-indigo-700 mx-4 ">
+                                            <a href="#">View All</a>
+                                            </div>
+                                        </div>
+                                        <div className="relative flex items-center">
+                                            <a
+                                                onClick={(event) => {
+                                                    slider4.prev()
+                                                }}>
+                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                                    </svg>
+                                                </div>
+                                            </a>
+                                            <a
+                                                onClick={(event) => {
+                                                    slider4.next()
+                                                }}>
+                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </div>
+                                            </a>
+                                            <div className="navigation-wrapper w-full">
+                                                <div ref={sliderRef4} className="keen-slider">
+                                            {videoCats[3].videos.filter((card) => {
+                                                if (searchText.trim() === "") {
+
+                                                    return card;
+                                                }
+                                                if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
+                                                    
+
+                                                    return card;
+                                                }
+                                                return "";
+                                            }).map((card) => (
+                                                        <div className="keen-slider__slide">
+                                                            <Link href={{
+                                                                pathname: '/career_explorer/career_video/' + card.id,
+                                                                query: { token: token }
+                                                            }} key={card.id}>
+                                                                <a>
+                                                                    <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
+                                                                        <div>
+                                                                            <img className=" rounded-t group-hover:filter-none duration-500" src={card.thumbnail} />
+                                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
+                                                                            <div className="flex-1 flex items-center justify-between truncate">
+                                                                                <div className="flex-1 px-4 py-2 text-sm truncate">
+                                                                                    <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
+                                                                                        {card.title}
+                                                                                    </div>
+                                                                                    <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
+                                                                            {({ open }) => (
+                                                                                <>
+                                                                                    <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none hover:bg-white hover:bg-opacity-30 rounded-full p-2 duration-500">
+                                                                                        <span className="sr-only">Open options</span>
+                                                                                        <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
+                                                                                    </Menu.Button>
+                                                                                    <Transition
+                                                                                        show={open}
+                                                                                        as={Fragment}
+                                                                                        enter="transition ease-out duration-100"
+                                                                                        enterFrom="transform opacity-0 scale-95"
+                                                                                        enterTo="transform opacity-100 scale-100"
+                                                                                        leave="transition ease-in duration-75"
+                                                                                        leaveFrom="transform opacity-100 scale-100"
+                                                                                        leaveTo="transform opacity-0 scale-95"
+                                                                                    >
+                                                                                        <Menu.Items
+                                                                                            static
+                                                                                            className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
+                                                                                        >
+                                                                                            <div className="py-1">
+                                                                                                <Menu.Item>
+                                                                                                    {({ active }) => (
+                                                                                                        <a
+                                                                                                            href="#"
+                                                                                                            className={classNames(
+                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                                'block px-4 py-2 text-sm'
+                                                                                                            )}
+                                                                                                        >
+                                                                                                            View
+                                                                                                        </a>
+                                                                                                    )}
+                                                                                                </Menu.Item>
+                                                                                            </div>
+                                                                                            <div className="py-1">
+                                                                                                <Menu.Item>
+                                                                                                    {({ active }) => (
+                                                                                                        <a
+                                                                                                            href="#"
+                                                                                                            className={classNames(
+                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                                'block px-4 py-2 text-sm'
+                                                                                                            )}
+                                                                                                        >
+                                                                                                            Removed from pinned
+                                                                                                        </a>
+                                                                                                    )}
+                                                                                                </Menu.Item>
+                                                                                                <Menu.Item>
+                                                                                                    {({ active }) => (
+                                                                                                        <a
+                                                                                                            href="#"
+                                                                                                            className={classNames(
+                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                                                'block px-4 py-2 text-sm'
+                                                                                                            )}
+                                                                                                        >
+                                                                                                            Share
+                                                                                                        </a>
+                                                                                                    )}
+                                                                                                </Menu.Item>
+                                                                                            </div>
+                                                                                        </Menu.Items>
+                                                                                    </Transition>
+                                                                                </>
+                                                                            )}
+                                                                        </Menu>
+                                                                    </div>
+                                                                </a>
+                                                            </Link>
+
+                                                        </div>
+                                                    ))
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>}
 
                                 </div>
                             </div>
@@ -700,7 +874,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                 </div>
 
 
-            </div >
+            </div>
             <Transition.Root show={openFilter} as={Fragment}>
                 <Dialog
                     as="div"
@@ -779,7 +953,7 @@ function CustomRightArrow({ handleClick }) {
             style={{ top: '31.5% !important' }}
             onClick={handleClick}>
             <ArrowRightIcon className="h-5 w-5 text-white" aria-hidden="true" />
-        </ button>
+        </button>
     );
 }
 

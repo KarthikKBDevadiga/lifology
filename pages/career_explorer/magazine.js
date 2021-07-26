@@ -56,6 +56,7 @@ export default function Magazine({ profile, token }) {
         },
     ]
 
+
     return (
         <>
             <MetaLayout title="Magazine" description="Magazine" />
@@ -67,7 +68,9 @@ export default function Magazine({ profile, token }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Magazines" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-                        <Breadcrumbs pages={pages} />
+
+
+                         <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">
