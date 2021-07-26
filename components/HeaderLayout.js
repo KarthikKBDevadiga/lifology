@@ -34,7 +34,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                 <div className="flex-1 flex font-bold self-center">
                     <div >
                         <h2 className="text-xl ">{title}</h2>
-
+                        
                     </div>
                 </div>
                 <div className="ml-4 flex items-center md:ml-6">
@@ -137,11 +137,16 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <Link
-                                                    href="#">
+                                                    href={{
+                                                        pathname: '/career_explorer/career_video/bookmark',
+                                                        query: { token: authToken }
+                                                    }}
+                                                
+                                                    >
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
-                                                            'block px-4 py-2 text-sm text-gray-700 flex'
+                                                            'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200'
                                                         )}
                                                     >
                                                         <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">

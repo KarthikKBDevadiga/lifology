@@ -78,6 +78,93 @@ mutation signup($mobile_number: String!, $email:String!, $name:String!, $child_n
 }
 `;
 
+export const SchemeAddWatchLater= gql`
+mutation videosBookmark($video_id: Int!,$bookmark_type: String!, ){
+  videosBookmark(video_id:$video_id,bookmark_type:$bookmark_type)
+    {
+      bookmark_status
+    }
+    
+  }
+`;
+
+export const SchemeAddBookmark = gql`
+mutation videosBookmark($video_id2: Int!,$bookmark_type: String!, ){
+  videosBookmark(video_id:$video_id2,bookmark_type:$bookmark_type)
+    {
+      bookmark_status
+    }
+    
+  }
+`;
+
+
+export const SchemeAddLike = gql`
+mutation videosLikeStatus($video_id: Int!){
+  videosLikeStatus(video_id:$video_id,like_status:1)
+  {
+    like_status
+  } 
+  }
+`;
+
+export const SchemeAddDislike = gql`
+mutation videosLikeStatus($video_id: Int!){
+  videosLikeStatus(video_id:$video_id,like_status:0)
+  {
+    like_status
+  } 
+  }
+`;
+
+export const SchemeGetWatchLaterVideos = gql`
+query{
+  videosWatchLater(filter:{search_keyword:"",page:1}){
+  id
+  lang_id
+  title
+  description
+  category_id
+  tags
+  views
+  video
+  thumbnail
+  }
+}
+
+`;
+
+
+export const SchemeNoAction = gql`
+mutation videosLikeStatus($video_id: Int!){
+  videosLikeStatus(video_id:$video_id,like_status:2)
+  {
+    like_status
+  } 
+  }
+`;
+
+export const SchemeVideoStatus = gql`
+
+query checkVideoStatus($video_id: Int!){
+  checkVideoStatus(video_id:$video_id){
+    bookmark_status
+    like_status
+    favorite_status
+  }
+}
+
+`;
+
+export const SchemeRemoveWatchLater = gql`
+mutation removeVideoBookmark($video_id: Int!){
+  removeVideoBookmark(video_id:$video_id,bookmark_type:"WATCH_LATER")
+  {
+      bookmark_status
+  }
+}
+`;
+
 export const SchemeGetProfile = gql`
 query{
   profile{
@@ -189,6 +276,7 @@ query{
 `;
 
 export const SchemeGetAllUniversity = gql`
+
 query{
   allUniversity(lang_id:1,filter:{pool_id:1,field_id:1,ranking:"Times Rank"}){
     title
@@ -334,6 +422,7 @@ query careerFields($pool_id:Int!){
   }
 }
 `;
+
 
 export const SchemeGetUniversities = gql`
 query allUniversity($pool_id:Int!,$field_id:Int!){

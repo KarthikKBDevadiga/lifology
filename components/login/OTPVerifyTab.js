@@ -135,11 +135,11 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
 
                 <div className="mt-4">
                     <div className="mt-1 grid grid-cols-2 gap-2">
-                        <div>
+                    {timeLeft != 0 && <div>
                             00:{timeLeft.toString().length == 1 ? '0' + timeLeft : timeLeft} seconds
-                        </div>
+                        </div>}
 
-                        <div className="text-right">
+                        <div className="">
                             {
                                 timeLeft == 0 ?
                                     <a

@@ -19,7 +19,7 @@ export const mutateGraph = function (apolloClient, vars, scheme) {
       })
       .catch((err) => {
         clearTimeout(timeoutCallMutate);
-        reject(err.networkError.result.errors[0].message);
+        reject(err);
       });
   });
 };
