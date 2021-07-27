@@ -657,7 +657,6 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return []
         })
-    console.log(universitiesData)
     const universities = universitiesData.university
     const universitiesCount = universitiesData.count
 
