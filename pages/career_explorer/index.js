@@ -35,6 +35,8 @@ export default function CareerExplorer({ profile, token }) {
         },
     ]
 
+    console.log(authToken)
+
     return (
         <>
 

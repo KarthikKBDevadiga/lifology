@@ -78,7 +78,7 @@ mutation signup($mobile_number: String!, $email:String!, $name:String!, $child_n
 }
 `;
 
-export const SchemeAddWatchLater= gql`
+export const SchemeAddWatchLater = gql`
 mutation videosBookmark($video_id: Int!,$bookmark_type: String!, ){
   videosBookmark(video_id:$video_id,bookmark_type:$bookmark_type)
     {
@@ -327,6 +327,24 @@ query universityDetails($id: Int!){
 }
 `;
 
+export const SchemeGetUniversityPerPage = gql`
+query allUniversity($limit:Int!, $page:Int!){
+  allUniversity(lang_id:1,filter:{count:true,limit:$limit,page:$page}){
+    count
+    title
+    university{
+    id
+    name
+    description
+    website
+    logo
+    city
+    state
+    country
+    }
+  }
+}
+`;
 export const SchemeGetVideo = gql`
 query videoDetails($id:Int!){
   videoDetails(id:$id){

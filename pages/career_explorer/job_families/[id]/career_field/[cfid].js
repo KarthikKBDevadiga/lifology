@@ -176,10 +176,23 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
 
                                             <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
 
-                                                <h2 className="text-lg font-medium text-gray-900 m-4 ">
-                                                    Universities
-                                                </h2>
-                                                <div className="navigation-wrapper w-full mb-4">
+                                                <div className="mx-4 mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
+
+                                                    <h2 className="text-lg font-medium text-gray-900">
+                                                        Universities
+                                                    </h2>
+                                                    <Link href={{
+                                                        pathname: '/career_explorer/course_and_university',
+                                                        query: { token: token }
+                                                    }}>
+                                                        <a>
+                                                            <div className="text-lblue text-right text-base">View All</div>
+                                                        </a>
+                                                    </Link>
+
+
+                                                </div>
+                                                <div className="navigation-wrapper w-full">
                                                     <div ref={universitySliderRef} className="keen-slider">
                                                         {universities.map((card) => (
                                                             <div className="keen-slider__slide self-center">
@@ -188,7 +201,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                                                     query: { token: token }
                                                                 }}>
                                                                     <a>
-                                                                        <div className="">
+                                                                        <div className="rounded bg-gray shadow p-2 mx-2 m-4 hover:shadow-lg hover:scale-105 duration-500">
                                                                             <img className="ml-auto mr-auto" src={Constants.baseUrlImage + card.logo} />
                                                                         </div>
                                                                     </a>

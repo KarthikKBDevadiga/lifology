@@ -40,9 +40,7 @@ export default function University({ profile, university, token }) {
             .then((res) => {
                 console.log("like status", res);
                 setVideoStatus(res.checkVideoStatus)
-
             }).catch((networkErr) => {
-
                 console.log(networkErr)
             });
     }
