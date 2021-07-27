@@ -30,8 +30,10 @@ import MetaLayout from '/components/MetaLayout'
 import Link from 'next/link'
 import classNames from '/helpers/classNames'
 import Breadcrumbs from '../../../components/Breadcrumbs'
+import { SchemeGetUniversityPerPage } from '../../../helpers/GraphQLSchemes'
 
-export default function CourceAndUniversity({ profile, countries, universities, token, state, city }) {
+const pageItemCount = 32
+export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, token, state, city }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -44,10 +46,13 @@ export default function CourceAndUniversity({ profile, countries, universities, 
     useEffect(() => {
         localStorage.setItem("country", selectedCountry.country)
         const value = localStorage.getItem("country")
-        console.log("local country", value)
     }, [selectedCountry])
 
-    console.log(countries, "-----university----", universities, "==state===", state, "city", city);
+    const totalPages = Math.ceil(universitiesCount / pageItemCount)
+    console.log(totalPages)
+
+    const nextPage = parseInt(page) + 1;
+    const previousPage = parseInt(page) - 1;
 
     const pages = [
         {
@@ -69,7 +74,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                                       <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Course & University" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Course & University" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -121,8 +126,8 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                     />
                                                 </div>
                                             </div>
-                                   
-                                                {/* 
+
+                                            {/* 
                                                          <div>
                                                 <button className=" flex p-2 w-20 absolute left-2 right-8 items-center bg-lblue rounded sm:text-sm text-white" style={{ marginLeft: "0.5rem", position: "sticky" }} aria-hidden="true"
                                                     onClick={(event) => {
@@ -133,7 +138,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                 </button> 
                                                  </div>
                                                 */}
-                                           
+
                                         </div>
 
                                         {/* <div className="sm:flex h-full w-full">
@@ -200,6 +205,53 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                 </Link>
                                             ))}
                                         </div>
+
+
+                                        <nav
+                                            className="bg-white flex items-center justify-between border-t border-gray-200 mt-4"
+                                            aria-label="Pagination"
+                                        >
+                                            <div className="hidden sm:block mt-4">
+                                                <p className="text-sm text-gray-700">
+                                                    Showing <span className="font-medium">{(page - 1) * pageItemCount + 1}</span> to <span className="font-medium">{((page - 1) * pageItemCount + 32) > universitiesCount ? universitiesCount : ((page - 1) * pageItemCount + 32)}</span> of{' '}
+                                                    <span className="font-medium">{universitiesCount}</span> results
+                                                </p>
+                                            </div>
+                                            <div className="flex-1 flex justify-between sm:justify-end mt-4">
+                                                {
+                                                    previousPage >= 1 ? <Link href={{
+                                                        pathname: '/career_explorer/course_and_university/test',
+                                                        query: {
+                                                            page: previousPage,
+                                                            token: token
+                                                        }
+                                                    }}>
+                                                        <a
+                                                            className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                                                        >
+                                                            Previous
+                                                        </a>
+                                                    </Link> : <></>
+                                                }
+                                                {
+                                                    nextPage <= totalPages ? <Link href={{
+                                                        pathname: '/career_explorer/course_and_university/test',
+                                                        query: {
+                                                            page: nextPage,
+                                                            token: token
+                                                        }
+                                                    }}>
+                                                        <a
+                                                            href="#"
+                                                            className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                                                        >
+                                                            Next
+                                                        </a>
+                                                    </Link> : <></>
+                                                }
+
+                                            </div>
+                                        </nav>
                                     </div>
                                 </div>
                             </div>
@@ -575,7 +627,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token, page = 1 } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -584,6 +636,7 @@ export async function getServerSideProps(context) {
             }
         }
     }
+    console.log(page)
     const careerClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
         cache: new InMemoryCache(),
@@ -597,12 +650,15 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return [];
         })
-    const universities = await queryGraph(careerClient, {}, SchemeGetAllUniversity)
+    const universitiesData = await queryGraph(careerClient, { limit: pageItemCount, page: parseInt(page) }, SchemeGetUniversityPerPage)
         .then((res) => {
-            return res.allUniversity[0].university
+
+            return res.allUniversity[0]
         }).catch((networkErr) => {
             return []
         })
+    const universities = universitiesData.university
+    const universitiesCount = universitiesData.count
 
     const state = await queryGraph(careerClient, {}, SchemeGetUniversityState)
         .then((res) => {
@@ -618,7 +674,6 @@ export async function getServerSideProps(context) {
             return []
         })
 
-    console.log(countries, "-----university----", universities);
 
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
@@ -634,7 +689,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { profile, countries, universities, token, state, city }
+        props: { profile, countries, universities, universitiesCount, page, token, state, city }
     }
 }
 
