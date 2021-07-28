@@ -22,6 +22,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../../components/Breadcrumbs'
+import { useRouter } from 'next/router'
 
 
 
@@ -45,7 +46,7 @@ const headerSlide = [
 ]
 
 export default function CareerVideo({ videoCats, profile, token }) {
-
+    const router = useRouter()
     console.log("video cats", videoCats)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
@@ -151,7 +152,10 @@ export default function CareerVideo({ videoCats, profile, token }) {
     //const [hide,setHide]=useState(true);
 
     const [searchText, setSearchText] = useState("");
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
 

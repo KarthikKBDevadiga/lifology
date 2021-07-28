@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
 import { CheckIcon, SelectorIcon, ExclamationIcon, ChevronDownIcon } from '@heroicons/react/solid'
@@ -25,7 +25,10 @@ export default function EditChildDetails({ profile, grades, token }) {
 
     const [selectedGrade, setSelectedGrade] = useState(grades.find(g => g.grade == profile.child_details.grade))
     const [selectedStream, setSelectedStream] = useState(selectedGrade.streams.length == 0 ? {} : selectedGrade.streams[0])
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     const genderList = [
         {
             id: 1,

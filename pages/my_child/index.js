@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     ScaleIcon,
 } from '@heroicons/react/outline'
@@ -36,6 +36,10 @@ export default function MyChild({ profile, assessments, isCF, isLS, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title="My Child" description="My Child" />

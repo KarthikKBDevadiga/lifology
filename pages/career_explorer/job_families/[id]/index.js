@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
@@ -13,9 +13,11 @@ import { SchemeCareerPools } from '/helpers/GraphQLSchemes'
 import VideoDialog from '../../../../components/dialog/VideoDialog'
 import { SchemeCareerFields } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
+import { useRouter } from 'next/router'
 
 
 export default function JobFamily({ profile, jobFamily, careerFields, token }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -38,7 +40,10 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
             name: 'Accounting and Finance', href: '#', current: true
         },
     ]
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />

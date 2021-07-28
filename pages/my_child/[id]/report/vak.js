@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile, SchemeGetAssessment, SchemeGetMIOReport } from '/helpers/GraphQLSchemes'
@@ -60,7 +60,10 @@ export default function VAKReport({ profile, assessment, report, token }) {
             name: assessment.title + ' Report', href: '#', current: true
         },
     ]
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title="VAK Assement Reports" description="VAK Assement Reports" />

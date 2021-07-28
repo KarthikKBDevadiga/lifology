@@ -31,9 +31,11 @@ import Link from 'next/link'
 import classNames from '/helpers/classNames'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import { SchemeGetUniversityPerPage } from '../../../helpers/GraphQLSchemes'
+import { useRouter } from 'next/router'
 
 const pageItemCount = 32
 export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, token, state, city }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -53,7 +55,10 @@ export default function CourceAndUniversity({ profile, countries, universities, 
 
     const nextPage = parseInt(page) + 1;
     const previousPage = parseInt(page) - 1;
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     const pages = [
         {
             name: 'Career Explorer', href: {

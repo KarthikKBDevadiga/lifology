@@ -33,12 +33,15 @@ export default function Login({ cs }) {
     const [tab, setTab] = useState(1)
 
     const [authToken, setAuthToken] = useLocalStorage("authToken", "");
+
     const [mobile, setMobile] = useLocalStorage("mobile", "");
 
     const [timeLeft, setTimeLeft] = useState(0);
 
     const [selectedCountry, setSelectedCountry] = useState(cs[104])
-
+    useEffect(() => {
+        setAuthToken("")
+    }, [])
     useEffect(() => {
         setTimeout(() => {
             if (tab == 1) {

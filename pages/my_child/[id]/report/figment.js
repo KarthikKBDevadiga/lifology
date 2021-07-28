@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import {
     SelectorIcon
 } from '@heroicons/react/solid'
@@ -44,6 +44,10 @@ export default function GreenZone({ profile, report, token }) {
             name: 'Figment Report', href: '#', current: true
         },
     ]
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title="Figment Report" description="Figment Report" />

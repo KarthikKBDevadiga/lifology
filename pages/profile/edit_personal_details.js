@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Dialog, Transition } from '@headlessui/react'
 import { mutateGraph, queryGraph } from '../../helpers/GraphQLCaller'
@@ -18,7 +18,10 @@ export default function EditPersonalDetails({ profile, token }) {
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     const submit = async (event) => {
         event.preventDefault()
         setLoadingDialog(true)

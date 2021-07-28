@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import {
     SelectorIcon
 } from '@heroicons/react/solid'
@@ -95,6 +95,10 @@ export default function MIOReport({ profile, assessment, report, token }) {
             name: assessment.title + ' Report', href: '#', current: true
         },
     ]
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title="MIO Assement Reports" description="MIO Assement Reports" />

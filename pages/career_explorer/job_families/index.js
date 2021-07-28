@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     SearchIcon,
 } from '@heroicons/react/solid'
@@ -30,7 +30,10 @@ export default function JobFamilies({ families, profile, token }) {
             name: 'Job Families & Career Fields', href: '#', current: true
         },
     ]
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title="Job Families & Career Fields" description="Job Families & Career Fields" />

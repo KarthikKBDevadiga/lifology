@@ -22,8 +22,10 @@ import { useKeenSlider } from 'keen-slider/react'
 
 import Expand from 'react-expand-animated';
 import Breadcrumbs from '../../../../../components/Breadcrumbs'
+import { useRouter } from 'next/router'
 
 export default function CareerFields({ profile, jobFamily, careerField, universities, dashboard, token }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [openVideo, setOpenVideo] = useState(false)
@@ -130,7 +132,10 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
             name: careerField.name, href: '#', current: true
         },
     ]
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />

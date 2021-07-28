@@ -8,7 +8,7 @@ import {
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import {SchemeGetWatchLaterVideos,SchemeGetProfile,SchemeRemoveWatchLater } from '/helpers/GraphQLSchemes'
+import { SchemeGetWatchLaterVideos, SchemeGetProfile, SchemeRemoveWatchLater } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
@@ -21,16 +21,17 @@ import { mutateGraph } from '../../../helpers/GraphQLCaller'
 
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
+import { useRouter } from 'next/router'
 
 
 
 
 
-export default function CareerVideo({token,profile}) {
-
+export default function CareerVideo({ token, profile }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-    const [watchLaterVideo,setWatchLaterVideo]= useState([])
+    const [watchLaterVideo, setWatchLaterVideo] = useState([])
 
     const client = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
@@ -39,44 +40,46 @@ export default function CareerVideo({token,profile}) {
             Authorization: "Bearer " + token,
         },
     });
-    const getWatchLaterVideos=()=>{
+    const getWatchLaterVideos = () => {
 
         mutateGraph(client,
             {
-            
-            },SchemeGetWatchLaterVideos)
+
+            }, SchemeGetWatchLaterVideos)
             .then((res) => {
                 setWatchLaterVideo(res);
-                console.log("remove watch later api",res);
+                console.log("remove watch later api", res);
             }).catch((networkErr) => {
-                
+
                 console.log(networkErr)
             });
 
     }
 
-    useEffect(()=>{ 
-   getWatchLaterVideos();
-    },[])
+    useEffect(() => {
+        getWatchLaterVideos();
+    }, [])
 
-    const removeVideo=(id)=>
-    {
-            mutateGraph(client,
+    const removeVideo = (id) => {
+        mutateGraph(client,
             {
-            video_id:Number(id)
-            },SchemeRemoveWatchLater)
+                video_id: Number(id)
+            }, SchemeRemoveWatchLater)
             .then((res) => {
                 // setVideoStatus(res.checkVideoStatus);
-                console.log("remove watch later api",res);
+                console.log("remove watch later api", res);
             }).catch((networkErr) => {
-                
+
                 console.log(networkErr)
             });
 
-            getWatchLaterVideos();
+        getWatchLaterVideos();
     }
 
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
 
@@ -89,38 +92,38 @@ export default function CareerVideo({token,profile}) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos / Watch Later" authToken={token} setAuthToken={setAuthToken} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-                    <div class="grid grid-cols-1 m-5 p-5 rounded shadow gap-4 bg-white">
-                    <p className="text-xl font-medium">Watch Later Videos</p>
+                        <div class="grid grid-cols-1 m-5 p-5 rounded shadow gap-4 bg-white">
+                            <p className="text-xl font-medium">Watch Later Videos</p>
 
-                    {watchLaterVideo.videosWatchLater!=undefined &&
-                        watchLaterVideo.videosWatchLater.map((video,index)=>(
-                            <div className="flex">
-                            <Link  href={{
+                            {watchLaterVideo.videosWatchLater != undefined &&
+                                watchLaterVideo.videosWatchLater.map((video, index) => (
+                                    <div className="flex">
+                                        <Link href={{
                                             pathname: '/career_explorer/career_video/' + video.id,
                                             query: { token: token }
-                                         }}>
-                            <div className="flex my-4 cursor-pointer " >
-                                <div className="mr-4 mt-2 flex-shrink-0 self-start">
-                                    <img className="w-36 rounded object-cover" src={video.thumbnail} />
-                                </div>
-                                <div className="self-center">
-                                    <h4 className="text-sm font-bold">{video.title} </h4>
-                                    <p className="mt-1 w-96 text-xs text-justify" >
-                                        {video.description}
-                                    </p>
-                                </div>
-                            </div>
-                            </Link>
-                            <span className="text-blue-500 ml-2 ml-auto cursor-pointer"  onClick={()=>removeVideo(video.id)}>Remove</span>
-                            </div>
-                            ))
-                    }
+                                        }}>
+                                            <div className="flex my-4 cursor-pointer " >
+                                                <div className="mr-4 mt-2 flex-shrink-0 self-start">
+                                                    <img className="w-36 rounded object-cover" src={video.thumbnail} />
+                                                </div>
+                                                <div className="self-center">
+                                                    <h4 className="text-sm font-bold">{video.title} </h4>
+                                                    <p className="mt-1 w-96 text-xs text-justify" >
+                                                        {video.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                        <span className="text-blue-500 ml-2 ml-auto cursor-pointer" onClick={() => removeVideo(video.id)}>Remove</span>
+                                    </div>
+                                ))
+                            }
 
-                    </div>
+                        </div>
 
-                      </main>
+                    </main>
                 </div>
-            </div>     
+            </div>
 
         </>
     )
@@ -153,22 +156,22 @@ export async function getServerSideProps(context) {
             return []
         })
 
-        const profileClient = new ApolloClient({
-            uri: Constants.baseUrl + "/api/user",
-            cache: new InMemoryCache(),
-            headers: {
-                Authorization: "Bearer " + token,
-            },
+    const profileClient = new ApolloClient({
+        uri: Constants.baseUrl + "/api/user",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    })
+    const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
+        .then((res) => {
+            return res.profile
+        }).catch((networkErr) => {
+            return {};
         })
-        const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
-            .then((res) => {
-                return res.profile
-            }).catch((networkErr) => {
-                return {};
-            })
- 
+
     return {
-        props: {token,profile }
+        props: { token, profile }
     }
 }
 

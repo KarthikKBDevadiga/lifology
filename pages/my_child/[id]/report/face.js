@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
@@ -39,6 +39,10 @@ export default function MTIReport({ profile, assessment, report, token }) {
     var carouselCP
     var carouselAW
     var carouselR
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     const pages = [
         {
             name: 'My Child', href: {

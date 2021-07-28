@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     ScaleIcon,
 } from '@heroicons/react/outline'
@@ -15,6 +15,7 @@ import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../components/Breadcrumbs'
+import Router from 'next/dist/next-server/server/router'
 
 const cards = [
     { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
@@ -35,7 +36,10 @@ export default function CareerExplorer({ profile, token }) {
         },
     ]
 
-    console.log(authToken)
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
 
     return (
         <>
@@ -99,6 +103,15 @@ export default function CareerExplorer({ profile, token }) {
     )
 }
 
+export async function getInitialProps({ res, user }) {
+    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
+    console.log('authtoken ' + authToken)
+    if (authToken == "") {
+        res.writeHead(307, { Location: '/login' })
+        res.end()
+    }
+    return {}
+}
 
 export async function getServerSideProps(context) {
     const { token } = context.query;

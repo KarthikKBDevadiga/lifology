@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import {
     ScaleIcon,
@@ -141,7 +141,10 @@ export default function Assessment({ profile, assessment, questions, token }) {
         setOrderedOptions(items)
     }
     resetServerContext()
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
 

@@ -20,6 +20,7 @@ import { SchemeGetRecommendedVideos, SchemeGetVideo, SchemeAddWatchLater, Scheme
 import { mutateGraph } from '../../../helpers/GraphQLCaller'
 import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../../components/Breadcrumbs'
+import { useRouter } from 'next/router'
 
 function getVideoId(url) {
     var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
@@ -31,6 +32,7 @@ function getVideoId(url) {
 }
 
 export default function CareerVideoDetail({ profile, video, recommended, token }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [videoStatus, setVideoStatus] = useState([])
@@ -159,6 +161,10 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
 
         getVideoStatus();
     }
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
 

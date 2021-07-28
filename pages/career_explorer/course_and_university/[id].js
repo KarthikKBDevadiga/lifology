@@ -17,8 +17,10 @@ import "react-multi-carousel/lib/styles.css";
 import { SchemeGetUniversity, SchemeAddBookmark, SchemeVideoStatus } from '../../../helpers/GraphQLSchemes'
 import { mutateGraph } from '../../../helpers/GraphQLCaller'
 import Breadcrumbs from '../../../components/Breadcrumbs'
+import { useRouter } from 'next/router'
 
 export default function University({ profile, university, token }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [searchText, setSearchText] = useState("")
@@ -82,6 +84,10 @@ export default function University({ profile, university, token }) {
             name: 'University Details', href: '#', current: true
         },
     ]
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title={university.name} description={university.description} />

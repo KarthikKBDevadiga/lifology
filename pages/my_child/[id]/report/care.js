@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile, SchemeGetAssessment, SchemeGetMIOReport } from '/helpers/GraphQLSchemes'
@@ -17,8 +17,10 @@ import { PieChart } from 'react-minimal-pie-chart';
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
+import { useRouter } from 'next/router'
 
 export default function CareReport({ profile, assessment, report, token }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -35,7 +37,10 @@ export default function CareReport({ profile, assessment, report, token }) {
             name: assessment.title + ' Report', href: '#', current: true
         },
     ]
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title="CARE Assement Reports" description="CARE Assement Reports" />

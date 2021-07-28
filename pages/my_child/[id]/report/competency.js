@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile, SchemeGetAssessment, SchemeGetMIOReport } from '/helpers/GraphQLSchemes'
@@ -33,6 +33,10 @@ export default function VAKReport({ profile, assessment, report, token }) {
         duration: 500,
         slidesPerView: 1,
     })
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     const reports = [
         {
             image: '/img/vak_report.png',

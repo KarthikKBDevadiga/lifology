@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import {
     SelectorIcon
 } from '@heroicons/react/solid'
@@ -75,6 +75,10 @@ export default function ContactUs({ profile, token }) {
     const [selectedCountry, setSelectedCountry] = useState({})
     const [selectedQuery, setSelectedQuery] = useState({})
     const [selectedUserType, setSelectedUserType] = useState({})
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     const index = 4;
     return (
         <>

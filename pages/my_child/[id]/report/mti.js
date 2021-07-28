@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
@@ -18,6 +18,7 @@ import { SchemeGetAssessment, SchemeGetMTIReport } from '../../../../helpers/Gra
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 
 export default function MTIReport({ profile, assessment, report, token }) {
+    const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -40,7 +41,10 @@ export default function MTIReport({ profile, assessment, report, token }) {
             name: assessment.title + ' Report', href: '#', current: true
         },
     ]
-
+    useEffect(() => {
+        if (authToken == "")
+            router.push('/login')
+    }, [])
     return (
         <>
             <MetaLayout title="MTI Assement Reports" description="MTI Assement Reports" />
