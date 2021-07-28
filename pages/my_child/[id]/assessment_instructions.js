@@ -78,8 +78,6 @@ export default function MTIAssessment({ profile, assessment, token }) {
                                                     </li>
                                                     <li className="text-sm">Remember there are no right or wrong answer. these are just your Prefrences to the given statement</li>
                                                 </ul>
-                                                <br></br><br></br><br></br>
-                                                <div className="text-container" dangerouslySetInnerHTML={{ __html: assessment.instruction }} />
 
                                                 <Link
                                                     href={{
@@ -127,9 +125,6 @@ export default function MTIAssessment({ profile, assessment, token }) {
                             </div>
                         </div>
 
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center front-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
             </div >

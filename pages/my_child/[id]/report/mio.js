@@ -23,6 +23,7 @@ import "react-multi-carousel/lib/styles.css";
 
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import Breadcrumbs from '../../../../components/Breadcrumbs'
+import { SchemeGetMIOSCReport } from '../../../../helpers/GraphQLSchemes'
 
 export default function MIOReport({ profile, assessment, report, token }) {
     const router = useRouter()
@@ -56,7 +57,7 @@ export default function MIOReport({ profile, assessment, report, token }) {
         labels: ['Kinesthetic', 'Naturalistic', 'Interpersonal', 'Intrapersonal', 'Logical', 'Visual', 'Rhythmic', 'Linguistical'],
         datasets: [
             {
-                label: 'Report',
+                label: '',
                 data: [
                     report.orientation_details.find(x => x.title == 'kinesthetic').percentage,
                     report.orientation_details.find(x => x.title == 'naturalistic').percentage,
@@ -116,7 +117,7 @@ export default function MIOReport({ profile, assessment, report, token }) {
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white rounded-md shadow h-30 p-4" style={{ height: "fit-content" }}>
-                                                    <p className="font-medium">Assesment/VAK Assesment</p>
+                                                    <p className="font-medium">Assesment/MIO Assesment</p>
 
                                                     <div className="sm:flex mt-4">
                                                         <div className="relative flex-shrink-0 sm:mb-0 sm:mr-4">
@@ -595,136 +596,103 @@ export default function MIOReport({ profile, assessment, report, token }) {
                                             {
                                                 openSCR ?
                                                     <div className="bg-white rounded-md shadow h-auto p-4">
-                                                        <div className="sm:flex shadow p-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Visualization Ability</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Creative</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Reasoning Skills</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Analytical</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Methodical</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Word Power</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Language Processing</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Co-Operating</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Working Relationships</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="sm:flex shadow p-4 mt-4">
-                                                            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                <div className="text-sm font-medium ">Energetic</div>
-                                                                <div className="text-xs mt-2">Do you think your child has mastery over.</div>
-                                                            </div>
-                                                            <div className="flex w-full self-center">
-                                                                <div className="w-1/5 h-4 rounded-l-full" style={{ background: '#26F1DC' }}></div>
-                                                                <div className="w-1/5 h-4 " style={{ background: '#29B6FF' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FF6600' }}></div>
-                                                                <div className="w-1/5 h-4" style={{ background: '#FFD500' }}></div>
-                                                                <div className="w-1/5 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
-                                                            </div>
-                                                        </div>
+                                                        {
+                                                            report.spread_characteristics.expert.map((e) => (
+                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4">
+                                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                                        <div className="text-sm font-medium ">{e.key}</div>
+                                                                        <div className="text-xs mt-2 text-justify">{e.info}</div>
+                                                                    </div>
+                                                                    <div className="flex w-full self-center">
+                                                                        <div className="w-1/4 h-4 rounded-l-full self-center" style={{ background: '#29B6FF' }}></div>
+                                                                        <div className="w-1/4 h-4 self-center" style={{ background: '#FF6600' }}></div>
+                                                                        <div className="w-1/4 h-4 self-center" style={{ background: '#FFD500' }}></div>
+                                                                        <div className="w-1/4 ">
+                                                                            <svg
+                                                                                className="w-4 ml-auto mr-auto"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path
+                                                                                    id="path"
+                                                                                    d="M 0 0 L 24 0 L 12 24 Z"
+                                                                                    fill="#000000" />
+                                                                            </svg>
+                                                                            <div className="h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
+                                                                            <div className="text-xs font-bold text-center">Expert</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                        {
+                                                            report.spread_characteristics.advanced.map((e) => (
+                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4">
+                                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                                        <div className="text-sm font-medium ">{e.key}</div>
+                                                                        <div className="text-xs mt-2">{e.info}</div>
+                                                                    </div>
+                                                                    <div className="flex w-full self-center">
+                                                                        <div className="w-1/4 h-4 rounded-l-full self-center" style={{ background: '#29B6FF' }}></div>
+                                                                        <div className="w-1/4 h-4 self-center" style={{ background: '#FF6600' }}></div>
+                                                                        <div className="w-1/4 self-center">
+                                                                            <svg
+                                                                                className="w-4 ml-auto mr-auto"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path
+                                                                                    id="path"
+                                                                                    d="M 0 0 L 24 0 L 12 24 Z"
+                                                                                    fill="#000000" />
+                                                                            </svg>
+                                                                            <div className="h-4" style={{ background: '#FFD500' }}></div>
+                                                                            <div className="text-xs font-bold text-center">Advanced</div>
+                                                                        </div>
+                                                                        <div className="w-1/4 h-4 rounded-r-full self-center" style={{ background: '#40B248' }}></div>
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                        {
+                                                            report.spread_characteristics.learner.map((e) => (
+                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4">
+                                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                                        <div className="text-sm font-medium ">{e.key}</div>
+                                                                        <div className="text-xs mt-2">{e.info}</div>
+                                                                    </div>
+                                                                    <div className="flex w-full self-center">
+                                                                        <div className="w-1/4 h-4 rounded-l-full self-center" style={{ background: '#29B6FF' }}></div>
+                                                                        <div className="w-1/4 self-center">
+                                                                            <svg
+                                                                                className="w-4 ml-auto mr-auto"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path
+                                                                                    id="path"
+                                                                                    d="M 0 0 L 24 0 L 12 24 Z"
+                                                                                    fill="#000000" />
+                                                                            </svg>
+                                                                            <div className="h-4" style={{ background: '#FF6600' }}></div>
+                                                                            <div className="text-xs font-bold text-center">Learner</div>
+                                                                        </div>
+                                                                        <div className="w-1/4 h-4 self-center" style={{ background: '#FFD500' }}></div>
+                                                                        <div className="w-1/4 h-4 rounded-r-full self-center" style={{ background: '#40B248' }}></div>
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                        {
+                                                            report.spread_characteristics.novice.map((e) => (
+                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4">
+                                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                                        <div className="text-sm font-medium ">{e.key}</div>
+                                                                        <div className="text-xs mt-2">{e.info}</div>
+                                                                    </div>
+                                                                    <div className="flex w-full self-center">
+                                                                        <div className="w-1/4 h-4 rounded-l-full" style={{ background: '#29B6FF' }}></div>
+                                                                        <div className="w-1/4 h-4" style={{ background: '#FF6600' }}></div>
+                                                                        <div className="w-1/4 h-4" style={{ background: '#FFD500' }}></div>
+                                                                        <div className="w-1/4 h-4 rounded-r-full" style={{ background: '#40B248' }}></div>
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                        }
                                                     </div> : <></>
                                             }
 
@@ -733,10 +701,6 @@ export default function MIOReport({ profile, assessment, report, token }) {
                                 </div>
                             </div>
                         </div>
-
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center front-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
 
@@ -825,12 +789,13 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {}
         })
+
     const report = await queryGraph(careerClient, {}, SchemeGetMIOReport)
         .then((res) => {
             return res.intelligenceOrientation
         }).catch((networkErr) => {
             return {};
-        });
+        })
 
     console.log(report)
 

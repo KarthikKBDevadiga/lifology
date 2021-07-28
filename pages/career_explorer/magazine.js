@@ -70,7 +70,7 @@ export default function Magazine({ profile, token }) {
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
 
-                         <Breadcrumbs pages={pages} />
+                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
                             <div className="max-w-6xl mx-auto mt-4">
@@ -180,10 +180,6 @@ export default function Magazine({ profile, token }) {
                                 </div>
                             </div>
                         </div>
-
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center front-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
 

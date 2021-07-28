@@ -76,7 +76,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                             <nav className="mt-5 flex-shrink-0 h-full divide-y divide-cyan-800 overflow-y-auto" aria-label="Sidebar"
                             >
                                 <div className="px-2 space-y-1">
-                                    <Link
+                                    {/* <Link
                                         href="#">
                                         <a
                                             className={classNames(
@@ -94,7 +94,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                             </svg>
                                             Home
                                         </a>
-                                    </Link>
+                                    </Link> */}
                                     <Link
                                         href={{
                                             pathname: '/my_child',
@@ -117,7 +117,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                             My Child
                                         </a>
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                         href="#">
                                         <a
                                             className={classNames(
@@ -135,7 +135,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                             </svg>
                                             Services
                                         </a>
-                                    </Link>
+                                    </Link> */}
                                     <Link
                                         href={{
                                             pathname: '/career_explorer',
@@ -158,7 +158,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                             Career Explorer
                                         </a>
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                         href="#">
                                         <a
                                             href="#"
@@ -177,7 +177,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                             </svg>
                                             Lifology Hub
                                         </a>
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </nav>
                         </div>
@@ -202,7 +202,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                         </div>
                         <nav className="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto relative" aria-label="Sidebar">
                             <div className="px-4 space-y-1 mt-4">
-
+                                {/* 
                                 <Link
                                     href="#">
                                     <a
@@ -219,7 +219,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                         </svg>
                                         Home
                                     </a>
-                                </Link>
+                                </Link> */}
                                 <Link
                                     href={{
                                         pathname: '/my_child',
@@ -240,7 +240,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                         My Child
                                     </a>
                                 </Link>
-                                <Link
+                                {/* <Link
                                     href="#">
                                     <a
                                         className={classNames(
@@ -256,7 +256,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                         </svg>
                                         Services
                                     </a>
-                                </Link>
+                                </Link> */}
                                 <Link
                                     href={{
                                         pathname: '/career_explorer',
@@ -277,7 +277,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                         Career Explorer
                                     </a>
                                 </Link>
-                                <Link
+                                {/* <Link
                                     href="#">
                                     <a
                                         className={classNames(
@@ -293,17 +293,17 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                         </svg>
                                         Lifology Hub
                                     </a>
-                                </Link>
+                                </Link> */}
                             </div>
                             <div className="absolute mt-6 pt-6 bottom-0 border-0">
                                 <div className="px-2 space-y-1 text-center">
                                     <span className="px-2 bg-white text-center text-gray-900 font-bold">Download Our App</span>
-                                    <a href="#" >
+                                    <a href="https://play.google.com/store/apps/details?id=com.app.lifology" >
                                         <img className="mt-4 ml-auto mr-auto w-3/5" src="/img/play-store.png" />
                                     </a>
-                                    <a href="#">
+                                    {/* <a href="#">
                                         <img className="mt-4 ml-auto mr-auto w-3/5" src="/img/app-store.png" />
-                                    </a>
+                                    </a> */}
                                 </div>
                             </div>
                         </nav>

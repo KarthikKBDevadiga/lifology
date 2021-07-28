@@ -19,7 +19,7 @@ export default function JobFamilies({ families, profile, token }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
-     const pages = [
+    const pages = [
         {
             name: 'Career Explorer', href: {
                 pathname: '/career_explorer/',
@@ -39,7 +39,7 @@ export default function JobFamilies({ families, profile, token }) {
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Job Families & Career Fields" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Job Families & Career Fields" authToken={token} setAuthToken={setAuthToken} />
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
                         <Breadcrumbs pages={pages} />
@@ -115,9 +115,6 @@ export default function JobFamilies({ families, profile, token }) {
 
                         </div>
 
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center font-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
 

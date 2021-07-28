@@ -19,8 +19,8 @@ import Breadcrumbs from '../../components/Breadcrumbs'
 const cards = [
     { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Course and University', href: '/career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Scholarship Program', href: '/career_explorer', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Magazine', href: '/career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
+    // { name: 'Scholarship Program', href: '/career_explorer', icon: ScaleIcon, amount: '$30,659.45' },
+    // { name: 'Magazine', href: '/career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Career Videos', href: '/career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
 ]
 
@@ -90,10 +90,6 @@ export default function CareerExplorer({ profile, token }) {
                             </div>
 
                         </div>
-
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center font-medium"></div>
-                        </footer>
                     </main>
                 </div>
 

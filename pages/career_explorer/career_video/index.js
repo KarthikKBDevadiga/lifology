@@ -46,7 +46,7 @@ const headerSlide = [
 
 export default function CareerVideo({ videoCats, profile, token }) {
 
-    console.log("video cats",videoCats)
+    console.log("video cats", videoCats)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
@@ -150,7 +150,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
     //const [hide,setHide]=useState(true);
 
-    const[searchText, setSearchText]=useState("");
+    const [searchText, setSearchText] = useState("");
 
     return (
         <>
@@ -169,7 +169,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col">
-                                <Breadcrumbs pages={pages} />
+                                    <Breadcrumbs pages={pages} />
                                     <div className="sm:flex sm:items-start sm:justify-between mx-4">
 
 
@@ -184,7 +184,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                     className="block w-full h-full p-3 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
                                                     placeholder="Search Any Videos"
                                                     type="search"
-                                                    onChange={(e)=>setSearchText(e.target.value)}
+                                                    onChange={(e) => setSearchText(e.target.value)}
                                                 />
                                             </div>
                                         </div>
@@ -269,8 +269,8 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                         </div>
                                     </div>
 
-                                    
-                                    {videoCats[0]!=undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+
+                                    {videoCats[0] != undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="grid grid-cols-2 gap-2">
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[0].name}
@@ -303,22 +303,21 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                             </a>
                                             <div className="navigation-wrapper w-full">
                                                 <div ref={sliderRef1} className="keen-slider">
-                                         {videoCats[0].videos.filter((card) => {
-                                                if(!videoCats[0])
-                                                {
-                                                    setHide(false);
-                                                }
-                                                if (searchText.trim() === "") {
+                                                    {videoCats[0].videos.filter((card) => {
+                                                        if (!videoCats[0]) {
+                                                            setHide(false);
+                                                        }
+                                                        if (searchText.trim() === "") {
 
-                                                    return card;
-                                                }
-                                                if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
-                                                    
+                                                            return card;
+                                                        }
+                                                        if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
 
-                                                    return card;
-                                                }
-                                                return "";
-                                            }).map((card) => (
+
+                                                            return card;
+                                                        }
+                                                        return "";
+                                                    }).map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
                                                                 pathname: '/career_explorer/career_video/' + card.id,
@@ -421,9 +420,9 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                         </div>
 
                                     </div>}
-                                
 
-                                    {videoCats[1]!=undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+
+                                    {videoCats[1] != undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="grid grid-cols-2 gap-2">
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[1].name}
@@ -456,18 +455,18 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                             </a>
                                             <div className="navigation-wrapper w-full">
                                                 <div ref={sliderRef2} className="keen-slider">
-                                            {videoCats[1].videos.filter((card) => {
-                                                if (searchText.trim() === "") {
+                                                    {videoCats[1].videos.filter((card) => {
+                                                        if (searchText.trim() === "") {
 
-                                                    return card;
-                                                }
-                                                if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
-                                                    
+                                                            return card;
+                                                        }
+                                                        if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
 
-                                                    return card;
-                                                }
-                                                return "";
-                                            }).map((card) => (
+
+                                                            return card;
+                                                        }
+                                                        return "";
+                                                    }).map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
                                                                 pathname: '/career_explorer/career_video/' + card.id,
@@ -569,7 +568,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                         </div>
                                     </div>}
 
-                                    {videoCats[2]!=undefined &&  <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+                                    {videoCats[2] != undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="grid grid-cols-2 gap-2">
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[2].name}
@@ -602,18 +601,18 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                             </a>
                                             <div className="navigation-wrapper w-full">
                                                 <div ref={sliderRef3} className="keen-slider">
-                                            {videoCats[2].videos.filter((card) => {
-                                                if (searchText.trim() === "") {
+                                                    {videoCats[2].videos.filter((card) => {
+                                                        if (searchText.trim() === "") {
 
-                                                    return card;
-                                                }
-                                                if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
-                                                    
+                                                            return card;
+                                                        }
+                                                        if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
 
-                                                    return card;
-                                                }
-                                                return "";
-                                            }).map((card) => (
+
+                                                            return card;
+                                                        }
+                                                        return "";
+                                                    }).map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
                                                                 pathname: '/career_explorer/career_video/' + card.id,
@@ -715,14 +714,14 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                         </div>
                                     </div>}
 
-                                 {videoCats[3]!=undefined &&  <div className="m-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+                                    {videoCats[3] != undefined && <div className="m-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                         <div className="grid grid-cols-2 gap-2">
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[3].name}
                                             </div>
 
                                             <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                            <a href="#">View All</a>
+                                                <a href="#">View All</a>
                                             </div>
                                         </div>
                                         <div className="relative flex items-center">
@@ -748,18 +747,18 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                             </a>
                                             <div className="navigation-wrapper w-full">
                                                 <div ref={sliderRef4} className="keen-slider">
-                                            {videoCats[3].videos.filter((card) => {
-                                                if (searchText.trim() === "") {
+                                                    {videoCats[3].videos.filter((card) => {
+                                                        if (searchText.trim() === "") {
 
-                                                    return card;
-                                                }
-                                                if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
-                                                    
+                                                            return card;
+                                                        }
+                                                        if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
 
-                                                    return card;
-                                                }
-                                                return "";
-                                            }).map((card) => (
+
+                                                            return card;
+                                                        }
+                                                        return "";
+                                                    }).map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <Link href={{
                                                                 pathname: '/career_explorer/career_video/' + card.id,
@@ -867,9 +866,6 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
                         </div>
 
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center font-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
 

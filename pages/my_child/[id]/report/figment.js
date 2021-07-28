@@ -202,25 +202,30 @@ export default function GreenZone({ profile, report, token }) {
                                                 index == 1 ? <div className="bg-white rounded-md shadow h-auto p-4">
 
                                                     {
-                                                        report.green_zone.map((r) => {
-                                                            return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#5EB570" }}>
-                                                                <p className="p-4">
-                                                                    <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">{r.percentage}%</span>{r.career}
-                                                                </p>
-                                                                <p className="text-sm pl-4 pb-2">Personality Match</p>
-                                                                <div className="relative ml-4 mr-4">
-                                                                    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-900">
-                                                                        <div style={{ width: r.personality_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                        report.green_zone.length > 0 ?
+                                                            report.green_zone.map((r) => {
+                                                                return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#5EB570" }}>
+                                                                    <p className="p-4">
+                                                                        <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">{r.percentage}%</span>{r.career}
+                                                                    </p>
+                                                                    <p className="text-sm pl-4 pb-2">Personality Match</p>
+                                                                    <div className="relative ml-4 mr-4">
+                                                                        <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-900">
+                                                                            <div style={{ width: r.personality_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p className="text-sm pl-4 pb-2">Orientation Match</p>
+                                                                    <div className="relative ml-4 mr-4">
+                                                                        <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-800">
+                                                                            <div style={{ width: r.orientation_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <p className="text-sm pl-4 pb-2">Orientation Match</p>
-                                                                <div className="relative ml-4 mr-4">
-                                                                    <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-800">
-                                                                        <div style={{ width: r.orientation_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
-                                                                    </div>
-                                                                </div>
+                                                            }) :
+                                                            <div className="text-white rounded-md p-4" style={{ background: "#5EB570" }}>
+                                                                <div className="font-bold text-xl text-center">No Career Here!</div>
+                                                                <div className="text-sm mt-4 text-center">Check Other Zones For Your Figment</div>
                                                             </div>
-                                                        })
                                                     }
 
                                                 </div> : ''
@@ -229,25 +234,30 @@ export default function GreenZone({ profile, report, token }) {
                                                 index == 2 ? <div className="bg-white rounded-md shadow h-auto p-4">
 
                                                     {
-                                                        report.blue_zone.map((r) => {
-                                                            return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#61B9FF" }}>
-                                                                <p className="p-4">
-                                                                    <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">{r.percentage}%</span>{r.career}
-                                                                </p>
-                                                                <p className="text-sm pl-4 pb-2">Personality Match</p>
-                                                                <div className="relative ml-4 mr-4">
-                                                                    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-800">
-                                                                        <div style={{ width: r.personality_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                        report.blue_zone.length > 0 ?
+                                                            report.blue_zone.map((r) => {
+                                                                return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#61B9FF" }}>
+                                                                    <p className="p-4">
+                                                                        <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">{r.percentage}%</span>{r.career}
+                                                                    </p>
+                                                                    <p className="text-sm pl-4 pb-2">Personality Match</p>
+                                                                    <div className="relative ml-4 mr-4">
+                                                                        <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-800">
+                                                                            <div style={{ width: r.personality_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p className="text-sm pl-4 pb-2">Orientation Match</p>
+                                                                    <div className="relative ml-4 mr-4">
+                                                                        <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-800">
+                                                                            <div style={{ width: r.orientation_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <p className="text-sm pl-4 pb-2">Orientation Match</p>
-                                                                <div className="relative ml-4 mr-4">
-                                                                    <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-800">
-                                                                        <div style={{ width: r.orientation_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
-                                                                    </div>
-                                                                </div>
+                                                            }) :
+                                                            <div className="text-white rounded-md p-4" style={{ background: "#61B9FF" }}>
+                                                                <div className="font-bold text-xl text-center">No Career Here!</div>
+                                                                <div className="text-sm mt-4 text-center">Check Other Zones For Your Figment</div>
                                                             </div>
-                                                        })
                                                     }
 
                                                 </div> : ''
@@ -255,25 +265,29 @@ export default function GreenZone({ profile, report, token }) {
                                             {
                                                 index == 3 ? <div className="bg-white rounded-md shadow h-auto p-4">
                                                     {
-                                                        report.orange_zone.map((r) => {
-                                                            return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#ED872F" }}>
-                                                                <p className="p-4">
-                                                                    <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">{r.percentage}%</span>{r.career}
-                                                                </p>
-                                                                <p className="text-sm pl-4 pb-2">Personality Match</p>
-                                                                <div className="relative ml-4 mr-4">
-                                                                    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-yellow-900">
-                                                                        <div style={{ width: r.personality_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                        report.orange_zone.length > 0 ?
+                                                            report.orange_zone.map((r) => {
+                                                                return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#ED872F" }}>
+                                                                    <p className="p-4">
+                                                                        <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">{r.percentage}%</span>{r.career}
+                                                                    </p>
+                                                                    <p className="text-sm pl-4 pb-2">Personality Match</p>
+                                                                    <div className="relative ml-4 mr-4">
+                                                                        <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-yellow-900">
+                                                                            <div style={{ width: r.personality_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p className="text-sm pl-4 pb-2">Orientation Match</p>
+                                                                    <div className="relative ml-4 mr-4">
+                                                                        <div className="overflow-hidden h-2 text-xs flex rounded bg-green-900">
+                                                                            <div style={{ width: r.orientation_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <p className="text-sm pl-4 pb-2">Orientation Match</p>
-                                                                <div className="relative ml-4 mr-4">
-                                                                    <div className="overflow-hidden h-2 text-xs flex rounded bg-green-900">
-                                                                        <div style={{ width: r.orientation_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
-                                                                    </div>
-                                                                </div>
+                                                            }) : <div className="text-white rounded-md p-4" style={{ background: "#ED872F" }}>
+                                                                <div className="font-bold text-xl text-center">No Career Here!</div>
+                                                                <div className="text-sm mt-4 text-center">Check Other Zones For Your Figment</div>
                                                             </div>
-                                                        })
                                                     }
 
                                                 </div> : ''
@@ -281,25 +295,29 @@ export default function GreenZone({ profile, report, token }) {
                                             {
                                                 index == 4 ? <div className="bg-white rounded-md shadow h-auto p-4">
                                                     {
-                                                        report.purple_zone.map((r) => {
-                                                            return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#9F2DC3" }}>
-                                                                <p className="p-4">
-                                                                    <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">{r.percentage}%</span>{r.career}
-                                                                </p>
-                                                                <p className="text-sm pl-4 pb-2">Personality Match</p>
-                                                                <div className="relative ml-4 mr-4">
-                                                                    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-900">
-                                                                        <div style={{ width: r.personality_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                        report.purple_zone.length > 0 ?
+                                                            report.purple_zone.map((r) => {
+                                                                return <div className="text-white rounded-md mb-4 pb-4" style={{ background: "#9F2DC3" }}>
+                                                                    <p className="p-4">
+                                                                        <span className="text-medium text-blue-500 bg-white mr-2 p-1 py-2 rounded-full h-12 w-9 text-sm">{r.percentage}%</span>{r.career}
+                                                                    </p>
+                                                                    <p className="text-sm pl-4 pb-2">Personality Match</p>
+                                                                    <div className="relative ml-4 mr-4">
+                                                                        <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-900">
+                                                                            <div style={{ width: r.personality_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p className="text-sm pl-4 pb-2">Orientation Match</p>
+                                                                    <div className="relative ml-4 mr-4">
+                                                                        <div className="overflow-hidden h-2 text-xs flex rounded bg-green-900">
+                                                                            <div style={{ width: r.orientation_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <p className="text-sm pl-4 pb-2">Orientation Match</p>
-                                                                <div className="relative ml-4 mr-4">
-                                                                    <div className="overflow-hidden h-2 text-xs flex rounded bg-green-900">
-                                                                        <div style={{ width: r.orientation_match + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full"></div>
-                                                                    </div>
-                                                                </div>
+                                                            }) : <div className="text-white rounded-md p-4" style={{ background: "#9F2DC3" }}>
+                                                                <div className="font-bold text-xl text-center">No Career Here!</div>
+                                                                <div className="text-sm mt-4 text-center">Check Other Zones For Your Figment</div>
                                                             </div>
-                                                        })
                                                     }
 
 
@@ -313,10 +331,6 @@ export default function GreenZone({ profile, report, token }) {
                                 </div>
                             </div>
                         </div>
-
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center front-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
 

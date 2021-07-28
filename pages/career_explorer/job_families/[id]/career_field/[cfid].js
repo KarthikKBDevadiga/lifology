@@ -115,7 +115,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
             }, current: false
         },
         {
-            name: 'Course & University', href: {
+            name: 'Job Families & Career Fields', href: {
                 pathname: '/career_explorer/job_families',
                 query: { token: token }
             }, current: false
@@ -402,10 +402,6 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                 </div>
                             </div>
                         </div>
-
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center front-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
 

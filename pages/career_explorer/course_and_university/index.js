@@ -95,16 +95,15 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                         </div>
                                     </div>
 
-                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
+                                    {/* <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
                                         <div className="space-y-6 lg:col-start-1 lg:col-span-2">
-                                            {/* Description list*/}
                                             <ul className={styles.topicGroup}>
                                                 {countries.map((c) => (
                                                     <li key={c.country} className="float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer bg-lgrey-bg border border-lgrey-border duration-500 hover:bg-lblue hover:text-white">{c.country}</li>
                                                 ))}
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
 
@@ -256,10 +255,6 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                 </div>
                             </div>
                         </div>
-
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center front-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
             </div>

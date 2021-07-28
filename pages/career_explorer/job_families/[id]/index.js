@@ -21,7 +21,7 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
 
     const [openVideo, setOpenVideo] = useState(false)
 
-     const pages = [
+    const pages = [
         {
             name: 'Career Explorer', href: {
                 pathname: '/career_explorer/',
@@ -29,7 +29,7 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
             }, current: false
         },
         {
-            name: 'Course & University', href: {
+            name: 'Job Families & Career Fields', href: {
                 pathname: '/career_explorer/job_families',
                 query: { token: token }
             }, current: false
@@ -170,10 +170,6 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                                 </div>
                             </div>
                         </div>
-
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center front-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
             </div >

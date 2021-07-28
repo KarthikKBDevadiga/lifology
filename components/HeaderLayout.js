@@ -34,18 +34,18 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                 <div className="flex-1 flex font-bold self-center">
                     <div >
                         <h2 className="text-xl ">{title}</h2>
-                        
+
                     </div>
                 </div>
                 <div className="ml-4 flex items-center md:ml-6">
-                    <button className="mr-2 bg-white p-3 lg:p-3 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none  lg:rounded-md lg:hover:bg-gray-200 lg:bg-gray-100 duration-500">
+                    {/* <button className="mr-2 bg-white p-3 lg:p-3 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none  lg:rounded-md lg:hover:bg-gray-200 lg:bg-gray-100 duration-500">
                         <span className="sr-only">Search</span>
                         <SearchIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
                     <button className="mr-2 bg-white p-3 lg:p-3 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none  lg:rounded-md lg:hover:bg-gray-200 lg:bg-gray-100 duration-500">
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
+                    </button> */}
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative">
@@ -113,7 +113,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                 </Link>
                                             )}
                                         </Menu.Item>
-                                        <Menu.Item>
+                                        {/* <Menu.Item>
                                             {({ active }) => (
                                                 <Link
                                                     href="#">
@@ -133,7 +133,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                     </a>
                                                 </Link>
                                             )}
-                                        </Menu.Item>
+                                        </Menu.Item> */}
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <Link
@@ -141,8 +141,8 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                         pathname: '/career_explorer/career_video/bookmark',
                                                         query: { token: authToken }
                                                     }}
-                                                
-                                                    >
+
+                                                >
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
@@ -160,7 +160,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                 </Link>
                                             )}
                                         </Menu.Item>
-                                        <Menu.Item>
+                                        {/* <Menu.Item>
                                             {({ active }) => (
                                                 <Link
                                                     href="#">
@@ -180,7 +180,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                     </a>
                                                 </Link>
                                             )}
-                                        </Menu.Item>
+                                        </Menu.Item> */}
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <Link

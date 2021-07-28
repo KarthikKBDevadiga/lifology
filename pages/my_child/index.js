@@ -83,39 +83,6 @@ export default function MyChild({ profile, assessments, isCF, isLS, token }) {
                                                         </a>
                                                     </Link>
                                             ))}
-                                            {/* {assessments.map((card) => (
-
-                                                ((card.id == 8 && !(assessments.find(a => a.id == 1).total_questions <= 0 &&
-                                                    assessments.find(a => a.id == 4).total_questions <= 0 &&
-                                                    assessments.find(a => a.id == 2).total_questions <= 0)) || (card.id == 9 && !(assessments.find(a => a.id == 7).total_questions <= 0 &&
-                                                        assessments.find(a => a.id == 3).total_questions <= 0))) ? <></> : <Link
-                                                            href={{
-                                                                pathname: card.assessment_type == 3 ? card.id == 9 ? '/my_child/' + card.id + '/report/la' : '/my_child/' + card.id + '/report/figment' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase(),
-                                                                query: { token: token }
-                                                            }}>
-                                                    <a>
-                                                        <div key={card.name} className="group relative bg-white overflow-hidden shadow hover:shadow-xl hover:scale-105 active:scale-100 active:shadow-sm rounded bg-cover duration-500 "
-                                                            style={{ height: '200px', }}
-                                                        >
-                                                            <img src={card.dash_cards_image} className="rounded w-full object-cover group-hover:scale-150 group-hover:rotate-12 group-active:rotate-0 group-active:scale-100 duration-500 bg-gray-400" style={{ height: '200px' }} />
-                                                            <div className="absolute p-4 top-0 w-full">
-                                                                <div className="text-white w-9/12 font-medium text-xl ">{card.title}</div>
-                                                                <div className="text-white w-9/12 text-sm mt-2">{card.subtitle}</div>
-                                                                <div className="mt-4 w-0 h-0.5 rounded bg-white group-hover:w-3/4 duration-500"></div>
-                                                            </div>
-                                                            <div className="flex absolute bottom-4 right-4 scale-0 group-hover:scale-100 duration-500 translate-x-full group-hover:translate-x-0">
-                                                                <div className="self-center font-medium text-lg text-white">{card.assessment_type == 3 ? '' : card.total_questions > 0 ? card.attempted_questions > 0 ? 'Continue' : 'Start' : 'View Report'}</div>
-
-                                                                <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </Link>
-
-
-                                            ))} */}
                                         </div>
                                     </div>
                                 </div>
@@ -123,9 +90,6 @@ export default function MyChild({ profile, assessments, isCF, isLS, token }) {
 
                         </div>
 
-                        <footer className="shadow p-4 bg-white">
-                            <div className="text-center font-medium">Copyright © 2021 Septa Milles Pvt Ltd. All Rights Reserved</div>
-                        </footer>
                     </main>
                 </div>
 
