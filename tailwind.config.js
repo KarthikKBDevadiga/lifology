@@ -25,7 +25,12 @@ module.exports = {
         },
         lgreen: {
           DEFAULT: '#02C77D',
-          light: '#5EB570'
+          light: '#5EB570',
+          lime: '#30C702'
+        },
+        lred: {
+          DEFAULT: '#FF0000',
+          dark: '#A40808'
         }
       },
       animation: {

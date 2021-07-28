@@ -210,32 +210,38 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                                                 <RadioGroup value={selectedOption} onChange={setSelectedOption}>
                                                                                     <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
                                                                                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                                                                                        {question.score_options.map((option) => (
-                                                                                            <RadioGroup.Option
-                                                                                                key={option.label}
-                                                                                                value={option}
-                                                                                                className="my-4 cursor-pointer"
-                                                                                            >
-                                                                                                {({ checked }) => (
-                                                                                                    <>
-                                                                                                        <div className={
-                                                                                                            classNames(
-                                                                                                                checked ? 'bg-lgreen shadow-xl text-white' : 'bg-white hover:bg-lgreen hover:text-white shadow text-gray-900',
-                                                                                                                "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
-                                                                                                            )
-                                                                                                        }>
-                                                                                                            <div className="text-base z-50">
-                                                                                                                <RadioGroup.Label as="div" className=
-                                                                                                                    "font-medium text-center"
-                                                                                                                >
-                                                                                                                    {option.label}
-                                                                                                                </RadioGroup.Label>
+                                                                                        {question.score_options.map(
+                                                                                            (option, index) => {
+                                                                                                const checkedC = index == 0 ? 'bg-lgreen' : index == 1 ? 'bg-lgreen-lime' : index == 2 ? 'bg-lyellow' : index == 3 ? 'bg-lred' : 'bg-lred-dark'
+                                                                                                const uncheckedC = (index == 0 ? 'hover:bg-lgreen' : index == 1 ? 'hover:bg-lgreen-lime' : index == 2 ? 'hover:bg-lyellow' : index == 3 ? 'hover:bg-lred' : 'hover:bg-lred-dark') + ' bg-white hover:text-white'
+                                                                                                return <RadioGroup.Option
+                                                                                                    key={option.label}
+                                                                                                    value={option}
+                                                                                                    className="my-4 cursor-pointer"
+                                                                                                >
+                                                                                                    {({ checked }) => (
+                                                                                                        <>
+                                                                                                            <div className={
+                                                                                                                classNames(
+                                                                                                                    checked ?
+                                                                                                                        checkedC + '  shadow-xl text-white' :
+                                                                                                                        uncheckedC + ' shadow text-gray-900',
+                                                                                                                    "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
+                                                                                                                )
+                                                                                                            }>
+                                                                                                                <div className="text-base z-50">
+                                                                                                                    <RadioGroup.Label as="div" className=
+                                                                                                                        "font-medium text-center"
+                                                                                                                    >
+                                                                                                                        {option.label}
+                                                                                                                    </RadioGroup.Label>
+                                                                                                                </div>
                                                                                                             </div>
-                                                                                                        </div>
-                                                                                                    </>
-                                                                                                )}
-                                                                                            </RadioGroup.Option>
-                                                                                        ))}
+                                                                                                        </>
+                                                                                                    )}
+                                                                                                </RadioGroup.Option>
+                                                                                            }
+                                                                                        )}
                                                                                     </div>
                                                                                 </RadioGroup>
                                                                             </> : <>
