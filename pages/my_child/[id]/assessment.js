@@ -226,7 +226,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                                                                                     checked ?
                                                                                                                         checkedC + '  shadow-xl text-white' :
                                                                                                                         uncheckedC + ' shadow text-gray-900',
-                                                                                                                    "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
+                                                                                                                    "w-full h-full items-center px-4 py-4 rounded-lg  hover:shadow-xl duration-500"
                                                                                                                 )
                                                                                                             }>
                                                                                                                 <div className="text-base z-50">
