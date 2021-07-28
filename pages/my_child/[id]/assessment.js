@@ -162,7 +162,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg bg-white p-4 h-screen">
                                         <div className="flex">
                                             <div className="w-2/4 font-bold text-sm" >{assessment.title} Test</div>
-                                            <div className="w-2/4 font-bold text-sm text-right" >View Instructions</div>
+                                            {/* <div className="w-2/4 font-bold text-sm text-right" >View Instructions</div> */}
                                         </div>
 
 
