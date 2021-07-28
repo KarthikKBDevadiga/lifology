@@ -220,7 +220,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                                                                     <>
                                                                                                         <div className={
                                                                                                             classNames(
-                                                                                                                checked ? 'bg-lgreen shadow-xl text-white' : 'bg-white shadow text-gray-900',
+                                                                                                                checked ? 'bg-lgreen shadow-xl text-white' : 'bg-white hover:bg-lgreen hover:text-white shadow text-gray-900',
                                                                                                                 "w-full h-full items-center px-4 py-4 rounded-lg hover:bg-lgreen hover:text-white hover:shadow-xl duration-500"
                                                                                                             )
                                                                                                         }>
