@@ -33,11 +33,12 @@ import Breadcrumbs from '../../../components/Breadcrumbs'
 import { SchemeGetUniversityPerPage } from '../../../helpers/GraphQLSchemes'
 import { useRouter } from 'next/router'
 
+import cookies from 'next-cookies'
+
 const pageItemCount = 32
-export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, token, state, city }) {
+export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, state, city }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [openFilter, setOpenFilter] = useState(false)
     const [searchText, setSearchText] = useState("")
@@ -51,20 +52,13 @@ export default function CourceAndUniversity({ profile, countries, universities, 
     }, [selectedCountry])
 
     const totalPages = Math.ceil(universitiesCount / pageItemCount)
-    console.log(totalPages)
 
     const nextPage = parseInt(page) + 1;
     const previousPage = parseInt(page) - 1;
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
+
     const pages = [
         {
-            name: 'Career Explorer', href: {
-                pathname: '/career_explorer/',
-                query: { token: token }
-            }, current: false
+            name: 'Career Explorer', href: '/career_explorer/', current: false
         },
         {
             name: 'Course & University', href: '#', current: true
@@ -76,10 +70,10 @@ export default function CourceAndUniversity({ profile, countries, universities, 
             <MetaLayout title="Magazine" description="Magazine" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Course & University" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Course & University" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -193,10 +187,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                 }
                                                 return "";
                                             }).map((u) => (
-                                                <Link href={{
-                                                    pathname: '/career_explorer/course_and_university/' + u.id,
-                                                    query: { token: token }
-                                                }}>
+                                                <Link href={'/career_explorer/course_and_university/' + u.id}>
                                                     <a>
                                                         <div className="h-full bg-white overflow-hidden shadow rounded p-4 hover:shadow-xl duration-500">
                                                             <img className="rounded-2xl w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
@@ -227,7 +218,6 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                         pathname: '/career_explorer/course_and_university/test',
                                                         query: {
                                                             page: previousPage,
-                                                            token: token
                                                         }
                                                     }}>
                                                         <a
@@ -242,7 +232,6 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                         pathname: '/career_explorer/course_and_university/test',
                                                         query: {
                                                             page: nextPage,
-                                                            token: token
                                                         }
                                                     }}>
                                                         <a
@@ -627,7 +616,8 @@ export default function CourceAndUniversity({ profile, countries, universities, 
 }
 
 export async function getServerSideProps(context) {
-    const { token, page = 1 } = context.query
+    const { token } = cookies(context)
+    const { page = 1 } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -636,7 +626,6 @@ export async function getServerSideProps(context) {
             }
         }
     }
-    console.log(page)
     const careerClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
         cache: new InMemoryCache(),
@@ -689,7 +678,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { profile, countries, universities, universitiesCount, page, token, state, city }
+        props: { profile, countries, universities, universitiesCount, page, state, city }
     }
 }
 

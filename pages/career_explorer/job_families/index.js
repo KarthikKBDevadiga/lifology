@@ -14,35 +14,27 @@ import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 
-export default function JobFamilies({ families, profile, token }) {
+import cookies from 'next-cookies'
+export default function JobFamilies({ families, profile }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-
     const pages = [
         {
-            name: 'Career Explorer', href: {
-                pathname: '/career_explorer/',
-                query: { token: token }
-            }, current: false
+            name: 'Career Explorer', href: '/career_explorer/', current: false
         },
         {
             name: 'Job Families & Career Fields', href: '#', current: true
         },
     ]
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     return (
         <>
             <MetaLayout title="Job Families & Career Fields" description="Job Families & Career Fields" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Job Families & Career Fields" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Job Families & Career Fields" />
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
                         <Breadcrumbs pages={pages} />
@@ -91,10 +83,7 @@ export default function JobFamilies({ families, profile, token }) {
                                             {/* Card */}
                                             {families.map((card) => (
                                                 <Link
-                                                    href={{
-                                                        pathname: 'job_families/' + card.id,
-                                                        query: { token: token }
-                                                    }}>
+                                                    href={'job_families/' + card.id}>
                                                     <a>
                                                         <div key={card.name} className="group bg-white overflow-hidden shadow hover:shadow-xl rounded-lg relative duration-500"
                                                             style={{ backgroundImage: `url(${card.image})`, height: '200px', }}
@@ -128,7 +117,7 @@ export default function JobFamilies({ families, profile, token }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {
@@ -162,10 +151,9 @@ export async function getServerSideProps(context) {
             return res.profile
         }).catch((networkErr) => {
             return {};
-            // console.log(networkErr);
         });
     return {
-        props: { families, profile, token }
+        props: { families, profile }
     }
 }
 

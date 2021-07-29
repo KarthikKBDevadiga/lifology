@@ -11,25 +11,22 @@ import MetaLayout from '../components/MetaLayout'
 import SettingNavigationLayout from '../components/SettingNavigationLayout'
 
 import "react-multi-carousel/lib/styles.css";
+import cookies from 'next-cookies'
 
-export default function PrivacyPolicy({ profile, token }) {
+export default function PrivacyPolicy({ profile }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
+
     const index = 5;
     return (
         <>
             <MetaLayout title="Privacy Policy" description="Privacy Policy" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Settings / Privacy Policy" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Settings / Privacy Policy" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -43,7 +40,7 @@ export default function PrivacyPolicy({ profile, token }) {
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
 
-                                                <SettingNavigationLayout index="5" authToken={token} />
+                                                <SettingNavigationLayout index="5" />
                                             </section>
 
                                         </div>
@@ -71,12 +68,8 @@ export default function PrivacyPolicy({ profile, token }) {
         </>
     )
 }
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
-
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

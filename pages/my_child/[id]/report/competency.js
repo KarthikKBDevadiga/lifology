@@ -20,11 +20,11 @@ import ReactCardCarousel from 'react-card-carousel';
 import { SchemeGetCompetencyReport, SchemeGetLSReport } from '../../../../helpers/GraphQLSchemes'
 import { Bar } from 'react-chartjs-2'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
+import cookies from 'next-cookies'
 
-export default function VAKReport({ profile, assessment, report, token }) {
+export default function VAKReport({ profile, assessment, report }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [sliderRef, slider] = useKeenSlider({
         initial: 0,
@@ -33,10 +33,6 @@ export default function VAKReport({ profile, assessment, report, token }) {
         duration: 500,
         slidesPerView: 1,
     })
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     const reports = [
         {
             image: '/img/vak_report.png',
@@ -80,10 +76,7 @@ export default function VAKReport({ profile, assessment, report, token }) {
     }
     const pages = [
         {
-            name: 'My Child', href: {
-                pathname: '/my_child/',
-                query: { token: token }
-            }, current: false
+            name: 'My Child', href: '/my_child/', current: false
         },
         {
             name: assessment.title + ' Report', href: '#', current: true
@@ -95,10 +88,10 @@ export default function VAKReport({ profile, assessment, report, token }) {
             <MetaLayout title="Competency Assesment" description="Competency Assesment" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Competency Report" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Competency Report" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -232,7 +225,7 @@ export default function VAKReport({ profile, assessment, report, token }) {
 // }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

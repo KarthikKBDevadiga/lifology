@@ -24,11 +24,11 @@ import "react-multi-carousel/lib/styles.css";
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import { SchemeGetMIOSCReport } from '../../../../helpers/GraphQLSchemes'
+import cookies from 'next-cookies'
 
-export default function MIOReport({ profile, assessment, report, token }) {
+export default function MIOReport({ profile, assessment, report }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [openOD, setOpenOD] = useState(true)
     const [openSCR, setOpenSCR] = useState(false)
@@ -86,28 +86,21 @@ export default function MIOReport({ profile, assessment, report, token }) {
 
     const pages = [
         {
-            name: 'My Child', href: {
-                pathname: '/my_child/',
-                query: { token: token }
-            }, current: false
+            name: 'My Child', href: '/my_child/', current: false
         },
         {
             name: assessment.title + ' Report', href: '#', current: true
         },
     ]
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     return (
         <>
             <MetaLayout title="MIO Assement Reports" description="MIO Assement Reports" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="MIO Report" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="MIO Report" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -599,10 +592,10 @@ export default function MIOReport({ profile, assessment, report, token }) {
                                             }
                                             {
                                                 openSCR ?
-                                                    <div className="bg-white rounded-md shadow h-auto p-4">
+                                                    <div className="bg-white rounded-md shadow h-auto px-4 pt-4 pb-px">
                                                         {
                                                             report.spread_characteristics.expert.map((e) => (
-                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4">
+                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4 mb-4">
                                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                                         <div className="text-sm font-medium ">{e.key}</div>
                                                                         <div className="text-xs mt-2 text-justify">{e.info}</div>
@@ -629,10 +622,10 @@ export default function MIOReport({ profile, assessment, report, token }) {
                                                         }
                                                         {
                                                             report.spread_characteristics.advanced.map((e) => (
-                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4">
+                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4 mb-4">
                                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                                         <div className="text-sm font-medium ">{e.key}</div>
-                                                                        <div className="text-xs mt-2">{e.info}</div>
+                                                                        <div className="text-xs mt-2 text-justify">{e.info}</div>
                                                                     </div>
                                                                     <div className="flex w-full self-center">
                                                                         <div className="w-1/4 h-4 rounded-l-full self-center" style={{ background: '#29B6FF' }}></div>
@@ -656,10 +649,10 @@ export default function MIOReport({ profile, assessment, report, token }) {
                                                         }
                                                         {
                                                             report.spread_characteristics.learner.map((e) => (
-                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4">
+                                                                <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-2 shadow p-4 mb-4">
                                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                                         <div className="text-sm font-medium ">{e.key}</div>
-                                                                        <div className="text-xs mt-2">{e.info}</div>
+                                                                        <div className="text-xs mt-2 text-justify">{e.info}</div>
                                                                     </div>
                                                                     <div className="flex w-full self-center">
                                                                         <div className="w-1/4 h-4 rounded-l-full self-center" style={{ background: '#29B6FF' }}></div>
@@ -771,7 +764,7 @@ export default function MIOReport({ profile, assessment, report, token }) {
 // }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

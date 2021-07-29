@@ -22,6 +22,8 @@ import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
+import cookies from 'next-cookies'
+
 function getVideoId(url) {
     var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
     var match = url.match(regExp);
@@ -34,21 +36,14 @@ function getVideoId(url) {
 export default function CareerVideoDetail({ profile, video, recommended, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [videoStatus, setVideoStatus] = useState([])
 
     const pages = [
         {
-            name: 'Career Explorer', href: {
-                pathname: '/career_explorer/',
-                query: { token: token }
-            }, current: false
+            name: 'Career Explorer', href: '/career_explorer/', current: false
         },
         {
-            name: 'Career Videos', href: {
-                pathname: '/career_explorer/career_video',
-                query: { token: token }
-            }, current: false
+            name: 'Career Videos', href: '/career_explorer/career_video', current: false
         },
         {
             name: 'Career Videos Details', href: '#', current: true
@@ -161,20 +156,16 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
 
         getVideoStatus();
     }
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     return (
         <>
 
             <MetaLayout title={video.title} description={video.description} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={video.title} authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={video.title} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -252,10 +243,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                 </h2>
                                                 {recommended.map((r) => (
                                                     <Link
-                                                        href={{
-                                                            pathname: '/career_explorer/career_video/' + r.id,
-                                                            query: { token: token }
-                                                        }}>
+                                                        href={'/career_explorer/career_video/' + r.id}>
                                                         <a>
                                                             <div className="flex my-4">
                                                                 <div className="mr-4 mt-2 flex-shrink-0 self-start">
@@ -291,7 +279,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
 // }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {
@@ -300,7 +288,6 @@ export async function getServerSideProps(context) {
             }
         }
     }
-
     const videoClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
         cache: new InMemoryCache(),

@@ -17,7 +17,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken }) => {
+const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
     // console.log(profile.profile_image);
     const router = useRouter()
     return (
@@ -92,7 +92,6 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                 <Link
                                                     href={{
                                                         pathname: '/profile',
-                                                        query: { token: authToken }
                                                     }}>
                                                     <a
                                                         className={classNames(
@@ -139,7 +138,6 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                 <Link
                                                     href={{
                                                         pathname: '/career_explorer/career_video/bookmark',
-                                                        query: { token: authToken }
                                                     }}
 
                                                 >
@@ -186,7 +184,6 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                 <Link
                                                     href={{
                                                         pathname: '/aboutus',
-                                                        query: { token: authToken }
                                                     }}>
                                                     <a
                                                         className={classNames(
@@ -211,7 +208,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title, authToken, setAuthToken 
                                                 <a
                                                     href="#"
                                                     onClick={(e) => {
-                                                        setAuthToken('')
+                                                        document.cookie = 'token='
                                                         router.push({
                                                             pathname: '/login',
                                                         })

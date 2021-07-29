@@ -14,45 +14,34 @@ import VideoDialog from '../../../../components/dialog/VideoDialog'
 import { SchemeCareerFields } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
+import cookies from 'next-cookies'
 
-
-export default function JobFamily({ profile, jobFamily, careerFields, token }) {
+export default function JobFamily({ profile, jobFamily, careerFields }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [openVideo, setOpenVideo] = useState(false)
 
     const pages = [
         {
-            name: 'Career Explorer', href: {
-                pathname: '/career_explorer/',
-                query: { token: token }
-            }, current: false
+            name: 'Career Explorer', href: '/career_explorer/', current: false
         },
         {
-            name: 'Job Families & Career Fields', href: {
-                pathname: '/career_explorer/job_families',
-                query: { token: token }
-            }, current: false
+            name: 'Job Families & Career Fields', href: '/career_explorer/job_families', current: false
         },
         {
             name: 'Accounting and Finance', href: '#', current: true
         },
     ]
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={jobFamily.name} authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={jobFamily.name} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -89,10 +78,7 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
                                                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-4 lg:grid-cols-4">
                                                     {careerFields.map((cf) => (
                                                         <Link
-                                                            href={{
-                                                                pathname: '/career_explorer/job_families/' + jobFamily.id + '/career_field/' + cf.id,
-                                                                query: { token: token }
-                                                            }}>
+                                                            href={'/career_explorer/job_families/' + jobFamily.id + '/career_field/' + cf.id}>
                                                             <a>
                                                                 <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: getColor() }}>
                                                                     <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
@@ -117,7 +103,7 @@ export default function JobFamily({ profile, jobFamily, careerFields, token }) {
 
                                             <div className=" bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
-                                                    University Video
+                                                    Career Video
                                                 </h2>
                                                 <a href="#" onClick={(event) => { setOpenVideo(true) }}>
                                                     <div className="group relative shadow hover:shadow-xl hover:scale-105 active:scale-100 duration-500">
@@ -190,7 +176,7 @@ const getColor = () => {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {
@@ -233,7 +219,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, jobFamily, careerFields, token }
+        props: { profile, jobFamily, careerFields }
     }
 }
 

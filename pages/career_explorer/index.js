@@ -17,6 +17,8 @@ import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../components/Breadcrumbs'
 import Router from 'next/dist/next-server/server/router'
 
+import cookies from 'next-cookies'
+
 const cards = [
     { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
     { name: 'Course and University', href: '/career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
@@ -25,10 +27,9 @@ const cards = [
     { name: 'Career Videos', href: '/career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
 ]
 
-export default function CareerExplorer({ profile, token }) {
+export default function CareerExplorer({ profile }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const pages = [
         {
@@ -36,20 +37,15 @@ export default function CareerExplorer({ profile, token }) {
         },
     ]
 
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
-
     return (
         <>
 
             <MetaLayout title="Career Explorer" description="Career Explorer" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
-                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -75,10 +71,7 @@ export default function CareerExplorer({ profile, token }) {
                                                     </div>
                                                     <div className="absolute p-5 bottom-0 right-0">
                                                         <Link
-                                                            href={{
-                                                                pathname: card.href,
-                                                                query: { token: token },
-                                                            }}>
+                                                            href={card.href}>
                                                             <a>
                                                                 <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-lyellow">Explore</div>
                                                             </a>
@@ -114,7 +107,7 @@ export async function getInitialProps({ res, user }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {
@@ -137,7 +130,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, token }
+        props: { profile }
     }
 }
 

@@ -16,19 +16,16 @@ import ProgressBar from '../../components/ProgressBar'
 import { Fragment } from 'react'
 import MetaLayout from '../../components/MetaLayout'
 import styles from '/styles/Signup.module.css'
+import cookies from 'next-cookies'
 
 export default function EditChildDetails({ profile, grades, token }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [selectedGrade, setSelectedGrade] = useState(grades.find(g => g.grade == profile.child_details.grade))
     const [selectedStream, setSelectedStream] = useState(selectedGrade.streams.length == 0 ? {} : selectedGrade.streams[0])
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
+
     const genderList = [
         {
             id: 1,
@@ -51,7 +48,7 @@ export default function EditChildDetails({ profile, grades, token }) {
             uri: Constants.baseUrl + "/api/user",
             cache: new InMemoryCache(),
             headers: {
-                Authorization: "Bearer " + authToken,
+                Authorization: "Bearer " + token,
             },
         });
         await mutateGraph(client,
@@ -83,11 +80,11 @@ export default function EditChildDetails({ profile, grades, token }) {
             <MetaLayout title="Edit Child Details" description="Edit Child Details" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
 
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Profile / Edit Child Details" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Profile / Edit Child Details" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -293,7 +290,7 @@ export default function EditChildDetails({ profile, grades, token }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

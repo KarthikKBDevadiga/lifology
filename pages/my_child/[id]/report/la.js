@@ -19,11 +19,11 @@ import { useKeenSlider } from 'keen-slider/react'
 import ReactCardCarousel from 'react-card-carousel';
 import { SchemeGetLSReport } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
+import cookies from 'next-cookies'
 
-export default function VAKReport({ profile, assessment, report, token }) {
+export default function VAKReport({ profile, assessment, report }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [sliderRef, slider] = useKeenSlider({
         initial: 0,
@@ -35,29 +35,22 @@ export default function VAKReport({ profile, assessment, report, token }) {
 
     const pages = [
         {
-            name: 'My Child', href: {
-                pathname: '/my_child/',
-                query: { token: token }
-            }, current: false
+            name: 'My Child', href: '/my_child/', current: false
         },
         {
             name: assessment.title + ' Report', href: '#', current: true
         },
     ]
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     var carousel;
     return (
         <>
             <MetaLayout title="Learning Accelerator Report" description="Learning Accelerator Report" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Learning Accelerator Report" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Learning Accelerator Report" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -198,7 +191,7 @@ export default function VAKReport({ profile, assessment, report, token }) {
 // }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

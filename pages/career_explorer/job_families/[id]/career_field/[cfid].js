@@ -23,11 +23,11 @@ import { useKeenSlider } from 'keen-slider/react'
 import Expand from 'react-expand-animated';
 import Breadcrumbs from '../../../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
+import cookies from 'next-cookies'
 
-export default function CareerFields({ profile, jobFamily, careerField, universities, dashboard, token }) {
+export default function CareerFields({ profile, jobFamily, careerField, universities, dashboard }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [openVideo, setOpenVideo] = useState(false)
 
     const [openStudyTopic, setOpenStudyTopic] = useState(false)
@@ -111,40 +111,27 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
 
     const pages = [
         {
-            name: 'Career Explorer', href: {
-                pathname: '/career_explorer/',
-                query: { token: token }
-            }, current: false
+            name: 'Career Explorer', href: '/career_explorer/', current: false
         },
         {
-            name: 'Job Families & Career Fields', href: {
-                pathname: '/career_explorer/job_families',
-                query: { token: token }
-            }, current: false
+            name: 'Job Families & Career Fields', href: '/career_explorer/job_families', current: false
         },
         {
-            name: jobFamily.name, href: {
-                pathname: '/career_explorer/job_families/' + careerField.id,
-                query: { token: token }
-            }, current: false
+            name: jobFamily.name, href: '/career_explorer/job_families/' + careerField.id, current: false
         },
         {
             name: careerField.name, href: '#', current: true
         },
     ]
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     return (
         <>
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={careerField.name} authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={careerField.name} />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -188,7 +175,6 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                                     </h2>
                                                     <Link href={{
                                                         pathname: '/career_explorer/course_and_university',
-                                                        query: { token: token }
                                                     }}>
                                                         <a>
                                                             <div className="text-lblue text-right text-base">View All</div>
@@ -203,7 +189,6 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                                             <div className="keen-slider__slide self-center">
                                                                 <Link href={{
                                                                     pathname: '/career_explorer/course_and_university/' + card.id,
-                                                                    query: { token: token }
                                                                 }}>
                                                                     <a>
                                                                         <div className="rounded bg-gray shadow p-2 mx-2 m-4 hover:shadow-lg hover:scale-105 duration-500">
@@ -220,7 +205,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                             </div>
 
 
-                                            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
+                                            {/* <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
 
                                                 <h2 className="text-lg font-medium text-gray-900 m-4 ">
                                                     Recommended Articles
@@ -240,7 +225,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                                         }
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
 
                                             <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
 
@@ -424,7 +409,7 @@ const getColor = () => {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {
@@ -446,7 +431,6 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {}
         })
-    console.log(dashboard)
     const careerClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
         cache: new InMemoryCache(),
@@ -493,7 +477,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { profile, jobFamily, careerField, universities, dashboard, token }
+        props: { profile, jobFamily, careerField, universities, dashboard }
     }
 }
 

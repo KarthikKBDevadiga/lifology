@@ -40,7 +40,7 @@ export default function Login({ cs }) {
 
     const [selectedCountry, setSelectedCountry] = useState(cs[104])
     useEffect(() => {
-        setAuthToken("")
+        document.cookie = 'token='
     }, [])
     useEffect(() => {
         setTimeout(() => {
@@ -109,9 +109,9 @@ export default function Login({ cs }) {
                     setSuccessDialog(true)
                     setTimeout(() => {
                         setSuccessDialog(false)
+                        document.cookie = 'token=' + res.otpVerification.auth_token
                         router.push({
                             pathname: 'career_explorer',
-                            query: { token: res.otpVerification.auth_token },
                         })
                     }, 1000)
                     setAuthToken(res.otpVerification.auth_token);

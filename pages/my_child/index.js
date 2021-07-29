@@ -15,6 +15,7 @@ import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import { SchemeGetAssessments } from '/helpers/GraphQLSchemes'
 import Breadcrumbs from '../../components/Breadcrumbs'
+import cookies from 'next-cookies'
 
 const cards = [
     { title: 'Face', subtitle: 'Core Behaviour', href: '#', bg: '/img/my_child/face.png' },
@@ -35,19 +36,15 @@ const pages = [
 export default function MyChild({ profile, assessments, isCF, isLS, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
+
     return (
         <>
             <MetaLayout title="My Child" description="My Child" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
-                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="My Child" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="My Child" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -62,10 +59,9 @@ export default function MyChild({ profile, assessments, isCF, isLS, token }) {
                                             {assessments.map((card) => (
                                                 ((card.id == 8 && !isCF) || (card.id == 9 && !isLS)) ? <></> :
                                                     <Link
-                                                        href={{
-                                                            pathname: card.assessment_type == 3 ? card.id == 9 ? '/my_child/' + card.id + '/report/la' : '/my_child/' + card.id + '/report/figment' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase(),
-                                                            query: { token: token }
-                                                        }}>
+                                                        href={
+                                                            card.assessment_type == 3 ? card.id == 9 ? '/my_child/' + card.id + '/report/la' : '/my_child/' + card.id + '/report/figment' : card.total_questions > 0 ? "/my_child/" + card.id + '/assessment_instructions' : "/my_child/" + card.id + '/report/' + card.title.toLowerCase()
+                                                        }>
                                                         <a>
                                                             <div key={card.name} className="group relative bg-white overflow-hidden shadow hover:shadow-xl hover:scale-105 active:scale-100 active:shadow-sm rounded bg-cover duration-500 "
                                                                 style={{ height: '200px', }}
@@ -105,7 +101,7 @@ export default function MyChild({ profile, assessments, isCF, isLS, token }) {
 
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

@@ -18,6 +18,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
+import cookies from 'next-cookies'
 
 export default function CareReport({ profile, assessment, report, token }) {
     const router = useRouter()
@@ -155,7 +156,7 @@ export default function CareReport({ profile, assessment, report, token }) {
 // }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

@@ -12,7 +12,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => {
+const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen }) => {
     const router = useRouter()
     return (
         <>
@@ -98,7 +98,6 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                     <Link
                                         href={{
                                             pathname: '/my_child',
-                                            query: { token: authToken }
                                         }}>
                                         <a
                                             className={classNames(
@@ -139,7 +138,6 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                     <Link
                                         href={{
                                             pathname: '/career_explorer',
-                                            query: { token: authToken }
                                         }}>
                                         <a
                                             className={classNames(
@@ -223,7 +221,6 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                 <Link
                                     href={{
                                         pathname: '/my_child',
-                                        query: { token: authToken }
                                     }}>
                                     <a
                                         className={classNames(
@@ -260,7 +257,6 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, authToken }) => 
                                 <Link
                                     href={{
                                         pathname: '/career_explorer',
-                                        query: { token: authToken }
                                     }}>
                                     <a
                                         className={classNames(

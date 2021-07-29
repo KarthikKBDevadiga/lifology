@@ -19,10 +19,11 @@ import { mutateGraph } from '../../../helpers/GraphQLCaller'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
+import cookies from 'next-cookies'
+
 export default function University({ profile, university, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [searchText, setSearchText] = useState("")
     const [videoStatus, setVideoStatus] = useState([])
 
@@ -40,7 +41,6 @@ export default function University({ profile, university, token }) {
                 video_id: Number(university.id)
             }, SchemeVideoStatus)
             .then((res) => {
-                console.log("like status", res);
                 setVideoStatus(res.checkVideoStatus)
             }).catch((networkErr) => {
                 console.log(networkErr)
@@ -52,7 +52,6 @@ export default function University({ profile, university, token }) {
     }, [])
 
     const addToBookmark = (id) => {
-        console.log(id)
         mutateGraph(client,
             {
                 video_id2: 17593, bookmark_type: "FAVORITE"
@@ -69,34 +68,24 @@ export default function University({ profile, university, token }) {
 
     const pages = [
         {
-            name: 'Career Explorer', href: {
-                pathname: '/career_explorer/',
-                query: { token: token }
-            }, current: false
+            name: 'Career Explorer', href: '/career_explorer/', current: false
         },
         {
-            name: 'Course & University', href: {
-                pathname: '/career_explorer/course_and_university',
-                query: { token: token }
-            }, current: false
+            name: 'Course & University', href: '/career_explorer/course_and_university', current: false
         },
         {
             name: 'University Details', href: '#', current: true
         },
     ]
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     return (
         <>
             <MetaLayout title={university.name} description={university.description} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={university.name} authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={university.name} />
 
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
@@ -245,13 +234,13 @@ export default function University({ profile, university, token }) {
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                            {/* <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     University Video
                                                 </h2>
                                                 <img className="rounded mt-2" src="/img/test.png" />
-                                            </div>
-                                            <div className="mt-4 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                            </div> */}
+                                            <div className="mt-0 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <div className="flex ">
                                                     <svg
                                                         width="48px"
@@ -352,7 +341,7 @@ export default function University({ profile, university, token }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

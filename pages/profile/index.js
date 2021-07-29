@@ -13,26 +13,23 @@ import HeaderLayout from '/components/HeaderLayout'
 import ProgressBar from '/components/ProgressBar'
 import { Fragment } from 'react'
 import MetaLayout from '/components/MetaLayout'
+import cookies from 'next-cookies'
 
-export default function Profile({ profile, token }) {
+export default function Profile({ profile }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
+
     return (
         <>
             <MetaLayout title="Profile" description="Profile" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
 
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Profile" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Profile" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -44,10 +41,7 @@ export default function Profile({ profile, token }) {
                                     <div className="mt-2 w-12 h-0.5 rounded bg-lblue"></div>
                                 </div>
 
-                                <Link href={{
-                                    pathname: '/profile/edit_personal_details',
-                                    query: { token: token }
-                                }}>
+                                <Link href='/profile/edit_personal_details'>
                                     <a
                                         className="py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none absolute right-0 duration-500">
                                         Edit
@@ -117,10 +111,7 @@ export default function Profile({ profile, token }) {
                                     <label className="text-black block text-base font-medium ">Child Details</label>
                                     <div className="mt-2 w-12 h-0.5 rounded bg-lblue"></div>
                                 </div>
-                                <Link href={{
-                                    pathname: '/profile/edit_child_details',
-                                    query: { token: token }
-                                }}>
+                                <Link href='/profile/edit_child_details'>
                                     <a
                                         className="py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none absolute right-0 duration-500">
                                         Edit
@@ -162,7 +153,7 @@ export default function Profile({ profile, token }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

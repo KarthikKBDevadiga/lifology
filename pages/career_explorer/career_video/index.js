@@ -24,7 +24,7 @@ import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
-
+import cookies from 'next-cookies'
 
 const headerSlide = [
     {
@@ -45,11 +45,9 @@ const headerSlide = [
     }
 ]
 
-export default function CareerVideo({ videoCats, profile, token }) {
+export default function CareerVideo({ videoCats, profile }) {
     const router = useRouter()
-    console.log("video cats", videoCats)
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
 
     const [openFilter, setOpenFilter] = useState(false)
 
@@ -141,10 +139,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
 
     const pages = [
         {
-            name: 'Career Explorer', href: {
-                pathname: '/career_explorer/',
-                query: { token: token }
-            }, current: false
+            name: 'Career Explorer', href: '/career_explorer/', current: false
         },
         { name: 'Career Videos', href: '#', current: true },
     ]
@@ -152,20 +147,17 @@ export default function CareerVideo({ videoCats, profile, token }) {
     //const [hide,setHide]=useState(true);
 
     const [searchText, setSearchText] = useState("");
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
+
     return (
         <>
 
             <MetaLayout title="Career Videos" description="Career Videos" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Videos" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Videos" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
@@ -323,10 +315,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                         return "";
                                                     }).map((card) => (
                                                         <div className="keen-slider__slide">
-                                                            <Link href={{
-                                                                pathname: '/career_explorer/career_video/' + card.id,
-                                                                query: { token: token }
-                                                            }} key={card.id}>
+                                                            <Link href={'/career_explorer/career_video/' + card.id} key={card.id}>
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
@@ -472,10 +461,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                         return "";
                                                     }).map((card) => (
                                                         <div className="keen-slider__slide">
-                                                            <Link href={{
-                                                                pathname: '/career_explorer/career_video/' + card.id,
-                                                                query: { token: token }
-                                                            }} key={card.id}>
+                                                            <Link href={'/career_explorer/career_video/' + card.id} key={card.id}>
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
@@ -618,10 +604,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                         return "";
                                                     }).map((card) => (
                                                         <div className="keen-slider__slide">
-                                                            <Link href={{
-                                                                pathname: '/career_explorer/career_video/' + card.id,
-                                                                query: { token: token }
-                                                            }} key={card.id}>
+                                                            <Link href={'/career_explorer/career_video/' + card.id} key={card.id}>
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
@@ -764,10 +747,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                                         return "";
                                                     }).map((card) => (
                                                         <div className="keen-slider__slide">
-                                                            <Link href={{
-                                                                pathname: '/career_explorer/career_video/' + card.id,
-                                                                query: { token: token }
-                                                            }} key={card.id}>
+                                                            <Link href={'/career_explorer/career_video/' + card.id} key={card.id}>
                                                                 <a>
                                                                     <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                         <div>
@@ -864,6 +844,7 @@ export default function CareerVideo({ videoCats, profile, token }) {
                                         </div>
                                     </div>}
 
+                                    <div className="h-4"></div>
                                 </div>
                             </div>
 
@@ -980,7 +961,7 @@ const ButtonGroup = ({ next, previous }) => {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {
@@ -1016,7 +997,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { videoCats, profile, token }
+        props: { videoCats, profile }
     }
 }
 

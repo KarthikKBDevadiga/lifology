@@ -15,6 +15,7 @@
     "graphql": "^15.5.1",
     "keen-slider": "^5.5.1",
     "next": "latest",
+    "next-cookies": "^2.0.3",
     "next-fonts": "^1.5.1",
     "nextjs-progressbar": "^0.0.11",
     "react": "^17.0.2",

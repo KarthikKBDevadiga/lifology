@@ -23,14 +23,13 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import { useRouter } from 'next/router'
 
-
+import cookies from 'next-cookies'
 
 
 
 export default function CareerVideo({ token, profile }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
     const [watchLaterVideo, setWatchLaterVideo] = useState([])
 
     const client = new ApolloClient({
@@ -76,20 +75,16 @@ export default function CareerVideo({ token, profile }) {
         getWatchLaterVideos();
     }
 
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     return (
         <>
 
             <MetaLayout title="Career Videos" description="Career Videos" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos / Watch Later" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos / Watch Later" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <div class="grid grid-cols-1 m-5 p-5 rounded shadow gap-4 bg-white">
@@ -98,10 +93,7 @@ export default function CareerVideo({ token, profile }) {
                             {watchLaterVideo.videosWatchLater != undefined &&
                                 watchLaterVideo.videosWatchLater.map((video, index) => (
                                     <div className="flex">
-                                        <Link href={{
-                                            pathname: '/career_explorer/career_video/' + video.id,
-                                            query: { token: token }
-                                        }}>
+                                        <Link href={'/career_explorer/career_video/' + video.id}>
                                             <div className="flex my-4 cursor-pointer " >
                                                 <div className="mr-4 mt-2 flex-shrink-0 self-start">
                                                     <img className="w-36 rounded object-cover" src={video.thumbnail} />
@@ -133,7 +125,8 @@ export default function CareerVideo({ token, profile }) {
 
 
 export async function getServerSideProps(context) {
-    const { token } = context.query
+
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

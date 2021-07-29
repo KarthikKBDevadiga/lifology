@@ -19,13 +19,11 @@ import "react-multi-carousel/lib/styles.css";
 import classNames from '/helpers/classNames'
 import { SchemeGetFigmentReport } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
+import cookies from 'next-cookies'
 
-
-export default function GreenZone({ profile, report, token }) {
+export default function GreenZone({ profile, report }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-
 
     const [openGreen, setGreenOpen] = useState(false)
     const [openBlue, setBlueOpen] = useState(false)
@@ -35,28 +33,21 @@ export default function GreenZone({ profile, report, token }) {
     const [index, setIndex] = useState(1)
     const pages = [
         {
-            name: 'My Child', href: {
-                pathname: '/my_child/',
-                query: { token: token }
-            }, current: false
+            name: 'My Child', href: '/my_child/', current: false
         },
         {
             name: 'Figment Report', href: '#', current: true
         },
     ]
-    useEffect(() => {
-        if (authToken == "")
-            router.push('/login')
-    }, [])
     return (
         <>
             <MetaLayout title="Figment Report" description="Figment Report" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Fitment Report" authToken={token} setAuthToken={setAuthToken} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Fitment Report" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -348,7 +339,7 @@ export default function GreenZone({ profile, report, token }) {
 // }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {
