@@ -328,8 +328,8 @@ query universityDetails($id: Int!){
 `;
 
 export const SchemeGetUniversityPerPage = gql`
-query allUniversity($limit:Int!, $page:Int!){
-  allUniversity(lang_id:1,filter:{count:true,limit:$limit,page:$page}){
+query allUniversity($limit:Int!, $page:Int!, $country:String!, $state:String!, $city:String!){
+  allUniversity(lang_id:1,filter:{count:true,limit:$limit,page:$page, country:$country, state:$state, city:$city}){
     count
     title
     university{

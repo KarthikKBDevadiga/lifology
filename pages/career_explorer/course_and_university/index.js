@@ -36,16 +36,16 @@ import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
 
 const pageItemCount = 32
-export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, state, city }) {
+export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, states, cities, countryFilter, stateFilter, cityFilter }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
     const [openFilter, setOpenFilter] = useState(false)
     const [searchText, setSearchText] = useState("")
 
-    const [selectedCountry, setSelectedCountry] = useState({})
-    const [selectedState, setSelectedState] = useState({})
-    const [selectedCity, setSelectedCity] = useState({})
+    const [selectedCountry, setSelectedCountry] = useState(countryFilter == '' ? {} : countries.find(c => c.country == countryFilter))
+    const [selectedState, setSelectedState] = useState(stateFilter == '' ? {} : states.find(s => s.state == stateFilter))
+    const [selectedCity, setSelectedCity] = useState(cityFilter == '' ? {} : cities.find(c => c.city == cityFilter))
     useEffect(() => {
         localStorage.setItem("country", selectedCountry.country)
         const value = localStorage.getItem("country")
@@ -64,6 +64,44 @@ export default function CourceAndUniversity({ profile, countries, universities, 
             name: 'Course & University', href: '#', current: true
         },
     ]
+    const query = {}
+    if (countryFilter != null && countryFilter != "")
+        query.country = countryFilter
+    if (stateFilter != null && stateFilter != "")
+        query.state = stateFilter
+    if (cityFilter != null && cityFilter != "")
+        query.city = cityFilter
+
+    const applyFilter = (event) => {
+        console.log('apply filter' + selectedCountry.country + ' ' + selectedState.state + ' ' + selectedCity.city)
+
+        const q = {}
+        if (selectedCountry.country != null)
+            q.country = selectedCountry.country
+        if (selectedState.state != null)
+            q.state = selectedState.state
+        if (selectedCity.city != null)
+            q.city = selectedCity.city
+        router.replace(
+            {
+                pathname: '/career_explorer/course_and_university',
+                query: q,
+            }
+        )
+        setOpenFilter(false)
+    }
+
+    const clearFilter = (event) => {
+        setSelectedCountry({})
+        setSelectedState({})
+        setSelectedCity({})
+        router.replace(
+            {
+                pathname: '/career_explorer/course_and_university',
+            }
+        )
+        setOpenFilter(false)
+    }
 
     return (
         <>
@@ -106,40 +144,9 @@ export default function CourceAndUniversity({ profile, countries, universities, 
 
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
 
-                                        <div className=" flex flex-wrap content-start ...">
-                                            <div className="font-medium text-xl ">Explore Lists of all Universities</div>
-                                            <div>
-                                                <div className="flex absolute rounded bg-lgrey focus-within:text-gray-600 " style={{ marginLeft: "20rem", position: "sticky" }}>
-                                                    <div className="p-2 items-center pointer-events-none" aria-hidden="true">
-                                                        <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                                                    </div>
-                                                    <input
-                                                        id="search_field"
-                                                        name="search_field"
-                                                        style={{ width: '360px' }}
-                                                        className="block h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
-                                                        placeholder="Search University"
-                                                        type="search"
-                                                        onChange={(e) => setSearchText(e.target.value)}
-                                                    />
-                                                </div>
-                                            </div>
 
-                                            {/* 
-                                                         <div>
-                                                <button className=" flex p-2 w-20 absolute left-2 right-8 items-center bg-lblue rounded sm:text-sm text-white" style={{ marginLeft: "0.5rem", position: "sticky" }} aria-hidden="true"
-                                                    onClick={(event) => {
-                                                        setOpenFilter(true)
-                                                    }}>
-                                                    <div>Filter</div>
-                                                    <img className="ml-2" src="/img/filter-icon.png" />
-                                                </button> 
-                                                 </div>
-                                                */}
 
-                                        </div>
-
-                                        {/* <div className="sm:flex h-full w-full">
+                                        <div className="sm:flex h-full w-full">
                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8" >
                                                 <div className="self-center font-medium text-base w-full">
                                                     <h2 className="text-xl ">Explore Lists of all Universities</h2>
@@ -173,7 +180,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div> */}
+                                        </div>
 
                                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mt-6">
                                             {universities.filter((val) => {
@@ -190,7 +197,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                 <Link href={'/career_explorer/course_and_university/' + u.id}>
                                                     <a>
                                                         <div className="h-full bg-white overflow-hidden shadow rounded p-4 hover:shadow-xl duration-500">
-                                                            <img className="rounded-2xl w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
+                                                            <img className="w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
                                                             <div className="top-0 mt-4 text-center">
                                                                 <div className="text-sm font-bold">{u.name}</div>
                                                                 <div className="text-xs mt-2">{u.state}, {u.country}</div>
@@ -215,7 +222,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                             <div className="flex-1 flex justify-between sm:justify-end mt-4">
                                                 {
                                                     previousPage >= 1 ? <Link href={{
-                                                        pathname: '/career_explorer/course_and_university/test',
+                                                        pathname: '/career_explorer/course_and_university',
                                                         query: {
                                                             page: previousPage,
                                                         }
@@ -229,13 +236,13 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                 }
                                                 {
                                                     nextPage <= totalPages ? <Link href={{
-                                                        pathname: '/career_explorer/course_and_university/test',
+                                                        pathname: '/career_explorer/course_and_university',
                                                         query: {
+                                                            ...query,
                                                             page: nextPage,
                                                         }
                                                     }}>
                                                         <a
-                                                            href="#"
                                                             className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                                                         >
                                                             Next
@@ -479,8 +486,8 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                                     className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                                                                 >
                                                                     {
-                                                                        state.length > 0 ?
-                                                                            state.map((state) => (
+                                                                        states.length > 0 ?
+                                                                            states.map((state) => (
                                                                                 <Listbox.Option
                                                                                     key={state.state}
                                                                                     className={({ active }) =>
@@ -545,8 +552,8 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                                     className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                                                                 >
                                                                     {
-                                                                        city.length > 0 ?
-                                                                            city.map((city) => (
+                                                                        cities.length > 0 ?
+                                                                            cities.map((city) => (
                                                                                 <Listbox.Option
                                                                                     key={city.city}
                                                                                     className={({ active }) =>
@@ -594,14 +601,14 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                     <button
                                         type="button"
                                         className="flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-700 hover:text-white focus:outline-none border border-indigo-700 cursor-pointer duration-500"
-                                        onClick={() => setOpenFilter(false)}
+                                        onClick={clearFilter}
                                     >
                                         Clear
                                     </button>
                                     <button
                                         type="button"
                                         className="ml-4 flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
-                                        onClick={() => setOpenFilter(false)}
+                                        onClick={applyFilter}
                                     >
                                         Apply
                                     </button>
@@ -617,7 +624,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
 
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
-    const { page = 1 } = context.query
+    const { page = 1, country = "", state = "", city = "" } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -639,7 +646,15 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return [];
         })
-    const universitiesData = await queryGraph(careerClient, { limit: pageItemCount, page: parseInt(page) }, SchemeGetUniversityPerPage)
+    const universitiesData = await queryGraph(careerClient,
+        {
+            limit: pageItemCount,
+            page: parseInt(page),
+            country: country,
+            state: state,
+            city: city
+        }
+        , SchemeGetUniversityPerPage)
         .then((res) => {
 
             return res.allUniversity[0]
@@ -649,14 +664,14 @@ export async function getServerSideProps(context) {
     const universities = universitiesData.university
     const universitiesCount = universitiesData.count
 
-    const state = await queryGraph(careerClient, {}, SchemeGetUniversityState)
+    const states = await queryGraph(careerClient, {}, SchemeGetUniversityState)
         .then((res) => {
             return res.universityState
         }).catch((networkErr) => {
             return []
         })
 
-    const city = await queryGraph(careerClient, {}, SchemeGetUniversityCity)
+    const cities = await queryGraph(careerClient, {}, SchemeGetUniversityCity)
         .then((res) => {
             return res.universityCity
         }).catch((networkErr) => {
@@ -678,7 +693,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { profile, countries, universities, universitiesCount, page, state, city }
+        props: { profile, countries, universities, universitiesCount, page, states, cities, countryFilter: country, stateFilter: state, cityFilter: city }
     }
 }
 
