@@ -210,6 +210,8 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                             className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
                                                             placeholder="Search University"
                                                             type="search"
+                                                            onChange={(e) => setSearchText(e.target.value)}
+
                                                         />
 
                                                     </div>

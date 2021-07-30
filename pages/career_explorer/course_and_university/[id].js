@@ -84,7 +84,7 @@ export default function University({ profile, university, token }) {
                             <div className="max-w-6xl mx-auto mt-4">
                                 <div className="flex flex-col mt-2">
 
-                                    <div className="max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+                                    <div className="w-full max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
                                         <div className="lg:col-start-1 lg:col-span-2">
                                             <div className="bg-white align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg p-4">
                                                 <div className="sm:flex h-full w-full">
