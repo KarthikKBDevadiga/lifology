@@ -79,7 +79,6 @@ export default function Bookmarks({ token, profile, bookmarks }) {
                                 universities.map(university => {
                                     return (
 
-
                                         <div
                                             className={
                                                 classNames(
@@ -88,13 +87,17 @@ export default function Bookmarks({ token, profile, bookmarks }) {
                                                 )
                                             }
                                         >
-                                            <div className="flex">
-                                                <div className="flex-shrink-0 m-4 self-center">
-                                                    <img className="object-contain " src={Constants.baseUrlImage + '/' + university.logo} style={{ maxHeight: '12rem', maxWidth: '12rem' }} />
-                                                </div>
-                                                <span className="font-medium block truncate text-lg self-center">{university.name}</span>
-                                            </div>
+                                            <Link href={'/career_explorer/course_and_university/' + university.id}>
+                                                <a>
+                                                    <div className="flex">
+                                                        <div className="flex-shrink-0 m-4 self-center">
+                                                            <img className="object-contain " src={Constants.baseUrlImage + '/' + university.logo} style={{ maxHeight: '12rem', maxWidth: '12rem' }} />
+                                                        </div>
+                                                        <span className="font-medium block truncate text-lg self-center">{university.name}</span>
+                                                    </div>
 
+                                                </a>
+                                            </Link>
                                             <span className="absolute inset-y-0 right-0 flex items-center pr-4 ">
                                                 <div className="hover:scale-110 p-1 rounded-full duration-500"
                                                     onClick={(event) => removeBookmark(university.id)}>
