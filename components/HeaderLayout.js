@@ -112,10 +112,10 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                 </Link>
                                             )}
                                         </Menu.Item>
-                                        {/* <Menu.Item>
+                                        <Menu.Item>
                                             {({ active }) => (
                                                 <Link
-                                                    href="#">
+                                                    href='/career_explorer/course_and_university/bookmarks'>
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
@@ -132,7 +132,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     </a>
                                                 </Link>
                                             )}
-                                        </Menu.Item> */}
+                                        </Menu.Item>
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <Link

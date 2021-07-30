@@ -30,26 +30,36 @@ import MetaLayout from '/components/MetaLayout'
 import Link from 'next/link'
 import classNames from '/helpers/classNames'
 import Breadcrumbs from '../../../components/Breadcrumbs'
-import { SchemeGetUniversityPerPage } from '../../../helpers/GraphQLSchemes'
+import { SchemeAllCareerPools, SchemeCareerFields, SchemeGetCountryState, SchemeGetUniversityPerPage } from '../../../helpers/GraphQLSchemes'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
 
 const pageItemCount = 32
-export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, states, cities, countryFilter, stateFilter, cityFilter }) {
+export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, countryFilter, stateFilter, poolIdFilter, fieldIdFilter, rankingFilter, careerPools, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
-
+    const [open, setOpen] = useState(true)
     const [openFilter, setOpenFilter] = useState(false)
     const [searchText, setSearchText] = useState("")
 
-    const [selectedCountry, setSelectedCountry] = useState(countryFilter == '' ? {} : countries.find(c => c.country == countryFilter))
-    const [selectedState, setSelectedState] = useState(stateFilter == '' ? {} : states.find(s => s.state == stateFilter))
-    const [selectedCity, setSelectedCity] = useState(cityFilter == '' ? {} : cities.find(c => c.city == cityFilter))
+    const ranks = [
+        { name: 'Times Rank' },
+        { name: 'QS Rank' },
+        { name: 'Guardian Rank' }
+    ]
+
+    const [selectedRanks, setSelectedRanks] = useState(rankingFilter == "" ? {} : ranks.find(r => r.name == rankingFilter))
+    const [selectedCareerPool, setSelectedCareerPool] = useState({})
+    const [careerFields, setCareerFields] = useState([])
+    const [selectedCareerField, setSelectedCareerField] = useState({})
+    const [selectedCountry, setSelectedCountry] = useState({})
+    const [states, setStates] = useState([])
+    const [selectedState, setSelectedState] = useState({})
     useEffect(() => {
-        localStorage.setItem("country", selectedCountry.country)
-        const value = localStorage.getItem("country")
-    }, [selectedCountry])
+        updateCountry(countryFilter == '' ? {} : countries.find(c => c.country == countryFilter))
+        updateCareerPools(poolIdFilter == -1 ? {} : careerPools.find(cp => cp.id == poolIdFilter))
+    }, [])
 
     const totalPages = Math.ceil(universitiesCount / pageItemCount)
 
@@ -69,19 +79,26 @@ export default function CourceAndUniversity({ profile, countries, universities, 
         query.country = countryFilter
     if (stateFilter != null && stateFilter != "")
         query.state = stateFilter
-    if (cityFilter != null && cityFilter != "")
-        query.city = cityFilter
+    if (poolIdFilter != null && poolIdFilter != -1)
+        query.pool_id = poolIdFilter
+    if (fieldIdFilter != null && fieldIdFilter != -1)
+        query.field_id = fieldIdFilter
+    if (rankingFilter != null && rankingFilter != "")
+        query.ranking = rankingFilter
 
     const applyFilter = (event) => {
-        console.log('apply filter' + selectedCountry.country + ' ' + selectedState.state + ' ' + selectedCity.city)
 
         const q = {}
         if (selectedCountry.country != null)
             q.country = selectedCountry.country
         if (selectedState.state != null)
             q.state = selectedState.state
-        if (selectedCity.city != null)
-            q.city = selectedCity.city
+        if (selectedCareerPool.id != null)
+            q.pool_id = selectedCareerPool.id
+        if (selectedCareerField.id != null)
+            q.field_id = selectedCareerField.id
+        if (selectedRanks.name != null && selectedRanks.name != "")
+            q.ranking = selectedRanks.name
         router.replace(
             {
                 pathname: '/career_explorer/course_and_university',
@@ -94,7 +111,6 @@ export default function CourceAndUniversity({ profile, countries, universities, 
     const clearFilter = (event) => {
         setSelectedCountry({})
         setSelectedState({})
-        setSelectedCity({})
         router.replace(
             {
                 pathname: '/career_explorer/course_and_university',
@@ -105,7 +121,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
 
     return (
         <>
-            <MetaLayout title="Magazine" description="Magazine" />
+            <MetaLayout title="Course & University" description="Course & University" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
@@ -132,15 +148,42 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                         </div>
                                     </div>
 
-                                    {/* <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
+                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
                                         <div className="space-y-6 lg:col-start-1 lg:col-span-2">
                                             <ul className={styles.topicGroup}>
+                                                <li key="all" className={
+                                                    classNames(
+                                                        "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500",
+                                                        (countryFilter == null || countryFilter == '') ? 'bg-lblue text-white' : 'bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white'
+                                                    )}
+                                                    onClick={(event) => {
+                                                        router.push(
+                                                            '/career_explorer/course_and_university'
+                                                        )
+                                                    }}
+                                                >All</li>
                                                 {countries.map((c) => (
-                                                    <li key={c.country} className="float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer bg-lgrey-bg border border-lgrey-border duration-500 hover:bg-lblue hover:text-white">{c.country}</li>
+                                                    <li key={c.country} className=
+                                                        {classNames(
+                                                            "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500",
+                                                            (countryFilter == c.country) ? 'bg-lblue text-white' : 'bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white'
+                                                        )}
+                                                        onClick={(event) => {
+                                                            updateCountry(c)
+                                                            router.replace(
+                                                                {
+                                                                    pathname: '/career_explorer/course_and_university',
+                                                                    query: {
+                                                                        country: c.country,
+                                                                    }
+                                                                }
+                                                            )
+                                                        }}
+                                                    >{c.country}</li>
                                                 ))}
                                             </ul>
                                         </div>
-                                    </div> */}
+                                    </div>
 
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
 
@@ -173,6 +216,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
 
                                                     <button className="flex p-2 w-20 absolute right-0 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
                                                         onClick={(event) => {
+                                                            console.log(selectedCountry)
                                                             setOpenFilter(true)
                                                         }}>
                                                         <div>Filter</div>
@@ -224,6 +268,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                     previousPage >= 1 ? <Link href={{
                                                         pathname: '/career_explorer/course_and_university',
                                                         query: {
+                                                            ...query,
                                                             page: previousPage,
                                                         }
                                                     }}>
@@ -259,6 +304,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                     </main>
                 </div>
             </div>
+
             <Transition.Root show={openFilter} as={Fragment}>
                 <Dialog
                     as="div"
@@ -267,7 +313,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                     open={openFilter}
                     onClose={setOpenFilter}
                 >
-                    <div className="flex items-end  min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -281,7 +327,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                         </Transition.Child>
 
                         {/* This element is to trick the browser into centering the modal contents. */}
-                        <span style={{ width: "100vw", marginRight: "300px" }} className="hidden sm:align-middle sm:inline-block sm:h-screen" aria-hidden="true">
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
                             &#8203;
                         </span>
                         <Transition.Child
@@ -293,311 +339,346 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
-                            <div className="inline-block align-middle  bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-4">
                                 <div className="sm:flex sm:items-start">
                                     <div className="text-center sm:text-left w-full">
-                                        <Dialog.Title as="h3" className="w-full text-lg leading-6 font-medium text-gray-900 text-center">
+                                        <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900 text-center">
                                             Filter
                                         </Dialog.Title>
-                                        <div className="mt-2">
-                                            {/* <ul className={styles.topicGroup}>
-                                                {countries.map((c) => (
-                                                    <li key={c.country} className="float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer bg-lgrey-bg border border-lgrey-border duration-500 hover:bg-lblue hover:text-white">{c.country}</li>
-                                                ))}
-                                            </ul> */}
-                                            <label className="font-medium text-sm">Career Pools</label>
-                                            <Listbox>
-                                                {({ open }) => (
-                                                    <>
-                                                        <div className="mt-1 relative mt-2">
-                                                            <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
-                                                                <span className={classNames(selectedCountry.country ? '' : 'text-gray-400', "block truncate")}>{selectedCountry.country ? selectedCountry.country : 'Career Pools'}</span>
-                                                                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                                </span>
-                                                            </Listbox.Button>
+                                        <div className="font-medium text-base mt-4">Career Pools</div>
+                                        <Listbox value={selectedCareerPool} onChange={updateCareerPools}>
+                                            {({ open }) => (
+                                                <>
+                                                    <div className="mt-1 relative mt-2">
+                                                        <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
+                                                            <span className={classNames(selectedCareerPool.name ? '' : 'text-gray-400', "block truncate")}>{selectedCareerPool.name ? selectedCareerPool.name : 'Career Pools'}</span>
+                                                            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                            </span>
+                                                        </Listbox.Button>
 
-                                                            <Transition className="sticky"
-                                                                show={open}
-                                                                as={Fragment}
-                                                                leave="transition ease-in duration-100"
-                                                                leaveFrom="opacity-100"
-                                                                leaveTo="opacity-0"
+                                                        <Transition className="sticky"
+                                                            show={open}
+                                                            as={Fragment}
+                                                            leave="transition ease-in duration-100"
+                                                            leaveFrom="opacity-100"
+                                                            leaveTo="opacity-0"
+                                                        >
+                                                            <Listbox.Options
+                                                                static
+                                                                className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                                                             >
-                                                                <Listbox.Options
-                                                                    static
-                                                                    className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                                                                >
-
-                                                                </Listbox.Options>
-                                                            </Transition>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </Listbox>
-                                            <label className="font-medium text-sm">Career Fields</label>
-                                            <Listbox>
-                                                {({ open }) => (
-                                                    <>
-                                                        <div className="mt-1 relative mt-2">
-                                                            <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
-                                                                <span className={classNames(selectedCountry.country ? '' : 'text-gray-400', "block truncate")}>{selectedCountry.country ? selectedCountry.country : 'Career Fields'}</span>
-                                                                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                                </span>
-                                                            </Listbox.Button>
-
-                                                            <Transition className="sticky"
-                                                                show={open}
-                                                                as={Fragment}
-                                                                leave="transition ease-in duration-100"
-                                                                leaveFrom="opacity-100"
-                                                                leaveTo="opacity-0"
-                                                            >
-                                                                <Listbox.Options
-                                                                    static
-                                                                    className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                                                                >
-
-                                                                </Listbox.Options>
-                                                            </Transition>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </Listbox>
-                                            <label className="font-medium text-sm">Ranking</label>
-                                            <Listbox >
-                                                {({ open }) => (
-                                                    <>
-                                                        <div className="mt-1 relative mt-2">
-                                                            <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
-                                                                <span className={classNames(selectedCountry.country ? '' : 'text-gray-400', "block truncate")}>{selectedCountry.country ? selectedCountry.country : 'Ranking'}</span>
-                                                                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                                </span>
-                                                            </Listbox.Button>
-
-                                                            <Transition className="sticky"
-                                                                show={open}
-                                                                as={Fragment}
-                                                                leave="transition ease-in duration-100"
-                                                                leaveFrom="opacity-100"
-                                                                leaveTo="opacity-0"
-                                                            >
-                                                                <Listbox.Options
-                                                                    static
-                                                                    className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                                                                >
-
-                                                                </Listbox.Options>
-                                                            </Transition>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </Listbox>
-
-                                            <label className="font-medium text-sm">Countries</label>
-                                            <Listbox value={selectedCountry} onChange={setSelectedCountry}>
-                                                {({ open }) => (
-                                                    <>
-                                                        <div className="mt-1 relative mt-2">
-                                                            <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
-                                                                <span className={classNames(selectedCountry.country ? '' : 'text-gray-400', "block truncate")}>{selectedCountry.country ? selectedCountry.country : 'Country'}</span>
-                                                                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                                </span>
-                                                            </Listbox.Button>
-
-                                                            <Transition className="sticky"
-                                                                show={open}
-                                                                as={Fragment}
-                                                                leave="transition ease-in duration-100"
-                                                                leaveFrom="opacity-100"
-                                                                leaveTo="opacity-0"
-                                                            >
-                                                                <Listbox.Options
-                                                                    static
-                                                                    className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                                                                >
-                                                                    {
-                                                                        countries.length > 0 ?
-                                                                            countries.map((country) => (
-                                                                                <Listbox.Option
-                                                                                    key={country.country}
-                                                                                    className={({ active }) =>
-                                                                                        classNames(
-                                                                                            active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                                                                                            'cursor-default select-none relative py-2 pl-8 pr-4'
-                                                                                        )
-                                                                                    }
-                                                                                    value={country}
-                                                                                >
-                                                                                    {({ selected, active }) => (
-                                                                                        <>
-                                                                                            <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                                                                                {country.country}
-                                                                                            </span>
-
-
-                                                                                        </>
-                                                                                    )}
-                                                                                </Listbox.Option>
-                                                                            )) : <Listbox.Option
-                                                                                key='no_data'
+                                                                {
+                                                                    careerPools.length > 0 ?
+                                                                        careerPools.map((cp) => (
+                                                                            <Listbox.Option
+                                                                                key={cp.name}
                                                                                 className={({ active }) =>
                                                                                     classNames(
                                                                                         active ? 'text-white bg-indigo-600' : 'text-gray-900',
                                                                                         'cursor-default select-none relative py-2 pl-8 pr-4'
                                                                                     )
                                                                                 }
-                                                                                value="No Data">
-                                                                                <span className={classNames('font-normal', 'block truncate')}>
-                                                                                    No Data
-                                                                                </span>
+                                                                                value={cp}
+                                                                            >
+                                                                                {({ selected, active }) => (
+                                                                                    <>
+                                                                                        <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                                            {cp.name}
+                                                                                        </span>
+
+
+                                                                                    </>
+                                                                                )}
                                                                             </Listbox.Option>
-                                                                    }
-                                                                </Listbox.Options>
-                                                            </Transition>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </Listbox>
-                                            <label className="font-medium text-sm">State</label>
-                                            <Listbox value={selectedState} onChange={setSelectedState}>
-                                                {({ open }) => (
-                                                    <>
-                                                        <div className="mt-1 relative mt-2">
-                                                            <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
-                                                                <span className={classNames(selectedState.state ? '' : 'text-gray-400', "block truncate")}>{selectedState.state ? selectedState.state : 'State'}</span>
-                                                                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                                </span>
-                                                            </Listbox.Button>
+                                                                        )) : <Listbox.Option
+                                                                            key='no_data'
+                                                                            className={({ active }) =>
+                                                                                classNames(
+                                                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                                    'cursor-default select-none relative py-2 pl-8 pr-4'
+                                                                                )
+                                                                            }
+                                                                            value="No Data">
+                                                                            <span className={classNames('font-normal', 'block truncate')}>
+                                                                                No Data
+                                                                            </span>
+                                                                        </Listbox.Option>
+                                                                }
+                                                            </Listbox.Options>
+                                                        </Transition>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </Listbox>
+                                        <div className="font-medium text-base mt-4">Career Fields</div>
+                                        <Listbox value={selectedCareerField} onChange={setSelectedCareerField}>
+                                            {({ open }) => (
+                                                <>
+                                                    <div className="mt-1 relative mt-2">
+                                                        <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
+                                                            <span className={classNames(selectedCareerField.name ? '' : 'text-gray-400', "block truncate")}>{selectedCareerField.name ? selectedCareerField.name : 'Career Fields'}</span>
+                                                            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                            </span>
+                                                        </Listbox.Button>
 
-                                                            <Transition className="sticky"
-                                                                show={open}
-                                                                as={Fragment}
-                                                                leave="transition ease-in duration-100"
-                                                                leaveFrom="opacity-100"
-                                                                leaveTo="opacity-0"
+                                                        <Transition className="sticky"
+                                                            show={open}
+                                                            as={Fragment}
+                                                            leave="transition ease-in duration-100"
+                                                            leaveFrom="opacity-100"
+                                                            leaveTo="opacity-0"
+                                                        >
+                                                            <Listbox.Options
+                                                                static
+                                                                className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                                                             >
-                                                                <Listbox.Options
-                                                                    static
-                                                                    className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                                                                >
-                                                                    {
-                                                                        states.length > 0 ?
-                                                                            states.map((state) => (
-                                                                                <Listbox.Option
-                                                                                    key={state.state}
-                                                                                    className={({ active }) =>
-                                                                                        classNames(
-                                                                                            active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                                                                                            'cursor-default select-none relative py-2 pl-8 pr-4'
-                                                                                        )
-                                                                                    }
-                                                                                    value={state}
-                                                                                >
-                                                                                    {({ selected, active }) => (
-                                                                                        <>
-                                                                                            <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                                                                                {state.state}
-                                                                                            </span>
-
-
-                                                                                        </>
-                                                                                    )}
-                                                                                </Listbox.Option>
-                                                                            )) : <Listbox.Option
-                                                                                key='no_data'
+                                                                {
+                                                                    careerFields.length > 0 ?
+                                                                        careerFields.map((cf) => (
+                                                                            <Listbox.Option
+                                                                                key={cf.name}
                                                                                 className={({ active }) =>
                                                                                     classNames(
                                                                                         active ? 'text-white bg-indigo-600' : 'text-gray-900',
                                                                                         'cursor-default select-none relative py-2 pl-8 pr-4'
                                                                                     )
                                                                                 }
-                                                                                value="No Data">
-                                                                                <span className={classNames('font-normal', 'block truncate')}>
-                                                                                    No Data
-                                                                                </span>
+                                                                                value={cf}
+                                                                            >
+                                                                                {({ selected, active }) => (
+                                                                                    <>
+                                                                                        <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                                            {cf.name}
+                                                                                        </span>
+
+
+                                                                                    </>
+                                                                                )}
                                                                             </Listbox.Option>
-                                                                    }
-                                                                </Listbox.Options>
-                                                            </Transition>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </Listbox>
-                                            <label className="font-medium text-sm">City</label>
-                                            <Listbox value={selectedCity} onChange={setSelectedCity}>
-                                                {({ open }) => (
-                                                    <>
-                                                        <div className="mt-1 relative mt-2">
-                                                            <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
-                                                                <span className={classNames(selectedCity.city ? '' : 'text-gray-400', "block truncate")}>{selectedCity.city ? selectedCity.city : 'City'}</span>
-                                                                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                                </span>
-                                                            </Listbox.Button>
+                                                                        )) : <Listbox.Option
+                                                                            key='no_data'
+                                                                            className={({ active }) =>
+                                                                                classNames(
+                                                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                                    'cursor-default select-none relative py-2 pl-8 pr-4'
+                                                                                )
+                                                                            }
+                                                                            value="No Data">
+                                                                            <span className={classNames('font-normal', 'block truncate')}>
+                                                                                No Data
+                                                                            </span>
+                                                                        </Listbox.Option>
+                                                                }
+                                                            </Listbox.Options>
+                                                        </Transition>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </Listbox>
+                                        <div className="font-medium text-base mt-4">Ranking</div>
+                                        <Listbox value={selectedRanks} onChange={setSelectedRanks} >
+                                            {({ open }) => (
+                                                <>
+                                                    <div className="mt-1 relative mt-2">
+                                                        <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
+                                                            <span className={classNames(selectedRanks.name ? '' : 'text-gray-400', "block truncate")}>{selectedRanks.name ? selectedRanks.name : 'Ranking'}</span>
+                                                            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                            </span>
+                                                        </Listbox.Button>
 
-                                                            <Transition className="sticky"
-                                                                show={open}
-                                                                as={Fragment}
-                                                                leave="transition ease-in duration-100"
-                                                                leaveFrom="opacity-100"
-                                                                leaveTo="opacity-0"
+                                                        <Transition className="sticky"
+                                                            show={open}
+                                                            as={Fragment}
+                                                            leave="transition ease-in duration-100"
+                                                            leaveFrom="opacity-100"
+                                                            leaveTo="opacity-0"
+                                                        >
+                                                            <Listbox.Options
+                                                                static
+                                                                className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                                                             >
-                                                                <Listbox.Options
-                                                                    static
-                                                                    className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                                                                >
-                                                                    {
-                                                                        cities.length > 0 ?
-                                                                            cities.map((city) => (
-                                                                                <Listbox.Option
-                                                                                    key={city.city}
-                                                                                    className={({ active }) =>
-                                                                                        classNames(
-                                                                                            active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                                                                                            'cursor-default select-none relative py-2 pl-8 pr-4'
-                                                                                        )
-                                                                                    }
-                                                                                    value={city}
-                                                                                >
-                                                                                    {({ selected, active }) => (
-                                                                                        <>
-                                                                                            <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                                                                                {city.city}
-                                                                                            </span>
-
-
-                                                                                        </>
-                                                                                    )}
-                                                                                </Listbox.Option>
-                                                                            )) : <Listbox.Option
-                                                                                key='no_data'
+                                                                {
+                                                                    ranks.length > 0 ?
+                                                                        ranks.map((r) => (
+                                                                            <Listbox.Option
+                                                                                key={r.name}
                                                                                 className={({ active }) =>
                                                                                     classNames(
                                                                                         active ? 'text-white bg-indigo-600' : 'text-gray-900',
                                                                                         'cursor-default select-none relative py-2 pl-8 pr-4'
                                                                                     )
                                                                                 }
-                                                                                value="No Data">
-                                                                                <span className={classNames('font-normal', 'block truncate')}>
-                                                                                    No Data
-                                                                                </span>
+                                                                                value={r}
+                                                                            >
+                                                                                {({ selected, active }) => (
+                                                                                    <>
+                                                                                        <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                                            {r.name}
+                                                                                        </span>
+
+
+                                                                                    </>
+                                                                                )}
                                                                             </Listbox.Option>
-                                                                    }
-                                                                </Listbox.Options>
-                                                            </Transition>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </Listbox>
-                                        </div>
+                                                                        )) : <Listbox.Option
+                                                                            key='no_data'
+                                                                            className={({ active }) =>
+                                                                                classNames(
+                                                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                                    'cursor-default select-none relative py-2 pl-8 pr-4'
+                                                                                )
+                                                                            }
+                                                                            value="No Data">
+                                                                            <span className={classNames('font-normal', 'block truncate')}>
+                                                                                No Data
+                                                                            </span>
+                                                                        </Listbox.Option>
+                                                                }
+                                                            </Listbox.Options>
+                                                        </Transition>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </Listbox>
+                                        <div className="font-medium text-base mt-4">Countries</div>
+                                        <Listbox value={selectedCountry} onChange={updateCountry}>
+                                            {({ open }) => (
+                                                <>
+                                                    <div className="mt-1 relative mt-2">
+                                                        <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
+                                                            <span className={classNames(selectedCountry.country ? '' : 'text-gray-400', "block truncate")}>{selectedCountry.country ? selectedCountry.country : 'Country'}</span>
+                                                            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                            </span>
+                                                        </Listbox.Button>
+
+                                                        <Transition className="sticky"
+                                                            show={open}
+                                                            as={Fragment}
+                                                            leave="transition ease-in duration-100"
+                                                            leaveFrom="opacity-100"
+                                                            leaveTo="opacity-0"
+                                                        >
+                                                            <Listbox.Options
+                                                                static
+                                                                className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                                                            >
+                                                                {
+                                                                    countries.length > 0 ?
+                                                                        countries.map((country) => (
+                                                                            <Listbox.Option
+                                                                                key={country.country}
+                                                                                className={({ active }) =>
+                                                                                    classNames(
+                                                                                        active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                                        'cursor-default select-none relative py-2 pl-8 pr-4'
+                                                                                    )
+                                                                                }
+                                                                                value={country}
+                                                                            >
+                                                                                {({ selected, active }) => (
+                                                                                    <>
+                                                                                        <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                                            {country.country}
+                                                                                        </span>
+
+
+                                                                                    </>
+                                                                                )}
+                                                                            </Listbox.Option>
+                                                                        )) : <Listbox.Option
+                                                                            key='no_data'
+                                                                            className={({ active }) =>
+                                                                                classNames(
+                                                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                                    'cursor-default select-none relative py-2 pl-8 pr-4'
+                                                                                )
+                                                                            }
+                                                                            value="No Data">
+                                                                            <span className={classNames('font-normal', 'block truncate')}>
+                                                                                No Data
+                                                                            </span>
+                                                                        </Listbox.Option>
+                                                                }
+                                                            </Listbox.Options>
+                                                        </Transition>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </Listbox>
+                                        <div className="font-medium text-base mt-4">State</div>
+                                        <Listbox value={selectedState} onChange={setSelectedState}>
+                                            {({ open }) => (
+                                                <>
+                                                    <div className="mt-1 relative mt-2">
+                                                        <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
+                                                            <span className={classNames(selectedState.state ? '' : 'text-gray-400', "block truncate")}>{selectedState.state ? selectedState.state : 'State'}</span>
+                                                            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                            </span>
+                                                        </Listbox.Button>
+
+                                                        <Transition className="sticky"
+                                                            show={open}
+                                                            as={Fragment}
+                                                            leave="transition ease-in duration-100"
+                                                            leaveFrom="opacity-100"
+                                                            leaveTo="opacity-0"
+                                                        >
+                                                            <Listbox.Options
+                                                                static
+                                                                className="sticky absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                                                            >
+                                                                {
+                                                                    states.length > 0 ?
+                                                                        states.map((state) => (
+                                                                            <Listbox.Option
+                                                                                key={state.state}
+                                                                                className={({ active }) =>
+                                                                                    classNames(
+                                                                                        active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                                        'cursor-default select-none relative py-2 pl-8 pr-4'
+                                                                                    )
+                                                                                }
+                                                                                value={state}
+                                                                            >
+                                                                                {({ selected, active }) => (
+                                                                                    <>
+                                                                                        <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                                            {state.state}
+                                                                                        </span>
+
+
+                                                                                    </>
+                                                                                )}
+                                                                            </Listbox.Option>
+                                                                        )) : <Listbox.Option
+                                                                            key='no_data'
+                                                                            className={({ active }) =>
+                                                                                classNames(
+                                                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                                    'cursor-default select-none relative py-2 pl-8 pr-4'
+                                                                                )
+                                                                            }
+                                                                            value="No Data">
+                                                                            <span className={classNames('font-normal', 'block truncate')}>
+                                                                                No Data
+                                                                            </span>
+                                                                        </Listbox.Option>
+                                                                }
+                                                            </Listbox.Options>
+                                                        </Transition>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </Listbox>
+
                                     </div>
                                 </div>
-                                <div className="mt-5 sm:mt-4 sm:flex">
+                                <div className="mt-4 sm:mt-4 sm:flex">
                                     <button
                                         type="button"
                                         className="flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-700 hover:text-white focus:outline-none border border-indigo-700 cursor-pointer duration-500"
@@ -610,7 +691,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                         className="ml-4 flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
                                         onClick={applyFilter}
                                     >
-                                        Apply
+                                        Filter
                                     </button>
                                 </div>
                             </div>
@@ -620,11 +701,49 @@ export default function CourceAndUniversity({ profile, countries, universities, 
             </Transition.Root>
         </>
     )
+
+    function updateCareerPools(careerPool) {
+        setSelectedCareerPool(careerPool)
+        setSelectedCareerField({})
+        const careerClient = new ApolloClient({
+            uri: Constants.baseUrl + "/api/career",
+            cache: new InMemoryCache(),
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        })
+        queryGraph(careerClient, { pool_id: parseInt(careerPool.id) }, SchemeCareerFields)
+            .then((res) => {
+                setCareerFields(res.careerFields)
+                setSelectedCareerField(fieldIdFilter == -1 ? {} : res.careerFields.find(cf => cf.id == fieldIdFilter))
+            }).catch((networkErr) => {
+                console.log('error')
+            })
+    }
+
+    function updateCountry(country) {
+        setSelectedCountry(country)
+        setSelectedState({})
+        const careerClient = new ApolloClient({
+            uri: Constants.baseUrl + "/api/career",
+            cache: new InMemoryCache(),
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        })
+        queryGraph(careerClient, { country: country.country }, SchemeGetCountryState)
+            .then((res) => {
+                setStates(res.universityState)
+                setSelectedState(stateFilter == '' ? {} : res.universityState.find(s => s.state == stateFilter))
+            }).catch((networkErr) => {
+                console.log('error')
+            })
+    }
 }
 
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
-    const { page = 1, country = "", state = "", city = "" } = context.query
+    const { page = 1, country = "", state = "", pool_id = -1, field_id = -1, ranking = "" } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -640,26 +759,43 @@ export async function getServerSideProps(context) {
             Authorization: "Bearer " + token,
         },
     })
+    const careerPools = await queryGraph(careerClient, {}, SchemeAllCareerPools)
+        .then((res) => {
+            return res.careerPools
+        }).catch((networkErr) => {
+            return [];
+        })
     const countries = await queryGraph(careerClient, {}, SchemeGetUniversityCountry)
         .then((res) => {
             return res.universityCountry
         }).catch((networkErr) => {
             return [];
         })
+    const params = {
+        limit: pageItemCount,
+        page: parseInt(page),
+    }
+    if (country != "")
+        params.country = country
+    if (state != "")
+        params.state = state
+    if (pool_id != -1)
+        params.pool_id = parseInt(pool_id)
+    if (field_id != -1)
+        params.field_id = parseInt(field_id)
+    if (ranking != "")
+        params.ranking = ranking
+
     const universitiesData = await queryGraph(careerClient,
-        {
-            limit: pageItemCount,
-            page: parseInt(page),
-            country: country,
-            state: state,
-            city: city
-        }
+        params
         , SchemeGetUniversityPerPage)
         .then((res) => {
-
             return res.allUniversity[0]
         }).catch((networkErr) => {
-            return []
+            return {
+                university: [],
+                count: 0
+            }
         })
     const universities = universitiesData.university
     const universitiesCount = universitiesData.count
@@ -667,13 +803,6 @@ export async function getServerSideProps(context) {
     const states = await queryGraph(careerClient, {}, SchemeGetUniversityState)
         .then((res) => {
             return res.universityState
-        }).catch((networkErr) => {
-            return []
-        })
-
-    const cities = await queryGraph(careerClient, {}, SchemeGetUniversityCity)
-        .then((res) => {
-            return res.universityCity
         }).catch((networkErr) => {
             return []
         })
@@ -693,7 +822,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { profile, countries, universities, universitiesCount, page, states, cities, countryFilter: country, stateFilter: state, cityFilter: city }
+        props: { profile, countries, universities, universitiesCount, page, states, countryFilter: country, stateFilter: state, poolIdFilter: pool_id, fieldIdFilter: field_id, rankingFilter: ranking, careerPools, token }
     }
 }
 

@@ -71,6 +71,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                 console.log(networkErr)
             });
     }
+
     useEffect(() => {
         getVideoStatus();
         console.log(videoStatus)
@@ -295,6 +296,7 @@ export async function getServerSideProps(context) {
             Authorization: "Bearer " + token,
         },
     })
+
     const video = await queryGraph(videoClient, { id: parseInt(context.params.id) }, SchemeGetVideo)
         .then((res) => {
             return res.videoDetails

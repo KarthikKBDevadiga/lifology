@@ -14,56 +14,45 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
-import { SchemeGetUniversity, SchemeAddBookmark, SchemeVideoStatus } from '../../../helpers/GraphQLSchemes'
+import { SchemeGetUniversity, SchemeAddBookmark, SchemeVideoStatus, SchemeGetUniversityBookmark, SchemeUpdateUniversityBookmark } from '../../../helpers/GraphQLSchemes'
 import { mutateGraph } from '../../../helpers/GraphQLCaller'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
+import LoadingDialog from '../../../components/dialog/LoadingDialog'
+import NotificationLayout from '../../../components/NotificationLayout'
 
 export default function University({ profile, university, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [searchText, setSearchText] = useState("")
-    const [videoStatus, setVideoStatus] = useState([])
+    const [bookmarkStatus, setBookmarkStatus] = useState(university.bookmark_status)
 
-    const client = new ApolloClient({
-        uri: Constants.baseUrl + "/api/career",
-        cache: new InMemoryCache(),
-        headers: {
-            Authorization: "Bearer " + token,
-        },
-    });
-
-    const getVideoStatus = () => {
-        mutateGraph(client,
-            {
-                video_id: Number(university.id)
-            }, SchemeVideoStatus)
-            .then((res) => {
-                setVideoStatus(res.checkVideoStatus)
-            }).catch((networkErr) => {
-                console.log(networkErr)
-            });
-    }
-
-    useEffect(() => {
-        getVideoStatus();
-    }, [])
+    const [loadingDialog, setLoadingDialog] = useState(false)
 
     const addToBookmark = (id) => {
-        mutateGraph(client,
-            {
-                video_id2: 17593, bookmark_type: "FAVORITE"
-            }, SchemeAddBookmark)
+        setLoadingDialog(true)
+        const careerClient = new ApolloClient({
+            uri: Constants.baseUrl + "/api/career",
+            cache: new InMemoryCache(),
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        })
+        mutateGraph(careerClient, {
+            college_id: parseInt(id)
+        }, SchemeUpdateUniversityBookmark)
             .then((res) => {
-                // setVideoStatus(res.checkVideoStatus);
-                console.log("FAVORITE  api", res);
-            }).catch((networkErr) => {
+                setLoadingDialog(false)
+                setBookmarkStatus(res.universityBookmark.bookmark_status)
+                console.log(res.universityBookmark)
 
-                console.log(networkErr)
-            });
-        getVideoStatus();
+            }).catch((networkErr) => {
+                setLoadingDialog(false)
+                console.log('error')
+            })
+
     }
 
     const pages = [
@@ -108,9 +97,10 @@ export default function University({ profile, university, token }) {
                                                                 <div className="bg-gray-200 px-4 py-2 text-xs rounded-full cursor-pointer duration-500 hover:text-white hover:bg-lblue">University</div>
                                                             </div>
 
-                                                            <div onClick={() => addToBookmark(university.id)} className="py-2 flex items-center absolute right-0">
-                                                                <BookmarkIcon className={videoStatus.favorite_status == true ? "w-5 h-5 mr-2 bg-blue text-blue-500" : "w-5 h-5 mr-2"} />
-
+                                                            <div onClick={() => addToBookmark(university.id)} className="flex items-center absolute right-0">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" fill={bookmarkStatus == 1 ? "lightblue" : "white"}>
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                                                </svg>
                                                             </div>
 
                                                         </div>
@@ -336,6 +326,9 @@ export default function University({ profile, university, token }) {
 
 
             </div>
+
+            <LoadingDialog showDialog={loadingDialog} setShowDialog={setLoadingDialog} />
+
         </>
     )
 }

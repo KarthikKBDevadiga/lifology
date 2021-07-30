@@ -131,7 +131,6 @@ query{
   thumbnail
   }
 }
-
 `;
 
 
@@ -267,6 +266,14 @@ query{
 }
 `;
 
+export const SchemeGetCountryState = gql`
+query universityState($country:String!){
+  universityState(country:$country){
+      state
+  }
+}
+`;
+
 export const SchemeGetUniversityCity = gql`
 query{
   universityCity(state:"Uttar Pradesh"){
@@ -328,8 +335,8 @@ query universityDetails($id: Int!){
 `;
 
 export const SchemeGetUniversityPerPage = gql`
-query allUniversity($limit:Int!, $page:Int!, $country:String!, $state:String!, $city:String!){
-  allUniversity(lang_id:1,filter:{count:true,limit:$limit,page:$page, country:$country, state:$state, city:$city}){
+query allUniversity($limit:Int!, $page:Int!, $country:String, $state:String, $pool_id:Int, $field_id:Int, $ranking:String){
+  allUniversity(lang_id:1,filter:{count:true,limit:$limit,page:$page, country:$country, state:$state, pool_id:$pool_id, field_id:$field_id, ranking:$ranking}){
     count
     title
     university{
@@ -408,6 +415,15 @@ query{
     percentage
     personality_match
     orientation_match
+  }
+}
+`;
+
+export const SchemeAllCareerPools = gql`
+query{
+  careerPools(lang_id:1){
+    id
+    name
   }
 }
 `;
@@ -766,6 +782,29 @@ query{
           description
       }
     }
+  }
+}
+`;
+
+export const SchemeUpdateUniversityBookmark = gql`
+mutation universityBookmark($college_id:Int!){
+  universityBookmark(college_id:$college_id)
+    {
+      bookmark_status
+    }
+  }
+`;
+export const SchemeGetUniversityBookmarkList = gql`
+query{
+  universities{
+    id
+    name
+    description
+    website
+    logo
+    city
+    state
+    country
   }
 }
 `;
