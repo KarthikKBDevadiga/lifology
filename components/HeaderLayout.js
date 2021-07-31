@@ -206,10 +206,10 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                 <a
                                                     href="#"
                                                     onClick={(e) => {
-                                                        // document.cookie = 'token='
-                                                        // router.push({
-                                                        //     pathname: '/login',
-                                                        // })
+                                                        document.cookie = 'token='
+                                                        router.push({
+                                                            pathname: '/login',
+                                                        })
                                                     }}
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',
