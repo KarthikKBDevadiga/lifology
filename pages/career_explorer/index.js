@@ -8,14 +8,11 @@ import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../components/Breadcrumbs'
-import Router from 'next/dist/next-server/server/router'
 
 import cookies from 'next-cookies'
 
@@ -94,16 +91,6 @@ export default function CareerExplorer({ profile }) {
             </div>
         </>
     )
-}
-
-export async function getInitialProps({ res, user }) {
-    const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-    console.log('authtoken ' + authToken)
-    if (authToken == "") {
-        res.writeHead(307, { Location: '/login' })
-        res.end()
-    }
-    return {}
 }
 
 export async function getServerSideProps(context) {

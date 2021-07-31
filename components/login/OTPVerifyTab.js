@@ -8,6 +8,8 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
     const fourRef = useRef()
     const fiveRef = useRef()
     const sixRef = useRef()
+
+    const verifyRef = useRef()
     return (
         <div className="mt-6">
             <form onSubmit={verifyOTP} className="space-y-6">
@@ -116,6 +118,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     if (event.keyCode == 8) {
                                         fiveRef.current.focus()
                                     } else {
+                                        verifyRef.current.click()
                                         // sixRef.current.focus()
                                     }
                                 }}
@@ -135,7 +138,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
 
                 <div className="mt-4">
                     <div className="mt-1 grid grid-cols-2 gap-2">
-                    {timeLeft != 0 && <div>
+                        {timeLeft != 0 && <div>
                             00:{timeLeft.toString().length == 1 ? '0' + timeLeft : timeLeft} seconds
                         </div>}
 
@@ -155,6 +158,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                 </div>
                 <div>
                     <button
+                        ref={verifyRef}
                         type="submit"
                         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-lblue hover:bg-lblue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 

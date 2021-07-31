@@ -24,6 +24,7 @@ import Expand from 'react-expand-animated';
 import Breadcrumbs from '../../../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
+import YoutubeDialog from '../../../../../components/dialog/YoutubeDialog'
 
 export default function CareerFields({ profile, jobFamily, careerField, universities, dashboard }) {
     const router = useRouter()
@@ -128,7 +129,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={careerField.name} />
@@ -397,7 +398,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
 
 
             </div >
-            <VideoDialog showDialog={openVideo} setShowDialog={setOpenVideo} url={careerField.video} />
+            <YoutubeDialog showDialog={openVideo} setShowDialog={setOpenVideo} url={careerField.video} />
         </>
     )
 }
@@ -456,9 +457,11 @@ export async function getServerSideProps(context) {
 
     const universitiesRaw = await queryGraph(careerClient, { pool_id: parseInt(context.params.id), field_id: parseInt(context.params.cfid) }, SchemeGetUniversities)
         .then((res) => {
+            console.log(res.allUniversity)
             return res.allUniversity
         }).catch((networkErr) => {
-            return {}
+            console.log(networkErr)
+            return [{}]
         })
     const universities = universitiesRaw[0].university
 

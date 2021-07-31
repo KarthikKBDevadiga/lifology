@@ -9,7 +9,6 @@ import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import styles from '/styles/Magazine.module.css'
@@ -163,7 +162,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
             <MetaLayout title={video.title} description={video.description} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={video.title} />
@@ -275,12 +274,9 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
         </>
     )
 }
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
-
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
+    console.log('vid' + token)
     if (token == null || token == '') {
         return {
             redirect: {

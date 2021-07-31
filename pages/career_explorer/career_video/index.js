@@ -3,14 +3,14 @@ import { Fragment, useState, useRef, useEffect } from 'react'
 import {
     DotsVerticalIcon,
     SearchIcon,
-    ArrowRightIcon
+    ArrowRightIcon,
+    SortAscendingIcon
 } from '@heroicons/react/solid'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Dialog, Menu, Transition, RadioGroup } from '@headlessui/react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile, SchemeGetVideos } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
@@ -20,11 +20,11 @@ import classNames from '/helpers/classNames'
 
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
-import NextNProgress from 'nextjs-progressbar'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
+import YoutubeDialog from '../../../components/dialog/YoutubeDialog'
 
 const headerSlide = [
     {
@@ -45,11 +45,13 @@ const headerSlide = [
     }
 ]
 
-export default function CareerVideo({ videoCats, profile }) {
+export default function CareerVideo({ videoCats, profile, order }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
     const [openFilter, setOpenFilter] = useState(false)
+
+    const [openVideoDialog, setOpenVideoDialog] = useState(false)
 
     const [headerPause, setHeaderPause] = useState(false)
     const timer = useRef()
@@ -66,6 +68,7 @@ export default function CareerVideo({ videoCats, profile }) {
             setHeaderPause(false)
         },
     })
+
 
 
     const [sliderRef1, slider1] = useKeenSlider({
@@ -137,6 +140,12 @@ export default function CareerVideo({ videoCats, profile }) {
         },
     })
 
+    const [selectedSort, setSelectedSort] = useState('')
+
+    useEffect(() => {
+        setSelectedSort(order)
+    }, [])
+
     const pages = [
         {
             name: 'Career Explorer', href: '/career_explorer/', current: false
@@ -148,13 +157,34 @@ export default function CareerVideo({ videoCats, profile }) {
 
     const [searchText, setSearchText] = useState("");
 
+    const clearFilter = (event) => {
+        router.replace(
+            {
+                pathname: '/career_explorer/career_video',
+            }
+        )
+        setOpenFilter(false)
+    }
+    const applyFilter = (event) => {
+        const q = {}
+        if (selectedSort != null)
+            q.order = selectedSort
+        console.log(q)
+        router.replace(
+            {
+                pathname: '/career_explorer/career_video',
+                query: q,
+            }
+        )
+        setOpenFilter(false)
+    }
     return (
         <>
 
             <MetaLayout title="Career Videos" description="Career Videos" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Videos" />
@@ -184,7 +214,7 @@ export default function CareerVideo({ videoCats, profile }) {
                                                 />
                                             </div>
                                         </div>
-                                        {/* <div className="mt-4 sm:mt-0 sm:ml-4 sm:flex-shrink-0 sm:flex sm:items-center">
+                                        <div className="mt-4 sm:mt-0 sm:ml-4 sm:flex-shrink-0 sm:flex sm:items-center">
                                             <a onClick={(event) => {
                                                 setOpenFilter(true)
                                             }}>
@@ -197,7 +227,7 @@ export default function CareerVideo({ videoCats, profile }) {
                                                     </svg>
                                                 </div>
                                             </a>
-                                        </div> */}
+                                        </div>
                                     </div>
 
 
@@ -238,7 +268,10 @@ export default function CareerVideo({ videoCats, profile }) {
                                                                     </div>
                                                                     <div className="self-center w-full mr-4">
                                                                         <h4 className="text-lg font-bold text-white text-right">{card.title}</h4>
-                                                                        <div className="flex text-base font-bold text-white text-right items-center text-lyellow mt-4 float-right">
+                                                                        <div className="flex text-base font-bold text-white text-right items-center text-lyellow mt-4 float-right"
+                                                                            onClick={(event) => {
+                                                                                setOpenVideoDialog(true)
+                                                                            }}>
                                                                             <svg
                                                                                 className="w-6 h-6 mr-2"
                                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -271,10 +304,17 @@ export default function CareerVideo({ videoCats, profile }) {
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[0].name}
                                             </div>
+                                            <Link href={{
+                                                pathname: '/career_explorer/career_video/view_all',
+                                                query: { cId: videoCats[0].id },
+                                            }}>
+                                                <a>
+                                                    <div className="text-sm text-right text-indigo-700 mx-4 ">
+                                                        View All
+                                                    </div>
+                                                </a>
+                                            </Link>
 
-                                            <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                <a href="#">View All</a>
-                                            </div>
                                         </div>
                                         <div className="relative flex items-center">
                                             <a
@@ -420,10 +460,16 @@ export default function CareerVideo({ videoCats, profile }) {
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[1].name}
                                             </div>
-
-                                            <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                <a href="#">View All</a>
-                                            </div>
+                                            <Link href={{
+                                                pathname: '/career_explorer/career_video/view_all',
+                                                query: { cId: videoCats[1].id },
+                                            }}>
+                                                <a>
+                                                    <div className="text-sm text-right text-indigo-700 mx-4 ">
+                                                        View All
+                                                    </div>
+                                                </a>
+                                            </Link>
                                         </div>
                                         <div className="relative flex items-center">
                                             <a
@@ -564,9 +610,16 @@ export default function CareerVideo({ videoCats, profile }) {
                                                 {videoCats[2].name}
                                             </div>
 
-                                            <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                <a href="#">View All</a>
-                                            </div>
+                                            <Link href={{
+                                                pathname: '/career_explorer/career_video/view_all',
+                                                query: { cId: videoCats[2].id },
+                                            }}>
+                                                <a>
+                                                    <div className="text-sm text-right text-indigo-700 mx-4 ">
+                                                        View All
+                                                    </div>
+                                                </a>
+                                            </Link>
                                         </div>
                                         <div className="relative flex items-center">
                                             <a
@@ -706,10 +759,16 @@ export default function CareerVideo({ videoCats, profile }) {
                                             <div className="text-black mx-4 block text-base font-bold">
                                                 {videoCats[3].name}
                                             </div>
-
-                                            <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                <a href="#">View All</a>
-                                            </div>
+                                            <Link href={{
+                                                pathname: '/career_explorer/career_video/view_all',
+                                                query: { cId: videoCats[3].id },
+                                            }}>
+                                                <a>
+                                                    <div className="text-sm text-right text-indigo-700 mx-4 ">
+                                                        View All
+                                                    </div>
+                                                </a>
+                                            </Link>
                                         </div>
                                         <div className="relative flex items-center">
                                             <a
@@ -894,10 +953,84 @@ export default function CareerVideo({ videoCats, profile }) {
                                 <div className="sm:flex sm:items-start">
                                     <div className="text-center sm:text-left w-full">
                                         <Dialog.Title as="h3" className="w-full text-lg leading-6 font-medium text-gray-900 text-center">
-                                            Filter
+                                            Sort
                                         </Dialog.Title>
                                         <div className="mt-2">
 
+                                            <div
+                                                onClick={(e) => { setSelectedSort('NEW_TO_OLD') }}
+                                                className={classNames(
+                                                    selectedSort == 'NEW_TO_OLD' ? 'z-10' : '',
+                                                    'relative px-4 py-2 flex cursor-pointer focus:outline-none'
+                                                )}>
+                                                <span
+                                                    className={classNames(
+                                                        selectedSort == 'NEW_TO_OLD' ? 'bg-indigo-600 border-transparent' : 'bg-white border-gray-300',
+                                                        'h-4 w-4 mt-0.5 cursor-pointer rounded-full border flex items-center justify-center'
+                                                    )}
+                                                    aria-hidden="true"
+                                                >
+                                                    <span className="rounded-full bg-white w-1.5 h-1.5" />
+                                                </span>
+                                                <div className="ml-3 flex flex-col">
+                                                    <div
+                                                        as="span"
+                                                        className={classNames(selectedSort == 'NEW_TO_OLD' ? 'text-indigo-700' : 'text-gray-900', 'block text-sm font-medium')}
+                                                    >
+                                                        New To Old
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                onClick={(e) => { setSelectedSort('OLD_TO_NEW') }}
+                                                className={classNames(
+                                                    selectedSort == 'OLD_TO_NEW' ? 'z-10' : '',
+                                                    'relative px-4 py-2 flex cursor-pointer focus:outline-none'
+                                                )}>
+                                                <span
+                                                    className={classNames(
+                                                        selectedSort == 'OLD_TO_NEW' ? 'bg-indigo-600 border-transparent' : 'bg-white border-gray-300',
+                                                        'h-4 w-4 mt-0.5 cursor-pointer rounded-full border flex items-center justify-center'
+                                                    )}
+                                                    aria-hidden="true"
+                                                >
+                                                    <span className="rounded-full bg-white w-1.5 h-1.5" />
+                                                </span>
+                                                <div className="ml-3 flex flex-col">
+                                                    <div
+                                                        as="span"
+                                                        className={classNames(selectedSort == 'OLD_TO_NEW' ? 'text-indigo-700' : 'text-gray-900', 'block text-sm font-medium')}
+                                                    >
+                                                        Old To New
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                onClick={(e) => { setSelectedSort('MOST_VIEWED') }}
+                                                className={classNames(
+                                                    selectedSort == 'MOST_VIEWED' ? 'z-10' : '',
+                                                    'relative px-4 py-2 flex cursor-pointer focus:outline-none'
+                                                )}>
+                                                <span
+                                                    className={classNames(
+                                                        selectedSort == 'MOST_VIEWED' ? 'bg-indigo-600 border-transparent' : 'bg-white border-gray-300',
+                                                        'h-4 w-4 mt-0.5 cursor-pointer rounded-full border flex items-center justify-center'
+                                                    )}
+                                                    aria-hidden="true"
+                                                >
+                                                    <span className="rounded-full bg-white w-1.5 h-1.5" />
+                                                </span>
+                                                <div className="ml-3 flex flex-col">
+                                                    <div
+                                                        as="span"
+                                                        className={classNames(selectedSort == 'MOST_VIEWED' ? 'text-indigo-700' : 'text-gray-900', 'block text-sm font-medium')}
+                                                    >
+                                                        Most Viewed
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -906,14 +1039,14 @@ export default function CareerVideo({ videoCats, profile }) {
                                     <button
                                         type="button"
                                         className="flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-700 hover:text-white focus:outline-none border border-indigo-700 cursor-pointer duration-500"
-                                        onClick={() => setOpenFilter(false)}
+                                        onClick={clearFilter}
                                     >
                                         Clear
                                     </button>
                                     <button
                                         type="button"
                                         className="ml-4 flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
-                                        onClick={() => setOpenFilter(false)}
+                                        onClick={applyFilter}
                                     >
                                         Apply
                                     </button>
@@ -923,45 +1056,15 @@ export default function CareerVideo({ videoCats, profile }) {
                     </div>
                 </Dialog>
             </Transition.Root>
+            <YoutubeDialog showDialog={openVideoDialog} setShowDialog={setOpenVideoDialog} />
         </>
     )
 }
 
-function CustomRightArrow({ handleClick }) {
-    return (
-        <button
-            className="absolute right-0 bg-black rounded-full p-2"
-            style={{ top: '31.5% !important' }}
-            onClick={handleClick}>
-            <ArrowRightIcon className="h-5 w-5 text-white" aria-hidden="true" />
-        </button>
-    );
-}
-
-function CustomLeftArrow({ handleClick }) {
-
-    return (
-        <button
-            onClick={handleClick}
-            aria-label="Go to previous slide"
-            className="react-multiple-carousel__arrow react-multiple-carousel__arrow--left"
-        />
-    );
-}
-
-const ButtonGroup = ({ next, previous }) => {
-    return (
-        <div className="carousel-button-group">
-            <CustomLeftArrow
-                handleClick={() => previous()}
-            />
-            <CustomRightArrow handleClick={() => next()} />
-        </div>
-    );
-}
 
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
+    const { order = "" } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -977,7 +1080,10 @@ export async function getServerSideProps(context) {
             Authorization: "Bearer " + token,
         },
     })
-    const videoCats = await queryGraph(videosClient, {}, SchemeGetVideos)
+    const params = {}
+    if (order != "")
+        params.order = order
+    const videoCats = await queryGraph(videosClient, params, SchemeGetVideos)
         .then((res) => {
             return res.videos
         }).catch((networkErr) => {
@@ -997,7 +1103,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { videoCats, profile }
+        props: { videoCats, profile, order }
     }
 }
 

@@ -95,7 +95,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
             q.state = selectedState.state
         if (selectedCareerPool.id != null)
             q.pool_id = selectedCareerPool.id
-        if (selectedCareerField.id != null)
+        if (selectedCareerField != null && selectedCareerField.id != null)
             q.field_id = selectedCareerField.id
         if (selectedRanks.name != null && selectedRanks.name != "")
             q.ranking = selectedRanks.name
@@ -111,6 +111,8 @@ export default function CourceAndUniversity({ profile, countries, universities, 
     const clearFilter = (event) => {
         setSelectedCountry({})
         setSelectedState({})
+        setSelectedCareerPool({})
+        setSelectedCareerField({})
         router.replace(
             {
                 pathname: '/career_explorer/course_and_university',
@@ -124,7 +126,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
             <MetaLayout title="Course & University" description="Course & University" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Course & University" />
@@ -246,7 +248,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                             <img className="w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
                                                             <div className="top-0 mt-4 text-center">
                                                                 <div className="text-sm font-bold">{u.name}</div>
-                                                                <div className="text-xs mt-2">{u.state}, {u.country}</div>
+                                                                <div className="text-xs mt-2">{u.state ? u.state + ',' : ''} {u.country}</div>
                                                             </div>
                                                         </div>
                                                     </a>
@@ -419,7 +421,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                 <>
                                                     <div className="mt-1 relative mt-2">
                                                         <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
-                                                            <span className={classNames(selectedCareerField.name ? '' : 'text-gray-400', "block truncate")}>{selectedCareerField.name ? selectedCareerField.name : 'Career Fields'}</span>
+                                                            <span className={classNames(selectedCareerField && selectedCareerField.name ? '' : 'text-gray-400', "block truncate")}>{selectedCareerField && selectedCareerField.name ? selectedCareerField.name : 'Career Fields'}</span>
                                                             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                                                 <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                                             </span>
@@ -799,8 +801,8 @@ export async function getServerSideProps(context) {
                 count: 0
             }
         })
-    const universities = universitiesData.university
-    const universitiesCount = universitiesData.count
+    const universities = universitiesData ? universitiesData.university : []
+    const universitiesCount = universitiesData ? universitiesData.count : 0
 
     const states = await queryGraph(careerClient, {}, SchemeGetUniversityState)
         .then((res) => {

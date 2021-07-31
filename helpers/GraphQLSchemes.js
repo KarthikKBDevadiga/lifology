@@ -222,8 +222,8 @@ mutation editProfile($profile_image:String,$country_abbr:String!, $email:String!
 `;
 
 export const SchemeGetVideos = gql`
-query{
-  videos(lang_id:1){
+query videos($order:String){
+  videos(lang_id:1,filter:{search_keyword:"",order:$order}){
     id
     name
     videos{
@@ -238,6 +238,32 @@ query{
     thumbnail
     watch_later_status
     favorite_status
+      chapters{
+        id
+        video_id
+        title
+        video
+        thumbnail
+      }
+    }
+  }
+}
+`;
+
+export const SchemeGetViewAllVideos = gql`
+query webVideosViewAll($category_id:Int!, $page:Int!,$limit:Int!){
+  webVideosViewAll(lang_id:1,category_id:$category_id,filter:{page:$page,limit:$limit,search_keyword:"",count:true}){
+      count
+      videos{
+      id
+      lang_id
+      title
+      description
+      category_id
+      tags
+      views
+      video
+      thumbnail
       chapters{
         id
         video_id

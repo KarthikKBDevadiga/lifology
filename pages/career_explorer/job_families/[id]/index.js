@@ -10,11 +10,11 @@ import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
 import { SchemeCareerPools } from '/helpers/GraphQLSchemes'
-import VideoDialog from '../../../../components/dialog/VideoDialog'
 import { SchemeCareerFields } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
+import YoutubeDialog from '../../../../components/dialog/YoutubeDialog'
 
 export default function JobFamily({ profile, jobFamily, careerFields }) {
     const router = useRouter()
@@ -30,7 +30,7 @@ export default function JobFamily({ profile, jobFamily, careerFields }) {
             name: 'Job Families & Career Fields', href: '/career_explorer/job_families', current: false
         },
         {
-            name: 'Accounting and Finance', href: '#', current: true
+            name: jobFamily.name, href: '#', current: true
         },
     ]
     return (
@@ -38,7 +38,7 @@ export default function JobFamily({ profile, jobFamily, careerFields }) {
             <MetaLayout title={jobFamily.name} description={jobFamily.description} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={jobFamily.name} />
@@ -61,7 +61,7 @@ export default function JobFamily({ profile, jobFamily, careerFields }) {
                                                     </div>
                                                     <div className="w-full self-center text-left">
                                                         <div className="font-bold text-xl mt-12" >{jobFamily.name}</div>
-                                                        <div className="mt-2 text-sm text-justify" >{jobFamily.one_liner}</div>
+                                                        {/* <div className="mt-2 text-sm text-justify" >{jobFamily.one_liner}</div> */}
                                                     </div>
                                                 </div>
 
@@ -139,19 +139,19 @@ export default function JobFamily({ profile, jobFamily, careerFields }) {
                                                 </div>
                                                 <div className="flex mt-4 text-sm font-medium text-gray-900">
                                                     <div className="w-2/4">Personality Match</div>
-                                                    <div className="w-2/4 text-right">{jobFamily.personality_match}%</div>
+                                                    <div className="w-2/4 text-right">{jobFamily.personality_match >= 0 ? jobFamily.personality_match : 0}%</div>
                                                 </div>
                                                 <div className="mt-2 h-2 w-full rounded-full" style={{ background: '#F3F3F3' }}>
-                                                    <div className="h-2 rounded-full bg-lblue" style={{ width: jobFamily.personality_match + '%' }}>
+                                                    <div className="h-2 rounded-full bg-lblue" style={{ width: jobFamily.personality_match >= 0 ? jobFamily.personality_match : 0 + '%' }}>
 
                                                     </div>
                                                 </div>
                                                 <div className="flex mt-4 text-sm font-medium text-gray-900">
                                                     <div className="w-2/4">Orientation Match</div>
-                                                    <div className="w-2/4 text-right">{jobFamily.orientation_match}%</div>
+                                                    <div className="w-2/4 text-right">{jobFamily.orientation_match >= 0 ? jobFamily.orientation_match : 0}%</div>
                                                 </div>
                                                 <div className="mt-2 h-2 w-full rounded-full" style={{ background: '#F3F3F3' }}>
-                                                    <div className="h-2 rounded-full bg-lyellow" style={{ width: jobFamily.orientation_match + '%' }}>
+                                                    <div className="h-2 rounded-full bg-lyellow" style={{ width: jobFamily.orientation_match >= 0 ? jobFamily.orientation_match : 0 + '%' }}>
 
                                                     </div>
                                                 </div>
@@ -165,7 +165,7 @@ export default function JobFamily({ profile, jobFamily, careerFields }) {
                 </div>
             </div >
 
-            <VideoDialog showDialog={openVideo} setShowDialog={setOpenVideo} url={jobFamily.video} />
+            <YoutubeDialog showDialog={openVideo} setShowDialog={setOpenVideo} url={jobFamily.video} />
         </>
     )
 }

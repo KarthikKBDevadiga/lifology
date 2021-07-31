@@ -11,14 +11,12 @@ import {
     SearchIcon,
 } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
-import useLocalStorage from '../helpers/useLocalStorage'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
 const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
-    // console.log(profile.profile_image);
     const router = useRouter()
     return (
         <div className="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none shadow" >
@@ -208,10 +206,10 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                 <a
                                                     href="#"
                                                     onClick={(e) => {
-                                                        document.cookie = 'token='
-                                                        router.push({
-                                                            pathname: '/login',
-                                                        })
+                                                        // document.cookie = 'token='
+                                                        // router.push({
+                                                        //     pathname: '/login',
+                                                        // })
                                                     }}
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',

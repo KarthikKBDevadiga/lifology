@@ -26,12 +26,13 @@ export default function JobFamilies({ families, profile }) {
             name: 'Job Families & Career Fields', href: '#', current: true
         },
     ]
+    const [searchText, setSearchText] = useState("")
     return (
         <>
             <MetaLayout title="Job Families & Career Fields" description="Job Families & Career Fields" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Job Families & Career Fields" />
@@ -66,6 +67,7 @@ export default function JobFamilies({ families, profile }) {
                                                                 className="block w-full h-full pl-12 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
                                                                 placeholder="Search Job Families"
                                                                 type="search"
+                                                                onChange={(e) => setSearchText(e.target.value)}
                                                             />
                                                         </div>
                                                     </form>
@@ -81,24 +83,37 @@ export default function JobFamilies({ families, profile }) {
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg bg-white p-4">
                                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                                             {/* Card */}
-                                            {families.map((card) => (
-                                                <Link
-                                                    href={'job_families/' + card.id}>
-                                                    <a>
-                                                        <div key={card.name} className="group bg-white overflow-hidden shadow hover:shadow-xl rounded-lg relative duration-500"
-                                                            style={{ backgroundImage: `url(${card.image})`, height: '200px', }}
-                                                        >
-                                                            {/* <img src="/img/bg_vertical.png" style={{ position: 'absolute', bottom: '0px' }} /> */}
-                                                            <div className="absolute h-3/6 group-hover:h-full w-full bottom-0 bg-gradient-to-t from-lblue via-lblue to-transparent duration-500">
-                                                            </div>
-                                                            <div className="p-5 absolute bottom-0">
-                                                                <div className="text-base text-white w-full font-medium" >{card.name}</div>
-                                                                <div className="mt-2 w-12 h-1 rounded bg-lyellow group-hover:w-full duration-500"></div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </Link>
-                                            ))}
+                                            {
+                                                families
+                                                    .filter((val) => {
+                                                        if (searchText.trim() === "") {
+
+                                                            return val;
+                                                        }
+                                                        if (val.name.toLowerCase().includes(searchText.toLowerCase())) {
+
+                                                            return val;
+                                                        }
+                                                        return "";
+                                                    })
+                                                    .map((card) => (
+                                                        <Link
+                                                            href={'job_families/' + card.id}>
+                                                            <a>
+                                                                <div key={card.name} className="group bg-white overflow-hidden shadow hover:shadow-xl rounded-lg relative duration-500"
+                                                                    style={{ backgroundImage: `url(${card.image})`, height: '200px', }}
+                                                                >
+                                                                    {/* <img src="/img/bg_vertical.png" style={{ position: 'absolute', bottom: '0px' }} /> */}
+                                                                    <div className="absolute h-3/6 group-hover:h-full w-full bottom-0 bg-gradient-to-t from-lblue via-lblue to-transparent duration-500">
+                                                                    </div>
+                                                                    <div className="p-5 absolute bottom-0">
+                                                                        <div className="text-base text-white w-full font-medium" >{card.name}</div>
+                                                                        <div className="mt-2 w-12 h-1 rounded bg-lyellow group-hover:w-full duration-500"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </Link>
+                                                    ))}
                                         </div>
 
                                     </div>
