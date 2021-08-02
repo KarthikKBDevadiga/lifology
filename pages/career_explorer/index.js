@@ -15,16 +15,10 @@ import MetaLayout from '/components/MetaLayout'
 import Breadcrumbs from '../../components/Breadcrumbs'
 
 import cookies from 'next-cookies'
+import { SchemeGetAssessments } from '/helpers/GraphQLSchemes'
 
-const cards = [
-    { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Course and University', href: '/career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
-    // { name: 'Scholarship Program', href: '/career_explorer', icon: ScaleIcon, amount: '$30,659.45' },
-    // { name: 'Magazine', href: '/career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
-    { name: 'Career Videos', href: '/career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
-]
 
-export default function CareerExplorer({ profile }) {
+export default function CareerExplorer({ profile, isTop }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -34,6 +28,13 @@ export default function CareerExplorer({ profile }) {
         },
     ]
 
+    const cards = [
+        { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
+        { name: 'Course and University', href: isTop ? '/career_explorer/course_and_university/top_universities' : '/career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
+        // { name: 'Scholarship Program', href: '/career_explorer', icon: ScaleIcon, amount: '$30,659.45' },
+        // { name: 'Magazine', href: '/career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
+        { name: 'Career Videos', href: '/career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
+    ]
     return (
         <>
 
@@ -103,6 +104,26 @@ export async function getServerSideProps(context) {
             }
         }
     }
+
+    const assessmentClient = new ApolloClient({
+        uri: Constants.baseUrl + "/api/assessment",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    })
+    const assessments = await queryGraph(assessmentClient, {}, SchemeGetAssessments)
+        .then((res) => {
+            return res.assessments
+        }).catch((networkErr) => {
+            return []
+        })
+
+    console.log(assessments)
+    const isTop = (assessments.find(a => a.id == 1).total_questions <= 0 &&
+        assessments.find(a => a.id == 4).total_questions <= 0 &&
+        assessments.find(a => a.id == 2).total_questions <= 0)
+    console.log(isTop)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -117,7 +138,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile }
+        props: { profile, isTop }
     }
 }
 

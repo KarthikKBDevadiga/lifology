@@ -109,7 +109,7 @@ export default function Login({ cs }) {
                     setSuccessDialog(true)
                     setTimeout(() => {
                         setSuccessDialog(false)
-                        document.cookie = 'token=' + res.otpVerification.auth_token + ';expires=3600; path=/'
+                        document.cookie = 'token=' + res.otpVerification.auth_token + ';expires=3600;'
                         router.push({
                             pathname: 'career_explorer',
                         })

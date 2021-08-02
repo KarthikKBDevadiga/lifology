@@ -92,12 +92,15 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
     const timer = useRef()
 
     useEffect(() => {
-        universitySliderRef.current.addEventListener("mouseover", () => {
-            setPause(true)
-        })
-        universitySliderRef.current.addEventListener("mouseout", () => {
-            setPause(false)
-        })
+        if (universities.length > 0) {
+            universitySliderRef.current.addEventListener("mouseover", () => {
+                setPause(true)
+            })
+            universitySliderRef.current.addEventListener("mouseout", () => {
+                setPause(false)
+            })
+        }
+
     }, [universitySliderRef])
     useEffect(() => {
         timer.current = setInterval(() => {
@@ -166,44 +169,48 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                                     </div>
                                                 </div>
                                             </div>
+                                            {
+                                                universities.length > 0 ?
+                                                    <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
 
-                                            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
+                                                        <div className="mx-4 mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
 
-                                                <div className="mx-4 mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
-
-                                                    <h2 className="text-lg font-medium text-gray-900">
-                                                        Universities
-                                                    </h2>
-                                                    <Link href={{
-                                                        pathname: '/career_explorer/course_and_university',
-                                                    }}>
-                                                        <a>
-                                                            <div className="text-lblue text-right text-base">View All</div>
-                                                        </a>
-                                                    </Link>
+                                                            <h2 className="text-lg font-medium text-gray-900">
+                                                                Universities
+                                                            </h2>
+                                                            <Link href={{
+                                                                pathname: '/career_explorer/course_and_university',
+                                                            }}>
+                                                                <a>
+                                                                    <div className="text-lblue text-right text-base">View All</div>
+                                                                </a>
+                                                            </Link>
 
 
-                                                </div>
-                                                <div className="navigation-wrapper w-full">
-                                                    <div ref={universitySliderRef} className="keen-slider">
-                                                        {universities.map((card) => (
-                                                            <div className="keen-slider__slide self-center">
-                                                                <Link href={{
-                                                                    pathname: '/career_explorer/course_and_university/' + card.id,
-                                                                }}>
-                                                                    <a>
-                                                                        <div className="rounded bg-gray shadow p-2 mx-2 m-4 hover:shadow-lg hover:scale-105 duration-500">
-                                                                            <img className="ml-auto mr-auto" src={Constants.baseUrlImage + card.logo} />
-                                                                        </div>
-                                                                    </a>
-                                                                </Link>
+                                                        </div>
+                                                        <div className="navigation-wrapper w-full">
+                                                            <div ref={universitySliderRef} className="keen-slider">
+                                                                {universities.map((card) => (
+                                                                    <div className="keen-slider__slide self-center">
+                                                                        <Link href={{
+                                                                            pathname: '/career_explorer/course_and_university/' + card.id,
+                                                                        }}>
+                                                                            <a>
+                                                                                <div className="rounded bg-gray shadow p-2 mx-2 m-4 hover:shadow-lg hover:scale-105 duration-500">
+                                                                                    <img className="ml-auto mr-auto" src={Constants.baseUrlImage + card.logo} />
+                                                                                </div>
+                                                                            </a>
+                                                                        </Link>
 
+                                                                    </div>
+                                                                ))
+                                                                }
                                                             </div>
-                                                        ))
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                        </div>
+                                                    </div> :
+                                                    <></>
+                                            }
+
 
 
                                             {/* <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
@@ -230,20 +237,27 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
 
                                             <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white">
 
-                                                <h2 className="text-lg font-medium text-gray-900 m-4 ">
+                                                <h2 className="text-lg font-medium text-gray-900 mx-4 mt-4">
                                                     Recommended Videos
                                                 </h2>
                                                 <div className="navigation-wrapper w-full mb-4">
                                                     <div ref={videoSliderRef} className="keen-slider">
                                                         {dashboard.videos.map((card) => (
-                                                            <div className="keen-slider__slide self-center">
-                                                                <div className="px-2">
-                                                                    <img className="ml-auto mr-auto rounded" src={card.thumbnail} />
-                                                                </div>
-                                                                <h2 className="text-sm font-medium text-gray-900 px-2 mt-2 h-10 overflow-hidden" >
-                                                                    {card.title}
-                                                                </h2>
-                                                            </div>
+                                                            <Link
+                                                                href={{
+                                                                    pathname: '/career_explorer/career_video/' + card.id
+                                                                }}
+                                                            >
+                                                                <a className="keen-slider__slide self-center">
+                                                                    <div className="px-2">
+                                                                        <img className="ml-auto mr-auto rounded" src={card.thumbnail} />
+                                                                    </div>
+                                                                    <h2 className="text-sm font-medium text-gray-900 px-2 mt-2 h-10 overflow-hidden" >
+                                                                        {card.title}
+                                                                    </h2>
+                                                                </a>
+                                                            </Link>
+
                                                         ))
                                                         }
                                                     </div>
@@ -461,9 +475,11 @@ export async function getServerSideProps(context) {
             return res.allUniversity
         }).catch((networkErr) => {
             console.log(networkErr)
-            return [{}]
+            return [{
+                university: []
+            }]
         })
-    const universities = universitiesRaw[0].university
+    const universities = universitiesRaw[0] ? universitiesRaw.university ? universitiesRaw.university : [] : []
 
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",

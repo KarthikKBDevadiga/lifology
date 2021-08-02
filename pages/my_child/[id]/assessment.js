@@ -27,6 +27,8 @@ import { DragDropContext, Droppable, Draggable, resetServerContext } from "react
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
+import SortableContainer from 'react-drag-sort'
+
 export default function Assessment({ profile, assessment, questions, token }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
@@ -37,7 +39,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
     const [questionNo, setQuestionNo] = useState(1)
     const [percentageCompleted, setPercentageCompleted] = useState(1 / questions.length)
 
-    const [orderedOptions, setOrderedOptions] = useState(questions)
+    const [orderedOptions, setOrderedOptions] = useState([])
     const [selectedQuestion, setSelectedQuestion] = useState({})
     const [selectedOption, setSelectedOption] = useState({})
 
@@ -51,7 +53,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
             setQuestionNo(assessment.attempted_questions + s.details().relativeSlide + 1)
             setPercentageCompleted((assessment.attempted_questions + s.details().relativeSlide) / (assessment.attempted_questions + questions.length))
             setSelectedQuestion(questions[s.details().relativeSlide])
-            setOrderedOptions(questions[s.details().relativeSlide].score_options)
+            setOptions(questions[s.details().relativeSlide].score_options)
         },
     })
     const pages = [
@@ -62,13 +64,26 @@ export default function Assessment({ profile, assessment, questions, token }) {
             name: assessment.title + 'Assignment', href: '#', current: true
         },
     ]
+
+    const setOptions = (options) => {
+        const o = []
+        options.map(option => {
+            o.push({
+                key: option.label,
+                value: option
+            })
+        })
+        console.log(o)
+        setOrderedOptions(o)
+    }
     const answer = event => {
         var scores = []
 
         if (assessment.assessment_type == 1) {
             orderedOptions.map((option) => {
-                scores.push(parseInt(option.score))
+                scores.push(parseInt(option.value.score))
             })
+            console.log(scores)
         }
         else if (assessment.assessment_type == 2) {
             if (selectedOption.score == null) {
@@ -116,26 +131,19 @@ export default function Assessment({ profile, assessment, questions, token }) {
             });
     }
 
-    const reorder = (list, startIndex, endIndex) => {
-        const result = Array.from(list);
-        const [removed] = result.splice(startIndex, 1);
-        result.splice(endIndex, 0, removed);
 
-        return result;
-    };
-    const onDragEnd = (result) => {
-        // dropped outside the list
-        if (!result.destination) {
-            return;
-        }
+    const Item = ({ value, index, onRemove, onChange, decorateHandle }) => {
+        console.log()
+        return (
+            <div className="shadow rounded p-4 mb-4 bg-white">
+                {decorateHandle(
+                    <div>
+                        {value.label}
+                    </div>
+                )}
 
-        const items = reorder(
-            orderedOptions,
-            result.source.index,
-            result.destination.index
-        );
-
-        setOrderedOptions(items)
+            </div>
+        )
     }
     resetServerContext()
 
@@ -162,7 +170,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                             {/* <div className="w-2/4 font-bold text-sm text-right" >View Instructions</div> */}
                                         </div>
 
-
                                         <div className="relative w-14 h-14 z-50 ml-auto">
                                             <svg className="w-full h-full" >
                                                 <circle cx="24" cy="24" r="24" style={{
@@ -188,8 +195,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                 {questionNo}/{assessment.attempted_questions + questions.length}
                                             </div>
                                         </div>
-
-
 
                                         <div className="navigation-wrapper">
                                             <div ref={sliderRef} className="keen-slider">
@@ -243,38 +248,20 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                                                 </RadioGroup>
                                                                             </> : <>
                                                                                 <img className="mr-5 " src="/img/assessment_left.svg"></img>
-                                                                                <DragDropContext onDragEnd={onDragEnd}>
-                                                                                    <Droppable droppableId="droppable">
-                                                                                        {(provided, snapshot) => (
-                                                                                            <div
-                                                                                                className=" "
-                                                                                                {...provided.droppableProps}
-                                                                                                ref={provided.innerRef}
-                                                                                            >
-                                                                                                {orderedOptions.map((item, index) => (
-                                                                                                    <Draggable key={item.label} draggableId={item.label + "" + item.score + "" + index} index={index}>
-                                                                                                        {(provided, snapshot) => (
-                                                                                                            <div
-                                                                                                                className="shadow p-4 mb-4 bg-white"
-                                                                                                                ref={provided.innerRef}
-                                                                                                                {...provided.draggableProps}
-                                                                                                                {...provided.dragHandleProps}
-                                                                                                            >
-                                                                                                                {item.label}
-                                                                                                            </div>
-                                                                                                        )}
-                                                                                                    </Draggable>
-                                                                                                ))}
-                                                                                                {provided.placeholder}
-                                                                                            </div>
-                                                                                        )}
-                                                                                    </Droppable>
-                                                                                </DragDropContext>
+                                                                                <SortableContainer
+                                                                                    collection={orderedOptions}
+                                                                                    onChange={collection => {
+                                                                                        console.log(collection)
+                                                                                        setOrderedOptions([...collection])
+                                                                                    }}
+                                                                                    Component={Item}
+                                                                                />
 
                                                                                 <div className="flex flex-col">
                                                                                     <img className="ml-32 mt-20 w-10 h-20" src="/img/assessment_right.svg"></img>
                                                                                     <p className="mt-2 ml-20 text-xs font-light">Re Order (Drag & Drop) the choices bases <br /> on your preferences </p>
                                                                                 </div>
+
                                                                             </>
                                                                     }
 
@@ -283,7 +270,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                         )
                                                     })
                                                 }
-
                                             </div>
                                         </div>
 

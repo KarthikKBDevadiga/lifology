@@ -375,7 +375,7 @@ const PhoneNumberTab = ({ submit, error, setError, countries, selectedCountry, s
                     </div>
                 </div>
 
-                <div>
+                {/* <div>
                     <div className="mt-6 relative">
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
                             <div className="w-full border-t border-gray-300" />
@@ -419,8 +419,7 @@ const PhoneNumberTab = ({ submit, error, setError, countries, selectedCountry, s
 
                         </div>
                     </div>
-
-                </div>
+                </div> */}
             </form>
         </div>
 

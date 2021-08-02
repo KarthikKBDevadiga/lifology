@@ -335,6 +335,7 @@ export default function University({ profile, university, token }) {
 
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
+    console.log('token ' + token)
     if (token == null || token == '') {
         return {
             redirect: {

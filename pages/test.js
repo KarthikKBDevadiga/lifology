@@ -26,12 +26,38 @@ import Breadcrumbs from '/components/Breadcrumbs'
 import { SchemeGetMIOSCReport } from '/helpers/GraphQLSchemes'
 import cookies from 'next-cookies'
 
+import Draggable from 'react-draggable';
+
+import SortableContainer from 'react-drag-sort'
+
 export default function MIOReport({ profile }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
-
     const index = 4;
+
+    const [collection, setCollection] = useState([
+        { key: 1, value: 'Hello a' },
+        { key: 2, value: 'Hello b' },
+        { key: 3, value: 'Hello c' },
+        { key: 4, value: 'Hello d' },
+        { key: 5, value: 'Hello e' },
+        { key: 6, value: 'Hello e' }
+    ])
+
+
+    const Item = ({ value, index, onRemove, onChange, decorateHandle }) => {
+        return (
+            <div className="shadow rounded p-4 mb-4 bg-white">
+                {decorateHandle(
+                    <div
+                    >{value}
+                    </div>
+                )}
+
+            </div>
+        )
+    }
 
     const pages = [
         {
@@ -41,6 +67,8 @@ export default function MIOReport({ profile }) {
             name: ' Report', href: '#', current: true
         },
     ]
+
+
     return (
         <>
             <MetaLayout title="MIO Assement Reports" description="MIO Assement Reports" />
@@ -55,82 +83,27 @@ export default function MIOReport({ profile }) {
                         <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
-                            <div className="max-w-6xl mx-auto mt-4">
-                                <div className="flex flex-col mt-2">
-
-                                    <div className="max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-4">
-                                        <div className="space-y-6 lg:col-start-1 lg:col-span-2">
-                                            {/* Description list*/}
-                                            <section aria-labelledby="applicant-information-title" >
-                                                <div className="bg-white rounded-md shadow h-30 p-4" style={{ height: "fit-content" }}>
-                                                    <p className="font-medium">Assesment/MIO Assesment</p>
-
-                                                    <div className="sm:flex mt-4">
-                                                        <div className="relative flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                            <img className="w-24 h-24 rounded" src="/img/test.png" />
-                                                            <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white font-medium text-lg">Title</div>
-                                                        </div>
-                                                        <div className="flex">
-                                                            <div>
-                                                                <div className="text-base font-medium">Hello</div>
-                                                                <div className="mt-1 text-xs font-normal text-justify">
-                                                                    Hellodhsdfhdjffhdfhsfhsfhdfhsjksksfg;lnnios ihisdio sbi tk i wyotho
-                                                                </div>
-                                                            </div>
-                                                            <img className="ml-4 w-16 object-contain" src="/img/fitment.png" alt="fitment" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="bg-white rounded-md shadow mt-4 p-4 relative">
-                                                    <div className="flex h-52 text-xs">
-
-                                                        <div className="w-1/5 px-4">
-                                                            <div class="h-full bg-black rounded-t-full"></div>
-                                                        </div>
-                                                        <div className="w-1/5 px-4">
-                                                            <div class="h-full bg-black rounded-t-full"></div>
-                                                        </div>
-                                                        <div className="w-1/5 px-4">
-                                                            <div class="h-full bg-black rounded-t-full"></div>
-                                                        </div>
-                                                        <div className="w-1/5 px-4">
-                                                            <div class="h-full bg-black rounded-t-full"></div>
-                                                        </div>
-                                                        <div className="w-1/5 px-4">
-                                                            <div class="h-full bg-black rounded-t-full"></div>
-                                                        </div>
-                                                        <div className="w-1/5 px-4">
-                                                            <div class="h-full bg-black rounded-t-full"></div>
-                                                        </div>
-                                                        <div className="w-1/5 px-4">
-                                                            <div class="h-full bg-black rounded-t-full"></div>
-                                                        </div>
-                                                        <div className="w-1/5 px-4">
-                                                            <div class="h-full bg-black rounded-t-full"></div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div className="absolute w-full">
-                                                        <div className="h-px bg-black"></div>
-                                                    </div>
-                                                </div>
-
-
-                                            </section>
-
-                                        </div>
-
-                                        <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-2">
-
-                                            <div className="bg-white rounded-md shadow p-4">
-                                                <img src="/img/test.png" />
-                                            </div>
-
-                                        </section>
-                                    </div>
+                            <Draggable
+                                axis="x"
+                                handle=".handle"
+                                defaultPosition={{ x: 0, y: 0 }}
+                                position={null}
+                                grid={[25, 25]}
+                                scale={1}>
+                                <div>
+                                    <div className="handle">Drag from here</div>
+                                    <div>This readme is really dragging on...</div>
                                 </div>
-                            </div>
+                            </Draggable>
+
+                            <SortableContainer
+                                collection={collection}
+                                onChange={collection => {
+                                    console.log('onchange')
+                                    setCollection(collection)
+                                }}
+                                Component={Item}
+                            />
                         </div>
                     </main>
                 </div>

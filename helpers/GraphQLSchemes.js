@@ -502,6 +502,24 @@ query allUniversity($pool_id:Int!,$field_id:Int!){
 }
 `;
 
+export const SchemeGetTopUniversities = gql`
+query{
+  topUniversity(lang_id:1){
+    title
+    university{
+      id
+      name
+      description
+      website
+      logo
+      city
+      state
+      country
+    }
+  }
+}
+`;
+
 export const SchemeGetArticleData = gql`
 query{
   article_video(filter:{pool_id:1}){
