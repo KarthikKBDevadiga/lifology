@@ -133,12 +133,14 @@ export default function CareerVideo({ profile, universities }) {
                                                         <div ref={sliderRef} className="keen-slider">
                                                             {u.university.map((card) => (
                                                                 <div className="keen-slider__slide self-center">
-                                                                    <Link href={{
-                                                                        pathname: '/career_explorer/course_and_university/' + card.id,
-                                                                    }}>
+                                                                    <Link href={'/career_explorer/course_and_university/' + card.id}>
                                                                         <a>
-                                                                            <div className="rounded bg-gray shadow p-2 mx-2 m-4 hover:shadow-lg hover:scale-105 duration-500">
-                                                                                <img className="ml-auto mr-auto" src={Constants.baseUrlImage + card.logo} />
+                                                                            <div className="h-full bg-white overflow-hidden shadow rounded p-4 hover:shadow-xl duration-500">
+                                                                                <img className="w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + card.logo} />
+                                                                                <div className="top-0 mt-4 text-center">
+                                                                                    <div className="text-sm font-bold">{card.name}</div>
+                                                                                    <div className="text-xs mt-2">{card.state ? card.state + ',' : ''} {card.country}</div>
+                                                                                </div>
                                                                             </div>
                                                                         </a>
                                                                     </Link>
