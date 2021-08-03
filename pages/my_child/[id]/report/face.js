@@ -26,10 +26,10 @@ export default function MTIReport({ profile, assessment, report }) {
     const [openIR, setOpenIR] = useState(false)
     const [openHOVY, setOpenHOVY] = useState(false)
     const [openDM, setOpenDM] = useState(false)
-    const [openCS, setOpenCS] = useState(true)
+    const [openCS, setOpenCS] = useState(false)
     const [openCP, setOpenCP] = useState(false)
     const [openAW, setOpenAW] = useState(false)
-    const [openR, setOpenR] = useState(true)
+    const [openR, setOpenR] = useState(false)
 
     var carouselUY
     var carouselIR

@@ -140,7 +140,7 @@ export default function CareerVideo({ videoCats, profile, order }) {
         },
     })
 
-    const [selectedSort, setSelectedSort] = useState('')
+    const [selectedSort, setSelectedSort] = useState((order != null && order != "") ? order : '')
 
     useEffect(() => {
         setSelectedSort(order)
@@ -233,7 +233,7 @@ export default function CareerVideo({ videoCats, profile, order }) {
 
 
 
-                                    <div className="relative flex items-center w-full mt-4">
+                                    {/* <div className="relative flex items-center w-full mt-4">
 
                                         <a
                                             onClick={(event) => {
@@ -296,7 +296,7 @@ export default function CareerVideo({ videoCats, profile, order }) {
                                                 }
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
 
                                     {videoCats[0] != undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">

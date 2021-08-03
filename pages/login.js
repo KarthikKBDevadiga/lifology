@@ -40,7 +40,7 @@ export default function Login({ cs }) {
 
     const [selectedCountry, setSelectedCountry] = useState(cs[104])
     useEffect(() => {
-        document.cookie = 'token='
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT'
     }, [])
     useEffect(() => {
         setTimeout(() => {

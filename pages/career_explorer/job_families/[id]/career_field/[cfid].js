@@ -121,7 +121,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
             name: 'Job Families & Career Fields', href: '/career_explorer/job_families', current: false
         },
         {
-            name: jobFamily.name, href: '/career_explorer/job_families/' + careerField.id, current: false
+            name: jobFamily.name, href: '/career_explorer/job_families/' + jobFamily.id, current: false
         },
         {
             name: careerField.name, href: '#', current: true
@@ -196,8 +196,8 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                                                             pathname: '/career_explorer/course_and_university/' + card.id,
                                                                         }}>
                                                                             <a>
-                                                                                <div className="rounded bg-gray shadow p-2 mx-2 m-4 hover:shadow-lg hover:scale-105 duration-500">
-                                                                                    <img className="ml-auto mr-auto" src={Constants.baseUrlImage + card.logo} />
+                                                                                <div className="rounded bg-gray shadow p-3 mx-2 m-4 hover:shadow-lg hover:scale-105 duration-500">
+                                                                                    <img className="ml-auto mr-auto h-32 object-contain" src={Constants.baseUrlImage + card.logo} />
                                                                                 </div>
                                                                             </a>
                                                                         </Link>
@@ -479,7 +479,7 @@ export async function getServerSideProps(context) {
                 university: []
             }]
         })
-    const universities = universitiesRaw[0] ? universitiesRaw.university ? universitiesRaw.university : [] : []
+    const universities = universitiesRaw[0] != null ? universitiesRaw[0].university != null ? universitiesRaw[0].university : [] : []
 
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",

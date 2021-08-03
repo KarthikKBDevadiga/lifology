@@ -36,12 +36,12 @@ import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
 
 const pageItemCount = 32
-export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, countryFilter, stateFilter, poolIdFilter, fieldIdFilter, rankingFilter, careerPools, token }) {
+export default function CourceAndUniversity({ profile, countries, universities, universitiesCount, page, countryFilter, stateFilter, poolIdFilter, fieldIdFilter, rankingFilter, q, careerPools, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [open, setOpen] = useState(true)
     const [openFilter, setOpenFilter] = useState(false)
-    const [searchText, setSearchText] = useState("")
+    const [searchText, setSearchText] = useState(q)
 
     const ranks = [
         { name: 'Times Rank' },
@@ -85,27 +85,51 @@ export default function CourceAndUniversity({ profile, countries, universities, 
         query.field_id = fieldIdFilter
     if (rankingFilter != null && rankingFilter != "")
         query.ranking = rankingFilter
+    if (q != null && q != "")
+        query.q = q
 
     const applyFilter = (event) => {
-
-        const q = {}
+        const queryParam = {}
         if (selectedCountry.country != null)
-            q.country = selectedCountry.country
+            queryParam.country = selectedCountry.country
         if (selectedState.state != null)
-            q.state = selectedState.state
+            queryParam.state = selectedState.state
         if (selectedCareerPool.id != null)
-            q.pool_id = selectedCareerPool.id
+            queryParam.pool_id = selectedCareerPool.id
         if (selectedCareerField != null && selectedCareerField.id != null)
-            q.field_id = selectedCareerField.id
+            queryParam.field_id = selectedCareerField.id
         if (selectedRanks.name != null && selectedRanks.name != "")
-            q.ranking = selectedRanks.name
+            queryParam.ranking = selectedRanks.name
+        if (searchText != null && searchText != "")
+            queryParam.q = searchText
         router.replace(
             {
                 pathname: '/career_explorer/course_and_university',
-                query: q,
+                query: queryParam,
             }
         )
         setOpenFilter(false)
+    }
+    const search = (event) => {
+        const queryParam = {}
+        if (selectedCountry.country != null)
+            queryParam.country = selectedCountry.country
+        if (selectedState.state != null)
+            queryParam.state = selectedState.state
+        if (selectedCareerPool.id != null)
+            queryParam.pool_id = selectedCareerPool.id
+        if (selectedCareerField != null && selectedCareerField.id != null)
+            queryParam.field_id = selectedCareerField.id
+        if (selectedRanks.name != null && selectedRanks.name != "")
+            queryParam.ranking = selectedRanks.name
+        if (searchText != null && searchText != "")
+            queryParam.q = searchText
+        router.replace(
+            {
+                pathname: '/career_explorer/course_and_university',
+                query: queryParam,
+            }
+        )
     }
 
     const clearFilter = (event) => {
@@ -113,6 +137,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
         setSelectedState({})
         setSelectedCareerPool({})
         setSelectedCareerField({})
+        setSelectedRanks({})
         router.replace(
             {
                 pathname: '/career_explorer/course_and_university',
@@ -159,6 +184,12 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                         (countryFilter == null || countryFilter == '') ? 'bg-lblue text-white' : 'bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white'
                                                     )}
                                                     onClick={(event) => {
+                                                        setSearchText("")
+                                                        setSelectedCountry({})
+                                                        setSelectedState({})
+                                                        setSelectedCareerPool({})
+                                                        setSelectedCareerField({})
+                                                        setSelectedRanks({})
                                                         router.push(
                                                             '/career_explorer/course_and_university'
                                                         )
@@ -172,6 +203,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                         )}
                                                         onClick={(event) => {
                                                             updateCountry(c)
+                                                            setSearchText("")
                                                             router.replace(
                                                                 {
                                                                     pathname: '/career_explorer/course_and_university',
@@ -209,13 +241,18 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                                         <input
                                                             id="search_field"
                                                             name="search_field"
-                                                            className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
+                                                            className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent mr-10"
                                                             placeholder="Search University"
-                                                            type="search"
+                                                            // type="search"
+                                                            value={searchText}
+                                                            onSubmit={search}
                                                             onChange={(e) => setSearchText(e.target.value)}
 
                                                         />
-
+                                                        <button className="flex p-2 w-max absolute right-0 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
+                                                            onClick={search}>
+                                                            <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                                        </button>
                                                     </div>
 
                                                     <button className="flex p-2 w-20 absolute right-0 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
@@ -231,21 +268,11 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                         </div>
 
                                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mt-6">
-                                            {universities.filter((val) => {
-                                                if (searchText.trim() === "") {
-
-                                                    return val;
-                                                }
-                                                if (val.name.toLowerCase().includes(searchText.toLowerCase())) {
-
-                                                    return val;
-                                                }
-                                                return "";
-                                            }).map((u) => (
+                                            {universities.map((u) => (
                                                 <Link href={'/career_explorer/course_and_university/' + u.id}>
                                                     <a>
                                                         <div className="h-full bg-white overflow-hidden shadow rounded p-4 hover:shadow-xl duration-500">
-                                                            <img className="w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
+                                                            <img className="w-full ml-auto mr-auto h-32 object-contain" src={Constants.baseUrlImage + '/' + u.logo} />
                                                             <div className="top-0 mt-4 text-center">
                                                                 <div className="text-sm font-bold">{u.name}</div>
                                                                 <div className="text-xs mt-2">{u.state ? u.state + ',' : ''} {u.country}</div>
@@ -716,13 +743,14 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                 Authorization: "Bearer " + token,
             },
         })
-        queryGraph(careerClient, { pool_id: parseInt(careerPool.id) }, SchemeCareerFields)
-            .then((res) => {
-                setCareerFields(res.careerFields)
-                setSelectedCareerField(fieldIdFilter == -1 ? {} : res.careerFields.find(cf => cf.id == fieldIdFilter))
-            }).catch((networkErr) => {
-                console.log('error')
-            })
+        if (careerPool.id)
+            queryGraph(careerClient, { pool_id: parseInt(careerPool.id) }, SchemeCareerFields)
+                .then((res) => {
+                    setCareerFields(res.careerFields)
+                    setSelectedCareerField(fieldIdFilter == -1 ? {} : res.careerFields.find(cf => cf.id == fieldIdFilter))
+                }).catch((networkErr) => {
+                    console.log('error')
+                })
     }
 
     function updateCountry(country) {
@@ -735,19 +763,20 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                 Authorization: "Bearer " + token,
             },
         })
-        queryGraph(careerClient, { country: country.country }, SchemeGetCountryState)
-            .then((res) => {
-                setStates(res.universityState)
-                setSelectedState(stateFilter == '' ? {} : res.universityState.find(s => s.state == stateFilter))
-            }).catch((networkErr) => {
-                console.log('error')
-            })
+        if (country != null && country.country != null)
+            queryGraph(careerClient, { country: country.country }, SchemeGetCountryState)
+                .then((res) => {
+                    setStates(res.universityState)
+                    setSelectedState(stateFilter == '' ? {} : res.universityState.find(s => s.state == stateFilter))
+                }).catch((networkErr) => {
+                    console.log('error')
+                })
     }
 }
 
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
-    const { page = 1, country = "", state = "", pool_id = -1, field_id = -1, ranking = "" } = context.query
+    const { page = 1, country = "", state = "", pool_id = -1, field_id = -1, ranking = "", q = "" } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -789,6 +818,8 @@ export async function getServerSideProps(context) {
         params.field_id = parseInt(field_id)
     if (ranking != "")
         params.ranking = ranking
+    if (q != "")
+        params.search_keyword = q
 
     const universitiesData = await queryGraph(careerClient,
         params
@@ -811,7 +842,6 @@ export async function getServerSideProps(context) {
             return []
         })
 
-
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -826,7 +856,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { profile, countries, universities, universitiesCount, page, states, countryFilter: country, stateFilter: state, poolIdFilter: pool_id, fieldIdFilter: field_id, rankingFilter: ranking, careerPools, token }
+        props: { profile, countries, universities, universitiesCount, page, states, countryFilter: country, stateFilter: state, poolIdFilter: pool_id, fieldIdFilter: field_id, rankingFilter: ranking, q, careerPools, token }
     }
 }
 

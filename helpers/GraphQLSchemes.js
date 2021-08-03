@@ -361,19 +361,19 @@ query universityDetails($id: Int!){
 `;
 
 export const SchemeGetUniversityPerPage = gql`
-query allUniversity($limit:Int!, $page:Int!, $country:String, $state:String, $pool_id:Int, $field_id:Int, $ranking:String){
-  allUniversity(lang_id:1,filter:{count:true,limit:$limit,page:$page, country:$country, state:$state, pool_id:$pool_id, field_id:$field_id, ranking:$ranking}){
+query allUniversity($limit:Int!, $page:Int!, $country:String, $state:String, $pool_id:Int, $field_id:Int, $ranking:String, $search_keyword:String){
+  allUniversity(lang_id:1,filter:{count:true,limit:$limit,page:$page, country:$country, state:$state, pool_id:$pool_id, field_id:$field_id, ranking:$ranking, search_keyword:$search_keyword}){
     count
     title
     university{
-    id
-    name
-    description
-    website
-    logo
-    city
-    state
-    country
+      id
+      name
+      description
+      website
+      logo
+      city
+      state
+      country
     }
   }
 }

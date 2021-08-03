@@ -33,7 +33,7 @@ const YoutubeDialog = ({ url, showDialog, setShowDialog }) => {
                         leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                         leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
-                        <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full sm:p-4">
+                        <div className="group inline-block align-bottom bg-white rounded-lg px-4 pt-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full sm:p-4">
                             <div>
                                 <div className="text-center">
                                     <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
@@ -46,11 +46,11 @@ const YoutubeDialog = ({ url, showDialog, setShowDialog }) => {
                             <div className="absolute w-8 h-8 top-0 right-0">
                                 <button
                                     type="button"
-                                    className="shadow hover:shadow-xl active:shadow-sm bg-gray-200 hover:bg-gray-300 rounded-bl-2xl w-full h-full focus:outline-none duration-500"
+                                    className="shadow translate-x-8 group-hover:translate-x-0 -translate-y-8 group-hover:translate-y-0 active:shadow-sm bg-lred text-white rounded-bl-2xl w-full h-full focus:outline-none transition ease-out duration-500"
                                     onClick={() => setShowDialog(false)}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
                             </div>

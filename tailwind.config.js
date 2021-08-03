@@ -30,7 +30,7 @@ module.exports = {
         },
         lred: {
           DEFAULT: '#FF0000',
-          dark: '#A40808'
+          dark: '#A40808',
         }
       },
       animation: {
