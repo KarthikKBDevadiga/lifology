@@ -158,6 +158,7 @@ export default function CareerVideo({ videoCats, profile, order }) {
     const [searchText, setSearchText] = useState("");
 
     const clearFilter = (event) => {
+        setSelectedSort('')
         router.replace(
             {
                 pathname: '/career_explorer/career_video',

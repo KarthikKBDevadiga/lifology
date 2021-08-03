@@ -35,6 +35,7 @@ export default function JobFamilies({ families, profile }) {
     const [selectedSort, setSelectedSort] = useState('')
 
     const clearFilter = (event) => {
+        setSelectedSort('')
         router.replace(
             {
                 pathname: '/career_explorer/job_families',
