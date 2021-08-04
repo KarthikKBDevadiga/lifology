@@ -14,11 +14,11 @@ import classNames from '/helpers/classNames'
 import "react-multi-carousel/lib/styles.css";
 
 import ReactCardCarousel from 'react-card-carousel';
-import { SchemeGetAssessment, SchemeGetFACEReport, SchemeGetMTIReport } from '../../../../helpers/GraphQLSchemes'
+import { SchemeGetAssessment, SchemeGetFACEReport, SchemeGetFACEReport2, SchemeGetMTIReport } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
-export default function MTIReport({ profile, assessment, report }) {
+export default function MTIReport({ profile, assessment, report, report2 }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -758,7 +758,140 @@ export default function MTIReport({ profile, assessment, report }) {
                                                 </div>
                                                     : <></>
                                             }
+                                            {
+                                                openCS ? <div className="bg-white rounded-md shadow h-auto p-4">
 
+                                                    <div className="cursor-pointer relative w-full bg-white text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
+                                                        <div className="text-base font-medium">Career Strength</div>
+                                                        <div className="text-sm mt-2">Here is the summary of you core behaviour</div>
+
+                                                    </div>
+                                                    <div style={{
+                                                        position: "relative",
+                                                        height: "400px",
+                                                        width: "100%",
+                                                        display: "flex",
+                                                        flex: 1,
+                                                        justifyContent: "center",
+                                                        alignItems: "middle"
+                                                    }}>
+                                                        <ReactCardCarousel style={{ height: '200px' }}
+                                                            ref={Carousel => carouselCS = Carousel}>
+                                                            {report2.career_strength.map((card) => (
+                                                                <div style={{
+                                                                    height: '100%',
+                                                                    width: '250px',
+                                                                    textAlign: 'center',
+                                                                    background: '#FFF',
+                                                                    border: '2px solid #EEEEEE',
+                                                                    color: '#FFF',
+                                                                    fontSize: '12px',
+                                                                    textTransform: 'uppercase',
+                                                                    borderRadius: '10px',
+                                                                }}>
+                                                                    <img className="rounded-t ml-auto mr-auto w-32 pt-8" src={card.image} />
+                                                                    <div className="mt-4 p-4 w-full text-gray-900 font-medium text-sm text-center">
+                                                                        {card.text}
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                            }
+
+                                                        </ReactCardCarousel>
+                                                    </div>
+                                                    <div className="flex ml-auto mr-auto w-min mt-4">
+                                                        <a
+                                                            onClick={(event) => {
+                                                                carouselCS.prev()
+                                                            }}>
+                                                            <div className="mr-2 cursor-pointer group w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 rounded-full  flex items-center duration-500 -translate-y-2/4">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
+                                                        <a
+                                                            onClick={(event) => {
+                                                                carouselCS.next()
+                                                            }}>
+                                                            <div className="ml-2 cursor-pointer group w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 rounded-full flex items-center duration-500 -translate-y-2/4">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                                    : <></>
+                                            }
+                                            {
+                                                openCP ? <div className="bg-white rounded-md shadow h-auto p-4">
+
+                                                    <div className="cursor-pointer relative w-full bg-white text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500">
+                                                        <div className="text-base font-medium">Communication Pattern</div>
+                                                        <div className="text-sm mt-2">Here is the summary of you core behaviour</div>
+
+                                                    </div>
+                                                    <div style={{
+                                                        position: "relative",
+                                                        height: "400px",
+                                                        width: "100%",
+                                                        display: "flex",
+                                                        flex: 1,
+                                                        justifyContent: "center",
+                                                        alignItems: "middle"
+                                                    }}>
+                                                        <ReactCardCarousel style={{ height: '200px' }}
+                                                            ref={Carousel => carouselCP = Carousel}>
+                                                            {report2.communication_pattern.map((card) => (
+                                                                <div style={{
+                                                                    height: '100%',
+                                                                    width: '250px',
+                                                                    textAlign: 'center',
+                                                                    background: '#FFF',
+                                                                    border: '2px solid #EEEEEE',
+                                                                    color: '#FFF',
+                                                                    fontSize: '12px',
+                                                                    textTransform: 'uppercase',
+                                                                    borderRadius: '10px',
+                                                                }}>
+                                                                    <img className="rounded-t ml-auto mr-auto w-32 pt-8" src={card.image} />
+                                                                    <div className="mt-4 p-4 w-full text-gray-900 font-medium text-sm text-center">
+                                                                        {card.text}
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                            }
+
+                                                        </ReactCardCarousel>
+                                                    </div>
+                                                    <div className="flex ml-auto mr-auto w-min mt-4">
+                                                        <a
+                                                            onClick={(event) => {
+                                                                carouselCP.prev()
+                                                            }}>
+                                                            <div className="mr-2 cursor-pointer group w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 rounded-full  flex items-center duration-500 -translate-y-2/4">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
+                                                        <a
+                                                            onClick={(event) => {
+                                                                carouselCP.next()
+                                                            }}>
+                                                            <div className="ml-2 cursor-pointer group w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 rounded-full flex items-center duration-500 -translate-y-2/4">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                                    : <></>
+                                            }
                                             {
                                                 openAW ?
                                                     <>
@@ -946,14 +1079,17 @@ export async function getServerSideProps(context) {
         })
     const report = await queryGraph(careerClient, {}, SchemeGetFACEReport)
         .then((res) => {
-            console.log(res)
             return res.coreBehaviour1
         }).catch((networkErr) => {
-            console.log('error')
-            console.log(networkErr)
             return {};
         });
-    console.log(report)
+    const report2 = await queryGraph(careerClient, {}, SchemeGetFACEReport2)
+        .then((res) => {
+            return res.coreBehaviour2
+        }).catch((networkErr) => {
+            return {};
+        });
+    console.log(report2)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -968,7 +1104,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, report, token }
+        props: { profile, assessment, report, report2, token }
     }
 }
 

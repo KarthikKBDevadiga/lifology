@@ -119,10 +119,9 @@ export default function CareReport({ profile, assessment, report }) {
                                                 <div className="text-base font-medium p-4">Reports</div>
 
                                                 <img src="/img/mti_report_wmy.png" className="ml-auto mr-auto mt-4" />
-                                                <div className="text-sm  px-8 mt-4 text-center">Cheers! You are almost midway in your journey to achieve your goals. </div>
-                                                <div className="text-sm  px-8 mt-4 text-center">You have the focus, you have the determination... just a little push is all you need to reach for the stars! </div>
-                                                <div className="text-sm  px-8 mt-4 text-center">Follow through your dreams and watch them turn into reality. Add a dash of passion to these dreams, so that you can tirelessly work through challenges and failures. </div>
-                                                <div className="text-sm  px-8 mt-4 pb-4 text-center">Amp up your focus, spike up your grit quotient and then sky is the limit!</div>
+                                                <div className="text-sm  px-8 mt-4 text-center">{report.circle_text}</div>
+                                                <div className="text-sm  px-8 mt-4 text-center">{report.quote_text}</div>
+                                                <div className="text-sm  px-8 mt-4 pb-4 text-center" dangerouslySetInnerHTML={{ __html: report.step_text }} />
                                             </div>
 
 
@@ -171,10 +170,12 @@ export async function getServerSideProps(context) {
         })
     const report = await queryGraph(careerClient, {}, SchemeGetGRITReport)
         .then((res) => {
-            return res.intelligenceOrientation
+            return res.passionPerseverance
         }).catch((networkErr) => {
             return {};
         });
+
+    console.log(report)
 
 
     const profileClient = new ApolloClient({
@@ -191,7 +192,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, token }
+        props: { profile, assessment, token, report }
     }
 }
 

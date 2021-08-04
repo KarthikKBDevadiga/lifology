@@ -738,6 +738,27 @@ query{
 }
 `;
 
+export const SchemeGetFACEReport2 = gql`
+query{
+  coreBehaviour2(lang_id:1){
+    career_strength
+    {
+        label
+        image
+        score
+        text
+    }
+    communication_pattern
+    {
+        label
+        image
+        score
+        text
+    }
+  }
+}
+`;
+
 export const SchemeGetGRITReport = gql`
 query{
   passionPerseverance(lang_id:1){
