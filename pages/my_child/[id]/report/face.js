@@ -789,10 +789,84 @@ export default function MTIReport({ profile, assessment, report, report2 }) {
                                                                     textTransform: 'uppercase',
                                                                     borderRadius: '10px',
                                                                 }}>
-                                                                    <img className="rounded-t ml-auto mr-auto w-32 pt-8" src={card.image} />
-                                                                    <div className="mt-4 p-4 w-full text-gray-900 font-medium text-sm text-center">
-                                                                        {card.text}
+                                                                    <div>
+                                                                        <img className="rounded-t ml-auto mr-auto w-32 pt-8" src={card.image} />
+                                                                        <div className="mt-4 p-4 w-full text-gray-900 font-medium text-sm text-center">
+                                                                            {card.text}
+                                                                        </div>
                                                                     </div>
+                                                                    <div className="flex w-4/6 ml-auto mr-auto pb-4">
+                                                                        <div className="h-3 w-1/5"  >
+                                                                            <div className="h-full w-full rounded-l-full" style={{ background: '#D93F3F' }} />
+                                                                            {
+                                                                                card.score == 1 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                        <div className="h-3 w-1/5"  >
+                                                                            <div className="h-full w-full" style={{ background: '#F57F21' }} />
+                                                                            {
+                                                                                card.score == 2 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                        <div className="w-1/5 h-3">
+
+                                                                            <div className="h-full w-full" style={{ background: '#F7DC1B' }} />
+                                                                            {
+                                                                                card.score == 3 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                        <div className="w-1/5 h-3">
+
+                                                                            <div className="h-full w-full" style={{ background: '#6BBC44' }} />
+                                                                            {
+                                                                                card.score == 4 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                        <div className="w-1/5 h-3">
+
+                                                                            <div className="h-full w-full rounded-r-full" style={{ background: '#40B248' }} />
+                                                                            {
+                                                                                card.score == 5 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="h-4"></div>
+
                                                                 </div>
                                                             ))
                                                             }
@@ -856,10 +930,84 @@ export default function MTIReport({ profile, assessment, report, report2 }) {
                                                                     textTransform: 'uppercase',
                                                                     borderRadius: '10px',
                                                                 }}>
-                                                                    <img className="rounded-t ml-auto mr-auto w-32 pt-8" src={card.image} />
-                                                                    <div className="mt-4 p-4 w-full text-gray-900 font-medium text-sm text-center">
-                                                                        {card.text}
+                                                                    <div>
+                                                                        <img className="rounded-t ml-auto mr-auto w-32 pt-8" src={card.image} />
+                                                                        <div className="mt-4 p-4 w-full text-gray-900 font-medium text-sm text-center">
+                                                                            {card.text}
+                                                                        </div>
                                                                     </div>
+                                                                    <div className="flex w-4/6 ml-auto mr-auto pb-4">
+                                                                        <div className="h-3 w-1/5"  >
+                                                                            <div className="h-full w-full rounded-l-full" style={{ background: '#D93F3F' }} />
+                                                                            {
+                                                                                card.score == 1 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                        <div className="h-3 w-1/5"  >
+                                                                            <div className="h-full w-full" style={{ background: '#F57F21' }} />
+                                                                            {
+                                                                                card.score == 2 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                        <div className="w-1/5 h-3">
+
+                                                                            <div className="h-full w-full" style={{ background: '#F7DC1B' }} />
+                                                                            {
+                                                                                card.score == 3 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                        <div className="w-1/5 h-3">
+
+                                                                            <div className="h-full w-full" style={{ background: '#6BBC44' }} />
+                                                                            {
+                                                                                card.score == 4 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                        <div className="w-1/5 h-3">
+
+                                                                            <div className="h-full w-full rounded-r-full" style={{ background: '#40B248' }} />
+                                                                            {
+                                                                                card.score == 5 ? <svg
+                                                                                    className="w-2 ml-auto mr-auto"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path
+                                                                                        id="path"
+                                                                                        d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                        fill="#000000" />
+                                                                                </svg> : <></>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="h-4"></div>
+
                                                                 </div>
                                                             ))
                                                             }
