@@ -76,11 +76,11 @@ export default function JobFamily({ profile, jobFamily, careerFields }) {
                                                     Career Fields
                                                 </h2>
                                                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-4 lg:grid-cols-4">
-                                                    {careerFields.map((cf) => (
+                                                    {careerFields.map((cf, index) => (
                                                         <Link
                                                             href={'/career_explorer/job_families/' + jobFamily.id + '/career_field/' + cf.id}>
                                                             <a>
-                                                                <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: getColor() }}>
+                                                                <div className="group relative rounded shadow p-4 hover:shadow-xl active:shadow-sm duration-500 h-40" style={{ background: getColor(index) }}>
                                                                     <img src="/img/logoWhite.png" className="absolute h-5 w-5 right-4 " />
                                                                     <div className="text-white text-opacity-20 text-7xl font-bold select-none group-hover:text-opacity-100 duration-500">{cf.name.charAt(0)}</div>
                                                                     <div className="absolute bottom-4 mr-12">
@@ -170,11 +170,15 @@ export default function JobFamily({ profile, jobFamily, careerFields }) {
     )
 }
 
-const getColor = () => {
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16)
-    return "#" + randomColor
-}
+// const getColor = () => {
+//     const randomColor = Math.floor(Math.random() * 16777215).toString(16)
+//     return "#" + randomColor
+// }
+const colors = ['#F15223', '#9366FF', '#6ED96E', '#FFC400', '#FF7A66', '#66BDFF', '#02C77D', '#FFC107']
 
+const getColor = (index) => {
+    return colors[index % 8]
+}
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
     if (token == null || token == '') {

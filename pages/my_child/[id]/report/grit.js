@@ -54,9 +54,13 @@ export default function CareReport({ profile, assessment, report }) {
                                                     <p className="font-medium">Assesment/GRIT Assesment</p>
 
                                                     <div className="sm:flex mt-4">
-                                                        <div className="relative flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                        {/* <div className="relative flex-shrink-0 sm:mb-0 sm:mr-4">
                                                             <img className="w-24 h-24 rounded" src={assessment.dash_cards_image} />
                                                             <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white font-medium text-lg">{assessment.title}</div>
+                                                        </div> */}
+                                                        <div className="h-24 mr-4 rounded" style={{ backgroundImage: 'url("' + assessment.dash_cards_image + '")' }}>
+                                                            {/* <img className="w-full h-24 rounded" src="https://cdn.lifology.com/m/dash/card_small_1.jpg" /> */}
+                                                            <div className="p-4 text-white font-medium text-lg">{assessment.title}</div>
                                                         </div>
                                                         <div className="flex">
                                                             <div>

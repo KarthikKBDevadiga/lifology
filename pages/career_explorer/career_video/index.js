@@ -45,7 +45,7 @@ const headerSlide = [
     }
 ]
 
-export default function CareerVideo({ videoCats, profile, order }) {
+export default function CareerVideo({ videoCats, profile, order, q }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -69,13 +69,7 @@ export default function CareerVideo({ videoCats, profile, order }) {
         },
     })
 
-
-
     const [sliderRef1, slider1] = useKeenSlider({
-        initial: 0,
-        loop: false,
-        controls: true,
-        duration: 500,
         breakpoints: {
             "(min-width: 464px)": {
                 slidesPerView: 1,
@@ -89,10 +83,6 @@ export default function CareerVideo({ videoCats, profile, order }) {
         },
     })
     const [sliderRef2, slider2] = useKeenSlider({
-        initial: 0,
-        loop: false,
-        controls: true,
-        duration: 500,
         breakpoints: {
             "(min-width: 464px)": {
                 slidesPerView: 1,
@@ -106,10 +96,6 @@ export default function CareerVideo({ videoCats, profile, order }) {
         },
     })
     const [sliderRef3, slider3] = useKeenSlider({
-        initial: 0,
-        loop: false,
-        controls: true,
-        duration: 500,
         breakpoints: {
             "(min-width: 464px)": {
                 slidesPerView: 1,
@@ -123,10 +109,19 @@ export default function CareerVideo({ videoCats, profile, order }) {
         },
     })
     const [sliderRef4, slider4] = useKeenSlider({
-        initial: 0,
-        loop: false,
-        controls: true,
-        duration: 500,
+        breakpoints: {
+            "(min-width: 464px)": {
+                slidesPerView: 1,
+            },
+            "(min-width: 768px)": {
+                slidesPerView: 2,
+            },
+            "(min-width: 1200px)": {
+                slidesPerView: 4,
+            },
+        },
+    })
+    const [sliderRef5, slider5] = useKeenSlider({
         breakpoints: {
             "(min-width: 464px)": {
                 slidesPerView: 1,
@@ -153,23 +148,27 @@ export default function CareerVideo({ videoCats, profile, order }) {
         { name: 'Career Videos', href: '#', current: true },
     ]
 
-    //const [hide,setHide]=useState(true);
-
-    const [searchText, setSearchText] = useState("");
+    const [searchText, setSearchText] = useState(q);
 
     const clearFilter = (event) => {
         setSelectedSort('')
+        const queryParam = {}
+        if (searchText != null && searchText != "")
+            queryParam.q = searchText
         router.replace(
             {
                 pathname: '/career_explorer/career_video',
+                query: queryParam,
             }
         )
         setOpenFilter(false)
     }
     const applyFilter = (event) => {
         const q = {}
-        if (selectedSort != null)
+        if (selectedSort != null && selectedSort != "")
             q.order = selectedSort
+        if (searchText != null && searchText != "")
+            q.q = searchText
         console.log(q)
         router.replace(
             {
@@ -178,6 +177,32 @@ export default function CareerVideo({ videoCats, profile, order }) {
             }
         )
         setOpenFilter(false)
+    }
+    const search = (event) => {
+        const queryParam = {}
+        if (selectedSort != null && selectedSort != "")
+            queryParam.order = selectedSort
+        if (searchText != null && searchText != "")
+            queryParam.q = searchText
+        console.log(queryParam)
+        router.replace(
+            {
+                pathname: '/career_explorer/career_video',
+                query: queryParam,
+            }
+        )
+    }
+    const clearQuery = (event) => {
+        setSearchText("")
+        const queryParam = {}
+        if (selectedSort != null && selectedSort != "")
+            queryParam.order = selectedSort
+        router.replace(
+            {
+                pathname: '/career_explorer/career_video',
+                query: queryParam,
+            }
+        )
     }
     return (
         <>
@@ -197,39 +222,62 @@ export default function CareerVideo({ videoCats, profile, order }) {
                             <div className="max-w-6xl mx-auto">
                                 <div className="flex flex-col">
                                     <Breadcrumbs pages={pages} />
-                                    <div className="sm:flex sm:items-start sm:justify-between mx-4">
 
+                                    <div className="sm:flex h-full w-full">
+                                        <div className="w-full h-8">
+                                            <label htmlFor="search_field" className="sr-only">
+                                                Search
+                                            </label>
+                                            <div className="relative w-full text-gray-400 ">
+                                                <div className="flex absolute rounded bg-white left-4 shadow right-28 focus-within:text-gray-600 ">
+                                                    <div className="p-2 items-center pointer-events-none" aria-hidden="true">
+                                                        <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                                    </div>
+                                                    <input
+                                                        id="search_field"
+                                                        name="search_field"
+                                                        className="self-center block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent mr-10"
+                                                        placeholder="Search Video"
+                                                        value={searchText}
+                                                        onSubmit={search}
+                                                        onChange={(e) => setSearchText(e.target.value)}
 
-                                        <div className="w-full rounded shadow h-full text-sm bg-white">
-                                            <div className="flex left-4  right-24 focus-within:text-gray-600 ">
-                                                <div className="p-3 items-center pointer-events-none" aria-hidden="true">
-                                                    <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                                    />
+                                                    <button className="flex p-2 w-max absolute right-0 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
+                                                        onClick={search}>
+                                                        <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                                    </button>
                                                 </div>
-                                                <input
-                                                    id="search_field"
-                                                    name="search_field"
-                                                    className="block w-full h-full p-3 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
-                                                    placeholder="Search Any Videos"
-                                                    type="search"
-                                                    onChange={(e) => setSearchText(e.target.value)}
-                                                />
+
+                                                <button className="flex p-2 w-20 absolute right-4 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
+                                                    onClick={(event) => {
+                                                        setOpenFilter(true)
+                                                    }}>
+                                                    <div>Filter</div>
+                                                    <img className="ml-2" src="/img/filter-icon.png" />
+                                                </button>
                                             </div>
                                         </div>
-                                        <div className="mt-4 sm:mt-0 sm:ml-4 sm:flex-shrink-0 sm:flex sm:items-center">
-                                            <a onClick={(event) => {
-                                                setOpenFilter(true)
-                                            }}>
-                                                <div
-                                                    className="cursor-pointer inline-flex items-center p-3 border border-transparent shadow-sm font-medium rounded-md text-white bg-lblue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-                                                >
-                                                    <div>Filter</div>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                        </div>
                                     </div>
+
+                                    {
+                                        q != null && q != "" ?
+                                            <div className="mx-4">
+                                                <div
+                                                    className=" relative w-full mt-4 px-4 text-left sm:text-sm"
+                                                >
+                                                    <span className="font-medium block truncate">Search Results for "{q}"</span>
+                                                    <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                                                        <div onClick={clearQuery}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                        </div>
+                                                    </span>
+                                                </div>
+
+                                            </div> : <></>
+                                    }
 
 
 
@@ -298,611 +346,95 @@ export default function CareerVideo({ videoCats, profile, order }) {
                                             </div>
                                         </div>
                                     </div> */}
-
-
-                                    {videoCats[0] != undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="text-black mx-4 block text-base font-bold">
-                                                {videoCats[0].name}
-                                            </div>
-                                            <Link href={{
-                                                pathname: '/career_explorer/career_video/view_all',
-                                                query: { cId: videoCats[0].id },
-                                            }}>
-                                                <a>
-                                                    <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                        View All
-                                                    </div>
-                                                </a>
-                                            </Link>
-
-                                        </div>
-                                        <div className="relative flex items-center">
-                                            <a
-                                                onClick={(event) => {
-                                                    slider1.prev()
-                                                }}>
-                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                            <a
-                                                onClick={(event) => {
-                                                    slider1.next()
-                                                }}>
-                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                            <div className="navigation-wrapper w-full">
-                                                <div ref={sliderRef1} className="keen-slider">
-                                                    {videoCats[0].videos.filter((card) => {
-                                                        if (!videoCats[0]) {
-                                                            setHide(false);
-                                                        }
-                                                        if (searchText.trim() === "") {
-
-                                                            return card;
-                                                        }
-                                                        if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
-
-
-                                                            return card;
-                                                        }
-                                                        return "";
-                                                    }).map((card) => (
-                                                        <div className="keen-slider__slide">
-                                                            <Link href={'/career_explorer/career_video/' + card.id} key={card.id}>
-                                                                <a>
-                                                                    <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
-                                                                        <div>
-                                                                            <img className="rounded-t group-hover:filter-none duration-500" src={card.thumbnail} />
-                                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
-                                                                            <div className="flex-1 flex items-center justify-between truncate">
-                                                                                <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                                    <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
-                                                                                        {card.title}
-                                                                                    </div>
-                                                                                    <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
-                                                                            {({ open }) => (
-                                                                                <>
-                                                                                    <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none hover:bg-white hover:bg-opacity-30 rounded-full p-2 duration-500">
-                                                                                        <span className="sr-only">Open options</span>
-                                                                                        <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
-                                                                                    </Menu.Button>
-                                                                                    <Transition
-                                                                                        show={open}
-                                                                                        as={Fragment}
-                                                                                        enter="transition ease-out duration-100"
-                                                                                        enterFrom="transform opacity-0 scale-95"
-                                                                                        enterTo="transform opacity-100 scale-100"
-                                                                                        leave="transition ease-in duration-75"
-                                                                                        leaveFrom="transform opacity-100 scale-100"
-                                                                                        leaveTo="transform opacity-0 scale-95"
-                                                                                    >
-                                                                                        <Menu.Items
-                                                                                            static
-                                                                                            className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
-                                                                                        >
-                                                                                            <div className="py-1">
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            View
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                            </div>
-                                                                                            <div className="py-1">
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            Removed from pinned
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            Share
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                            </div>
-                                                                                        </Menu.Items>
-                                                                                    </Transition>
-                                                                                </>
-                                                                            )}
-                                                                        </Menu>
-                                                                    </div>
-                                                                </a>
-                                                            </Link>
-
+                                    {
+                                        videoCats.map((videoCat, index) => {
+                                            // const [sliderRef, slider] = useKeenSlider({
+                                            //     breakpoints: {
+                                            //         "(min-width: 464px)": {
+                                            //             slidesPerView: 1,
+                                            //         },
+                                            //         "(min-width: 768px)": {
+                                            //             slidesPerView: 2,
+                                            //         },
+                                            //         "(min-width: 1200px)": {
+                                            //             slidesPerView: 4,
+                                            //         },
+                                            //     },
+                                            // })
+                                            const sliderRef = index == 0 ? sliderRef1 : index == 1 ? sliderRef2 : index == 2 ? sliderRef3 : index == 3 ? sliderRef4 : sliderRef5
+                                            const slider = index == 0 ? slider1 : index == 1 ? slider2 : index == 2 ? slider3 : index == 3 ? slider4 : slider5
+                                            return (
+                                                <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        <div className="text-black mx-4 block text-base font-bold">
+                                                            {videoCat.name}
                                                         </div>
-                                                    ))
-                                                    }
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>}
-
-
-                                    {videoCats[1] != undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="text-black mx-4 block text-base font-bold">
-                                                {videoCats[1].name}
-                                            </div>
-                                            <Link href={{
-                                                pathname: '/career_explorer/career_video/view_all',
-                                                query: { cId: videoCats[1].id },
-                                            }}>
-                                                <a>
-                                                    <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                        View All
+                                                        <Link href={{
+                                                            pathname: '/career_explorer/career_video/view_all',
+                                                            query: { cId: videoCat.id },
+                                                        }}>
+                                                            <a>
+                                                                <div className="text-sm text-right text-indigo-700 mx-4 ">
+                                                                    View All
+                                                                </div>
+                                                            </a>
+                                                        </Link>
                                                     </div>
-                                                </a>
-                                            </Link>
-                                        </div>
-                                        <div className="relative flex items-center">
-                                            <a
-                                                onClick={(event) => {
-                                                    slider2.prev()
-                                                }}>
-                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                            <a
-                                                onClick={(event) => {
-                                                    slider2.next()
-                                                }}>
-                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                            <div className="navigation-wrapper w-full">
-                                                <div ref={sliderRef2} className="keen-slider">
-                                                    {videoCats[1].videos.filter((card) => {
-                                                        if (searchText.trim() === "") {
-
-                                                            return card;
-                                                        }
-                                                        if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
-
-
-                                                            return card;
-                                                        }
-                                                        return "";
-                                                    }).map((card) => (
-                                                        <div className="keen-slider__slide">
-                                                            <Link href={'/career_explorer/career_video/' + card.id} key={card.id}>
-                                                                <a>
-                                                                    <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
-                                                                        <div>
-                                                                            <img className=" rounded-t  group-hover:filter-none duration-500" src={card.thumbnail} />
-                                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
-                                                                            <div className="flex-1 flex items-center justify-between truncate">
-                                                                                <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                                    <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
-                                                                                        {card.title}
+                                                    <div className="relative flex items-center">
+                                                        <a
+                                                            onClick={(event) => {
+                                                                slider.prev()
+                                                            }}>
+                                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
+                                                        <a
+                                                            onClick={(event) => {
+                                                                slider.next()
+                                                            }}>
+                                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
+                                                        <div className="navigation-wrapper w-full">
+                                                            <div ref={sliderRef} className="keen-slider">
+                                                                {
+                                                                    videoCat.videos.map((video) => (
+                                                                        <div className="keen-slider__slide">
+                                                                            <Link href={'/career_explorer/career_video/' + video.id} key={video.id}>
+                                                                                <a>
+                                                                                    <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
+                                                                                        <div>
+                                                                                            <img className="rounded-t group-hover:filter-none duration-500 w-full h-32 object-cover" src={video.thumbnail} />
+                                                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
+                                                                                            <div className="flex-1 flex items-center justify-between truncate">
+                                                                                                <div className="flex-1 px-4 py-2 text-sm truncate">
+                                                                                                    <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
+                                                                                                        {video.title}
+                                                                                                    </div>
+                                                                                                    <div className="text-gray-500 mt-2 w-full overflow-hidden">{video.description}</div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
-                                                                                </div>
-                                                                            </div>
+                                                                                </a>
+                                                                            </Link>
+
                                                                         </div>
-
-                                                                        <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
-                                                                            {({ open }) => (
-                                                                                <>
-                                                                                    <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none hover:bg-white hover:bg-opacity-30 rounded-full p-2 duration-500">
-                                                                                        <span className="sr-only">Open options</span>
-                                                                                        <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
-                                                                                    </Menu.Button>
-                                                                                    <Transition
-                                                                                        show={open}
-                                                                                        as={Fragment}
-                                                                                        enter="transition ease-out duration-100"
-                                                                                        enterFrom="transform opacity-0 scale-95"
-                                                                                        enterTo="transform opacity-100 scale-100"
-                                                                                        leave="transition ease-in duration-75"
-                                                                                        leaveFrom="transform opacity-100 scale-100"
-                                                                                        leaveTo="transform opacity-0 scale-95"
-                                                                                    >
-                                                                                        <Menu.Items
-                                                                                            static
-                                                                                            className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
-                                                                                        >
-                                                                                            <div className="py-1">
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            View
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                            </div>
-                                                                                            <div className="py-1">
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            Removed from pinned
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            Share
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                            </div>
-                                                                                        </Menu.Items>
-                                                                                    </Transition>
-                                                                                </>
-                                                                            )}
-                                                                        </Menu>
-                                                                    </div>
-                                                                </a>
-                                                            </Link>
-
+                                                                    ))
+                                                                }
+                                                            </div>
                                                         </div>
-                                                    ))
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>}
-
-                                    {videoCats[2] != undefined && <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="text-black mx-4 block text-base font-bold">
-                                                {videoCats[2].name}
-                                            </div>
-
-                                            <Link href={{
-                                                pathname: '/career_explorer/career_video/view_all',
-                                                query: { cId: videoCats[2].id },
-                                            }}>
-                                                <a>
-                                                    <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                        View All
                                                     </div>
-                                                </a>
-                                            </Link>
-                                        </div>
-                                        <div className="relative flex items-center">
-                                            <a
-                                                onClick={(event) => {
-                                                    slider3.prev()
-                                                }}>
-                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                                    </svg>
                                                 </div>
-                                            </a>
-                                            <a
-                                                onClick={(event) => {
-                                                    slider3.next()
-                                                }}>
-                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                            <div className="navigation-wrapper w-full">
-                                                <div ref={sliderRef3} className="keen-slider">
-                                                    {videoCats[2].videos.filter((card) => {
-                                                        if (searchText.trim() === "") {
-
-                                                            return card;
-                                                        }
-                                                        if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
-
-
-                                                            return card;
-                                                        }
-                                                        return "";
-                                                    }).map((card) => (
-                                                        <div className="keen-slider__slide">
-                                                            <Link href={'/career_explorer/career_video/' + card.id} key={card.id}>
-                                                                <a>
-                                                                    <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
-                                                                        <div>
-                                                                            <img className=" rounded-t  group-hover:filter-none duration-500" src={card.thumbnail} />
-                                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
-                                                                            <div className="flex-1 flex items-center justify-between truncate">
-                                                                                <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                                    <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
-                                                                                        {card.title}
-                                                                                    </div>
-                                                                                    <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
-                                                                            {({ open }) => (
-                                                                                <>
-                                                                                    <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none hover:bg-white hover:bg-opacity-30 rounded-full p-2 duration-500">
-                                                                                        <span className="sr-only">Open options</span>
-                                                                                        <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
-                                                                                    </Menu.Button>
-                                                                                    <Transition
-                                                                                        show={open}
-                                                                                        as={Fragment}
-                                                                                        enter="transition ease-out duration-100"
-                                                                                        enterFrom="transform opacity-0 scale-95"
-                                                                                        enterTo="transform opacity-100 scale-100"
-                                                                                        leave="transition ease-in duration-75"
-                                                                                        leaveFrom="transform opacity-100 scale-100"
-                                                                                        leaveTo="transform opacity-0 scale-95"
-                                                                                    >
-                                                                                        <Menu.Items
-                                                                                            static
-                                                                                            className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
-                                                                                        >
-                                                                                            <div className="py-1">
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            View
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                            </div>
-                                                                                            <div className="py-1">
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            Removed from pinned
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            Share
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                            </div>
-                                                                                        </Menu.Items>
-                                                                                    </Transition>
-                                                                                </>
-                                                                            )}
-                                                                        </Menu>
-                                                                    </div>
-                                                                </a>
-                                                            </Link>
-
-                                                        </div>
-                                                    ))
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>}
-
-                                    {videoCats[3] != undefined && <div className="m-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="text-black mx-4 block text-base font-bold">
-                                                {videoCats[3].name}
-                                            </div>
-                                            <Link href={{
-                                                pathname: '/career_explorer/career_video/view_all',
-                                                query: { cId: videoCats[3].id },
-                                            }}>
-                                                <a>
-                                                    <div className="text-sm text-right text-indigo-700 mx-4 ">
-                                                        View All
-                                                    </div>
-                                                </a>
-                                            </Link>
-                                        </div>
-                                        <div className="relative flex items-center">
-                                            <a
-                                                onClick={(event) => {
-                                                    slider4.prev()
-                                                }}>
-                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                            <a
-                                                onClick={(event) => {
-                                                    slider4.next()
-                                                }}>
-                                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                            <div className="navigation-wrapper w-full">
-                                                <div ref={sliderRef4} className="keen-slider">
-                                                    {videoCats[3].videos.filter((card) => {
-                                                        if (searchText.trim() === "") {
-
-                                                            return card;
-                                                        }
-                                                        if (card.title.toLowerCase().includes(searchText.toLowerCase())) {
-
-
-                                                            return card;
-                                                        }
-                                                        return "";
-                                                    }).map((card) => (
-                                                        <div className="keen-slider__slide">
-                                                            <Link href={'/career_explorer/career_video/' + card.id} key={card.id}>
-                                                                <a>
-                                                                    <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
-                                                                        <div>
-                                                                            <img className=" rounded-t group-hover:filter-none duration-500" src={card.thumbnail} />
-                                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
-                                                                            <div className="flex-1 flex items-center justify-between truncate">
-                                                                                <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                                    <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
-                                                                                        {card.title}
-                                                                                    </div>
-                                                                                    <div className="text-gray-500 mt-2 w-full overflow-hidden">{card.description}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <Menu as="div" className="absolute top-0 right-0 flex-shrink-0">
-                                                                            {({ open }) => (
-                                                                                <>
-                                                                                    <Menu.Button className="inline-flex items-center justify-center text-white focus:outline-none hover:bg-white hover:bg-opacity-30 rounded-full p-2 duration-500">
-                                                                                        <span className="sr-only">Open options</span>
-                                                                                        <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
-                                                                                    </Menu.Button>
-                                                                                    <Transition
-                                                                                        show={open}
-                                                                                        as={Fragment}
-                                                                                        enter="transition ease-out duration-100"
-                                                                                        enterFrom="transform opacity-0 scale-95"
-                                                                                        enterTo="transform opacity-100 scale-100"
-                                                                                        leave="transition ease-in duration-75"
-                                                                                        leaveFrom="transform opacity-100 scale-100"
-                                                                                        leaveTo="transform opacity-0 scale-95"
-                                                                                    >
-                                                                                        <Menu.Items
-                                                                                            static
-                                                                                            className="z-10 mx-1 origin-top-right absolute right-8 top-4 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
-                                                                                        >
-                                                                                            <div className="py-1">
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            View
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                            </div>
-                                                                                            <div className="py-1">
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            Removed from pinned
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                                <Menu.Item>
-                                                                                                    {({ active }) => (
-                                                                                                        <a
-                                                                                                            href="#"
-                                                                                                            className={classNames(
-                                                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                                'block px-4 py-2 text-sm'
-                                                                                                            )}
-                                                                                                        >
-                                                                                                            Share
-                                                                                                        </a>
-                                                                                                    )}
-                                                                                                </Menu.Item>
-                                                                                            </div>
-                                                                                        </Menu.Items>
-                                                                                    </Transition>
-                                                                                </>
-                                                                            )}
-                                                                        </Menu>
-                                                                    </div>
-                                                                </a>
-                                                            </Link>
-
-                                                        </div>
-                                                    ))
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>}
+                                            )
+                                        })
+                                    }
 
                                     <div className="h-4"></div>
                                 </div>
@@ -1065,7 +597,7 @@ export default function CareerVideo({ videoCats, profile, order }) {
 
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
-    const { order = "" } = context.query
+    const { order = "", q = "" } = context.query
     if (token == null || token == '') {
         return {
             redirect: {
@@ -1084,6 +616,8 @@ export async function getServerSideProps(context) {
     const params = {}
     if (order != "")
         params.order = order
+    if (q != "")
+        params.search_keyword = q
     const videoCats = await queryGraph(videosClient, params, SchemeGetVideos)
         .then((res) => {
             return res.videos
@@ -1104,7 +638,7 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { videoCats, profile, order }
+        props: { videoCats, profile, order, q }
     }
 }
 

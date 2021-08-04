@@ -222,8 +222,8 @@ mutation editProfile($profile_image:String,$country_abbr:String!, $email:String!
 `;
 
 export const SchemeGetVideos = gql`
-query videos($order:String){
-  videos(lang_id:1,filter:{search_keyword:"",order:$order}){
+query videos($order:String, $search_keyword:String){
+  videos(lang_id:1,filter:{search_keyword:$search_keyword,order:$order}){
     id
     name
     videos{

@@ -22,7 +22,7 @@ import { Bar } from 'react-chartjs-2'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
-export default function VAKReport({ profile, assessment, report }) {
+export default function VAKReport({ profile, assessment, reports }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -33,20 +33,20 @@ export default function VAKReport({ profile, assessment, report }) {
         duration: 500,
         slidesPerView: 1,
     })
-    const reports = [
-        {
-            image: '/img/vak_report.png',
-            text: 'You may be able to bring people together to achieve your goals'
-        },
-        {
-            image: '/img/vak_report.png',
-            text: 'You may be able to bring people together to achieve your goals'
-        },
-        {
-            image: '/img/vak_report.png',
-            text: 'You may be able to bring people together to achieve your goals'
-        }
-    ]
+    // const reports = [
+    //     {
+    //         image: '/img/vak_report.png',
+    //         text: 'You may be able to bring people together to achieve your goals'
+    //     },
+    //     {
+    //         image: '/img/vak_report.png',
+    //         text: 'You may be able to bring people together to achieve your goals'
+    //     },
+    //     {
+    //         image: '/img/vak_report.png',
+    //         text: 'You may be able to bring people together to achieve your goals'
+    //     }
+    // ]
     const chartData = {
         labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
         datasets: [
@@ -107,10 +107,10 @@ export default function VAKReport({ profile, assessment, report }) {
                                                 <div className="bg-white rounded-md shadow h-30 p-4" style={{ height: "fit-content" }}>
                                                     <p className="font-medium">Assesment / Competency Assesment</p>
 
-                                                    <div className="sm:flex mt-4">
-                                                        <div className="relative flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                            <img className="w-24 h-24 rounded" src="https://cdn.lifology.com/m/dash/card_small_1.jpg" />
-                                                            <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white font-medium text-lg">{assessment.title}</div>
+                                                    <div className="sm:flex mt-4 ">
+                                                        <div className="h-24 mr-4 rounded" style={{ backgroundImage: 'url("https://cdn.lifology.com/m/dash/card_small_1.jpg")' }}>
+                                                            {/* <img className="w-full h-24 rounded" src="https://cdn.lifology.com/m/dash/card_small_1.jpg" /> */}
+                                                            <div className="p-4 text-white font-medium text-lg">{assessment.title}</div>
                                                         </div>
                                                         <div className="flex">
                                                             <div>
@@ -158,17 +158,52 @@ export default function VAKReport({ profile, assessment, report }) {
                                                                 <div>
                                                                     <img className="rounded-t ml-auto mr-auto" src={card.image} />
                                                                     <div className="mt-2 pb-4 w-full text-gray-900 font-medium text-center">
-                                                                        {card.text}
+                                                                        {card.info}
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex w-4/6 ml-auto mr-auto pb-4">
-                                                                    <div className="h-6 w-1/6 rounded-l-full" style={{ background: '#D93F3F' }} />
-                                                                    <div className="h-6 w-1/6" style={{ background: '#F14B25' }} />
-                                                                    <div className="h-6 w-1/6" style={{ background: '#F57F21' }} />
-                                                                    <div className="h-6 w-1/6" style={{ background: '#F7DC1B' }} />
-                                                                    <div className="h-6 w-1/6" style={{ background: '#6BBC44' }} />
-                                                                    <div className="h-6 w-1/6 rounded-r-full" style={{ background: '#40B248' }} />
+                                                                    <div className="h-3 w-1/3"  >
+                                                                        <div className="h-full w-full rounded-l-full" style={{ background: '#D93F3F' }} />
+                                                                        {
+                                                                            card.score == 1 ? <svg
+                                                                                className="w-4 ml-auto mr-auto"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path
+                                                                                    id="path"
+                                                                                    d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                    fill="#000000" />
+                                                                            </svg> : <></>
+                                                                        }
+                                                                    </div>
+                                                                    <div className="h-3 w-1/3"  >
+                                                                        <div className="h-full w-full" style={{ background: '#FFC400' }} />
+                                                                        {
+                                                                            card.score == 2 ? <svg
+                                                                                className="w-4 ml-auto mr-auto"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path
+                                                                                    id="path"
+                                                                                    d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                    fill="#000000" />
+                                                                            </svg> : <></>
+                                                                        }
+                                                                    </div>
+                                                                    <div className="w-1/3 h-3">
+
+                                                                        <div className="h-full w-full rounded-r-full" style={{ background: '#40B248' }} />
+                                                                        {
+                                                                            card.score == 3 ? <svg
+                                                                                className="w-4 ml-auto mr-auto"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path
+                                                                                    id="path"
+                                                                                    d="M 0 24 L 24 24 L 12 0 Z"
+                                                                                    fill="#000000" />
+                                                                            </svg> : <></>
+                                                                        }
+                                                                    </div>
                                                                 </div>
+                                                                <div className="h-4"></div>
 
                                                             </div>
 
@@ -247,13 +282,13 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {}
         })
-    const report = await queryGraph(careerClient, {}, SchemeGetCompetencyReport)
+    const reports = await queryGraph(careerClient, {}, SchemeGetCompetencyReport)
         .then((res) => {
             return res.competencies
         }).catch((networkErr) => {
             return {};
         });
-    console.log(report)
+    console.log(reports)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -268,7 +303,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, report, token }
+        props: { profile, assessment, reports, token }
     }
 }
 

@@ -118,7 +118,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
                         setSuccessDialog(false)
                         router.push({
                             pathname: '/my_child/' + assessment.id + '/report/' + assessment.title.toLowerCase(),
-                            query: { token: authToken }
                         })
                     }, 1000)
                 } else {

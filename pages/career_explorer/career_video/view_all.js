@@ -85,7 +85,7 @@ export default function CareerVideoViewAll({ profile, cId, videos, videosCount, 
                                                             <a>
                                                                 <div className="group relative shadow rounded hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                                                     <div>
-                                                                        <img className=" rounded-t group-hover:filter-none duration-500" src={video.thumbnail} />
+                                                                        <img className=" rounded-t group-hover:filter-none duration-500  w-full h-32 object-cover" src={video.thumbnail} />
                                                                         <div className="flex-1 flex items-center justify-between truncate">
                                                                             <div className="flex-1 px-4 py-2 text-sm truncate">
                                                                                 <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">

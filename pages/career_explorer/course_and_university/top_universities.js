@@ -219,7 +219,7 @@ export default function CareerVideo({ profile, universities }) {
                                                                     <Link href={'/career_explorer/course_and_university/' + card.id}>
                                                                         <a>
                                                                             <div className="h-full bg-white overflow-hidden shadow rounded p-4 hover:shadow-xl duration-500">
-                                                                                <img className="w-full ml-auto mr-auto object-contain" src={Constants.baseUrlImage + '/' + card.logo} />
+                                                                                <img className="w-full ml-auto mr-auto h-32 object-contain" src={Constants.baseUrlImage + '/' + card.logo} />
                                                                                 <div className="top-0 mt-4 text-center">
                                                                                     <div className="text-sm font-bold">{card.name}</div>
                                                                                     <div className="text-xs mt-2">{card.state ? card.state + ',' : ''} {card.country}</div>
