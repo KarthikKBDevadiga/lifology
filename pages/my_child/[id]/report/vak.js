@@ -19,6 +19,7 @@ import { useKeenSlider } from 'keen-slider/react'
 import ReactCardCarousel from 'react-card-carousel';
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
+import { SchemeGetVAKReport } from '../../../../helpers/GraphQLSchemes'
 
 export default function VAKReport({ profile, assessment, report }) {
     const router = useRouter()
@@ -126,9 +127,9 @@ export default function VAKReport({ profile, assessment, report }) {
                                                             fontSize: '6px',
                                                         }}
                                                         data={[
-                                                            { title: 'Seeing', value: 31, color: 'purple' },
-                                                            { title: 'Hearing', value: 33.3, color: 'blue' },
-                                                            { title: 'Doing', value: 35.6, color: 'orange' },
+                                                            { title: 'Seeing', value: report.percentage.seeing, color: 'purple' },
+                                                            { title: 'Hearing', value: report.percentage.hearing, color: 'blue' },
+                                                            { title: 'Doing', value: report.percentage.doing, color: 'orange' },
                                                         ]}
                                                     />
                                                     <div className="flex text-sm items-center w-max ml-auto mr-auto mt-4">
@@ -270,9 +271,9 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {}
         })
-    const report = await queryGraph(careerClient, {}, SchemeGetMIOReport)
+    const report = await queryGraph(careerClient, {}, SchemeGetVAKReport)
         .then((res) => {
-            return res.intelligenceOrientation
+            return res.learningStyles
         }).catch((networkErr) => {
             return {};
         });

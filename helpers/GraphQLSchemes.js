@@ -665,6 +665,20 @@ query{
 }
 `;
 
+export const SchemeGetVAKReport = gql`
+query{
+  learningStyles(lang_id:1){
+   title
+   content
+   percentage{
+    seeing
+    hearing
+    doing
+   }
+}
+  }
+`;
+
 export const SchemeGetMTIReport = gql`
 query{
   environmentalInteractions(lang_id:1){
