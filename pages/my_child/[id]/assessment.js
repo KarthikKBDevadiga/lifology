@@ -73,7 +73,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
                 value: option
             })
         })
-        console.log(o)
         setOrderedOptions(o)
     }
     const answer = event => {
@@ -83,7 +82,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
             orderedOptions.map((option) => {
                 scores.push(parseInt(option.value.score))
             })
-            console.log(scores)
         }
         else if (assessment.assessment_type == 2) {
             if (selectedOption.score == null) {
@@ -111,7 +109,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
             SchemeAnswerAssessmentQuestion)
             .then((res) => {
                 setLoadingDialog(false)
-                console.log(questionNo + ' ' + questions.length)
                 if (questionNo == (assessment.attempted_questions + questions.length)) {
                     setSuccessDialog(true)
                     setTimeout(() => {
@@ -123,16 +120,13 @@ export default function Assessment({ profile, assessment, questions, token }) {
                 } else {
                     slider.next()
                 }
-                console.log('Success')
             }).catch((networkErr) => {
                 setLoadingDialog(false)
-                console.log('Error')
             });
     }
 
 
     const Item = ({ value, index, onRemove, onChange, decorateHandle }) => {
-        console.log()
         return (
             <div className="shadow rounded p-4 mb-4 bg-white">
                 {decorateHandle(
@@ -198,7 +192,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                         <div className="navigation-wrapper">
                                             <div ref={sliderRef} className="keen-slider">
                                                 {
-                                                    questions.map((question) => {
+                                                    questions.map((question, qIndex) => {
                                                         return (
                                                             <div className="keen-slider__slide number-slide1 py-4 px-2">
                                                                 <div className="mb-8">
@@ -222,22 +216,45 @@ export default function Assessment({ profile, assessment, questions, token }) {
                                                                                                 >
                                                                                                     {({ checked }) => (
                                                                                                         <>
-                                                                                                            <div className={
-                                                                                                                classNames(
-                                                                                                                    checked ?
-                                                                                                                        checkedC + '  shadow-xl text-white' :
-                                                                                                                        uncheckedC + ' shadow text-gray-900',
-                                                                                                                    "w-full h-full items-center px-4 py-4 rounded-lg  hover:shadow-xl duration-500"
-                                                                                                                )
-                                                                                                            }>
-                                                                                                                <div className="text-base z-50">
-                                                                                                                    <RadioGroup.Label as="div" className=
-                                                                                                                        "font-medium text-center"
-                                                                                                                    >
-                                                                                                                        {option.label}
-                                                                                                                    </RadioGroup.Label>
-                                                                                                                </div>
-                                                                                                            </div>
+                                                                                                            {
+                                                                                                                qIndex % 2 == 0 ?
+                                                                                                                    <div className={
+                                                                                                                        classNames(
+                                                                                                                            checked ?
+                                                                                                                                checkedC + '  shadow-xl text-white' :
+                                                                                                                                uncheckedC + ' shadow text-gray-900',
+                                                                                                                            "w-full h-full items-center px-4 py-4 rounded-lg  hover:shadow-xl duration-500"
+                                                                                                                        )
+                                                                                                                    }>
+                                                                                                                        <div className="text-base z-50">
+                                                                                                                            <RadioGroup.Label as="div" className="font-medium text-center">
+                                                                                                                                {option.label}
+                                                                                                                            </RadioGroup.Label>
+                                                                                                                        </div>
+                                                                                                                    </div> :
+                                                                                                                    <div className="group relative">
+                                                                                                                        <svg className={
+                                                                                                                            classNames(
+                                                                                                                                checked ? 'text-lgreen' : 'text-lgrey-light group-hover:text-lgreen',
+                                                                                                                                "h-32 duration-500"
+                                                                                                                            )
+                                                                                                                        } viewBox='0 0 120 100' xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                                                                                                            <path d='M38,2 L82,2 A12,12 0 0,1 94,10 L112,44 A12,12 0 0,1 112,56 L94,90 A12,12 0 0,1 82,98 L38,98 A12,12 0 0,1 26,90 L8,56 A12,12 0 0,1 8,44 L26,10 A12,12 0 0,1 38,2' />
+                                                                                                                        </svg>
+                                                                                                                        <div className="absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4">
+                                                                                                                            <RadioGroup.Label as="div" className={
+                                                                                                                                classNames(
+                                                                                                                                    checked ? 'text-white' : '',
+                                                                                                                                    "font-medium text-center group-hover:text-white"
+                                                                                                                                )
+                                                                                                                            }>
+                                                                                                                                {option.label}
+                                                                                                                            </RadioGroup.Label>
+                                                                                                                        </div>
+
+                                                                                                                    </div>
+                                                                                                            }
+
                                                                                                         </>
                                                                                                     )}
                                                                                                 </RadioGroup.Option>

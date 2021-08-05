@@ -110,6 +110,7 @@ export default function CourceAndUniversity({ profile, countries, universities, 
         )
         setOpenFilter(false)
     }
+
     const search = (event) => {
         const queryParam = {}
         if (selectedCountry.country != null)

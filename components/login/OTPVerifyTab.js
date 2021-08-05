@@ -19,11 +19,21 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
 
                             <input
                                 ref={oneRef}
+                                // onKeyPress={(event) => {
+                                //     if (!/[0-9]/.test(event.key)) {
+                                //         event.preventDefault();
+                                //     }
+                                // }}
                                 onKeyUp={(event) => {
                                     if (event.keyCode == 8) {
 
                                     } else {
-                                        twoRef.current.focus()
+                                        if (!/[0-9]/.test(event.key))
+                                            oneRef.current.value = ''
+                                        else
+                                            twoRef.current.focus()
+
+
                                     }
                                 }}
                                 onFocus={(event) => {
@@ -31,10 +41,11 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 }}
                                 id="one"
                                 name="one"
-                                type="phone"
+                                type="tel"
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
+                                pattern="[0-9]"
                             />
                             <input
                                 ref={twoRef}
@@ -42,7 +53,10 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     if (event.keyCode == 8) {
                                         oneRef.current.focus()
                                     } else {
-                                        threeRef.current.focus()
+                                        if (!/[0-9]/.test(event.key))
+                                            twoRef.current.value = ''
+                                        else
+                                            threeRef.current.focus()
                                     }
                                 }}
                                 onFocus={(event) => {
@@ -61,7 +75,10 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     if (event.keyCode == 8) {
                                         twoRef.current.focus()
                                     } else {
-                                        fourRef.current.focus()
+                                        if (!/[0-9]/.test(event.key))
+                                            threeRef.current.value = ''
+                                        else
+                                            fourRef.current.focus()
                                     }
                                 }}
                                 onFocus={(event) => {
@@ -80,7 +97,10 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     if (event.keyCode == 8) {
                                         threeRef.current.focus()
                                     } else {
-                                        fiveRef.current.focus()
+                                        if (!/[0-9]/.test(event.key))
+                                            fourRef.current.value = ''
+                                        else
+                                            fiveRef.current.focus()
                                     }
                                 }}
                                 onFocus={(event) => {
@@ -99,7 +119,10 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     if (event.keyCode == 8) {
                                         fourRef.current.focus()
                                     } else {
-                                        sixRef.current.focus()
+                                        if (!/[0-9]/.test(event.key))
+                                            fiveRef.current.value = ''
+                                        else
+                                            sixRef.current.focus()
                                     }
                                 }}
                                 onFocus={(event) => {
@@ -118,7 +141,10 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                     if (event.keyCode == 8) {
                                         fiveRef.current.focus()
                                     } else {
-                                        verifyRef.current.click()
+                                        if (!/[0-9]/.test(event.key))
+                                            sixRef.current.value = ''
+                                        else
+                                            verifyRef.current.click()
                                         // sixRef.current.focus()
                                     }
                                 }}

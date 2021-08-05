@@ -328,8 +328,8 @@ query{
 `;
 
 export const SchemeGetUniversity = gql`
-query universityDetails($id: Int!){
-  universityDetails(id:$id,lang_id:1){
+query universityDetails($id: Int!, $pool_id:Int, $field_id:Int){
+  universityDetails(id:$id,lang_id:1, pool_id:$pool_id,field_id:$field_id){
     id
     name
     description
@@ -454,6 +454,17 @@ query{
 }
 `;
 
+export const SchemeAllUniversityCareerPools = gql`
+query universityPool($college_id:Int!){
+  universityPool(college_id:$college_id,lang_id:1){
+    id
+    name
+    image
+    thumbnail
+  }
+}
+`;
+
 export const SchemeCareerFields = gql`
 query careerFields($pool_id:Int!){
   careerFields(lang_id:1,pool_id:$pool_id){
@@ -483,6 +494,17 @@ query careerFields($pool_id:Int!){
 }
 `;
 
+export const SchemeUniversityCareerFields = gql`
+query universityFields($college_id:Int!, $pool_id:Int!){
+  universityFields(college_id:$college_id,lang_id:1,pool_id:$pool_id){
+    id
+    pool_id
+    name
+    image
+    thumbnail
+  }
+}
+`;
 
 export const SchemeGetUniversities = gql`
 query allUniversity($pool_id:Int!,$field_id:Int!){

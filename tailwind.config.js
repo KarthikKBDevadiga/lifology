@@ -17,6 +17,7 @@ module.exports = {
         lgrey: {
           DEFAULT: '#F8F8F8',
           bg: '#F8F8F8',
+          light: '#F3F3F3',
           border: '#F2F2F2',
           dark: '#9A9A9A'
         },
