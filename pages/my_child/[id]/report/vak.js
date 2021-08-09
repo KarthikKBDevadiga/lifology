@@ -90,9 +90,9 @@ export default function VAKReport({ profile, assessment, report }) {
                                                             <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white font-medium text-lg">{assessment.title}</div>
                                                         </div> */}
 
-                                                        <div className="h-24 mr-4 rounded" style={{ backgroundImage: 'url("' + assessment.dash_cards_image + '")' }}>
+                                                        <div className="h-24 mr-4 rounded flex bg-no-repeat" style={{ backgroundImage: 'url("' + assessment.dash_cards_image + '")' }}>
                                                             {/* <img className="w-full h-24 rounded" src="https://cdn.lifology.com/m/dash/card_small_1.jpg" /> */}
-                                                            <div className="p-4 text-white font-medium text-lg">{assessment.title}</div>
+                                                            <div className="p-4 min-w-6 text-white font-medium text-lg text-center">{assessment.title}</div>
                                                         </div>
                                                         <div className="flex">
                                                             <div>

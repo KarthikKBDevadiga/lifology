@@ -9,6 +9,9 @@ module.exports = {
       fontFamily: {
         roboto: ['Roboto'],
       },
+      minWidth: {
+        6: '6rem'
+      },
       colors: {
         lblue: {
           light: '#21AAED',

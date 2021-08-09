@@ -909,3 +909,37 @@ query{
   }
 }
 `;
+export const SchemeGetCoachesList = gql`
+query{
+  coaches(filter:{search_keyword:"",gender:""}){
+    id
+    name
+    rating
+    profile_image
+    country_code
+    mobile_number
+    bio
+    coaching_category,
+    location,
+    language,
+  }
+}
+`;
+export const SchemeGetPackagesList = gql`
+query{
+  coachingPackages{
+    id
+    title
+    description
+    thumbnail
+    video
+	  no_sessions
+    purchase_status
+    coaching_packages_prices{
+      label
+      price
+      currency_code
+    }
+  }
+}
+`;
