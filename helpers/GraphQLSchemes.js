@@ -925,6 +925,33 @@ query{
   }
 }
 `;
+
+export const SchemeGetCoacheDetails = gql`
+query CoachDetails($id:Int!){
+  CoachDetails(id:$id){
+    id
+    name
+    rating
+    profile_image
+    country_code
+    mobile_number
+    bio
+    coaching_category,
+    location,
+    language,
+    slots{
+      date
+      times
+      {
+        start_time
+        end_time
+      }
+    }
+    purpose
+  }
+}
+`;
+
 export const SchemeGetPackagesList = gql`
 query{
   coachingPackages{
@@ -939,6 +966,31 @@ query{
       label
       price
       currency_code
+    }
+  }
+}
+`;
+export const SchemeGetPackageDetails = gql`
+query coachingPackageDetails($id:Int!){
+  coachingPackageDetails(id:$id){
+    id
+    title
+    description
+    thumbnail
+    video
+		no_sessions
+    coaching_packages_prices{
+      price
+    }
+    coaching_package_session_titles{
+      title
+      coaching_package_sessions{
+        id
+        title
+        description
+        purpose
+        session_time
+      }
     }
   }
 }

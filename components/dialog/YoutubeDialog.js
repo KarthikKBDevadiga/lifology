@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 const YoutubeDialog = ({ url, showDialog, setShowDialog }) => {
+    const videoType = getVideoType(url)
     return (
         <Transition.Root show={showDialog} as={Fragment}>
             <Dialog as="div" static className="fixed z-10 inset-0 overflow-y-auto" open={showDialog} onClose={setShowDialog}>
@@ -37,9 +38,9 @@ const YoutubeDialog = ({ url, showDialog, setShowDialog }) => {
                             <div>
                                 <div className="text-center">
                                     <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
-                                        <iframe title="vimeo-player" src="https://www.youtube.com/embed/PCwL3-hkKrg" className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
-
+                                        <iframe title="vimeo-player" src={videoType == 'youtube' ? url : videoType == 'vimeo' ? 'https://player.vimeo.com/video/' + getVimeoVideoId(url) : 'https://www.youtube.com/embed/PCwL3-hkKrg'} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
                                         </iframe>
+
                                     </div>
                                 </div>
                             </div>
@@ -60,6 +61,23 @@ const YoutubeDialog = ({ url, showDialog, setShowDialog }) => {
             </Dialog>
         </Transition.Root>
     )
+}
+function getVideoType($url) {
+    if ($url.includes('youtube')) {
+        return 'youtube'
+    } else if ($url.includes('vimeo')) {
+        return 'vimeo'
+    } else {
+        return 'unknown'
+    }
+}
+function getVimeoVideoId(url) {
+    var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
+    var match = url.match(regExp);
+    if (match) {
+        return match[2]
+    }
+    return ''
 }
 
 export default YoutubeDialog

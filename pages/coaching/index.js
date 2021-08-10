@@ -109,8 +109,8 @@ export default function Coacging({ profile, coaches, packages }) {
                                     <div ref={packagesSliderRef} className="mx-2 keen-slider">
                                         {
                                             packages.map((video) => (
-                                                <div className="keen-slider__slide">
-                                                    <div className="group relative bg-white shadow mx-2 my-4 rounded m-1 duration-500" style={{}}>
+                                                <div className="keen-slider__slide py-4 ">
+                                                    <div className="group relative bg-white shadow mx-2 h-full rounded m-1 duration-500" style={{}}>
                                                         <div>
                                                             <img className="rounded-t duration-500 w-full h-32 object-cover ml-auto mr-auto" src={video.thumbnail} />
                                                             {/* <img className=" rounded-t " src={card.thumbnail} /> */}
@@ -130,15 +130,15 @@ export default function Coacging({ profile, coaches, packages }) {
                                                                     <div className="w-1/2 text-gray-900 font-medium">
                                                                         Services
                                                                     </div>
-                                                                    <div className="mt-2 text-xs" >
+                                                                    <div className="mt-2 text-xs text-justify" >
                                                                         {video.description}
                                                                     </div>
                                                                     <div className="flex w-full mt-2">
-                                                                        <div className="w-1/2 text-center py-2 bg-lyellow rounded-full text-white my-2 mr-2 text-xs">
+                                                                        <div className="w-1/2 text-center py-2 bg-lyellow rounded-full text-white mt-2 mr-2 text-xs">
                                                                             Book Demo
                                                                         </div>
-                                                                        <Link href={'/coaching/service/' + video.id}>
-                                                                            <a className="w-1/2 py-2 bg-lblue  rounded-full my-2 ml-2 hover:scale-105 duration-200">
+                                                                        <Link href={'/coaching/package/' + video.id}>
+                                                                            <a className="w-1/2 py-2 bg-lblue  rounded-full mt-2 ml-2 hover:scale-105 duration-200">
                                                                                 <div className="text-center text-white text-xs">
                                                                                     Purchase Now
                                                                                 </div>
@@ -148,6 +148,8 @@ export default function Coacging({ profile, coaches, packages }) {
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+
                                                         </div>
                                                     </div>
 
@@ -179,7 +181,7 @@ export default function Coacging({ profile, coaches, packages }) {
                                         coachesSlider.prev()
                                     }}>
                                     <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-200" fill="none" viewBox="0 0 24 24" stroke="white">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                                         </svg>
                                     </div>
@@ -189,7 +191,7 @@ export default function Coacging({ profile, coaches, packages }) {
                                         coachesSlider.next()
                                     }}>
                                     <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-200" fill="none" viewBox="0 0 24 24" stroke="white">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
                                     </div>
@@ -199,7 +201,7 @@ export default function Coacging({ profile, coaches, packages }) {
                                         {
                                             coaches.map((coach) => (
                                                 <div className="keen-slider__slide">
-                                                    <Link href={'/career_explorer/career_video/' + coach.id} key={coach.id}>
+                                                    <Link href={'/coaching/coach/' + coach.id} key={coach.id}>
                                                         <a>
                                                             <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500 pt-4" style={{}}>
                                                                 <div>
@@ -211,7 +213,7 @@ export default function Coacging({ profile, coaches, packages }) {
                                                                                 {coach.name}
                                                                             </div>
                                                                             <div className="text-gray-500 mt-1 w-full overflow-hidden text-center text-xs">{coach.coaching_category}</div>
-                                                                            <div className="flex w-min ml-auto mr-auto mt-1">
+                                                                            <div className="flex w-min ml-auto mr-auto mt-1 mb-2">
                                                                                 <div className={coach.rating >= 1 ? 'text-lyellow' : 'text-gray-400'}>
 
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
