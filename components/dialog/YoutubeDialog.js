@@ -63,7 +63,9 @@ const YoutubeDialog = ({ url, showDialog, setShowDialog }) => {
     )
 }
 function getVideoType($url) {
-    if ($url.includes('youtube')) {
+    if ($url == null) {
+        return 'unknown'
+    } else if ($url.includes('youtube')) {
         return 'youtube'
     } else if ($url.includes('vimeo')) {
         return 'vimeo'
