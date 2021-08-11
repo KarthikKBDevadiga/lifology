@@ -20,7 +20,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import Breadcrumbs from '../../components/Breadcrumbs'
 
-export default function Coacging({ profile, coaches, packages }) {
+export default function Coaching({ profile, coaches, packages }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -111,12 +111,10 @@ export default function Coacging({ profile, coaches, packages }) {
                                             packages.map((video) => (
                                                 <div className="keen-slider__slide py-4 ">
                                                     <div className="group relative bg-white shadow mx-2 h-full rounded m-1 duration-500" style={{}}>
-                                                        <div>
+                                                        <div className="mb-12">
                                                             <img className="rounded-t duration-500 w-full h-32 object-cover ml-auto mr-auto" src={video.thumbnail} />
-                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                                             <div className="flex-1 flex items-center justify-between ">
                                                                 <div className="flex-1 px-4 py-2 text-sm ">
-
                                                                     <div className="flex w-full mt-2">
                                                                         <div className="w-1/2 text-gray-900 font-medium">
                                                                             {video.title}
@@ -127,30 +125,36 @@ export default function Coacging({ profile, coaches, packages }) {
                                                                         </div>
                                                                     </div>
                                                                     <div className="w-full h-px bg-lgrey-border mt-2 mb-2"></div>
+
                                                                     <div className="w-1/2 text-gray-900 font-medium">
                                                                         Services
                                                                     </div>
                                                                     <div className="mt-2 text-xs text-justify" >
                                                                         {video.description}
                                                                     </div>
-                                                                    <div className="flex w-full mt-2">
-                                                                        <div className="w-1/2 text-center py-2 bg-lyellow rounded-full text-white mt-2 mr-2 text-xs">
-                                                                            Book Demo
-                                                                        </div>
-                                                                        <Link href={'/coaching/package/' + video.id}>
-                                                                            <a className="w-1/2 py-2 bg-lblue  rounded-full mt-2 ml-2 hover:scale-105 duration-200">
-                                                                                <div className="text-center text-white text-xs">
-                                                                                    Purchase Now
-                                                                                </div>
-                                                                            </a>
-                                                                        </Link>
 
-                                                                    </div>
+
                                                                 </div>
                                                             </div>
 
+                                                        </div>
+
+
+                                                        <div className="flex w-full px-4 absolute bottom-4">
+                                                            <div className="w-1/2 text-center py-2 bg-lyellow rounded-full text-white mt-2 mr-2 text-xs">
+                                                                Book Demo
+                                                            </div>
+                                                            <Link href={'/coaching/package/' + video.id}>
+                                                                <a className="w-1/2 py-2 bg-lblue  rounded-full mt-2 ml-2 hover:scale-105 duration-200">
+                                                                    <div className="text-center text-white text-xs">
+                                                                        Purchase Now
+                                                                    </div>
+                                                                </a>
+                                                            </Link>
 
                                                         </div>
+
+
                                                     </div>
 
                                                 </div>
@@ -167,7 +171,7 @@ export default function Coacging({ profile, coaches, packages }) {
                                 <div className="text-black mx-4 block text-base font-bold">
                                     Our Coaches
                                 </div>
-                                <Link href="#">
+                                <Link href="/coaching/coach/list">
                                     <a>
                                         <div className="text-sm text-right text-indigo-700 mx-4 ">
                                             View All

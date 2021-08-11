@@ -42,7 +42,7 @@ export default function ServiceDetails({ profile, token, coachPackage, coach }) 
 
     const pages = [
         {
-            name: 'Coaching', href: '/coaching', current: true
+            name: 'Coaching', href: '/coaching', current: false
         },
         {
             name: coach.name, href: '#', current: true
@@ -202,7 +202,7 @@ export async function getServerSideProps(context) {
             return res.CoachDetails
         }).catch((networkErr) => {
             return []
-        });
+        })
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),

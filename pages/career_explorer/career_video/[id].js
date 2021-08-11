@@ -23,14 +23,14 @@ import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
 
-function getVideoId(url) {
-    var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
-    var match = url.match(regExp);
-    if (match) {
-        return match[2]
-    }
-    return ''
-}
+// function getVideoId(url) {
+//     var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
+//     var match = url.match(regExp);
+//     if (match) {
+//         return match[2]
+//     }
+//     return ''
+// }
 
 export default function CareerVideoDetail({ profile, video, recommended, token }) {
     const router = useRouter()
@@ -62,24 +62,19 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                 video_id: Number(video.id)
             }, SchemeVideoStatus)
             .then((res) => {
-                console.log("like status", res);
                 setVideoStatus(res.checkVideoStatus)
 
             }).catch((networkErr) => {
-
-                console.log(networkErr)
             });
     }
 
     useEffect(() => {
         getVideoStatus();
-        console.log(videoStatus)
     }, [video.id])
 
 
 
     const addToWatchLater = (id) => {
-        //console.log("video id",id)
 
         mutateGraph(client,
             {
@@ -87,27 +82,21 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
             }, SchemeAddWatchLater)
             .then((res) => {
                 // setVideoStatus(res.checkVideoStatus);
-                console.log("watch later api", res);
             }).catch((networkErr) => {
 
-                console.log(networkErr)
             });
         getVideoStatus();
 
     }
 
     const addToLike = (id) => {
-        //console.log("video id",id,videoStatus)
         if (videoStatus.like_status == 1) {
             mutateGraph(client,
                 {
                     video_id: Number(id)
                 }, SchemeNoAction)
                 .then((res) => {
-                    console.log("remove like video api", res);
                 }).catch((networkErr) => {
-
-                    console.log(networkErr)
                 });
         }
         else {
@@ -116,10 +105,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                     video_id: Number(id)
                 }, SchemeAddLike)
                 .then((res) => {
-                    console.log("like video api", res);
                 }).catch((networkErr) => {
-
-                    console.log(networkErr)
                 });
         }
 
@@ -127,7 +113,6 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
     }
 
     const addToDislike = (id) => {
-        console.log("video id", id, videoStatus)
         if (videoStatus.like_status == 0) {
 
             mutateGraph(client,
@@ -135,10 +120,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                     video_id: Number(id)
                 }, SchemeNoAction)
                 .then((res) => {
-                    console.log("remove dislike video api", res);
                 }).catch((networkErr) => {
-
-                    console.log(networkErr)
                 });
         }
         else {
@@ -147,15 +129,13 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                     video_id: Number(id)
                 }, SchemeAddDislike)
                 .then((res) => {
-                    console.log("dislike video api", res);
                 }).catch((networkErr) => {
-
-                    console.log(networkErr)
                 });
         }
 
         getVideoStatus();
     }
+    const videoType = getVideoType(video.video)
     return (
         <>
 
@@ -183,7 +163,11 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                             <section aria-labelledby="applicant-information-title" >
                                                 <div className="bg-white shadow sm:rounded-lg p-4">
                                                     <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
-                                                        <iframe title="vimeo-player" src={"https://player.vimeo.com/video/" + getVideoId(video.video)} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
+                                                        <iframe title="vimeo-player" src=
+                                                            {
+                                                                videoType == 'youtube' ? 'https://www.youtube.com/embed/' + getYoutubeVideoId(video.video) : videoType == 'vimeo' ?
+                                                                    "https://player.vimeo.com/video/" + getVimeoVideoId(video.video) : ''
+                                                            } className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
 
                                                         </iframe>
                                                     </div>
@@ -247,7 +231,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                         <a>
                                                             <div className="flex my-4">
                                                                 <div className="mr-4 mt-2 flex-shrink-0 self-start">
-                                                                    <img className="w-20 rounded object-cover" src={r.thumbnail} />
+                                                                    <img className="w-20 h-12 rounded object-cover" src={r.thumbnail} />
                                                                 </div>
                                                                 <div className="self-center">
                                                                     <h4 className="text-sm font-bold">{r.title}</h4>
@@ -274,9 +258,32 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
         </>
     )
 }
+function getVideoType($url) {
+    if ($url == null) {
+        return 'unknown'
+    } else if ($url.includes('youtu')) {
+        return 'youtube'
+    } else if ($url.includes('vimeo')) {
+        return 'vimeo'
+    } else {
+        return 'unknown'
+    }
+}
+function getVimeoVideoId(url) {
+    var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
+    var match = url.match(regExp);
+    if (match) {
+        return match[2]
+    }
+    return ''
+}
+function getYoutubeVideoId(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return (match && match[7].length == 11) ? match[7] : false;
+}
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
-    console.log('vid' + token)
     if (token == null || token == '') {
         return {
             redirect: {

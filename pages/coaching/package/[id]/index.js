@@ -16,18 +16,18 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
-import { SchemeGetUniversity, SchemeAddBookmark, SchemeVideoStatus, SchemeGetUniversityBookmark, SchemeUpdateUniversityBookmark, SchemeAllUniversityCareerPools, SchemeUniversityCareerFields, SchemeGetPackageDetails, SchemeGetCoachesList } from '../../../helpers/GraphQLSchemes'
-import { mutateGraph } from '../../../helpers/GraphQLCaller'
-import Breadcrumbs from '../../../components/Breadcrumbs'
+import { SchemeGetUniversity, SchemeAddBookmark, SchemeVideoStatus, SchemeGetUniversityBookmark, SchemeUpdateUniversityBookmark, SchemeAllUniversityCareerPools, SchemeUniversityCareerFields, SchemeGetPackageDetails, SchemeGetCoachesList } from '/helpers/GraphQLSchemes'
+import { mutateGraph } from '/helpers/GraphQLCaller'
+import Breadcrumbs from '/components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
-import LoadingDialog from '../../../components/dialog/LoadingDialog'
-import NotificationLayout from '../../../components/NotificationLayout'
+import LoadingDialog from '/components/dialog/LoadingDialog'
+import NotificationLayout from '/components/NotificationLayout'
 import classNames from '/helpers/classNames'
 
 import Expand from 'react-expand-animated'
-import YoutubeDialog from '../../../components/dialog/YoutubeDialog'
+import YoutubeDialog from '/components/dialog/YoutubeDialog'
 import Link from 'next/link'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
@@ -42,7 +42,7 @@ export default function ServiceDetails({ profile, token, coachPackage, coaches }
 
     const pages = [
         {
-            name: 'Coaching', href: '/coaching', current: true
+            name: 'Coaching', href: '/coaching', current: false
         },
         {
             name: coachPackage.title, href: '/career_explorer/#', current: true
@@ -95,7 +95,7 @@ export default function ServiceDetails({ profile, token, coachPackage, coaches }
                                                         <div className="px-4 ml-auto text-center py-2 bg-lyellow rounded-full text-white mr-2 text-xs">
                                                             Book Demo
                                                         </div>
-                                                        <Link href={'/coaching/package/' + coachPackage.id}>
+                                                        <Link href={'/coaching/package/' + coachPackage.id + '/payment'}>
                                                             <a className="px-4 py-2 bg-lblue  rounded-full ml-2 hover:scale-105 duration-200">
                                                                 <div className="text-center text-white text-xs">
                                                                     Purchase Now
@@ -166,7 +166,7 @@ export default function ServiceDetails({ profile, token, coachPackage, coaches }
                                                     <div className="text-black mx-4 block text-base font-bold">
                                                         Our Coaches
                                                     </div>
-                                                    <Link href="#">
+                                                    <Link href="/coaching/coach/list">
                                                         <a>
                                                             <div className="text-sm text-right text-indigo-700 mx-4 ">
                                                                 View All
