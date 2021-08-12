@@ -895,6 +895,7 @@ mutation universityBookmark($college_id:Int!){
     }
   }
 `;
+
 export const SchemeGetUniversityBookmarkList = gql`
 query{
   universities{
@@ -909,6 +910,7 @@ query{
   }
 }
 `;
+
 export const SchemeGetCoachesList = gql`
 query{
   coaches(filter:{search_keyword:"",gender:""}){
@@ -970,6 +972,7 @@ query{
   }
 }
 `;
+
 export const SchemeGetPackageDetails = gql`
 query coachingPackageDetails($id:Int!){
   coachingPackageDetails(id:$id){
@@ -994,4 +997,15 @@ query coachingPackageDetails($id:Int!){
     }
   }
 }
+`;
+
+export const SchemeCreateOrder = gql`
+  mutation createOrder($coupon_code: String,$item_id: Int!, $currency: String!, $order_type: String!) {
+    createOrder(coupon_code: $coupon_code,item_id: $item_id, currency: $currency,order_type:$order_type ) {
+      id
+      currency
+      amount
+      discount
+    }
+  }
 `;

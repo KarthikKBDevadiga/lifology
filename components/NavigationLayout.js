@@ -329,7 +329,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen }) => {
                             <div className="absolute mt-6 pt-6 bottom-0 border-0">
                                 <div className="px-2 space-y-1 text-center">
                                     <span className="px-2 bg-white text-center text-gray-900 font-bold">Download Our App</span>
-                                    <a href="https://play.google.com/store/apps/details?id=com.app.lifology" >
+                                    <a target="_blank" href="https://play.google.com/store/apps/details?id=com.app.lifology" >
                                         <img className="mt-4 ml-auto mr-auto w-3/5" src="/img/play-store.png" />
                                     </a>
                                     {/* <a href="#">

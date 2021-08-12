@@ -45,7 +45,7 @@ export default function ServiceDetails({ profile, token, coachPackage, coaches }
             name: 'Coaching', href: '/coaching', current: false
         },
         {
-            name: coachPackage.title, href: '/career_explorer/#', current: true
+            name: coachPackage.title, href: '#', current: true
         },
     ]
 

@@ -91,7 +91,7 @@ export default function ServiceDetails({ profile, token, coachPackage, coach }) 
                                                         <img className="object-contain rounded-full w-24 h-24 object-cover" src={coach.profile_image} />
                                                     </div>
                                                     <div className="w-full self-center text-left">
-                                                        <div className="mt-2 w-full text-gray-900 font-medium text-base">
+                                                        <div className="w-full text-gray-900 font-medium text-base">
                                                             {coach.name}
                                                         </div>
                                                         <div className="text-gray-500 mt-1 w-full overflow-hidden text-sm">{coach.coaching_category}</div>
@@ -130,7 +130,7 @@ export default function ServiceDetails({ profile, token, coachPackage, coach }) 
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="mt-4">
+                                                <div className="mt-4 text-sm text-justify">
                                                     {coach.bio}
                                                 </div>
                                             </div>
