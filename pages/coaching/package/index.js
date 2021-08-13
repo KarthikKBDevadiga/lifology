@@ -160,23 +160,23 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                 </div>
                                                 <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-3 lg:grid-cols-5">
                                                     <div>
-                                                        <img src="/img/hiw1.png" className="m-auto h-16 w-16" />
+                                                        <img src="/img/hiw1.png" className="m-auto h-16 w-16 object-cover" />
                                                         <div className="mt-2 text-xs text-center font-medium">Complete The Assessment</div>
                                                     </div>
                                                     <div>
-                                                        <img src="/img/hiw2.png" className="m-auto h-16 w-16" />
+                                                        <img src="/img/hiw2.png" className="m-auto h-16 w-16 object-cover" />
                                                         <div className="mt-2 text-xs text-center font-medium">Purchase the coaching package</div>
                                                     </div>
                                                     <div>
-                                                        <img src="/img/hiw3.png" className="m-auto h-16 w-16" />
+                                                        <img src="/img/hiw3.png" className="m-auto h-16 w-16 object-cover" />
                                                         <div className="mt-2 text-xs text-center font-medium">Get matched with a right coach</div>
                                                     </div>
                                                     <div>
-                                                        <img src="/img/hiw4.png" className="m-auto h-16 w-16" />
+                                                        <img src="/img/hiw4.png" className="m-auto h-16 w-16 object-cover" />
                                                         <div className="mt-2 text-xs text-center font-medium">Take appointment</div>
                                                     </div>
                                                     <div>
-                                                        <img src="/img/hiw5.png" className="m-auto h-16 w-16" />
+                                                        <img src="/img/hiw5.png" className="m-auto h-16 w-16 object-cover" />
                                                         <div className="mt-2 text-xs text-center font-medium">Start coaching</div>
                                                     </div>
                                                 </div>
@@ -266,7 +266,12 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                     {purchasedPackage.coaching_packages.coach_details.bio}
                                                 </div>
                                                 <div className="flex mt-4">
-                                                    <div className="px-4 py-2 bg-lblue rounded-full w-1/2 text-center text-sm text-white mr-2">View Profile</div>
+                                                    <Link href={"/coaching/coach/" + purchasedPackage.coaching_packages.coach_details.id}>
+                                                        <a className=" w-1/2">
+                                                            <div className="px-4 py-2 bg-lblue rounded-full text-center text-sm text-white mr-2">View Profile</div>
+                                                        </a>
+                                                    </Link>
+
                                                     <div className="px-4 py-2 w-1/2 text-center text-sm bg-lgrey-light rounded-full border border-lgrey-border ml-2">View Details</div>
                                                 </div>
                                             </div>
