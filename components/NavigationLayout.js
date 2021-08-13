@@ -11,7 +11,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen }) => {
+const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhased }) => {
     const router = useRouter()
     return (
         <>

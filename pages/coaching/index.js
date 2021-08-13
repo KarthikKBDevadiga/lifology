@@ -14,7 +14,7 @@ import ProgressBar from '/components/ProgressBar'
 import { Fragment } from 'react'
 import MetaLayout from '/components/MetaLayout'
 import cookies from 'next-cookies'
-import { SchemeGetCoachesList, SchemeGetPackagesList } from '../../helpers/GraphQLSchemes'
+import { SchemeGetAvailablePackage, SchemeGetCoachesList, SchemeGetPackagesList } from '../../helpers/GraphQLSchemes'
 
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
@@ -292,6 +292,20 @@ export async function getServerSideProps(context) {
             Authorization: "Bearer " + token,
         },
     });
+    const isAvailablePackages = await queryGraph(skillsClient, {}, SchemeGetAvailablePackage)
+        .then((res) => {
+            return res.isAvailablePackages
+        }).catch((networkErr) => {
+            return []
+        });
+    if (isAvailablePackages) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/coaching/package"
+            }
+        }
+    }
     const coaches = await queryGraph(skillsClient, {}, SchemeGetCoachesList)
         .then((res) => {
             return res.coaches

@@ -1009,3 +1009,53 @@ export const SchemeCreateOrder = gql`
     }
   }
 `;
+
+export const SchemeGetPurchasedPakage = gql`
+query{
+  purchasedPackages{
+    coaching_packages{
+      id
+      title
+      description
+      thumbnail
+      video
+      no_sessions
+      coach_details{
+        id
+        name
+        rating
+        profile_image
+        country_code
+        mobile_number
+        bio
+        coaching_category,
+        location,
+        language,
+      }
+      coaching_packages_prices{
+        price
+      }
+      coaching_package_session_titles{
+        title
+        coaching_package_sessions{
+          id
+          title
+          description
+          purpose
+          session_time
+          coach_id
+          appointment_id
+          session_status
+          rating
+        }
+      }
+    }
+  }
+}
+`;
+
+export const SchemeGetAvailablePackage = gql`
+query{
+  isAvailablePackages
+}
+`;

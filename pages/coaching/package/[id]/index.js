@@ -159,8 +159,6 @@ export default function ServiceDetails({ profile, token, coachPackage, coaches }
                                                 }
                                             </div>
 
-
-
                                             <div className="my-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                                 <div className="grid grid-cols-2 gap-2">
                                                     <div className="text-black mx-4 block text-base font-bold">
