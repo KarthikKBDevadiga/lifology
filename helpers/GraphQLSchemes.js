@@ -1059,3 +1059,18 @@ query{
   isAvailablePackages
 }
 `;
+
+export const SchemeBookAppointment = gql`
+mutation bookAppointment($coach_id:Int!, $session_id:Int!, $appointment_date: Date!, $start_time:String!, $end_time:String!, $duration:Int!){
+  bookAppointment(coach_id: $coach_id,session_id: $session_id,appointment_date:$appointment_date,start_time:$start_time,end_time:$end_time,duration:$duration){
+    id
+    coach_id
+    session_id
+    appointment_date
+    start_time
+    end_time
+    duration
+    session_status 
+  }
+}
+`;

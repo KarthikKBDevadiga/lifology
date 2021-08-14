@@ -106,12 +106,6 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                 </div>
                                             </div>
 
-                                            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
-                                                <div className="w-1/2 text-gray-900 font-medium">
-                                                    Available Sessions
-                                                </div>
-
-                                            </div>
 
                                             <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
                                                 <div className="w-1/2 text-gray-900 font-medium">
@@ -147,6 +141,13 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                                         <div>{session.coaching_package_sessions[0].title}</div>
                                                                         <div>{session.coaching_package_sessions[0].description}</div>
                                                                         <div>{session.coaching_package_sessions[0].purpose}</div>
+                                                                        <Link href={"/coaching/session/" + session.coaching_package_sessions[0].id + "/book"}>
+                                                                            <a>
+                                                                                <div className="py-2 px-4 my-4 bg-lblue text-white w-max rounded-full">Book Session</div>
+                                                                            </a>
+                                                                        </Link>
+
+
                                                                     </div>
                                                                 </Expand>
                                                             </div>
@@ -154,6 +155,7 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                     })
                                                 }
                                             </div>
+
                                             <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
                                                 <div className="w-1/2 text-gray-900 font-medium">
                                                     How It Works

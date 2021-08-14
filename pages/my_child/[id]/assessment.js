@@ -126,6 +126,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
     }
 
 
+
     const Item = ({ value, index, onRemove, onChange, decorateHandle }) => {
         return (
             <div className="shadow rounded p-4 mb-4 bg-white">
