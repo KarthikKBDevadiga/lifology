@@ -1074,3 +1074,60 @@ mutation bookAppointment($coach_id:Int!, $session_id:Int!, $appointment_date: Da
   }
 }
 `;
+
+export const SchemeAppointmentDetails = gql`
+query appointmentDetails($id:Int!){
+  appointmentDetails(id:$id)
+  {
+    id
+    coach_id
+    session_id
+    appointment_date
+    start_time
+    end_time
+    duration
+    session_status
+    reschedule_by
+    meeting_link
+    tasks{
+      name
+      status
+    }
+    coach_rating
+    user_rating
+    coach_feedback
+    user_feedback
+    is_concern
+    meeting_info
+    coach_details{
+      id
+      name
+      rating
+      profile_image
+      country_code
+      country_abbr
+      mobile_number
+      bio
+      coaching_category
+      location
+      language
+      slots{
+        date
+        times{
+          start_time
+          end_time
+        }
+      }
+      purpose
+    }
+  }
+}
+`;
+
+export const SchemeGetSummaryDetails = gql`
+query assessmentDetails($id:Int!){
+  assessmentDetails(id:$id){
+    summary_report
+  }
+}
+`;

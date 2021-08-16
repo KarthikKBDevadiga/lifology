@@ -19,9 +19,9 @@ import { useKeenSlider } from 'keen-slider/react'
 import ReactCardCarousel from 'react-card-carousel';
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
-import { SchemeGetVAKReport } from '../../../../helpers/GraphQLSchemes'
+import { SchemeGetSummaryDetails, SchemeGetVAKReport } from '../../../../helpers/GraphQLSchemes'
 
-export default function VAKReport({ profile, assessment, report }) {
+export default function VAKReport({ profile, assessment, report, summaryDetails }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -127,18 +127,18 @@ export default function VAKReport({ profile, assessment, report }) {
                                                             fontSize: '6px',
                                                         }}
                                                         data={[
-                                                            { title: 'Seeing', value: report.percentage.seeing, color: 'purple' },
-                                                            { title: 'Hearing', value: report.percentage.hearing, color: 'blue' },
-                                                            { title: 'Doing', value: report.percentage.doing, color: 'orange' },
+                                                            { title: 'Seeing', value: summaryDetails.VISUAL, color: 'purple' },
+                                                            { title: 'Hearing', value: summaryDetails.AUDITORY, color: 'blue' },
+                                                            { title: 'Doing', value: summaryDetails.KINESTHETIC, color: 'orange' },
                                                         ]}
                                                     />
                                                     <div className="flex text-sm items-center w-max ml-auto mr-auto mt-4">
                                                         <div className="w-4 h-4" style={{ background: 'purple' }}></div>
-                                                        <div className="pl-2 pr-4">Seeing</div>
+                                                        <div className="pl-2 pr-4">VISUAL</div>
                                                         <div className="w-4 h-4" style={{ background: 'blue' }}></div>
-                                                        <div className="pl-2 pr-4">Hearing</div>
+                                                        <div className="pl-2 pr-4">AUDITORY</div>
                                                         <div className="w-4 h-4" style={{ background: 'orange' }}></div>
-                                                        <div className="pl-2">Doing</div>
+                                                        <div className="pl-2">KINESTHETIC</div>
                                                     </div>
                                                 </div>
 
@@ -207,7 +207,13 @@ export async function getServerSideProps(context) {
             return {};
         });
 
-    console.log(report)
+    const summaryDetails = await queryGraph(careerClient, { id: parseInt(context.params.id) }, SchemeGetSummaryDetails)
+        .then((res) => {
+            return JSON.parse(res.assessmentDetails.summary_report)
+        }).catch((networkErr) => {
+            return {};
+        })
+    console.log(summaryDetails)
 
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
@@ -223,7 +229,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, report, token }
+        props: { profile, assessment, report, token, summaryDetails }
     }
 }
 

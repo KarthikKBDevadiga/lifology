@@ -23,10 +23,10 @@ import "react-multi-carousel/lib/styles.css";
 
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import Breadcrumbs from '../../../../components/Breadcrumbs'
-import { SchemeGetMIOSCReport } from '../../../../helpers/GraphQLSchemes'
+import { SchemeGetMIOSCReport, SchemeGetSummaryDetails } from '../../../../helpers/GraphQLSchemes'
 import cookies from 'next-cookies'
 
-export default function MIOReport({ profile, assessment, report }) {
+export default function MIOReport({ profile, assessment, report, summaryDetails }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -59,14 +59,14 @@ export default function MIOReport({ profile, assessment, report }) {
             {
                 label: '',
                 data: [
-                    report.orientation_details.find(x => x.title == 'kinesthetic').percentage,
-                    report.orientation_details.find(x => x.title == 'naturalistic').percentage,
-                    report.orientation_details.find(x => x.title == 'interpersonal').percentage,
-                    report.orientation_details.find(x => x.title == 'intrapersonal').percentage,
-                    report.orientation_details.find(x => x.title == 'logical').percentage,
-                    report.orientation_details.find(x => x.title == 'visual').percentage,
-                    report.orientation_details.find(x => x.title == 'rhythmic').percentage,
-                    report.orientation_details.find(x => x.title == 'linguistic').percentage,
+                    summaryDetails.kinesthetic,
+                    summaryDetails.naturalistic,
+                    summaryDetails.interpersonal,
+                    summaryDetails.intrapersonal,
+                    summaryDetails.logical,
+                    summaryDetails.visual,
+                    summaryDetails.rhythmic,
+                    summaryDetails.linguistic
                 ],
                 backgroundColor: [
                     'rgba(255, 99, 132)',
@@ -797,9 +797,13 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {};
         })
-
-    console.log(report)
-
+    const summaryDetails = await queryGraph(careerClient, { id: parseInt(context.params.id) }, SchemeGetSummaryDetails)
+        .then((res) => {
+            return JSON.parse(res.assessmentDetails.summary_report)
+        }).catch((networkErr) => {
+            return {};
+        })
+    console.log(summaryDetails)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -814,7 +818,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, report, token }
+        props: { profile, assessment, report, token, summaryDetails }
     }
 }
 

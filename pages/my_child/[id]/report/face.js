@@ -14,11 +14,11 @@ import classNames from '/helpers/classNames'
 import "react-multi-carousel/lib/styles.css";
 
 import ReactCardCarousel from 'react-card-carousel';
-import { SchemeGetAssessment, SchemeGetFACEReport, SchemeGetFACEReport2, SchemeGetMTIReport } from '../../../../helpers/GraphQLSchemes'
+import { SchemeGetAssessment, SchemeGetFACEReport, SchemeGetFACEReport2, SchemeGetMTIReport, SchemeGetSummaryDetails } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
-export default function MTIReport({ profile, assessment, report, report2 }) {
+export default function MTIReport({ profile, assessment, report, report2, summaryDetails }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -102,7 +102,7 @@ export default function MTIReport({ profile, assessment, report, report2 }) {
                                                                     d="M 62 0 C 67.092 0 72.095 1.341 76.504 3.887 C 80.914 6.434 84.575 10.098 87.12 14.508 L 96.639 31.008 C 99.181 35.414 100.52 40.413 100.52 45.5 C 100.52 50.587 99.181 55.586 96.639 59.992 L 87.12 76.492 C 84.575 80.902 80.914 84.566 76.504 87.113 C 72.095 89.659 67.092 91 62 91 L 43 91 C 37.908 91 32.905 89.659 28.496 87.113 C 24.086 84.566 20.425 80.902 17.88 76.492 L 8.361 59.992 C 5.819 55.586 4.48 50.587 4.48 45.5 C 4.48 40.413 5.819 35.414 8.361 31.008 L 17.88 14.508 C 20.425 10.098 24.086 6.434 28.496 3.887 C 32.905 1.341 37.908 0 43 0 Z"
                                                                     strokeWidth="1" />
                                                             </svg>
-                                                            <div className="text-lg text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">82%</div>
+                                                            <div className="text-base text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">{summaryDetails.FACT + "%"}</div>
                                                         </div>
                                                         <div className="mt-2 text-sm text-center">FACT</div>
                                                     </div>
@@ -116,7 +116,7 @@ export default function MTIReport({ profile, assessment, report, report2 }) {
                                                                     d="M 62 0 C 67.092 0 72.095 1.341 76.504 3.887 C 80.914 6.434 84.575 10.098 87.12 14.508 L 96.639 31.008 C 99.181 35.414 100.52 40.413 100.52 45.5 C 100.52 50.587 99.181 55.586 96.639 59.992 L 87.12 76.492 C 84.575 80.902 80.914 84.566 76.504 87.113 C 72.095 89.659 67.092 91 62 91 L 43 91 C 37.908 91 32.905 89.659 28.496 87.113 C 24.086 84.566 20.425 80.902 17.88 76.492 L 8.361 59.992 C 5.819 55.586 4.48 50.587 4.48 45.5 C 4.48 40.413 5.819 35.414 8.361 31.008 L 17.88 14.508 C 20.425 10.098 24.086 6.434 28.496 3.887 C 32.905 1.341 37.908 0 43 0 Z"
                                                                     strokeWidth="1" />
                                                             </svg>
-                                                            <div className="text-lg text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">82%</div>
+                                                            <div className="text-base text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">{summaryDetails.ACTION + "%"}</div>
                                                         </div>
                                                         <div className="mt-2 text-sm text-center">ACTION</div>
                                                     </div>
@@ -130,7 +130,7 @@ export default function MTIReport({ profile, assessment, report, report2 }) {
                                                                     d="M 62 0 C 67.092 0 72.095 1.341 76.504 3.887 C 80.914 6.434 84.575 10.098 87.12 14.508 L 96.639 31.008 C 99.181 35.414 100.52 40.413 100.52 45.5 C 100.52 50.587 99.181 55.586 96.639 59.992 L 87.12 76.492 C 84.575 80.902 80.914 84.566 76.504 87.113 C 72.095 89.659 67.092 91 62 91 L 43 91 C 37.908 91 32.905 89.659 28.496 87.113 C 24.086 84.566 20.425 80.902 17.88 76.492 L 8.361 59.992 C 5.819 55.586 4.48 50.587 4.48 45.5 C 4.48 40.413 5.819 35.414 8.361 31.008 L 17.88 14.508 C 20.425 10.098 24.086 6.434 28.496 3.887 C 32.905 1.341 37.908 0 43 0 Z"
                                                                     strokeWidth="1" />
                                                             </svg>
-                                                            <div className="text-lg text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">82%</div>
+                                                            <div className="text-base text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">{summaryDetails.CONCEPT + "%"}</div>
                                                         </div>
                                                         <div className="mt-2 text-sm text-center">CONCEPT</div>
                                                     </div>
@@ -144,7 +144,7 @@ export default function MTIReport({ profile, assessment, report, report2 }) {
                                                                     d="M 62 0 C 67.092 0 72.095 1.341 76.504 3.887 C 80.914 6.434 84.575 10.098 87.12 14.508 L 96.639 31.008 C 99.181 35.414 100.52 40.413 100.52 45.5 C 100.52 50.587 99.181 55.586 96.639 59.992 L 87.12 76.492 C 84.575 80.902 80.914 84.566 76.504 87.113 C 72.095 89.659 67.092 91 62 91 L 43 91 C 37.908 91 32.905 89.659 28.496 87.113 C 24.086 84.566 20.425 80.902 17.88 76.492 L 8.361 59.992 C 5.819 55.586 4.48 50.587 4.48 45.5 C 4.48 40.413 5.819 35.414 8.361 31.008 L 17.88 14.508 C 20.425 10.098 24.086 6.434 28.496 3.887 C 32.905 1.341 37.908 0 43 0 Z"
                                                                     strokeWidth="1" />
                                                             </svg>
-                                                            <div className="text-lg text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">82%</div>
+                                                            <div className="text-base text-white absolute text-center top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4">{summaryDetails.EMOTION + "%"}</div>
                                                         </div>
                                                         <div className="mt-2 text-sm text-center">EMOTION</div>
                                                     </div>
@@ -1237,7 +1237,13 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {};
         });
-    console.log(report2)
+    const summaryDetails = await queryGraph(careerClient, { id: parseInt(context.params.id) }, SchemeGetSummaryDetails)
+        .then((res) => {
+            return JSON.parse(res.assessmentDetails.summary_report)
+        }).catch((networkErr) => {
+            return {};
+        })
+    console.log(summaryDetails)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
@@ -1252,7 +1258,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, report, report2, token }
+        props: { profile, assessment, report, report2, token, summaryDetails }
     }
 }
 
