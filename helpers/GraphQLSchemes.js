@@ -1124,6 +1124,12 @@ query appointmentDetails($id:Int!){
 }
 `;
 
+export const SchemeCancelAppointment = gql`
+mutation cancelAppointment($id:Int!){
+  cancelAppointment(appointment_id:$id)
+}
+`;
+
 export const SchemeGetSummaryDetails = gql`
 query assessmentDetails($id:Int!){
   assessmentDetails(id:$id){

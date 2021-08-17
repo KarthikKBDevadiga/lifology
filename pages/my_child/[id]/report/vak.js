@@ -3,7 +3,6 @@ import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile, SchemeGetAssessment, SchemeGetMIOReport } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
@@ -16,7 +15,6 @@ import { PieChart } from 'react-minimal-pie-chart';
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
-import ReactCardCarousel from 'react-card-carousel';
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 import { SchemeGetSummaryDetails, SchemeGetVAKReport } from '../../../../helpers/GraphQLSchemes'
@@ -141,9 +139,7 @@ export default function VAKReport({ profile, assessment, report, summaryDetails 
                                                         <div className="pl-2">KINESTHETIC</div>
                                                     </div>
                                                 </div>
-
                                             </section>
-
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-2">
@@ -152,10 +148,8 @@ export default function VAKReport({ profile, assessment, report, summaryDetails 
 
                                                 <img src="/img/mti_report_wmy.png" className="ml-auto mr-auto mt-4" />
                                                 <div className="text-sm  px-8 mt-4 text-center">{report.title}</div>
-                                                <div className="text-sm  px-8 mt-4 pb-4 text-center">{report.content}</div>
+                                                <div className="text-sm  px-8 mt-4 pb-4 text-justify ">{report.content}</div>
                                             </div>
-
-
                                         </section>
                                     </div>
                                 </div>

@@ -113,7 +113,10 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                 </div>
                                                 {
                                                     purchasedPackage.coaching_packages.coaching_package_session_titles.map(session => {
-                                                        const [open, setOpen] = useState(false)
+                                                        const [open, setOpen] = useState((session.coaching_package_sessions[0].session_status == 'Scheduled' ||
+                                                            session.coaching_package_sessions[0].session_status == 'In progress' ||
+                                                            session.coaching_package_sessions[0].session_status == 'Accepted' ||
+                                                            session.coaching_package_sessions[0].session_status == 'Rescheduled'))
                                                         return (
                                                             <div>
                                                                 <div
@@ -141,9 +144,27 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                                         <div>{session.coaching_package_sessions[0].title}</div>
                                                                         <div>{session.coaching_package_sessions[0].description}</div>
                                                                         <div>{session.coaching_package_sessions[0].purpose}</div>
-                                                                        <Link href={"/coaching/session/" + session.coaching_package_sessions[0].id + "/book"}>
+                                                                        <Link href={
+                                                                            (session.coaching_package_sessions[0].session_status == 'Scheduled' ||
+                                                                                session.coaching_package_sessions[0].session_status == 'In progress' ||
+                                                                                session.coaching_package_sessions[0].session_status == 'Accepted' ||
+                                                                                session.coaching_package_sessions[0].session_status == 'Rescheduled') ?
+                                                                                "/coaching/session/" + session.coaching_package_sessions[0].id + "/book/" + session.coaching_package_sessions[0].appointment_id + "/view" :
+                                                                                (session.coaching_package_sessions[0].session_status == 'Completed') ?
+                                                                                    "/coaching/session/" + session.coaching_package_sessions[0].id + "/book" :
+                                                                                    "/coaching/session/" + session.coaching_package_sessions[0].id + "/book"
+
+                                                                        }>
                                                                             <a>
-                                                                                <div className="py-2 px-4 my-4 bg-lblue text-white w-max rounded-full">Book Session</div>
+                                                                                <div className="py-2 px-4 my-4 bg-lblue text-white w-max rounded-full">
+                                                                                    {
+                                                                                        (session.coaching_package_sessions[0].session_status == 'Scheduled' ||
+                                                                                            session.coaching_package_sessions[0].session_status == 'In progress' ||
+                                                                                            session.coaching_package_sessions[0].session_status == 'Accepted' ||
+                                                                                            session.coaching_package_sessions[0].session_status == 'Rescheduled') ? 'View Session' :
+                                                                                            (session.coaching_package_sessions[0].session_status == 'Completed') ? 'Rate Session' : 'Book Session'
+                                                                                    }
+                                                                                </div>
                                                                             </a>
                                                                         </Link>
 

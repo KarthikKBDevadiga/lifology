@@ -152,6 +152,13 @@ export default function BookSession({ profile, token, purchasedPackage, session 
             console.log(res)
             setSuccessDialogString('Session Booked Successfully')
             setSuccessDialog(true)
+            setTimeout(() => {
+                setSuccessDialog(false)
+                router.replace({
+                    pathname: "/coaching/session/" + session.coaching_package_sessions[0].id + "/book/" + res.bookAppointment.id + "/view",
+                })
+            }, 1000)
+            console.log(res)
         }).catch((networkErr) => {
             console.log(networkErr)
             setErrorDialogString('Failed To Book Session')
