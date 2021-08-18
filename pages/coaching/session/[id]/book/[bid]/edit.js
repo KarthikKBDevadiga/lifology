@@ -34,11 +34,12 @@ import Link from 'next/link'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import Calendar from 'react-calendar'
+import { SchemeAppointmentDetails, SchemeUpdateAppointment } from '../../../../../../helpers/GraphQLSchemes'
 import moment from 'moment'
 // import 'react-calendar/dist/Calendar.css';
 
 
-export default function BookSession({ profile, token, purchasedPackage, session }) {
+export default function EditBookedSession({ profile, token, purchasedPackage, session, selectedSession }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -46,11 +47,12 @@ export default function BookSession({ profile, token, purchasedPackage, session 
 
     const [openVideo, setOpenVideo] = useState(false)
 
-    const [date, setDate] = useState(new Date())
+    const selectedDate = moment(selectedSession.appointment_date)
+    const [date, setDate] = useState(selectedDate.toDate())
 
     const pages = [
         {
-            name: 'Booking', href: '#', current: true
+            name: 'Update', href: '#', current: true
         },
     ]
 
@@ -124,16 +126,15 @@ export default function BookSession({ profile, token, purchasedPackage, session 
         }
     ]
 
-    const [selectedTime, setSelectedTime] = useState(0)
+    const [selectedTime, setSelectedTime] = useState(timeArray.find(t => t.start == selectedSession.start_time).id)
     const [openSession, setOpenSession] = useState(true)
-
 
     const [successDialog, setSuccessDialog] = useState(false)
     const [successDialogString, setSuccessDialogString] = useState('')
     const [errorDialog, setErrorDialog] = useState(false)
     const [errorDialogString, setErrorDialogString] = useState('')
 
-    const bookSession = (event) => {
+    const updateSession = (event) => {
         console.log(date + ' ' + timeArray[selectedTime].start)
         const coachClient = new ApolloClient({
             uri: Constants.baseUrl + "/api/skills",
@@ -143,20 +144,18 @@ export default function BookSession({ profile, token, purchasedPackage, session 
             },
         })
         mutateGraph(coachClient, {
-            coach_id: parseInt(purchasedPackage.coaching_packages.coach_details.id),
-            session_id: parseInt(session.coaching_package_sessions[0].id),
+            id: parseInt(selectedSession.id),
             appointment_date: date,
             start_time: timeArray[selectedTime].start,
             end_time: timeArray[selectedTime].end,
-            duration: 60
-        }, SchemeBookAppointment).then((res) => {
+        }, SchemeUpdateAppointment).then((res) => {
             console.log(res)
-            setSuccessDialogString('Session Booked Successfully')
+            setSuccessDialogString('Session Updated Successfully')
             setSuccessDialog(true)
             setTimeout(() => {
                 setSuccessDialog(false)
                 router.replace({
-                    pathname: "/coaching/session/" + session.coaching_package_sessions[0].id + "/book/" + res.bookAppointment.id + "/view",
+                    pathname: "/coaching/session/" + selectedSession.session_id + "/book/" + selectedSession.id + "/view",
                 })
             }, 1000)
             console.log(res)
@@ -168,13 +167,13 @@ export default function BookSession({ profile, token, purchasedPackage, session 
     }
     return (
         <>
-            <MetaLayout title='Book Session' description='Book Session' />
+            <MetaLayout title='Update Session' description='Update Session' />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="6" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title='Book Session' />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title='Update Session' />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />
@@ -334,9 +333,9 @@ export default function BookSession({ profile, token, purchasedPackage, session 
                                                 </RadioGroup>
 
                                                 <div
-                                                    onClick={bookSession}
+                                                    onClick={updateSession}
                                                     className="select-none mt-4 w-max px-4 py-2 bg-lblue text-white rounded-full ml-auto text-sm cursor-pointer">
-                                                    Book Session
+                                                    Update Session
                                                 </div>
 
                                             </div>
@@ -470,6 +469,15 @@ export async function getServerSideProps(context) {
             Authorization: "Bearer " + token,
         },
     })
+    const selectedSession = await queryGraph(coachClient, { id: parseInt(context.params.bid) }, SchemeAppointmentDetails)
+        .then((res) => {
+            return res.appointmentDetails
+        }).catch((networkErr) => {
+            console.log(networkErr)
+            return {};
+        })
+    console.log(selectedSession)
+
     const purchasedPackage = await queryGraph(coachClient, {}, SchemeGetPurchasedPakage)
         .then((res) => {
             return res.purchasedPackages[0]
@@ -493,6 +501,6 @@ export async function getServerSideProps(context) {
         })
     const session = purchasedPackage.coaching_packages.coaching_package_session_titles.find((s) => s.coaching_package_sessions[0].id == context.params.id)
     return {
-        props: { profile, token, purchasedPackage, session }
+        props: { profile, token, purchasedPackage, session, selectedSession }
     }
 }

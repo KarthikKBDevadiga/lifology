@@ -96,7 +96,7 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                 </div>
 
                                                 <div className="sm:flex h-full w-full">
-                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4 self-center">
+                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                         <img className="object-contain rounded" src={purchasedPackage.coaching_packages.thumbnail} style={{ maxHeight: '12rem', maxWidth: '12rem' }} />
                                                     </div>
                                                     <div className="w-full self-center text-left">
@@ -109,7 +109,7 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
 
                                             <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
                                                 <div className="w-1/2 text-gray-900 font-medium">
-                                                    Avilable Sessions
+                                                    Available Sessions
                                                 </div>
                                                 {
                                                     purchasedPackage.coaching_packages.coaching_package_session_titles.map(session => {
@@ -126,14 +126,34 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                                     className="bg-white shadow cursor-pointer relative w-full rounded  hover:shadow-lg pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none sm:text-sm duration-500 my-2"                                                                >
                                                                     <span className="font-medium block truncate">{session.title}</span>
                                                                     <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
-                                                                        <div className="text-lblue">1 Session</div>
-                                                                        <div className={
-                                                                            classNames(open ? 'rotate-90' : '', "text-black p-1")
+                                                                        {
+                                                                            session.coaching_package_sessions[0].session_status ?
+                                                                                <div className="px-4 text-lgreen text-xs flex">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                                                    </svg>
+                                                                                    <div className="self-center">
+                                                                                        Marked as {session.coaching_package_sessions[0].session_status}
+                                                                                    </div>
+
+                                                                                </div> : <></>
                                                                         }
-                                                                        >
+                                                                        <div className="text-lblue flex">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-2 w-2 mr-2 self-center " viewBox="0 0 20 20" fill="currentColor">
+                                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16z" clipRule="evenodd" />
+                                                                            </svg>
+                                                                            <div className="self-center text-xs ">1 Session</div>
+
+                                                                        </div>
+                                                                        <div className={
+                                                                            classNames(open ? 'animate-expand rotate-180' : 'animate-collapse  ', "text-black p-1")
+                                                                        }>
                                                                             {
-                                                                                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                                                // <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                //     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                                                // </svg>
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
                                                                                 </svg>
                                                                             }
                                                                         </div>

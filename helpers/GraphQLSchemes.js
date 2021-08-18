@@ -1074,6 +1074,17 @@ mutation bookAppointment($coach_id:Int!, $session_id:Int!, $appointment_date: Da
   }
 }
 `;
+export const SchemeUpdateAppointment = gql`
+mutation bookAppointment($id:Int!, $appointment_date: Date!, $start_time:String!, $end_time:String!){
+  updateAppointment(id:$id,appointment_date:$appointment_date,start_time:$start_time,end_time:$end_time){
+    id
+    appointment_date
+    start_time
+    end_time
+  }
+}
+`;
+
 
 export const SchemeAppointmentDetails = gql`
 query appointmentDetails($id:Int!){

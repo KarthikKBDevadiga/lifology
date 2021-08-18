@@ -18,7 +18,7 @@ import moment from 'moment'
 import { CheckIcon, ExclamationIcon } from '@heroicons/react/outline'
 import LoadingDialog from '/components/dialog/LoadingDialog'
 
-export default function Profile({ profile, token, session }) {
+export default function ViewBookedSession({ profile, token, session }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [successDialog, setSuccessDialog] = useState(false)
@@ -84,10 +84,13 @@ export default function Profile({ profile, token, session }) {
                                         className="cursor-pointer mr-2 py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none duration-500">
                                         Cancel
                                     </div>
-                                    <div
-                                        className="cursor-pointer py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none duration-500">
-                                        Edit
-                                    </div>
+                                    <Link href={"/coaching/session/" + session.session_id + "/book/" + session.id + "/edit"}>
+                                        <a
+                                            className="cursor-pointer py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none duration-500">
+                                            Edit
+                                        </a>
+                                    </Link>
+
                                 </div>
 
                             </div>
@@ -194,7 +197,7 @@ export default function Profile({ profile, token, session }) {
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
-                            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                            <div className="inline-block align-bottom bg-white rounded-lg  text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-lg sm:w-full p-4">
                                 <div className="sm:flex sm:items-start">
                                     <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                                         <ExclamationIcon className="h-6 w-6 text-red-600" aria-hidden="true" />

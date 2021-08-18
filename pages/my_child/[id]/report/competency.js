@@ -17,7 +17,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
 import ReactCardCarousel from 'react-card-carousel';
-import { SchemeGetCompetencyReport, SchemeGetLSReport } from '../../../../helpers/GraphQLSchemes'
+import { SchemeGetCompetencyReport, SchemeGetLSReport, SchemeGetSummaryDetails } from '../../../../helpers/GraphQLSchemes'
 import { Bar } from 'react-chartjs-2'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
@@ -287,8 +287,14 @@ export async function getServerSideProps(context) {
             return res.competencies
         }).catch((networkErr) => {
             return {};
-        });
-    console.log(reports)
+        })
+    const summaryDetails = await queryGraph(careerClient, { id: parseInt(context.params.id) }, SchemeGetSummaryDetails)
+        .then((res) => {
+            return JSON.parse(res.assessmentDetails.summary_report)
+        }).catch((networkErr) => {
+            return {};
+        })
+    console.log(summaryDetails)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
