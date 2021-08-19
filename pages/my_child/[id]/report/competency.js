@@ -22,7 +22,7 @@ import { Bar } from 'react-chartjs-2'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
-export default function VAKReport({ profile, assessment, reports }) {
+export default function VAKReport({ profile, assessment, reports, summaryDetails }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -33,20 +33,7 @@ export default function VAKReport({ profile, assessment, reports }) {
         duration: 500,
         slidesPerView: 1,
     })
-    // const reports = [
-    //     {
-    //         image: '/img/vak_report.png',
-    //         text: 'You may be able to bring people together to achieve your goals'
-    //     },
-    //     {
-    //         image: '/img/vak_report.png',
-    //         text: 'You may be able to bring people together to achieve your goals'
-    //     },
-    //     {
-    //         image: '/img/vak_report.png',
-    //         text: 'You may be able to bring people together to achieve your goals'
-    //     }
-    // ]
+    console.log(summaryDetails.length)
     const chartData = {
         labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
         datasets: [
@@ -138,6 +125,33 @@ export default function VAKReport({ profile, assessment, reports }) {
                                                             }
                                                         }}
                                                     />
+                                                </div>
+                                                <div className="bg-white rounded-md shadow mt-4 px-4 py-px">
+                                                    {
+                                                        summaryDetails.map((s) => (
+                                                            <div className="flex shadow rounded p-4 my-4 bg-blue-100">
+                                                                <div>
+                                                                    <h4 className="text-base font-bold">{s.key}</h4>
+                                                                    <div className="mt-1">{s.total_score * 100 / s.max_score} %</div>
+                                                                    <div className="w-full relative self-center my-2">
+                                                                        <div className="overflow-hidden h-2 text-xs flex rounded" style={{ background: '#F3F3F3' }}>
+                                                                            <div style={{ width: s.total_score * 100 / s.max_score + '%', background: '#02C77D' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p className="mt-1 text-xs">
+                                                                        {s.info}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="ml-4 flex-shrink-0">
+                                                                    <img
+                                                                        className="h-20"
+                                                                        src={s.image} />
+
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
+
                                                 </div>
 
 
@@ -309,7 +323,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, reports, token }
+        props: { profile, assessment, reports, token, summaryDetails }
     }
 }
 

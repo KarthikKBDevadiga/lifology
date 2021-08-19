@@ -52,6 +52,9 @@ export default function EditBookedSession({ profile, token, purchasedPackage, se
 
     const pages = [
         {
+            name: 'Session', href: '/coaching/session/' + selectedSession.session_id + "/book/" + selectedSession.id + "/view", current: false
+        },
+        {
             name: 'Update', href: '#', current: true
         },
     ]

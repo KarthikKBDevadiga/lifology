@@ -94,7 +94,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
-                                                            'block px-4 py-2 text-sm text-gray-700 flex'
+                                                            'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200 duration-500'
                                                         )}
                                                     >
                                                         <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
@@ -117,7 +117,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
-                                                            'block px-4 py-2 text-sm text-gray-700 flex'
+                                                            'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200 duration-500'
                                                         )}
                                                     >
                                                         <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
@@ -142,7 +142,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
-                                                            'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200'
+                                                            'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200 duration-500'
                                                         )}
                                                     >
                                                         <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
@@ -186,7 +186,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
-                                                            'block px-4 py-2 text-sm text-gray-700 flex'
+                                                            'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200 duration-500'
                                                         )}
                                                     >
 
@@ -213,7 +213,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     }}
                                                     className={classNames(
                                                         active ? 'bg-gray-100' : '',
-                                                        'block px-4 py-2 text-sm text-yellow-400 flex'
+                                                        'block px-4 py-2 text-sm text-yellow-400 flex hover:bg-gray-200 duration-500'
                                                     )}
                                                 >
                                                     <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="#FFC400">

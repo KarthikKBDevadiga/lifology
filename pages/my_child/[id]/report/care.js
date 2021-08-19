@@ -19,8 +19,10 @@ import { useKeenSlider } from 'keen-slider/react'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
+import { SchemeGetSummaryDetails } from '../../../../helpers/GraphQLSchemes'
+import { Bar } from 'react-chartjs-2'
 
-export default function CareReport({ profile, assessment, report, token }) {
+export default function CareReport({ profile, assessment, report, token, summaryDetails }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "")
@@ -42,6 +44,28 @@ export default function CareReport({ profile, assessment, report, token }) {
         if (authToken == "")
             router.push('/login')
     }, [])
+
+    const chartData = {
+        labels: ['EXPERIENCE', 'REFLECT', 'ACT', 'CONCEPTUALIZE'],
+        datasets: [
+            {
+                label: '',
+                data: [
+                    summaryDetails.EXPERIENCE,
+                    summaryDetails.REFLECT,
+                    summaryDetails.ACT,
+                    summaryDetails.CONCEPTUALIZE,
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                ]
+            }
+        ]
+    }
+
     return (
         <>
             <MetaLayout title="CARE Assement Reports" description="CARE Assement Reports" />
@@ -89,7 +113,7 @@ export default function CareReport({ profile, assessment, report, token }) {
 
                                                 <div className="bg-white rounded-md shadow mt-4 px-24 py-4">
                                                     {/* <Doughnut data={data} /> */}
-                                                    <PieChart
+                                                    {/* <PieChart
                                                         style={{
                                                             fontFamily:
                                                                 '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
@@ -112,15 +136,22 @@ export default function CareReport({ profile, assessment, report, token }) {
                                                             { title: 'Hearing', value: 33.3, color: 'blue' },
                                                             { title: 'Doing', value: 35.6, color: 'orange' },
                                                         ]}
+                                                    /> */}
+                                                    <Bar
+                                                        data={chartData}
+                                                        options={{
+                                                            title: {
+                                                                display: true,
+                                                                text: 'Largest Cities In City',
+                                                                fontSize: 25
+                                                            },
+                                                            legend: {
+                                                                display: true,
+                                                                position: 'right'
+                                                            }
+                                                        }}
                                                     />
-                                                    <div className="flex text-sm items-center w-max ml-auto mr-auto mt-4">
-                                                        <div className="w-4 h-4" style={{ background: 'purple' }}></div>
-                                                        <div className="pl-2 pr-4">Seeing</div>
-                                                        <div className="w-4 h-4" style={{ background: 'blue' }}></div>
-                                                        <div className="pl-2 pr-4">Hearing</div>
-                                                        <div className="w-4 h-4" style={{ background: 'orange' }}></div>
-                                                        <div className="pl-2">Doing</div>
-                                                    </div>
+
                                                 </div>
 
                                             </section>
@@ -189,7 +220,13 @@ export async function getServerSideProps(context) {
             return {};
         });
 
-    console.log(report)
+    const summaryDetails = await queryGraph(careerClient, { id: parseInt(context.params.id) }, SchemeGetSummaryDetails)
+        .then((res) => {
+            return JSON.parse(res.assessmentDetails.summary_report)
+        }).catch((networkErr) => {
+            return {};
+        })
+    console.log(summaryDetails)
 
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
@@ -205,7 +242,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, assessment, report, token }
+        props: { profile, assessment, report, token, summaryDetails }
     }
 }
 

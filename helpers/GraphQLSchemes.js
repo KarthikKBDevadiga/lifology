@@ -1148,3 +1148,14 @@ query assessmentDetails($id:Int!){
   }
 }
 `;
+
+export const SchemeGetServices = gql`
+query{
+  servicesCategory{
+   id
+   title
+   image
+   cta
+ }
+}
+`;

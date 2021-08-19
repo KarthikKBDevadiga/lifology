@@ -255,8 +255,8 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhase
                                         My Child
                                     </a>
                                 </Link>
-                                {/* <Link
-                                    href="/services">
+                                <Link
+                                    href="/service">
                                     <a
                                         className={classNames(
                                             index == 3 ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100',
@@ -271,7 +271,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhase
                                         </svg>
                                         Services
                                     </a>
-                                </Link> */}
+                                </Link>
                                 <Link
                                     href={{
                                         pathname: '/career_explorer',

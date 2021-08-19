@@ -221,9 +221,6 @@ export default function CourceAndUniversity({ profile, countries, universities, 
                                     </div>
 
                                     <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg mt-4 bg-white p-4">
-
-
-
                                         <div className="sm:flex h-full w-full">
                                             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8" >
                                                 <div className="self-center font-medium text-base w-full">
