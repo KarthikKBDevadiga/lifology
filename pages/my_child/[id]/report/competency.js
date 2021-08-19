@@ -110,22 +110,6 @@ export default function VAKReport({ profile, assessment, reports, summaryDetails
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="bg-white rounded-md shadow mt-4 p-4">
-                                                    <Bar
-                                                        data={chartData}
-                                                        options={{
-                                                            title: {
-                                                                display: true,
-                                                                text: 'Largest Cities In City',
-                                                                fontSize: 25
-                                                            },
-                                                            legend: {
-                                                                display: true,
-                                                                position: 'right'
-                                                            }
-                                                        }}
-                                                    />
-                                                </div>
                                                 <div className="bg-white rounded-md shadow mt-4 px-4 py-px">
                                                     {
                                                         summaryDetails.map((s) => (
