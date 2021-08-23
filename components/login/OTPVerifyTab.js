@@ -64,7 +64,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 }}
                                 id="two"
                                 name="two"
-                                type="phone"
+                                type="tel"
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
@@ -86,7 +86,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 }}
                                 id="three"
                                 name="three"
-                                type="phone"
+                                type="tel"
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
@@ -108,7 +108,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 }}
                                 id="four"
                                 name="four"
-                                type="phone"
+                                type="tel"
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
@@ -130,7 +130,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 }}
                                 id="five"
                                 name="five"
-                                type="phone"
+                                type="tel"
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
@@ -153,7 +153,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 }}
                                 id="six"
                                 name="six"
-                                type="phone"
+                                type="tel"
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"

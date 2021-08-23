@@ -3,7 +3,6 @@ import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
@@ -13,11 +12,20 @@ import classNames from '/helpers/classNames'
 
 import "react-multi-carousel/lib/styles.css";
 
-import ReactCardCarousel from 'react-card-carousel';
-import { SchemeGetAssessment, SchemeGetMTIReport, SchemeGetServicesCategory } from '/helpers/GraphQLSchemes'
+import { SchemeGetServicesCategory } from '/helpers/GraphQLSchemes'
 import Breadcrumbs from '/components/Breadcrumbs'
 import cookies from 'next-cookies'
 import Link from 'next/link'
+
+import {
+    Link as MyLink,
+    DirectLink,
+    Element,
+    Events,
+    animateScroll as scroll,
+    scrollSpy,
+    scroller
+} from "react-scroll";
 
 export default function Service({ profile, services }) {
     const router = useRouter()
@@ -46,7 +54,7 @@ export default function Service({ profile, services }) {
             <MetaLayout title="MTI Assement Reports" description="MTI Assement Reports" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="3" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="MTI Report" />
@@ -65,22 +73,25 @@ export default function Service({ profile, services }) {
 
                                                 {/* <SettingNavigationLayout index="5" /> */}
 
-                                                <div className="space-y-4 shadow bg-white p-4 rounded">
+                                                <div className="space-y-4 shadow bg-white px-4 pb-4 pt-px rounded">
                                                     {
                                                         services.map((s) => (
-                                                            <div
-                                                                onClick={
-                                                                    (event) => {
-                                                                        setIndex(s.id)
-                                                                    }
-                                                                }
-                                                                className={classNames(
-                                                                    s.id == index ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100 hover:text-lblue',
-                                                                    "cursor-pointer font-medium text-sm p-2 rounded-md items-center flex duration-500"
-                                                                )}
-                                                            >
-                                                                {s.title}
-                                                            </div>
+                                                            <MyLink activeClass="active" className={'ss' + s.id} to={'ss' + s.id} spy={true} smooth={true} duration={500}>
+                                                                <div
+                                                                    // onClick={
+                                                                    //     (event) => {
+                                                                    //         setIndex(s.id)
+                                                                    //     }
+                                                                    // }
+                                                                    className={classNames(
+                                                                        s.id == index ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100 hover:text-lblue',
+                                                                        "mt-4 font-medium text-sm p-2 rounded-md items-center flex duration-500"
+                                                                    )}
+                                                                >
+                                                                    {s.title}
+                                                                </div>
+                                                            </MyLink>
+
                                                         ))
                                                     }
 
@@ -92,19 +103,35 @@ export default function Service({ profile, services }) {
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-2 lg:col-span-3 overflow-auto w-full h-screen">
                                             <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4 w-full">
-
                                                 {
                                                     services.map((s) => (
-                                                        <div>
+                                                        <Element name={'ss' + s.id} className="element">
+                                                            <div>
+                                                                <div className="text-base font-medium px-4 pt-4">{s.title}</div>
+                                                                {
+                                                                    s.services.map(ss => {
+                                                                        if (ss.image.startsWith('http'))
+                                                                            return <img src={ss.image} className="w-full object-cover h-48 rounded mt-4" />
+                                                                        else
+                                                                            return <></>
+                                                                    })
+                                                                }
+                                                            </div>
+                                                        </Element>
+                                                    ))
+                                                }
+                                                {/* {
+                                                    services.map((s) => (
+                                                        <Element name={s.id} className="element">
                                                             <div className="text-base font-medium px-4 pt-4">{s.title}</div>
                                                             {
                                                                 s.services.map(ss => (
-                                                                    <img className="w-full mt-4 rounded" src={ss.image} />
+                                                                    <img className="h-96 object-cover w-full mt-4 rounded" src={ss.image} />
                                                                 ))
                                                             }
-                                                        </div>
+                                                        </Element>
                                                     ))
-                                                }
+                                                } */}
 
                                             </div>
                                         </section>
