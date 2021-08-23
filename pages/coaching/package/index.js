@@ -1,29 +1,17 @@
-import { Fragment, useState, useEffect } from 'react'
-import { Listbox, Dialog, Transition } from '@headlessui/react'
-import {
-    BookmarkIcon,
-    SelectorIcon
-} from '@heroicons/react/outline'
-import {
-    SearchIcon,
-} from '@heroicons/react/solid'
+import { useState } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
-import { SchemeGetUniversity, SchemeAddBookmark, SchemeVideoStatus, SchemeGetUniversityBookmark, SchemeUpdateUniversityBookmark, SchemeAllUniversityCareerPools, SchemeUniversityCareerFields, SchemeGetPackageDetails, SchemeGetCoachesList } from '/helpers/GraphQLSchemes'
-import { mutateGraph } from '/helpers/GraphQLCaller'
 import Breadcrumbs from '/components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
 import LoadingDialog from '/components/dialog/LoadingDialog'
-import NotificationLayout from '/components/NotificationLayout'
 import classNames from '/helpers/classNames'
 
 import Expand from 'react-expand-animated'

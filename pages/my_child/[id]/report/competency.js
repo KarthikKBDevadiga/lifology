@@ -11,14 +11,10 @@ import MetaLayout from '/components/MetaLayout'
 
 import "react-multi-carousel/lib/styles.css";
 
-import { PieChart } from 'react-minimal-pie-chart';
-
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
-import ReactCardCarousel from 'react-card-carousel';
 import { SchemeGetCompetencyReport, SchemeGetLSReport, SchemeGetSummaryDetails } from '../../../../helpers/GraphQLSchemes'
-import { Bar } from 'react-chartjs-2'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
@@ -34,33 +30,7 @@ export default function VAKReport({ profile, assessment, reports, summaryDetails
         slidesPerView: 1,
     })
     console.log(summaryDetails.length)
-    const chartData = {
-        labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
-        datasets: [
-            {
-                label: 'Report',
-                data: [
-                    30,
-                    70,
-                    90,
-                    60,
-                    40,
-                    70,
-                    5,
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132)',
-                    'rgba(54, 162, 235)',
-                    'rgba(255, 206, 86)',
-                    'rgba(75, 192, 192)',
-                    'rgba(153, 102, 255)',
-                    'rgba(255, 159, 64)',
-                    'rgba(255, 99, 132)',
-                    'rgba(255, 159, 64)',
-                ]
-            }
-        ]
-    }
+
     const pages = [
         {
             name: 'My Child', href: '/my_child/', current: false
@@ -69,13 +39,12 @@ export default function VAKReport({ profile, assessment, reports, summaryDetails
             name: assessment.title + ' Report', href: '#', current: true
         },
     ]
-    var carousel;
     return (
         <>
             <MetaLayout title="Competency Assesment" description="Competency Assesment" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Competency Report" />

@@ -9,26 +9,19 @@ import {
 } from '@heroicons/react/solid'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
+import { SchemeGetProfile, SchemeGetCoacheDetails } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
-import { SchemeGetUniversity, SchemeAddBookmark, SchemeVideoStatus, SchemeGetUniversityBookmark, SchemeUpdateUniversityBookmark, SchemeAllUniversityCareerPools, SchemeUniversityCareerFields, SchemeGetPackageDetails, SchemeGetCoachesList, SchemeGetCoacheDetails } from '../../../helpers/GraphQLSchemes'
-import { mutateGraph } from '../../../helpers/GraphQLCaller'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
 import LoadingDialog from '../../../components/dialog/LoadingDialog'
-import NotificationLayout from '../../../components/NotificationLayout'
-import classNames from '/helpers/classNames'
 
-import Expand from 'react-expand-animated'
-import YoutubeDialog from '../../../components/dialog/YoutubeDialog'
-import Link from 'next/link'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 

@@ -14,11 +14,12 @@ import "react-multi-carousel/lib/styles.css";
 import { PieChart } from 'react-minimal-pie-chart';
 
 import 'keen-slider/keen-slider.min.css'
-import { SchemeGetGRITReport } from '../../../../helpers/GraphQLSchemes'
+import { SchemeGetGRITReport, SchemeGetSummaryDetails } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
+import classNames from '/helpers/classNames'
 
-export default function CareReport({ profile, assessment, report }) {
+export default function CareReport({ profile, assessment, report, summaryDetails }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const pages = [
@@ -34,7 +35,7 @@ export default function CareReport({ profile, assessment, report }) {
             <MetaLayout title="GRIT Assement Reports" description="GRIT Assement Reports" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="GRIT Report" />
@@ -54,10 +55,6 @@ export default function CareReport({ profile, assessment, report }) {
                                                     <p className="font-medium">Assesment/GRIT Assesment</p>
 
                                                     <div className="sm:flex mt-4">
-                                                        {/* <div className="relative flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                            <img className="w-24 h-24 rounded" src={assessment.dash_cards_image} />
-                                                            <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white font-medium text-lg">{assessment.title}</div>
-                                                        </div> */}
                                                         <div className="h-24 mr-4 rounded" style={{ backgroundImage: 'url("' + assessment.dash_cards_image + '")' }}>
                                                             {/* <img className="w-full h-24 rounded" src="https://cdn.lifology.com/m/dash/card_small_1.jpg" /> */}
                                                             <div className="p-4 text-white font-medium text-lg">{assessment.title}</div>
@@ -74,39 +71,20 @@ export default function CareReport({ profile, assessment, report }) {
                                                     </div>
                                                 </div>
 
-                                                <div className="bg-white rounded-md shadow mt-4 px-24 py-4">
+                                                <div className="bg-white rounded-md shadow mt-4 px-20 py-4">
                                                     {/* <Doughnut data={data} /> */}
-                                                    <PieChart
-                                                        style={{
-                                                            fontFamily:
-                                                                '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
-                                                            fontSize: '8px',
-                                                        }}
-                                                        radius={PieChart.defaultProps.radius}
-                                                        lineWidth={50}
-                                                        segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
-                                                        animate
-                                                        label={({ dataEntry }) => Math.round(dataEntry.percentage) + '%'}
-                                                        labelPosition={70}
-                                                        labelStyle={{
-                                                            fill: '#fff',
-                                                            opacity: 0.75,
-                                                            pointerEvents: 'none',
-                                                            fontSize: '6px',
-                                                        }}
-                                                        data={[
-                                                            { title: 'Seeing', value: 31, color: 'purple' },
-                                                            { title: 'Hearing', value: 33.3, color: 'blue' },
-                                                            { title: 'Doing', value: 35.6, color: 'orange' },
-                                                        ]}
-                                                    />
-                                                    <div className="flex text-sm items-center w-max ml-auto mr-auto mt-4">
-                                                        <div className="w-4 h-4" style={{ background: 'purple' }}></div>
-                                                        <div className="pl-2 pr-4">Seeing</div>
-                                                        <div className="w-4 h-4" style={{ background: 'blue' }}></div>
-                                                        <div className="pl-2 pr-4">Hearing</div>
-                                                        <div className="w-4 h-4" style={{ background: 'orange' }}></div>
-                                                        <div className="pl-2">Doing</div>
+                                                    <div className="relative">
+                                                        <img className="w-full" src="/img/meter.png" />
+                                                        <img
+                                                            className={classNames(
+                                                                summaryDetails.total_score == 1 ? "-rotate-72" :
+                                                                    summaryDetails.total_score == 2 ? "-rotate-39" :
+                                                                        summaryDetails.total_score == 3 ? "rotate-0" :
+                                                                            summaryDetails.total_score == 4 ? "rotate-35" :
+                                                                                "rotate-72",
+                                                                "absolute w-full bottom-0 h-4/5 w-max left-2/4 -translate-x-2/4 origin-bottom"
+                                                            )}
+                                                            src="/img/needle_top.png" />
                                                     </div>
                                                 </div>
 
@@ -141,10 +119,6 @@ export default function CareReport({ profile, assessment, report }) {
     )
 }
 
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
-
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
     if (token == null || token == '') {
@@ -173,26 +147,28 @@ export async function getServerSideProps(context) {
             return res.passionPerseverance
         }).catch((networkErr) => {
             return {};
-        });
-
-    console.log(report)
-
-
+        })
+    const summaryDetails = await queryGraph(careerClient, { id: parseInt(context.params.id) }, SchemeGetSummaryDetails)
+        .then((res) => {
+            return JSON.parse(res.assessmentDetails.summary_report)[0]
+        }).catch((networkErr) => {
+            return {};
+        })
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
-        });
+        })
     return {
-        props: { profile, assessment, token, report }
+        props: { profile, assessment, token, report, summaryDetails }
     }
 }
 

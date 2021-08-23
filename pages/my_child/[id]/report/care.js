@@ -71,7 +71,7 @@ export default function CareReport({ profile, assessment, report, token, summary
             <MetaLayout title="CARE Assement Reports" description="CARE Assement Reports" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
+                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} authToken={token} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="CARE Report" authToken={token} setAuthToken={setAuthToken} />

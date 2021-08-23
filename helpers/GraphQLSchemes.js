@@ -1159,3 +1159,22 @@ query{
  }
 }
 `;
+
+export const SchemeGetServicesCategory = gql`
+query servicesSubCategory($id:Int!){
+  servicesSubCategory(id:$id){
+    id
+    title
+    image
+    services{
+      id
+      subcategory_id
+      title
+      image
+      is_cta_required
+      cta
+      templete_type
+    }
+  }
+}
+`;

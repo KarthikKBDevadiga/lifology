@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 
-
 import { CheckIcon, SelectorIcon, ExclamationIcon, ChevronDownIcon } from '@heroicons/react/solid'
 import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { mutateGraph, queryGraph } from '../../helpers/GraphQLCaller'

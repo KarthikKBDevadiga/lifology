@@ -1,18 +1,12 @@
-import { Fragment, useState, useEffect } from 'react'
-import {
-    SelectorIcon
-} from '@heroicons/react/solid'
+import { useState } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-
-import { Listbox, Transition, Dialog } from '@headlessui/react'
 
 import "react-multi-carousel/lib/styles.css";
 
@@ -44,7 +38,7 @@ export default function GreenZone({ profile, report }) {
             <MetaLayout title="Figment Report" description="Figment Report" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Fitment Report" />

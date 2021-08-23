@@ -1,8 +1,6 @@
-import Link from 'next/link'
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import {
-    ScaleIcon,
     CheckIcon,
     ExclamationIcon
 } from '@heroicons/react/outline'
@@ -11,7 +9,6 @@ import { queryGraph, mutateGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile, SchemeGetAssessmentQuestion, SchemeAnswerAssessmentQuestion, SchemeGetAssessment } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import classNames from '../../../helpers/classNames'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
@@ -23,7 +20,7 @@ import LoadingDialog from '/components/dialog/LoadingDialog'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
-import { DragDropContext, Droppable, Draggable, resetServerContext } from "react-beautiful-dnd";
+import { resetServerContext } from "react-beautiful-dnd";
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
@@ -146,7 +143,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
 
             <MetaLayout title={"My Child / " + assessment.title + " Assesment"} description={"My Child / " + assessment.title + " Assesment"} />
             <div className="min-h-screen flex overflow-hidden bg-gray-100 font-roboto">
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={"My Child / " + assessment.title + " Assesment"} />

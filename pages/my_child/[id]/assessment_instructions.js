@@ -1,17 +1,14 @@
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import "react-multi-carousel/lib/styles.css";
-import { SchemeCareerPools } from '/helpers/GraphQLSchemes'
 import VideoDialog from '/components/dialog/VideoDialog'
-import { SchemeCareerFields } from '/helpers/GraphQLSchemes'
 import styles from '/styles/Mti.module.css'
 import { SchemeGetAssessment } from '../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../components/Breadcrumbs'
@@ -37,7 +34,7 @@ export default function MTIAssessment({ profile, assessment }) {
             <MetaLayout title="Assesment / MTI Assesment" description={"Assesment / " + assessment.title + " Assesment"} />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <NavigationLayout index="2" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={"Instructions"} />

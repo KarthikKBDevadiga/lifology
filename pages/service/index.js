@@ -12,11 +12,11 @@ import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import Breadcrumbs from '../../components/Breadcrumbs'
+import Breadcrumbs from '/components/Breadcrumbs'
 
 import cookies from 'next-cookies'
 import { SchemeGetAssessments } from '/helpers/GraphQLSchemes'
-import { SchemeGetServices } from '../../helpers/GraphQLSchemes'
+import { SchemeGetServices } from '/helpers/GraphQLSchemes'
 
 
 export default function Service({ profile, services }) {
@@ -84,26 +84,31 @@ export default function Service({ profile, services }) {
                                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                                             {/* Card */}
                                             {services.map((card) => (
-                                                <div key={card.id} className="relative bg-white overflow-hidden shadow rounded-lg"
-                                                    style={{ height: '200px', }}
-                                                >
+                                                <Link href={"service/" + card.id}>
+                                                    <a>
+                                                        <div key={card.id} className="relative bg-white overflow-hidden shadow rounded-lg"
+                                                            style={{ height: '200px', }}
+                                                        >
 
-                                                    <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent"  >
-                                                    </div>
-                                                    <img src={card.image} className="rounded-lg" />
-                                                    <div className="absolute p-5 top-0">
-                                                        <div className="text-white w-9/12 font-medium text-xl">{card.title}</div>
-                                                    </div>
-                                                    <div className="absolute p-5 bottom-0 left-0">
-                                                        <Link
-                                                            href={card.image}>
-                                                            <a>
-                                                                <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-lyellow">Explore</div>
-                                                            </a>
-                                                        </Link>
+                                                            <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent"  >
+                                                            </div>
+                                                            <img src={card.image} className="rounded-lg" />
+                                                            <div className="absolute p-5 top-0">
+                                                                <div className="text-white w-9/12 font-medium text-xl">{card.title}</div>
+                                                            </div>
+                                                            <div className="absolute p-5 bottom-0 left-0">
+                                                                <Link
+                                                                    href={card.image}>
+                                                                    <a>
+                                                                        <div className="mt-4 w-min rounded-2xl text-white py-1 px-3 bg-lyellow">Explore</div>
+                                                                    </a>
+                                                                </Link>
 
-                                                    </div>
-                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </Link>
+
                                             ))}
                                         </div>
 

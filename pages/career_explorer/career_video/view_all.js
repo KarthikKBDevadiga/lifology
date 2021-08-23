@@ -1,32 +1,20 @@
 import Link from 'next/link'
-import { Fragment, useState, useRef, useEffect } from 'react'
-import {
-    DotsVerticalIcon,
-    SearchIcon,
-    ArrowRightIcon,
-    SortAscendingIcon
-} from '@heroicons/react/solid'
-import { Dialog, Menu, Transition, RadioGroup } from '@headlessui/react'
+import { useState } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { SchemeGetCareerFamilies, SchemeGetGrades, SchemeGetProfile, SchemeGetVideos } from '/helpers/GraphQLSchemes'
+import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import classNames from '/helpers/classNames'
 
 import 'keen-slider/keen-slider.min.css'
-import { useKeenSlider } from 'keen-slider/react'
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
-import YoutubeDialog from '../../../components/dialog/YoutubeDialog'
 import { SchemeGetViewAllVideos } from '../../../helpers/GraphQLSchemes'
-
 
 const pageItemCount = 32
 export default function CareerVideoViewAll({ profile, cId, videos, videosCount, page }) {

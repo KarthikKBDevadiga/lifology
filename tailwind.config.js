@@ -55,6 +55,12 @@ module.exports = {
           '0%': { transform: 'rotate(180deg)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
           '100%': { transform: 'rotate(0deg)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' }
         }
+      },
+      rotate: {
+        '-72': '-72deg',
+        '-39': '-39deg',
+        '35': '35deg',
+        '72': '72deg'
       }
     },
   },

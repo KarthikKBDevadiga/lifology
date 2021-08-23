@@ -13,6 +13,7 @@ import ProgressBar from '../../components/ProgressBar'
 import { Fragment } from 'react'
 import MetaLayout from '../../components/MetaLayout'
 import cookies from 'next-cookies'
+
 export default function EditPersonalDetails({ profile, token }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
