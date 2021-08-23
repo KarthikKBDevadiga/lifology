@@ -68,6 +68,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
+                                pattern="[0-9]"
                             />
                             <input
                                 ref={threeRef}
@@ -90,6 +91,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
+                                pattern="[0-9]"
                             />
                             <input
                                 ref={fourRef}
@@ -112,6 +114,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
+                                pattern="[0-9]"
                             />
                             <input
                                 ref={fiveRef}
@@ -134,6 +137,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
+                                pattern="[0-9]"
                             />
                             <input
                                 ref={sixRef}
@@ -157,6 +161,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 required
                                 className="w-10 h-10 text-center rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-lblue duration-500"
                                 maxLength="1"
+                                pattern="[0-9]"
                             />
                         </div>
                     </div>
