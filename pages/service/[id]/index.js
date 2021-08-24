@@ -27,7 +27,7 @@ import {
     scroller
 } from "react-scroll";
 
-export default function Service({ profile, services }) {
+export default function Service({ profile, services, id }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -78,14 +78,14 @@ export default function Service({ profile, services }) {
                                                         services.map((s) => (
                                                             <MyLink activeClass="active" className={'ss' + s.id} to={'ss' + s.id} spy={true} smooth={true} duration={500}>
                                                                 <div
-                                                                    // onClick={
-                                                                    //     (event) => {
-                                                                    //         setIndex(s.id)
-                                                                    //     }
-                                                                    // }
+                                                                    onClick={
+                                                                        (event) => {
+                                                                            setIndex(s.id)
+                                                                        }
+                                                                    }
                                                                     className={classNames(
                                                                         s.id == index ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100 hover:text-lblue',
-                                                                        "mt-4 font-medium text-sm p-2 rounded-md items-center flex duration-500"
+                                                                        "cursor-pointer mt-4 font-medium text-sm p-2 rounded-md items-center flex duration-500"
                                                                     )}
                                                                 >
                                                                     {s.title}
@@ -106,12 +106,20 @@ export default function Service({ profile, services }) {
                                                 {
                                                     services.map((s) => (
                                                         <Element name={'ss' + s.id} className="element">
+
                                                             <div>
                                                                 <div className="text-base font-medium px-4 pt-4">{s.title}</div>
                                                                 {
                                                                     s.services.map(ss => {
                                                                         if (ss.image.startsWith('http'))
-                                                                            return <img src={ss.image} className="w-full object-cover h-48 rounded mt-4" />
+                                                                            return (
+                                                                                <Link href={"/service/" + id + '/serviceDetails/' + ss.id}>
+                                                                                    <a>
+                                                                                        <img src={ss.image} className="w-full object-cover h-48 rounded mt-4" />
+                                                                                    </a>
+                                                                                </Link>
+
+                                                                            )
                                                                         else
                                                                             return <></>
                                                                     })
@@ -191,6 +199,6 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, services }
+        props: { profile, services, id: context.params.id }
     }
 }
