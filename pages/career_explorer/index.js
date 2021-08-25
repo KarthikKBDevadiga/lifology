@@ -61,7 +61,7 @@ export default function CareerExplorer({ profile, isTop }) {
                                                     style={{ backgroundImage: 'url(\'/img/test.png\')', height: '200px', }}
                                                 >
 
-                                                    <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent"  >
+                                                    <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent">
                                                     </div>
                                                     <img src="/img/test.png" className="rounded-lg" />
                                                     <div className="absolute p-5 top-0">

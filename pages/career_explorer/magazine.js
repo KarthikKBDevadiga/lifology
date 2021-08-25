@@ -28,6 +28,7 @@ import MetaLayout from '../../components/MetaLayout'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Breadcrumbs from '../../components/Breadcrumbs'
+import cookies from 'next-cookies'
 
 const cards = [
     { heading: 'FACT CHECK: Is Bitcoin mining environmentally unfriendly?', subheading: 'Coin base in the Coin Blog', image: '/img/career-guidence.png', date: 'May 25', read: '5 min read' },
@@ -190,7 +191,7 @@ export default function Magazine({ profile, token }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = context.query;
+    const { token } = cookies(context)
     if (token == null || token == '') {
         return {
             redirect: {

@@ -51,7 +51,7 @@ export default function Service({ profile, services, id }) {
     ]
     return (
         <>
-            <MetaLayout title="MTI Assement Reports" description="MTI Assement Reports" />
+            <MetaLayout title="Service" description="Service" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="3" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
@@ -102,28 +102,59 @@ export default function Service({ profile, services, id }) {
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-2 lg:col-span-3 overflow-auto w-full h-screen">
-                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4 w-full">
+                                            <div className="bg-white px-4 pb-4 shadow sm:rounded-lg sm:px-4 w-full">
                                                 {
                                                     services.map((s) => (
                                                         <Element name={'ss' + s.id} className="element">
 
                                                             <div>
-                                                                <div className="text-base font-medium px-4 pt-4">{s.title}</div>
-                                                                {
-                                                                    s.services.map(ss => {
-                                                                        if (ss.image.startsWith('http'))
-                                                                            return (
-                                                                                <Link href={"/service/" + id + '/serviceDetails/' + ss.id}>
+                                                                <div className="text-base font-medium pt-4">{s.title}</div>
+                                                                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2">
+                                                                    {
+                                                                        s.services.map(ss => {
+                                                                            if (ss.is_cta_required) {
+                                                                                return <Link href={
+                                                                                    ss.cta == 'JobFamilies_CareerPools' ? '/career_explorer/job_families' :
+                                                                                        ss.cta == 'UniversityFinder' ? '/career_explorer/course_and_university' :
+                                                                                            "/career_explorer"
+                                                                                }>
                                                                                     <a>
-                                                                                        <img src={ss.image} className="w-full object-cover h-48 rounded mt-4" />
+                                                                                        <div className="group h-24 relative bg-white overflow-hidden shadow rounded-lg mt-4 hover:shadow-2xl hover:scale-105 duration-500"
+                                                                                        >
+                                                                                            <div className="absolute h-full w-full h-48 bg-gradient-to-r from-lblue via-lblue to-transparent" />
+                                                                                            <div className="absolute p-5 top-0">
+                                                                                                <div className="text-white font-medium text-xl">{ss.title}</div>
+
+                                                                                                <div className="mt-2 w-12 h-1 rounded bg-lyellow group-hover:w-full duration-500"></div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </a>
                                                                                 </Link>
+                                                                            } else {
+                                                                                return (
+                                                                                    <Link href={"/service/" + id + '/serviceDetails/' + ss.id + '/' + ss.subcategory_id}>
+                                                                                        <a>
+                                                                                            {/* <img src={ss.image} className="w-full object-cover h-48 rounded mt-4" /> */}
+                                                                                            <div className="group relative bg-white overflow-hidden shadow rounded-lg mt-4 hover:shadow-2xl hover:scale-105 duration-500"
+                                                                                            >
+                                                                                                <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent" />
+                                                                                                <img src={ss.image} className="rounded-lg w-full object-cover h-48 rounded " />
+                                                                                                <div className="absolute p-5 top-0">
+                                                                                                    <div className="text-white font-medium text-xl">{ss.title}</div>
 
-                                                                            )
-                                                                        else
-                                                                            return <></>
-                                                                    })
-                                                                }
+                                                                                                    <div className="mt-2 w-12 h-1 rounded bg-lyellow group-hover:w-full duration-500"></div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </a>
+                                                                                    </Link>
+                                                                                )
+                                                                            }
+
+                                                                        })
+                                                                    }
+                                                                </div>
+
+                                                                <div className="w-full h-px bg-gray-200 mt-4 rounded"></div>
                                                             </div>
                                                         </Element>
                                                     ))

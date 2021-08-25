@@ -61,7 +61,7 @@ module.exports = {
         '-39': '-39deg',
         '35': '35deg',
         '72': '72deg'
-      }
+      },
     },
   },
   variants: {

@@ -1,3 +1,4 @@
+import cookies from 'next-cookies'
 import Head from 'next/head'
 
 export default function Home() {
@@ -8,12 +9,19 @@ export default function Home() {
   )
 }
 export async function getServerSideProps(context) {
-  const { token } = context.query;
+  const { token } = cookies(context)
   if (token == null || token == '') {
     return {
       redirect: {
         permanent: false,
         destination: "/login"
+      }
+    }
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/career_explorer"
       }
     }
   }

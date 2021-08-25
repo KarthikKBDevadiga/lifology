@@ -14,7 +14,7 @@ import ProgressBar from '/components/ProgressBar'
 import { Fragment } from 'react'
 import MetaLayout from '/components/MetaLayout'
 import cookies from 'next-cookies'
-import { SchemeGetServiceDetails } from '../../../../helpers/GraphQLSchemes'
+import { SchemeGetServiceDetails } from '../../../../../helpers/GraphQLSchemes'
 
 export default function Profile({ profile, serviceDetails }) {
     const router = useRouter()
@@ -24,7 +24,7 @@ export default function Profile({ profile, serviceDetails }) {
     const content = JSON.parse(serviceDetails.templete_content)
     return (
         <>
-            <MetaLayout title="Profile" description="Profile" />
+            <MetaLayout title="Services Details" description="Service Details" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
                 <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
@@ -35,23 +35,21 @@ export default function Profile({ profile, serviceDetails }) {
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
-                        <div className="m-4 p-4 shadow rounded bg-white">
+                        <div className="w-full max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+                            <div className="m-4 p-4 shadow rounded bg-white lg:col-start-1 lg:col-span-2">
+                                <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
+                                    <iframe title="vimeo-player" src={'https://www.youtube.com/embed/' + getyoutubeId(content.video)} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
+                                    </iframe>
 
-                            <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
-                                <iframe title="vimeo-player" src={'https://www.youtube.com/embed/' + getyoutubeId(content.video)} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
-                                </iframe>
+                                </div>
 
-                            </div>
-
-                            <div className="mt-4" dangerouslySetInnerHTML={{ __html: content.html_body }}>
+                                <div className="mt-4" dangerouslySetInnerHTML={{ __html: content.html_body }}>
+                                </div>
                             </div>
                         </div>
                     </main>
                 </div>
-
-
             </div >
-
         </>
     )
 }
@@ -83,7 +81,7 @@ export async function getServerSideProps(context) {
         },
     })
     const serviceDetails = await queryGraph(servicesClient, {
-        subcategory_id: parseInt(context.params.id),
+        subcategory_id: parseInt(context.params.scid),
         id: parseInt(context.params.sid),
     }, SchemeGetServiceDetails)
         .then((res) => {
