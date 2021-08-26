@@ -29,6 +29,9 @@ import cookies from 'next-cookies'
 import Draggable from 'react-draggable';
 
 import SortableContainer from 'react-drag-sort'
+import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import TestNa from '../components/TestNa'
+
 
 export default function MIOReport({ profile }) {
     const router = useRouter()
@@ -36,74 +39,44 @@ export default function MIOReport({ profile }) {
 
     const index = 4;
 
-    const [collection, setCollection] = useState([
-        { key: 1, value: 'Hello a' },
-        { key: 2, value: 'Hello b' },
-        { key: 3, value: 'Hello c' },
-        { key: 4, value: 'Hello d' },
-        { key: 5, value: 'Hello e' },
-        { key: 6, value: 'Hello e' }
-    ])
-
-
-    const Item = ({ value, index, onRemove, onChange, decorateHandle }) => {
-        return (
-            <div className="shadow rounded p-4 mb-4 bg-white">
-                {decorateHandle(
-                    <div
-                    >{value}
-                    </div>
-                )}
-
-            </div>
-        )
-    }
-
-    const pages = [
-        {
-            name: 'My Child', href: '/my_child/', current: false
-        },
-        {
-            name: ' Report', href: '#', current: true
-        },
-    ]
-
 
     return (
         <>
             <MetaLayout title="MIO Assement Reports" description="MIO Assement Reports" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
 
-                <NavigationLayout index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+                <TestNa index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="MIO Report" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-                        <Breadcrumbs pages={pages} />
                         <div className="m-4">
 
-                            <Draggable
-                                axis="x"
-                                handle=".handle"
-                                defaultPosition={{ x: 0, y: 0 }}
-                                position={null}
-                                grid={[25, 25]}
-                                scale={1}>
-                                <div>
-                                    <div className="handle">Drag from here</div>
-                                    <div>This readme is really dragging on...</div>
-                                </div>
-                            </Draggable>
+                            <Element name="test1" className="element h-screen" >
+                                test 1
+                            </Element>
 
-                            <SortableContainer
-                                collection={collection}
-                                onChange={collection => {
-                                    console.log('onchange')
-                                    setCollection(collection)
-                                }}
-                                Component={Item}
-                            />
+                            <Element name="test2" className="element h-screen">
+                                test 2
+                            </Element>
+
+                            <Element name="test3" className="element h-screen">
+                                test 3
+                            </Element>
+
+                            <Element name="test4" className="element h-screen">
+                                test 4
+                            </Element>
+
+                            <Element name="test5" className="element h-screen">
+                                test 5
+                            </Element>
+
+                            <div id="anchor" className="element h-screen">
+                                test 6 (anchor)
+                            </div>
+
                         </div>
                     </main>
                 </div>
@@ -114,61 +87,7 @@ export default function MIOReport({ profile }) {
 
         </>
     )
-    function getOdListValue(title) {
-        switch (title) {
-            case 'kinesthetic':
-                return openB.kinesthetic
-            case 'naturalistic':
-                return openB.naturalistic
-            case 'interpersonal':
-                return openB.interpersonal
-            case 'intrapersonal':
-                return openB.intrapersonal
-            case 'logical':
-                return openB.logical
-            case 'visual':
-                return openB.visual
-            case 'rhythmic':
-                return openB.rhythmic
-            case 'linguistic':
-                return openB.linguistic
-        }
-    }
-    function toggleListValue(title) {
-        switch (title) {
-            case 'kinesthetic':
-                openB.kinesthetic = !openB.kinesthetic
-                break
-            case 'naturalistic':
-                openB.naturalistic = !openB.naturalistic
-                break
-            case 'interpersonal':
-                openB.interpersonal = !openB.interpersonal
-                break
-            case 'intrapersonal':
-                openB.intrapersonal = !openB.intrapersonal
-                break
-            case 'logical':
-                openB.logical = !openB.logical
-                break
-            case 'visual':
-                openB.visual = !openB.visual
-                break
-            case 'rhythmic':
-                openB.rhythmic = !openB.rhythmic
-                break
-            case 'linguistic':
-                openB.linguistic = !openB.linguistic
-                break
-        }
-        setOpenB(openB)
-        console.log(openB)
-    }
 }
-
-// JobFamilies.getInitialProps = async (context) => {
-// const [authToken, setAuthToken] = useLocalStorage("authToken", "")
-// }
 
 export async function getServerSideProps(context) {
     const { token } = cookies(context)

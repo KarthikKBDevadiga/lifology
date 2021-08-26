@@ -102,14 +102,14 @@ export default function Service({ profile, services, id }) {
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-2 lg:col-span-3 overflow-auto w-full h-screen">
-                                            <div className="bg-white px-4 pb-4 shadow sm:rounded-lg sm:px-4 w-full">
+                                            <div className="bg-white px-4 pb-4 shadow rounded sm:px-4 w-full">
                                                 {
                                                     services.map((s) => (
                                                         <Element name={'ss' + s.id} className="element">
 
                                                             <div>
                                                                 <div className="text-base font-medium pt-4">{s.title}</div>
-                                                                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2">
+                                                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 mt-4">
                                                                     {
                                                                         s.services.map(ss => {
                                                                             if (ss.is_cta_required) {
@@ -119,7 +119,7 @@ export default function Service({ profile, services, id }) {
                                                                                             "/career_explorer"
                                                                                 }>
                                                                                     <a>
-                                                                                        <div className="group h-24 relative bg-white overflow-hidden shadow rounded-lg mt-4 hover:shadow-2xl hover:scale-105 duration-500"
+                                                                                        <div className="group h-24 relative bg-white overflow-hidden shadow rounded-lg hover:shadow-2xl hover:scale-105 duration-500"
                                                                                         >
                                                                                             <div className="absolute h-full w-full h-48 bg-gradient-to-r from-lblue via-lblue to-transparent" />
                                                                                             <div className="absolute p-5 top-0">
@@ -135,7 +135,7 @@ export default function Service({ profile, services, id }) {
                                                                                     <Link href={"/service/" + id + '/serviceDetails/' + ss.id + '/' + ss.subcategory_id}>
                                                                                         <a>
                                                                                             {/* <img src={ss.image} className="w-full object-cover h-48 rounded mt-4" /> */}
-                                                                                            <div className="group relative bg-white overflow-hidden shadow rounded-lg mt-4 hover:shadow-2xl hover:scale-105 duration-500"
+                                                                                            <div className="group relative bg-white overflow-hidden shadow rounded-lg hover:shadow-2xl hover:scale-105 duration-500"
                                                                                             >
                                                                                                 <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent" />
                                                                                                 <img src={ss.image} className="rounded-lg w-full object-cover h-48 rounded " />

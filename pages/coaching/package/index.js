@@ -83,7 +83,7 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
 
                                                 </div>
 
-                                                <div className="sm:flex h-full w-full">
+                                                {/* <div className="sm:flex h-full w-full">
                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                         <img className="object-contain rounded" src={purchasedPackage.coaching_packages.thumbnail} style={{ maxHeight: '12rem', maxWidth: '12rem' }} />
                                                     </div>
@@ -91,7 +91,16 @@ export default function PurchasedPackage({ profile, token, purchasedPackage }) {
                                                         <div className="font-bold text-base" >{purchasedPackage.coaching_packages.title}</div>
                                                         <div className="mt-2 text-sm text-justify" >{purchasedPackage.coaching_packages.description}</div>
                                                     </div>
+                                                </div> */}
+                                                <div>
+                                                    <div className="float-left">
+                                                        <img className="object-contain rounded mr-4" src={purchasedPackage.coaching_packages.thumbnail} style={{ maxHeight: '12rem', maxWidth: '12rem' }} />
+
+                                                    </div>
+                                                    <div className="font-bold text-base m-4" >{purchasedPackage.coaching_packages.title}</div>
+                                                    <div className="mt-2 text-sm text-justify" >{purchasedPackage.coaching_packages.description}</div>
                                                 </div>
+
                                             </div>
 
 
