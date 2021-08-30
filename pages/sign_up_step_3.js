@@ -82,15 +82,9 @@ export default function SignUpStep3({ grades, prefs }) {
                     pathname: 'career_explorer',
                     query: { token: res.signup.auth_token }
                 })
-                // if (res.sendOtp) {
-                //     setLoadingDialog(false)
-                //     setTab(2)
-                //     setTimeLeft(30)
-                // }
             }).catch((networkErr) => {
-                // setLoadingDialog(false)
                 console.log(networkErr)
-            });
+            })
     }
 
     const onChangePref = (event) => {
@@ -100,20 +94,18 @@ export default function SignUpStep3({ grades, prefs }) {
         var list = prefsList;
         console.log(value);
         if (list.includes(target.id) && !value) {
-            // list.remove(target.id)
             var index = list.indexOf(target.id);
             if (index > -1) {
-                list.splice(index, 1);
+                list.splice(index, 1)
             }
         } else if (!list.includes(target.id) && value) {
             list.push(target.id)
         }
         setPrefsList(list)
 
-        console.log(list.includes(1));
+        console.log(list.includes(1))
     }
 
-    console.log(prefs);
 
     return (
         <>

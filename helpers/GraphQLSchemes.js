@@ -1194,3 +1194,19 @@ query serviceDetails($id:Int!, $subcategory_id:Int!){
   }
 }
 `;
+
+export const SchemeSearch = gql`
+query searchServices($title:String!){
+  searchServices(title:$title){
+    id
+    subcategory_id
+    subcategory_title
+    service_title
+    title
+    image
+    is_cta_required
+    cta
+    templete_type
+  }
+}
+`;

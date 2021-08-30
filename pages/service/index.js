@@ -17,9 +17,10 @@ import Breadcrumbs from '/components/Breadcrumbs'
 import cookies from 'next-cookies'
 import { SchemeGetAssessments } from '/helpers/GraphQLSchemes'
 import { SchemeGetServices } from '/helpers/GraphQLSchemes'
+import { SchemeSearch } from '../../helpers/GraphQLSchemes'
 
 
-export default function Service({ profile, services }) {
+export default function Service({ profile, services, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -28,14 +29,29 @@ export default function Service({ profile, services }) {
             name: 'Services', href: '#', current: true
         },
     ]
+    const [searchText, setSearchText] = useState("")
+    const [searchList, setSearchList] = useState([])
 
-    const cards = [
-        { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
-        { name: 'Course and University', href: '/career_explorer/course_and_university/top_universities', icon: ScaleIcon, amount: '$30,659.45' },
-        // { name: 'Scholarship Program', href: '/career_explorer', icon: ScaleIcon, amount: '$30,659.45' },
-        // { name: 'Magazine', href: '/career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
-        { name: 'Career Videos', href: '/career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
-    ]
+    const client = new ApolloClient({
+        uri: Constants.baseUrl + "/api/services",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    })
+    const searchService = (e) => {
+        setSearchText(e.target.value)
+        queryGraph(client, {
+            title: e.target.value
+        }, SchemeSearch)
+            .then((res) => {
+                setSearchList(res.searchServices)
+                console.log(res)
+            }).catch((networkErr) => {
+                console.log(networkErr)
+            })
+    }
+
     return (
         <>
 
@@ -63,17 +79,34 @@ export default function Service({ profile, services }) {
                                             <input
                                                 id="search_field"
                                                 name="search_field"
-                                                className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent mr-10"
+                                                className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent mr-2"
                                                 placeholder="Search Services"
+                                                type="search"
+                                                value={searchText}
+                                                onChange={searchService}
 
                                             />
-                                            <button className="flex p-2 w-max absolute right-0 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
-                                            >
-                                                <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div>
+                                {
+                                    searchList.map((m) => (
+                                        <Link href={
+                                            m.is_cta_required ?
+                                                m.cta == 'JobFamilies_CareerPools' ? '/career_explorer/job_families' :
+                                                    matchMedia.cta == 'UniversityFinder' ? '/career_explorer/course_and_university' :
+                                                        "/career_explorer" :
+                                                'service/-1/serviceDetails/' + m.id + '/' + m.subcategory_id
+                                        }>
+                                            <a>
+                                                <div className="p-4 hover:bg-lgrey-light duration-500">{m.title}</div>
+                                            </a>
+                                        </Link>
+
+                                    ))
+                                }
                             </div>
                         </div>
                         <div className="m-4">
@@ -168,7 +201,7 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, services }
+        props: { profile, services, token }
     }
 }
 

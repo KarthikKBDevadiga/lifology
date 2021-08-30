@@ -106,13 +106,13 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
-            return {};
-        });
+            return {}
+        })
     return {
         props: { profile, token }
     }

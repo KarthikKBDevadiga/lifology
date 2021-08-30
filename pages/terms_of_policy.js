@@ -3,7 +3,6 @@ import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
@@ -17,7 +16,7 @@ export default function TermsOfPolicy({ profile }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
-    const index = 3;
+    const index = 3
     return (
         <>
             <MetaLayout title="Terms Of Policy" description="Terms Of Policy" />
@@ -86,13 +85,13 @@ export async function getServerSideProps(context) {
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
     const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
         .then((res) => {
             return res.profile
         }).catch((networkErr) => {
             return {};
-        });
+        })
     return {
         props: { profile, token }
     }
