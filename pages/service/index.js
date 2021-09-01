@@ -19,6 +19,7 @@ import { SchemeGetAssessments } from '/helpers/GraphQLSchemes'
 import { SchemeGetServices } from '/helpers/GraphQLSchemes'
 import { SchemeSearch } from '../../helpers/GraphQLSchemes'
 
+import classNames from '../../helpers/classNames'
 
 export default function Service({ profile, services, token }) {
     const router = useRouter()
@@ -30,6 +31,7 @@ export default function Service({ profile, services, token }) {
         },
     ]
     const [searchText, setSearchText] = useState("")
+    const [loading, setLoading] = useState(false)
     const [searchList, setSearchList] = useState([])
 
     const client = new ApolloClient({
@@ -40,14 +42,16 @@ export default function Service({ profile, services, token }) {
         },
     })
     const searchService = (e) => {
+        setLoading(true)
         setSearchText(e.target.value)
         queryGraph(client, {
             title: e.target.value
         }, SchemeSearch)
             .then((res) => {
+                setLoading(false)
                 setSearchList(res.searchServices)
-                console.log(res)
             }).catch((networkErr) => {
+                setLoading(false)
                 console.log(networkErr)
             })
     }
@@ -65,21 +69,32 @@ export default function Service({ profile, services, token }) {
                     <main className="flex-1 relative z-0 overflow-y-auto">
 
                         <Breadcrumbs pages={pages} />
-                        <div className="p-4 mx-4 bg-white shadow rounded">
+                        <div className="mx-4 bg-white shadow rounded-lg">
                             <div className="sm:flex h-full w-full">
                                 <div className="w-full">
                                     <label htmlFor="search_field" className="sr-only">
                                         Search
                                     </label>
-                                    <div className="relative w-full text-gray-400 ">
-                                        <div className="flex rounded bg-lgrey focus-within:text-gray-600 ">
-                                            <div className="p-2 items-center pointer-events-none" aria-hidden="true">
-                                                <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                    <div className="relative w-full text-gray-400">
+                                        <div className={
+                                            classNames(
+                                                searchText ? 'rounded-t-lg' : 'rounded-lg',
+                                                "flex focus-within:text-black duration-500 relative"
+                                            )
+                                        }>
+
+                                            <div className=" p-4 items-center pointer-events-none z-50" aria-hidden="true">
+                                                <SearchIcon className="h-4 w-4" aria-hidden="true   " />
                                             </div>
                                             <input
                                                 id="search_field"
                                                 name="search_field"
-                                                className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent mr-2"
+                                                className={
+                                                    classNames(
+                                                        searchText ? 'rounded-t-lg' : 'rounded-lg',
+                                                        "absolute pl-12 block w-full h-full py-4 pr-4 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent focus:bg-gray-100 sm:text-sm bg-transparent duration-500"
+                                                    )
+                                                }
                                                 placeholder="Search Services"
                                                 type="search"
                                                 value={searchText}
@@ -90,24 +105,36 @@ export default function Service({ profile, services, token }) {
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                {
-                                    searchList.map((m) => (
-                                        <Link href={
-                                            m.is_cta_required ?
-                                                m.cta == 'JobFamilies_CareerPools' ? '/career_explorer/job_families' :
-                                                    matchMedia.cta == 'UniversityFinder' ? '/career_explorer/course_and_university' :
-                                                        "/career_explorer" :
-                                                'service/-1/serviceDetails/' + m.id + '/' + m.subcategory_id
-                                        }>
-                                            <a>
-                                                <div className="p-4 hover:bg-lgrey-light duration-500">{m.title}</div>
-                                            </a>
-                                        </Link>
+                            {
+                                searchText ?
+                                    searchList.length > 0 ?
+                                        <div>
+                                            {
+                                                searchList.map((m, i) => (
+                                                    <Link href={
+                                                        m.is_cta_required ?
+                                                            m.cta == 'JobFamilies_CareerPools' ? '/career_explorer/job_families' :
+                                                                matchMedia.cta == 'UniversityFinder' ? '/career_explorer/course_and_university' :
+                                                                    "/career_explorer" :
+                                                            '/service/-1/serviceDetails/' + m.id + '/' + m.subcategory_id
+                                                    }>
+                                                        <a>
+                                                            <div className={
+                                                                classNames(
+                                                                    searchList.length == i + 1 ? 'rounded-b-lg' : '',
+                                                                    "p-4 hover:bg-lgrey-light duration-500"
+                                                                )
+                                                            }>{m.title}</div>
+                                                        </a>
+                                                    </Link>
 
-                                    ))
-                                }
-                            </div>
+                                                ))
+                                            }
+                                        </div> :
+                                        <div className="p-4 text-gray-400">{loading ? 'Loading...' : 'No Data'}</div>
+                                    : <></>
+                            }
+
                         </div>
                         <div className="m-4">
                             {/* Activity table (small breakpoint and up) */}
@@ -119,15 +146,15 @@ export default function Service({ profile, services, token }) {
                                             {services.map((card) => (
                                                 <Link href={
                                                     card.cta == null ?
-                                                        'service/' + card.id :
+                                                        '/service/' + card.id :
                                                         card.cta == 'CareerVideos' ?
-                                                            'career_explorer/career_video' :
+                                                            '/career_explorer/career_video' :
                                                             card.cta == 'Magazines' ?
-                                                                'career_explorer/magazine' :
-                                                                'service/' + card.id
+                                                                '/career_explorer/magazine' :
+                                                                '/service/' + card.id
                                                 }>
                                                     <a>
-                                                        <div key={card.id} className="relative bg-white overflow-hidden shadow rounded-lg"
+                                                        <div key={card.id} className="relative bg-white overflow-hidden shadow rounded-lg hover:scale-105 hover:shadow-2xl duration-500"
                                                             style={{ height: '200px', }}
                                                         >
 
@@ -186,7 +213,6 @@ export async function getServerSideProps(context) {
             return []
         })
 
-    console.log(services)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),
