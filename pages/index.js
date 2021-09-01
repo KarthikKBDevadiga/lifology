@@ -36,25 +36,25 @@ const coaches = [
     id: 85,
     name: 'Test Coach',
     designation: 'Career Coach',
-    img: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png',
+    profile_image: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png',
   },
   {
     id: 85,
     name: 'Test Coach',
     designation: 'Career Coach',
-    img: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png',
+    profile_image: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png',
   },
   {
     id: 85,
     name: 'Test Coach',
     designation: 'Career Coach',
-    img: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png',
+    profile_image: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png',
   },
   {
     id: 85,
     name: 'Test Coach',
     designation: 'Career Coach',
-    img: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png',
+    profile_image: 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png',
   },
 ];
 
@@ -85,7 +85,10 @@ export default function Home({ profile, home }) {
         slidesPerView: 3,
       },
     }
-  });
+  })
+  const [coachSliderRef, coachSlider] = useKeenSlider({
+    breakpoints,
+  })
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -99,7 +102,7 @@ export default function Home({ profile, home }) {
             <div className="flex px-4 justify-center">
               <div className="mb-4 max-w-3xl w-full grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
 
-                <div className='space-y-6 lg:col-start-1 lg:col-span-2'>
+                <div className='space-y-4 lg:col-start-1 lg:col-span-2'>
                   {/* STAT CARDS START */}
                   <div className='sm:flex bg-white shadow rounded-lg p-4 min-w-full'>
                     <div className='bg-blue-100 p-3 mb-4 sm:mb-0 sm:ml-1 sm:mr-2 sm:w-1/3 w-full rounded-md'>
@@ -218,7 +221,9 @@ export default function Home({ profile, home }) {
                       <div className='navigation-wrapper keen-slider' ref={assessmentSliderRef}>
                         {home.assessment?.map(assessment => (
                           <div key={assessment.id} className='keen-slider__slide rounded-lg'>
-                            <Link href='#'>
+                            <Link href={
+                              assessment.assessment_type == 3 ? assessment.id == 9 ? '/my_child/' + assessment.id + '/report/la' : '/my_child/' + assessment.id + '/report/figment' : assessment.total_questions > 0 ? "/my_child/" + assessment.id + '/assessment_instructions' : "/my_child/" + assessment.id + '/report/' + assessment.title.toLowerCase()
+                            }>
                               <a>
                                 <div key={assessment.name} className="my-4 mx-2 group relative bg-white overflow-hidden shadow hover:shadow-xl hover:scale-105 active:scale-100 active:shadow-sm rounded bg-cover duration-500 h-48"
 
@@ -353,7 +358,7 @@ export default function Home({ profile, home }) {
                   <div className='bg-white shadow rounded-lg min-w-full'>
                     <div className='flex justify-between'>
                       <div className='font-bold text-base px-4 pt-4'>Recommended Articles</div>
-                      <a href='#' className='text-lblue font-medium text-sm px-4 pt-4'>View All</a>
+                      <a href='/career_explorer/magazine' className='text-lblue font-medium text-sm px-4 pt-4'>View All</a>
                     </div>
                     <div className='relative flex items-center'>
                       <a
@@ -398,27 +403,98 @@ export default function Home({ profile, home }) {
                   </div>
                   {/* ARTICLES END */}
 
+
                   {/* COACHES START */}
-                  <div className='bg-white shadow rounded-lg p-4 pb-5 min-w-full'>
-                    <div className='flex justify-between'>
-                      <div className='font-bold text-xl mb-3'>Our Coaches</div>
-                      <a href='#' className='text-lblue font-medium'>View All</a>
-                    </div>
-                    <div className='grid gap-6 sm:grid-cols-4 grid-cols-1'>
-                      {coaches.map(coach => (
-                        <Link href={`/coaching/coach/${coach.id}`}>
-                          <a href={`/coaching/coach/${coach.id}`}>
-                            <div className='sm:h-64 flex flex-col items-center px-10 sm:pt-0 pt-2 bg-white shadow rounded-md col-span-1 hover:shadow-lg duration-200'>
-                              <img src={coach.img} className='rounded-full bg-gray-100 mt-auto' />
-                              <div className='text-xl font-bold my-2'>John Doe</div>
-                              <div className='text-sm text-gray-300 font-medium'>Career Coach</div>
-                              <div className='mt-auto mb-4 text-lblue'><a href='#'>View Profile</a></div>
+                  {
+                    home.coach.length > 0 ?
+                      <div className='bg-white shadow rounded-lg min-w-full'>
+                        <div className='flex justify-between'>
+                          <div className='font-bold text-base px-4 pt-4'>Our Coaches</div>
+                          <a href='/coaching/coach/list' className='text-lblue font-medium text-sm px-4 pt-4'>View All</a>
+                        </div>
+                        <div className='relative flex items-center'>
+                          <a
+                            onClick={(event) => {
+                              coachSlider.prev()
+                            }}>
+                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
                             </div>
                           </a>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
+                          <a
+                            onClick={(event) => {
+                              coachSlider.next()
+                            }}>
+                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </div>
+                          </a>
+                          <div className='keen-slider navigation-wrapper w-full' ref={coachSliderRef}>
+                            {home.coach.map(coach => (
+                              <div key={coach.id} className='keen-slider__slide'>
+                                <Link href={'/coaching/coach/' + coach.id} key={coach.id}>
+                                  <a>
+                                    <div className="mx-2 my-4 group relative shadow  rounded m-1 hover:shadow-xl hover:scale-105 duration-500 pt-4" style={{}}>
+                                      <div>
+                                        <img className="rounded-full duration-500 w-full h-24 w-24 object-cover ml-auto mr-auto" src={coach.profile_image} />
+                                        {/* <img className=" rounded-t " src={card.thumbnail} /> */}
+                                        <div className="flex-1 flex items-center justify-between truncate">
+                                          <div className="flex-1 px-4 py-2 text-sm truncate">
+                                            <div className="mt-2 w-full text-gray-900 font-medium text-center">
+                                              {coach.name}
+                                            </div>
+                                            <div className="text-gray-500 mt-1 w-full overflow-hidden text-center text-xs">{coach.coaching_category}</div>
+                                            <div className="flex w-min ml-auto mr-auto mt-1 mb-2">
+                                              <div className={coach.rating >= 1 ? 'text-lyellow' : 'text-gray-400'}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                              </div>
+                                              <div className={coach.rating >= 2 ? 'text-lyellow' : 'text-gray-400'}>
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                              </div>
+                                              <div className={coach.rating >= 3 ? 'text-lyellow' : 'text-gray-400'}>
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                              </div>
+                                              <div className={coach.rating >= 4 ? 'text-lyellow' : 'text-gray-400'}>
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                              </div>
+                                              <div className={coach.rating >= 5 ? 'text-lyellow' : 'text-gray-400'}>
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                              </div>
+
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div> : <></>
+                  }
+
+
+
                   {/* COACHES END */}
 
                 </div>
