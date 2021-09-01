@@ -31,8 +31,8 @@ export default function CareerExplorer({ profile, isTop }) {
     const cards = [
         { name: 'Job Families & Career Fields', href: '/career_explorer/job_families', icon: ScaleIcon, amount: '$30,659.45' },
         { name: 'Course and University', href: isTop ? '/career_explorer/course_and_university/top_universities' : '/career_explorer/course_and_university', icon: ScaleIcon, amount: '$30,659.45' },
-        // { name: 'Scholarship Program', href: '/career_explorer', icon: ScaleIcon, amount: '$30,659.45' },
-        // { name: 'Magazine', href: '/career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
+        { name: 'Scholarship Program', href: '/career_explorer/scholarship', icon: ScaleIcon, amount: '$30,659.45' },
+        { name: 'Magazine', href: '/career_explorer/magazine', icon: ScaleIcon, amount: '$30,659.45' },
         { name: 'Career Videos', href: '/career_explorer/career_video', icon: ScaleIcon, amount: '$30,659.45' },
     ]
     return (
@@ -61,7 +61,7 @@ export default function CareerExplorer({ profile, isTop }) {
                                                     style={{ backgroundImage: 'url(\'/img/test.png\')', height: '200px', }}
                                                 >
 
-                                                    <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent">
+                                                    <div className="absolute h-full w-7/12 bg-gradient-to-r from-lblue via-lblue to-transparent"  >
                                                     </div>
                                                     <img src="/img/test.png" className="rounded-lg" />
                                                     <div className="absolute p-5 top-0">
@@ -119,11 +119,9 @@ export async function getServerSideProps(context) {
             return []
         })
 
-    console.log(assessments)
     const isTop = (assessments.find(a => a.id == 1).total_questions <= 0 &&
         assessments.find(a => a.id == 4).total_questions <= 0 &&
         assessments.find(a => a.id == 2).total_questions <= 0)
-    console.log(isTop)
     const profileClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/user",
         cache: new InMemoryCache(),

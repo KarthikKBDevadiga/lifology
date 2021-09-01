@@ -31,7 +31,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
             <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
                 <div className="flex-1 flex font-bold self-center">
                     <div >
-                        <h2 className="text-xl ">{title}</h2>
+                        <h2 className="sm:text-xl text-sm">{title}</h2>
 
                     </div>
                 </div>
@@ -113,7 +113,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <Link
-                                                    href='/career_explorer/course_and_university/bookmarks'>
+                                                    href='/bookmarks'>
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
@@ -142,7 +142,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     <a
                                                         className={classNames(
                                                             active ? 'bg-gray-100' : '',
-                                                            'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200 duration-500'
+                                                             'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200 duration-500'
                                                         )}
                                                     >
                                                         <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">

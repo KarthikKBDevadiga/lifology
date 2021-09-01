@@ -11,7 +11,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhased }) => {
+const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen , isPackagePurhased }) => {
     const router = useRouter()
     return (
         <>
@@ -75,8 +75,8 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhase
                             <nav className="mt-5 flex-shrink-0 h-full divide-y divide-cyan-800 overflow-y-auto" aria-label="Sidebar"
                             >
                                 <div className="px-2 space-y-1">
-                                    {/* <Link
-                                        href="#">
+                                    <Link
+                                        href="/">
                                         <a
                                             className={classNames(
                                                 index == 1 ? 'bg-cyan-800 text-white' : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
@@ -93,7 +93,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhase
                                             </svg>
                                             Home
                                         </a>
-                                    </Link> */}
+                                    </Link>
                                     <Link
                                         href={{
                                             pathname: '/my_child',
@@ -218,9 +218,9 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhase
                         </div>
                         <nav className="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto relative" aria-label="Sidebar">
                             <div className="px-4 space-y-1 mt-4">
-                                {/* 
+                                
                                 <Link
-                                    href="#">
+                                    href="/">
                                     <a
                                         className={classNames(
                                             index == 1 ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100',
@@ -235,7 +235,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhase
                                         </svg>
                                         Home
                                     </a>
-                                </Link> */}
+                                </Link>
                                 <Link
                                     href={{
                                         pathname: '/my_child',

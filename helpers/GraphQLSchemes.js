@@ -895,7 +895,6 @@ mutation universityBookmark($college_id:Int!){
     }
   }
 `;
-
 export const SchemeGetUniversityBookmarkList = gql`
 query{
   universities{
@@ -972,7 +971,6 @@ query{
   }
 }
 `;
-
 export const SchemeGetPackageDetails = gql`
 query coachingPackageDetails($id:Int!){
   coachingPackageDetails(id:$id){
@@ -998,6 +996,199 @@ query coachingPackageDetails($id:Int!){
   }
 }
 `;
+export const SchemeViewAllMagazines = gql`
+  query magazinesViewAll($category_id: Int, $search_keyword: String){
+    magazinesViewAll(lang_id:1,category_id:$category_id,filter:{ search_keyword: $search_keyword }){
+      id
+      created_at
+      lang_id
+      title
+      description
+      category_id
+      tags
+      video
+      thumbnail
+    }
+  }
+`;
+
+export const SchemeGetMagazinesCategories = gql`
+  query{
+    magazineCategory{
+      id 
+      name
+    }
+  }
+`;
+
+export const SchemeBookmarkMagazine = gql`
+  mutation magazineBookmark($magazine_id: Int!) {
+    magazineBookmark(magazine_id: $magazine_id)
+    {
+      bookmark_status
+    }
+  }
+`;
+
+export const SchemeCheckMagazineStatus = gql`
+  query checkMagazineStatus($magazine_id:Int!){
+    checkMagazineStatus(magazine_id: $magazine_id){
+      bookmark_status
+      like_status
+    }
+  }
+`;
+
+export const SchemeGetMagazineDetails = gql`
+  query magazineDetails($id: Int!){
+    magazineDetails(id: $id){
+      details{
+        id
+        created_at
+        lang_id
+        title
+        description
+        category_id
+        tags
+        video
+        thumbnail
+        like_status
+        bookmark_status
+      }
+      relatedVideos{
+        id
+        lang_id
+        title
+        description
+        category_id
+        tags
+        video
+        thumbnail
+      }
+    }
+  }
+`;
+
+export const SchemeMyLifologyMagazines = gql`
+  query magazines{
+    magazines{
+      id
+      lang_id
+      title
+      description
+      category_id
+      tags
+      video
+      thumbnail
+    }
+  }
+`;
+
+
+export const SchemeGetTrendingMagazines = gql`
+  query{
+    trendingMagazines(lang_id:1){
+      id
+      created_at
+      lang_id
+      title
+      description
+      category_id
+      tags
+      video
+      thumbnail
+    }
+  }
+`;
+
+
+export const SchemeGetMagazineBanner = gql`
+  query{
+    magazineBanners{
+        id
+        created_at
+        title
+        description
+        image
+        magazine_id
+    }
+  }
+`;
+
+export const SchemeAddMagazineComment = gql`
+  mutation magazineComment($magazine_id: Int!, $comment: String!) {
+    magazineComment(magazine_id: $magazine_id, comment: $comment)
+    {
+      id
+      magazine_id
+      user_id
+      comment
+    }
+  }
+`;
+
+export const SchemeMagazineLikeDislike = gql`
+  mutation magazineLikeStatus($magazine_id: Int!, $like_status: Int!) {
+    magazineLikeStatus(magazine_id: $magazine_id, like_status: $like_status)
+    {
+      like_status
+    }
+  }
+`;
+
+export const SchemeGetScholarships = gql`
+  query scholarshipsWeb($lang: Int!, $filter: Scholarship_Filter){
+    scholarshipsWeb(lang: $lang, filter: $filter) {
+      count
+      scholarships {
+        id
+        name
+        image
+        description
+        other_criteria
+        amount
+        studying_in
+        deadline
+        from_countries
+        no_awards
+        studying_subjects
+        includes
+      }
+    }
+  }
+`;
+
+export const SchemeGetScholarshipDetails = gql`
+  query scholarshipDetails($scholarship_id: Int!){  
+    scholarshipDetails(scholarship_id: $scholarship_id){
+      id
+      name
+      image
+      description
+      other_criteria
+      amount
+      studying_in
+      deadline
+      from_countries
+      no_awards
+      studying_subjects
+      includes
+    }
+  }
+`;
+
+export const SchemeGetScholarshipsCountries = gql`
+  query{
+    scholarshipCountry{
+      from_countries{
+          country
+      }
+      in_countries{
+          country
+      }
+    }
+  }
+`;
 
 export const SchemeCreateOrder = gql`
   mutation createOrder($coupon_code: String,$item_id: Int!, $currency: String!, $order_type: String!) {
@@ -1006,6 +1197,57 @@ export const SchemeCreateOrder = gql`
       currency
       amount
       discount
+    }
+  }
+`;
+
+export const SchemeMyLifologyVideos = gql`
+  query{
+    videos{
+      id
+      lang_id
+      title
+      description
+      category_id
+      tags
+      views
+      video
+      thumbnail
+      watch_later_status
+      favorite_status
+      
+    }
+  }
+`;
+
+export const SchemeMyLifologyCareerPools = gql`
+  query{
+    careerPools{
+      id
+      name
+      image
+      one_liner
+      description
+      video
+      thumbnail
+      percentage
+      personality_match
+      orientation_match
+    }
+  }
+`;
+
+export const SchemeMyLifologyUniversities = gql`
+  query{
+    universities{
+    id
+      name
+      description
+      website
+      logo
+      city
+      state
+      country
     }
   }
 `;
@@ -1074,6 +1316,7 @@ mutation bookAppointment($coach_id:Int!, $session_id:Int!, $appointment_date: Da
   }
 }
 `;
+
 export const SchemeUpdateAppointment = gql`
 mutation bookAppointment($id:Int!, $appointment_date: Date!, $start_time:String!, $end_time:String!){
   updateAppointment(id:$id,appointment_date:$appointment_date,start_time:$start_time,end_time:$end_time){
@@ -1149,6 +1392,92 @@ query assessmentDetails($id:Int!){
 }
 `;
 
+export const SchemeGetHomeData = gql`
+query{
+  home{
+    start_video{
+      id
+      title
+      video
+      thumbnail
+      description
+    }
+     master_class_videos{
+      id
+      title
+      video
+      thumbnail
+      description
+      alt_thumbnail
+    }
+    assessment{
+      id
+      title
+      subtitle
+      dash_cards_image
+      instruction
+      icon
+      lang_id
+      assessment_type
+      description
+      assessment_status
+      total_questions
+      attempted_questions
+      questions_count
+    }
+    completed_assessment
+    percentage_completed
+    watch_videos{
+      id
+      title
+      video
+      thumbnail
+      description
+    }
+    university{
+      id
+      name
+      description
+      website
+      logo
+      city
+      state
+      country
+    }
+    articles{
+      id
+      lang_id
+      title
+      description
+      description
+      category_id
+      tags
+      video
+      thumbnail
+    }
+    coach
+    {
+      id
+      name
+      profile_image
+    }
+    total_coach
+    user_details{
+      time_spent
+      better_than
+      percentage_dif
+      time_description
+      badge_url
+      badge_description
+    }
+  }
+   dashboardCounts{
+    total_watched_videos
+    total_read_articles
+  }
+}
+`;
+
 export const SchemeGetServices = gql`
 query{
   servicesCategory{
@@ -1177,6 +1506,7 @@ query servicesSubCategory($id:Int!){
     }
   }
 }
+
 `;
 
 export const SchemeGetServiceDetails = gql`

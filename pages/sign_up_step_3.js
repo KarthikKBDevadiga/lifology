@@ -82,7 +82,9 @@ export default function SignUpStep3({ grades, prefs }) {
                     pathname: 'career_explorer',
                     query: { token: res.signup.auth_token }
                 })
+               
             }).catch((networkErr) => {
+                // setLoadingDialog(false)
                 console.log(networkErr)
             })
     }
@@ -94,6 +96,7 @@ export default function SignUpStep3({ grades, prefs }) {
         var list = prefsList;
         console.log(value);
         if (list.includes(target.id) && !value) {
+            
             var index = list.indexOf(target.id);
             if (index > -1) {
                 list.splice(index, 1)
@@ -106,6 +109,7 @@ export default function SignUpStep3({ grades, prefs }) {
         console.log(list.includes(1))
     }
 
+    
 
     return (
         <>

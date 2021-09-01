@@ -9,12 +9,14 @@ const Breadcrumbs = ({ pages }) => {
         <div className="shadow m-4 px-4 py-3 rounded-md  bg-white">
             <ol className="flex items-center space-x-4">
                 <li>
-                    <div>
-                        <div className="text-gray-400 hover:text-gray-500">
-                            <HomeIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
-                            <span className="sr-only">Home</span>
-                        </div>
-                    </div>
+                    <Link href={'/'}>
+                        <a>
+                            <div className="text-gray-400 hover:text-gray-500">
+                                <HomeIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
+                                <span className="sr-only">Home</span>
+                            </div>
+                        </a>
+                    </Link>
                 </li>
                 {pages.map((page) => (
                     <li key={page.name}>

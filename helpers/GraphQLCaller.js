@@ -41,6 +41,7 @@ export const queryGraph = function (apolloClient, vars = {}, scheme, fetch_Polic
         resolve(res.data);
       })
       .catch((err) => {
+        console.log("ERROR", err)
         clearTimeout(timeoutCall);
         if (err.networkError != null && err.networkError.result != null && err.networkError.result.errors != null)
           reject(err.networkError.result.errors[0].message);
