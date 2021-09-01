@@ -12,6 +12,7 @@ import { SchemeGetProfile, SchemeGetHomeData } from '/helpers/GraphQLSchemes';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import Link from 'next/link';
+import { SchemeGetCoachesList } from '../helpers/GraphQLSchemes';
 
 const breakpoints = {
   "(min-width: 464px)": {
@@ -58,7 +59,7 @@ const coaches = [
   },
 ];
 
-export default function Home({ profile, home }) {
+export default function Home({ profile, home, coaches }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [masterClassSliderRef, masterClassSlider] = useKeenSlider({
     // breakpoints: { ...breakpoints, "(min-width: 1200px)": { slidesPerView: 2.5 }, },
@@ -406,7 +407,7 @@ export default function Home({ profile, home }) {
 
                   {/* COACHES START */}
                   {
-                    home.coach.length > 0 ?
+                    coaches.length > 0 ?
                       <div className='bg-white shadow rounded-lg min-w-full'>
                         <div className='flex justify-between'>
                           <div className='font-bold text-base px-4 pt-4'>Our Coaches</div>
@@ -434,7 +435,7 @@ export default function Home({ profile, home }) {
                             </div>
                           </a>
                           <div className='keen-slider navigation-wrapper w-full' ref={coachSliderRef}>
-                            {home.coach.map(coach => (
+                            {coaches.map(coach => (
                               <div key={coach.id} className='keen-slider__slide'>
                                 <Link href={'/coaching/coach/' + coach.id} key={coach.id}>
                                   <a>
@@ -555,13 +556,27 @@ export async function getServerSideProps(context) {
     }).catch((networkErr) => {
       return {};
     })
-  console.log(home)
 
+  const skillClient = new ApolloClient({
+    uri: Constants.baseUrl + "/api/skills",
+    cache: new InMemoryCache(),
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  })
+  const coaches = await queryGraph(skillClient, {}, SchemeGetCoachesList)
+    .then((res) => {
+      return res.coaches
+    }).catch((networkErr) => {
+      return {};
+    })
+  console.log(coaches)
 
   return {
     props: {
       profile,
-      home
+      home,
+      coaches
     },
   };
 }
