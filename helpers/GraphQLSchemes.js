@@ -1471,7 +1471,7 @@ query{
       badge_description
     }
   }
-   dashboardCounts{
+  dashboardCounts{
     total_watched_videos
     total_read_articles
   }

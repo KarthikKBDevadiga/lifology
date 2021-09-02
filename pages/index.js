@@ -87,9 +87,12 @@ export default function Home({ profile, home, coaches }) {
       },
     }
   })
+
   const [coachSliderRef, coachSlider] = useKeenSlider({
     breakpoints,
   })
+
+  const [liveTileNo, setLiveTileNo] = useState(1)
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -197,7 +200,28 @@ export default function Home({ profile, home, coaches }) {
 
                   {/* ASSESSMENT START */}
                   <div className='bg-white shadow rounded-lg  min-w-full'>
-                    <div className='font-bold text-base px-4 pt-4'>Assessment</div>
+                    <div
+                      className="relative w-full rounded px-4 py-2 text-left sm:text-sm"
+                    >
+                      <span className="font-bold block truncate text-base">Assessment</span>
+                      <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                        <div className="text-sm font-medium"
+                        >
+                          {home.percentage_completed}%
+                        </div>
+                        <div className="text-xs  ml-1">
+                          completed
+                        </div>
+                        <div className="h-2 w-36 bg-lgrey-border rounded-full ml-4">
+                          <div className="bg-lblue h-full rounded-full" style={{
+                            width: home.percentage_completed + '%'
+                          }}></div>
+                        </div>
+                        <div className="mx-4 text-sm font-medium">{home.completed_assessment}/8</div>
+
+                      </span>
+                    </div>
+
                     <div className='relative flex items-center'>
                       <a
                         onClick={(event) => {
@@ -404,7 +428,6 @@ export default function Home({ profile, home, coaches }) {
                   </div>
                   {/* ARTICLES END */}
 
-
                   {/* COACHES START */}
                   {
                     coaches.length > 0 ?
@@ -501,9 +524,42 @@ export default function Home({ profile, home, coaches }) {
                 </div>
 
                 <div aria-labelledby="" className="lg:col-start-3 lg:col-span-1">
-                  <div className="bg-white shadow rounded-lg">
-                    <img className={'w-full'} src={'/img/dashboard_banner_bg.png'} />
-                  </div>
+                  {
+                    liveTileNo == 1 ?
+                      <div className="bg-lblue shadow rounded-lg">
+                        <div className="flex-shrink-0 flex items-center px-4 py-4">
+                          <img
+                            className="h-8 w-auto"
+                            src="/img/logoWhite.png"
+                            alt="Lifology Logo"
+                          />
+                          <span className="text-white self-center font-bold pl-4 text-xl tracking-wide">LIFOLOGY</span>
+                        </div>
+                        <img src="/img/dashboard.png" className="w-9/12 ml-auto mr-auto" />
+                        <div className="text-base text-white text-center px-4 pt-4 ">Help me to Decide</div>
+                        <div className="text-sm text-white text-center px-4 pt-2">Unable to find a solution? We are here for you.</div>
+
+                        <div
+                          onClick={(e) => {
+                            setLiveTileNo(2)
+                          }}
+                          className="cursor-pointer px-6 py-2 bg-lyellow rounded-full w-max text-lblue ml-auto mr-auto mt-4">Get Started</div>
+                        <div className="h-4"></div>
+                        {/* <img className={'w-full'} src={'/img/dashboard_banner_bg.png'} /> */}
+                      </div>
+                      : liveTileNo == 2 ?
+                        <div className="bg-white shadow rounded-lg">
+                          <div className="text-base text-center px-4 pt-4 font-medium">Thank you for your message!</div>
+                          <div className="text-sm  text-center px-4 pt-2">I didn't quite get you... Please bear with me as I get smarter. meanwhile</div>
+
+                          <div className="cursor-pointer px-6 py-2 bg-lyellow bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 mx-4 text-sm text-center duration-500">Admission Support</div>
+                          <div className="cursor-pointer px-6 py-2 bg-lgreen bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 mx-4 text-sm text-center duration-500">Best fit colleges for my child</div>
+                          <div className="cursor-pointer px-6 py-2 bg-lblue bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 mx-4 text-sm text-center duration-500">Trending Careers in the Modern World</div>
+                          <div className="cursor-pointer px-6 py-2 bg-lred bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 mx-4 text-sm text-center duration-500">Suitable career for my child</div>
+                          <div className="h-4"></div>
+                        </div>
+                        : <></>
+                  }
                 </div>
 
               </div>
@@ -570,7 +626,7 @@ export async function getServerSideProps(context) {
     }).catch((networkErr) => {
       return {};
     })
-  console.log(coaches)
+  console.log(home)
 
   return {
     props: {
