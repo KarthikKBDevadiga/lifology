@@ -653,7 +653,7 @@ export default function Home({ profile, home, coaches, token }) {
                                   <div
                                     onClick={
                                       (e) => {
-                                        setLiveTileNo(4)
+                                        // setLiveTileNo(4)
                                       }
                                     }
                                     className="cursor-pointer px-3 py-2 bg-lgrey-border hover:bg-lgrey-dark rounded-full font-medium mt-4 text-sm text-center duration-500">
