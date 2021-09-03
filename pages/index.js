@@ -12,7 +12,7 @@ import { SchemeGetProfile, SchemeGetHomeData } from '/helpers/GraphQLSchemes';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import Link from 'next/link';
-import { SchemeGetCoachesList } from '../helpers/GraphQLSchemes';
+import { SchemeGetCoachesList, SchemeVlOption } from '../helpers/GraphQLSchemes';
 
 const breakpoints = {
   "(min-width: 464px)": {
@@ -59,7 +59,7 @@ const coaches = [
   },
 ];
 
-export default function Home({ profile, home, coaches }) {
+export default function Home({ profile, home, coaches, token }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [masterClassSliderRef, masterClassSlider] = useKeenSlider({
     // breakpoints: { ...breakpoints, "(min-width: 1200px)": { slidesPerView: 2.5 }, },
@@ -93,6 +93,26 @@ export default function Home({ profile, home, coaches }) {
   })
 
   const [liveTileNo, setLiveTileNo] = useState(1)
+  const [options, setOptions] = useState({})
+
+  const loadOptions = (id) => {
+    const dashboardClient = new ApolloClient({
+      uri: Constants.baseUrl + "/api/dashboard",
+      cache: new InMemoryCache(),
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    queryGraph(dashboardClient, { section_id: id }, SchemeVlOption)
+      .then((res) => {
+        console.log(token)
+        console.log(res.vl_options)
+        setOptions(res.vl_options)
+        setLiveTileNo(3)
+      }).catch((networkErr) => {
+        console.log(networkErr)
+      })
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -116,7 +136,7 @@ export default function Home({ profile, home, coaches }) {
                           Total Videos Watched
                         </div>
                         <div className='mt-3'>
-                          <span className='font-bold text-3xl mr-2'>{home.watch_videos.length}</span>
+                          <span className='font-bold text-3xl mr-2'>{home?.watch_videos?.length}</span>
                           <span>Videos</span>
                         </div>
                       </div>
@@ -140,7 +160,7 @@ export default function Home({ profile, home, coaches }) {
                           Total Articles Read
                         </div>
                         <div className='mt-3'>
-                          <span className='font-bold text-3xl mr-2'>{home.articles.length}</span>
+                          <span className='font-bold text-3xl mr-2'>{home?.articles?.length}</span>
                           <span>Articles</span>
                         </div>
                       </div>
@@ -201,10 +221,10 @@ export default function Home({ profile, home, coaches }) {
                   {/* ASSESSMENT START */}
                   <div className='bg-white shadow rounded-lg  min-w-full'>
                     <div
-                      className="relative w-full rounded px-4 py-2 text-left sm:text-sm"
+                      className="relative w-full rounded px-4 pt-4 text-left sm:text-sm"
                     >
                       <span className="font-bold block truncate text-base">Assessment</span>
-                      <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                      <span className="absolute inset-y-0 right-0 top-0 flex items-center pl-2 pr-2 pt-4">
                         <div className="text-sm font-medium"
                         >
                           {home.percentage_completed}%
@@ -330,8 +350,6 @@ export default function Home({ profile, home, coaches }) {
                     </div>
                   </div>
                   {/* VIDEOS END */}
-
-
 
                   {/* COURSE+UNI START */}
                   <div className='bg-white shadow rounded-lg  min-w-full'>
@@ -516,9 +534,6 @@ export default function Home({ profile, home, coaches }) {
                         </div>
                       </div> : <></>
                   }
-
-
-
                   {/* COACHES END */}
 
                 </div>
@@ -549,16 +564,163 @@ export default function Home({ profile, home, coaches }) {
                       </div>
                       : liveTileNo == 2 ?
                         <div className="bg-white shadow rounded-lg">
-                          <div className="text-base text-center px-4 pt-4 font-medium">Thank you for your message!</div>
-                          <div className="text-sm  text-center px-4 pt-2">I didn't quite get you... Please bear with me as I get smarter. meanwhile</div>
 
-                          <div className="cursor-pointer px-6 py-2 bg-lyellow bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 mx-4 text-sm text-center duration-500">Admission Support</div>
-                          <div className="cursor-pointer px-6 py-2 bg-lgreen bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 mx-4 text-sm text-center duration-500">Best fit colleges for my child</div>
-                          <div className="cursor-pointer px-6 py-2 bg-lblue bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 mx-4 text-sm text-center duration-500">Trending Careers in the Modern World</div>
-                          <div className="cursor-pointer px-6 py-2 bg-lred bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 mx-4 text-sm text-center duration-500">Suitable career for my child</div>
-                          <div className="h-4"></div>
+                          <div
+                            className="relative w-full rounded px-4 py-4 text-left sm:text-sm"
+                          >
+                            <div className="flex-shrink-0 flex items-center">
+                              <div className="p-2 rounded-full bg-lblue">
+                                <img
+                                  className="h-4 w-auto"
+                                  src="/img/logoWhite.png"
+                                  alt="Lifology Logo"
+                                />
+                              </div>
+
+                              <span className="self-center font-bold pl-4 text-base tracking-wide">Lifology Virtual Assistant</span>
+                            </div>
+                            <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                              <div className="p-1 rounded-full text-black cursor-pointer hover:scale-110 duration-500"
+                                onClick={
+                                  (e) => {
+                                    setLiveTileNo(1)
+                                  }
+                                }
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                              </div>
+                            </span>
+                          </div>
+                          <div className="mx-4 mb-4 p-4 shadow bg-white rounded-lg">
+                            <div className="text-base text-center font-medium">Thank you for your message!</div>
+                            <div className="text-sm  text-center pt-2">I didn't quite get you... Please bear with me as I get smarter. meanwhile</div>
+
+                            <div onClick={(e) => {
+                              loadOptions(1)
+                            }} className="cursor-pointer px-4 py-2 bg-lyellow bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">Admission Support</div>
+                            <div onClick={(e) => {
+
+                              loadOptions(2)
+                            }} className="cursor-pointer px-4 py-2 bg-lgreen bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">Best fit colleges for my child</div>
+                            <div onClick={(e) => {
+                              loadOptions(3)
+                            }} className="cursor-pointer px-4 py-2 bg-lblue bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">Trending Careers in the Modern World</div>
+                            <div onClick={(e) => {
+                              loadOptions(4)
+                            }} className="cursor-pointer px-4 py-2 bg-lred bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">Suitable career for my child</div>
+
+                          </div>
+                          <div className="h-px"></div>
+
                         </div>
-                        : <></>
+                        : liveTileNo == 3 ?
+                          <div className="bg-white shadow rounded-lg">
+                            <div
+                              className="relative w-full rounded px-4 py-4 text-left sm:text-sm"
+                            >
+                              <div className="flex-shrink-0 flex items-center">
+                                <div className="p-2 rounded-full bg-lblue">
+                                  <img
+                                    className="h-4 w-auto"
+                                    src="/img/logoWhite.png"
+                                    alt="Lifology Logo"
+                                  />
+                                </div>
+
+                                <span className="self-center font-bold pl-4 text-base tracking-wide">Lifology Virtual Assistant</span>
+                              </div>
+                              <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                                <div className="p-1 rounded-full text-black cursor-pointer hover:scale-110 duration-500"
+                                  onClick={
+                                    (e) => {
+                                      setLiveTileNo(2)
+                                    }
+                                  }
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                  </svg>
+                                </div>
+                              </span>
+                            </div>
+                            <div className="mx-4 mb-4 p-4 shadow bg-white rounded-lg">
+                              <div className="text-base text-center font-medium">{options.title}</div>
+
+                              {
+                                options.options.map((o) => (
+                                  <div
+                                    onClick={
+                                      (e) => {
+                                        setLiveTileNo(4)
+                                      }
+                                    }
+                                    className="cursor-pointer px-3 py-2 bg-lgrey-border hover:bg-lgrey-dark rounded-full font-medium mt-4 text-sm text-center duration-500">
+                                    <div className="flex-shrink-0 flex items-center">
+                                      <span className="self-center font-bold text-sm tracking-wide">{o.title}</span>
+                                    </div>
+
+                                  </div>
+                                ))
+                              }
+                              {/* <div
+                                onClick={
+                                  (e) => {
+                                    setLiveTileNo(4)
+                                  }
+                                } className="cursor-pointer px-3 py-2 bg-lgrey-border hover:bg-lgrey-dark rounded-full font-medium mt-4 text-sm text-center duration-500">
+                                <div className="flex-shrink-0 flex items-center">
+                                  <span className="self-center font-bold text-sm tracking-wide">Other Country</span>
+                                </div>
+                              </div> */}
+                            </div>
+                            <div className="h-px"></div>
+
+                          </div>
+                          : liveTileNo == 4 ?
+                            <div className="bg-white shadow rounded-lg">
+                              <div
+                                className="relative w-full rounded px-4 py-4 text-left sm:text-sm"
+                              >
+                                <div className="flex-shrink-0 flex items-center">
+                                  <div className="p-2 rounded-full bg-lblue">
+                                    <img
+                                      className="h-4 w-auto"
+                                      src="/img/logoWhite.png"
+                                      alt="Lifology Logo"
+                                    />
+                                  </div>
+
+                                  <span className="self-center font-bold pl-4 text-base tracking-wide">Lifology Virtual Assistant</span>
+                                </div>
+                                <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                                  <div className="p-1 rounded-full text-black cursor-pointer hover:scale-110 duration-500"
+                                    onClick={
+                                      (e) => {
+                                        setLiveTileNo(3)
+                                      }
+                                    }
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                  </div>
+                                </span>
+                              </div>
+                              <div className="mx-4 mb-4 p-4 shadow bg-white rounded-lg">
+                                <div className="text-base text-center font-medium">Get In Touch</div>
+                                <div className="text-sm text-center mt-2">Book a Free Call with Advisor</div>
+
+                                <div className="text-sm text-center font-medium mt-4">Morning (9:30 AM - 11:30 AM)</div>
+                                <div className="text-sm text-center font-medium mt-2">Afternoon (12:30 PM - 5:30 PM)</div>
+
+                                <div
+                                  className="cursor-pointer px-6 py-2 bg-lgreen rounded-full w-max text-white ml-auto mr-auto mt-4">Submit</div>
+                              </div>
+                              <div className="h-px"></div>
+                            </div>
+                            : <></>
                   }
                 </div>
 
@@ -567,7 +729,7 @@ export default function Home({ profile, home, coaches }) {
           </main>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 export async function getServerSideProps(context) {
@@ -613,6 +775,8 @@ export async function getServerSideProps(context) {
       return {};
     })
 
+
+
   const skillClient = new ApolloClient({
     uri: Constants.baseUrl + "/api/skills",
     cache: new InMemoryCache(),
@@ -632,7 +796,8 @@ export async function getServerSideProps(context) {
     props: {
       profile,
       home,
-      coaches
+      coaches,
+      token
     },
   };
 }

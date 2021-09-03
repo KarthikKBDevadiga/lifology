@@ -1540,3 +1540,18 @@ query searchServices($title:String!){
   }
 }
 `;
+
+export const SchemeVlOption = gql`
+query vl_options($section_id:Int!){
+  vl_options(section_id:$section_id,question_id:null,option_id:null){
+    id
+    title
+    options{
+      id
+      title
+    }
+    is_api_required
+    cta
+  }
+}
+`;
