@@ -1555,3 +1555,26 @@ query vl_options($section_id:Int!){
   }
 }
 `;
+
+export const SchemeVlSlide2Option = gql`
+query{
+  vl_sections{
+      id
+      title
+  }
+}
+`;
+export const SchemeVlSlide3Option = gql`
+query vl_options($section_id:Int!, $question_id:Int!, $option_id:Int!){
+  vl_options(section_id:$section_id,question_id:$question_id,option_id:$option_id){
+      id
+      title
+      options{
+          id
+          title
+      }
+      is_api_required
+      cta
+  }
+}
+`;

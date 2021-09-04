@@ -12,7 +12,8 @@ import { SchemeGetProfile, SchemeGetHomeData } from '/helpers/GraphQLSchemes';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import Link from 'next/link';
-import { SchemeGetCoachesList, SchemeVlOption } from '../helpers/GraphQLSchemes';
+import { SchemeGetCoachesList, SchemeVlOption, SchemeVlSlide2Option, SchemeVlSlide3Option } from '../helpers/GraphQLSchemes';
+import { useRouter } from 'next/router';
 
 const breakpoints = {
   "(min-width: 464px)": {
@@ -59,7 +60,8 @@ const coaches = [
   },
 ];
 
-export default function Home({ profile, home, coaches, token }) {
+export default function Home({ profile, home, coaches, slide2Options, token }) {
+  const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [masterClassSliderRef, masterClassSlider] = useKeenSlider({
     // breakpoints: { ...breakpoints, "(min-width: 1200px)": { slidesPerView: 2.5 }, },
@@ -74,6 +76,7 @@ export default function Home({ profile, home, coaches, token }) {
   const [universitySliderRef, universitySlider] = useKeenSlider({
     breakpoints,
   })
+
   const [videosSliderRef, videosSlider] = useKeenSlider({
     breakpoints: {
       "(min-width: 464px)": {
@@ -93,9 +96,14 @@ export default function Home({ profile, home, coaches, token }) {
   })
 
   const [liveTileNo, setLiveTileNo] = useState(1)
+
+  const [sectionId, setSectionId] = useState(-1)
   const [options, setOptions] = useState({})
+  const [questionId, setQuestionId] = useState(-1)
+  const [answerId, setAnswerId] = useState(-1)
 
   const loadOptions = (id) => {
+    setSectionId(id)
     const dashboardClient = new ApolloClient({
       uri: Constants.baseUrl + "/api/dashboard",
       cache: new InMemoryCache(),
@@ -105,7 +113,6 @@ export default function Home({ profile, home, coaches, token }) {
     })
     queryGraph(dashboardClient, { section_id: id }, SchemeVlOption)
       .then((res) => {
-        console.log(token)
         console.log(res.vl_options)
         setOptions(res.vl_options)
         setLiveTileNo(3)
@@ -114,6 +121,41 @@ export default function Home({ profile, home, coaches, token }) {
       })
   }
 
+  const answer = (answerId) => {
+    setAnswerId(answerId)
+    setQuestionId(options.id)
+    const dashboardClient = new ApolloClient({
+      uri: Constants.baseUrl + "/api/dashboard",
+      cache: new InMemoryCache(),
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    queryGraph(dashboardClient, {
+      section_id: sectionId,
+      question_id: options.id,
+      option_id: answerId
+    }, SchemeVlSlide3Option)
+      .then((res) => {
+        console.log(res.vl_options)
+        const data = res.vl_options
+        if (data.is_api_required) {
+          if (data.cta == 'MyChild') {
+            router.push({
+              pathname: '/my_child',
+            })
+          } else if (data.cta == 'AllUniversitiesHome') {
+            router.push({
+              pathname: '/career_explorer/course_and_university',
+            })
+          }
+        } else {
+
+        }
+      }).catch((networkErr) => {
+        console.log(networkErr)
+      })
+  }
   return (
     <div className="flex flex-col min-h-screen">
       <MetaLayout title={'Dashboard'} description={'Home Page'} />
@@ -597,20 +639,14 @@ export default function Home({ profile, home, coaches, token }) {
                             <div className="text-base text-center font-medium">Thank you for your message!</div>
                             <div className="text-sm  text-center pt-2">I didn't quite get you... Please bear with me as I get smarter. meanwhile</div>
 
-                            <div onClick={(e) => {
-                              loadOptions(1)
-                            }} className="cursor-pointer px-4 py-2 bg-lyellow bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">Admission Support</div>
-                            <div onClick={(e) => {
+                            {
+                              slide2Options.map(o => (
+                                <div onClick={(e) => {
 
-                              loadOptions(2)
-                            }} className="cursor-pointer px-4 py-2 bg-lgreen bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">Best fit colleges for my child</div>
-                            <div onClick={(e) => {
-                              loadOptions(3)
-                            }} className="cursor-pointer px-4 py-2 bg-lblue bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">Trending Careers in the Modern World</div>
-                            <div onClick={(e) => {
-                              loadOptions(4)
-                            }} className="cursor-pointer px-4 py-2 bg-lred bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">Suitable career for my child</div>
-
+                                  loadOptions(parseInt(o.id))
+                                }} className="cursor-pointer px-4 py-2 bg-lgreen bg-opacity-20 hover:bg-opacity-100 hover:text-white rounded-full font-medium mt-4 text-sm text-center duration-500">{o.title}</div>
+                              ))
+                            }
                           </div>
                           <div className="h-px"></div>
 
@@ -653,7 +689,7 @@ export default function Home({ profile, home, coaches, token }) {
                                   <div
                                     onClick={
                                       (e) => {
-                                        // setLiveTileNo(4)
+                                        answer(o.id)
                                       }
                                     }
                                     className="cursor-pointer px-3 py-2 bg-lgrey-border hover:bg-lgrey-dark rounded-full font-medium mt-4 text-sm text-center duration-500">
@@ -775,7 +811,13 @@ export async function getServerSideProps(context) {
       return {};
     })
 
-
+  const slide2Options = await queryGraph(dashboardClient, {}, SchemeVlSlide2Option)
+    .then((res) => {
+      return res.vl_sections
+    }).catch((networkErr) => {
+      return {};
+    })
+  console.log(slide2Options)
 
   const skillClient = new ApolloClient({
     uri: Constants.baseUrl + "/api/skills",
@@ -790,13 +832,13 @@ export async function getServerSideProps(context) {
     }).catch((networkErr) => {
       return {};
     })
-  console.log(home)
 
   return {
     props: {
       profile,
       home,
       coaches,
+      slide2Options,
       token
     },
   };
