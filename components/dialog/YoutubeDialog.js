@@ -38,9 +38,8 @@ const YoutubeDialog = ({ url, showDialog, setShowDialog }) => {
                             <div>
                                 <div className="text-center">
                                     <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
-                                        <iframe title="vimeo-player" src={videoType == 'youtube' ? url : videoType == 'vimeo' ? 'https://player.vimeo.com/video/' + getVimeoVideoId(url) : 'https://www.youtube.com/embed/PCwL3-hkKrg'} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
+                                        <iframe title="vimeo-player" src={videoType == 'youtube' ? 'https://www.youtube.com/embed/' +getYoutubeVideoId(url): videoType == 'vimeo' ? 'https://player.vimeo.com/video/' + getVimeoVideoId(url) : 'https://www.youtube.com/embed/PCwL3-hkKrg'} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
                                         </iframe>
-
                                     </div>
                                 </div>
                             </div>
@@ -75,11 +74,19 @@ function getVideoType($url) {
 }
 function getVimeoVideoId(url) {
     var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
-    var match = url.match(regExp);
+    var match = url.match(regExp)
     if (match) {
         return match[2]
     }
     return ''
+}
+function getYoutubeVideoId(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+    var match = url.match(regExp)
+    if (match)
+        return match[7]
+    return ''
+    // return (match&&match[7].length==11)? match[7] : 'false'
 }
 
 export default YoutubeDialog
