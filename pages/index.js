@@ -1,5 +1,5 @@
 import cookies from 'next-cookies';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Breadcrumbs from '/components/Breadcrumbs';
 import MetaLayout from '/components/MetaLayout';
@@ -155,6 +155,8 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
         console.log(networkErr)
       })
   }
+
+  
 
   return (
 

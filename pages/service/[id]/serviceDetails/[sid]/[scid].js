@@ -67,14 +67,19 @@ export default function Profile({ profile, serviceDetails }) {
                     <main className="flex-1 relative z-0 overflow-y-auto ">
 
                         <div className=" m-4 p-4  shadow rounded bg-white">
-                            <div className="w-full max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-                                <div className="lg:col-start-1 lg:col-span-2">
-                                    <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
-                                        <iframe title="vimeo-player" src={'https://www.youtube.com/embed/' + getyoutubeId(content.video)} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
-                                        </iframe>
+                            {
+                                content.video ?
+                                    <div className="w-full max-w-3xl mx-auto grid grid-cols-1 gap-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+                                        <div className="lg:col-start-1 lg:col-span-2">
+                                            <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
+                                                <iframe title="vimeo-player" src={'https://www.youtube.com/embed/' + getyoutubeId(content?.video)} className="absolute rounded-lg top-0 left-0 w-full h-full" frameBorder="0" allowFullScreen>
+                                                </iframe>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                    : <></>
+                            }
+
 
                             <div className="mt-4" dangerouslySetInnerHTML={{ __html: content.html_body }}>
                             </div>

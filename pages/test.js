@@ -51,31 +51,8 @@ export default function MIOReport({ profile }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="MIO Report" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-                        <div className="m-4">
-
-                            <Element name="test1" className="element h-screen" >
-                                test 1
-                            </Element>
-
-                            <Element name="test2" className="element h-screen">
-                                test 2
-                            </Element>
-
-                            <Element name="test3" className="element h-screen">
-                                test 3
-                            </Element>
-
-                            <Element name="test4" className="element h-screen">
-                                test 4
-                            </Element>
-
-                            <Element name="test5" className="element h-screen">
-                                test 5
-                            </Element>
-
-                            <div id="anchor" className="element h-screen">
-                                test 6 (anchor)
-                            </div>
+                        <div className="m-4 ">
+                            <img src="/img/error.svg" className="text-lgrey ml-auto mr-auto" />
 
                         </div>
                     </main>
