@@ -12,7 +12,7 @@ import { SchemeGetProfile, SchemeGetHomeData } from '/helpers/GraphQLSchemes';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import Link from 'next/link';
-import { SchemeGetCoachesList, SchemeVlOption, SchemeVlSlide2Option, SchemeVlSlide3Option } from '../helpers/GraphQLSchemes';
+import { SchemeGetCoachesList, SchemeNotificationSettings, SchemeVlOption, SchemeVlSlide2Option, SchemeVlSlide3Option } from '../helpers/GraphQLSchemes';
 import { useRouter } from 'next/router';
 
 import ProgressBar from '/components/ProgressBar'
@@ -156,7 +156,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
       })
   }
 
-  
+
 
   return (
 
@@ -795,6 +795,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
         </div>
       </div >
       <PhoneNumberDialog showDialog={phoneNumberDialog} setShowDialog={setPhoneNumberDialog} phoneNumber={phoneNumber} />
+      {/* <NotificationSettingsDialog showDialog={notificationSettingsDialog} setShowDialog={setNotificationSettingsDialog} /> */}
     </>
   )
 }
@@ -826,6 +827,7 @@ export async function getServerSideProps(context) {
       return {};
     })
 
+
   const dashboardClient = new ApolloClient({
     uri: Constants.baseUrl + "/api/dashboard",
     cache: new InMemoryCache(),
@@ -847,7 +849,6 @@ export async function getServerSideProps(context) {
     }).catch((networkErr) => {
       return {};
     })
-  console.log(slide2Options)
 
   const skillClient = new ApolloClient({
     uri: Constants.baseUrl + "/api/skills",
@@ -862,6 +863,8 @@ export async function getServerSideProps(context) {
     }).catch((networkErr) => {
       return {};
     })
+
+
 
   return {
     props: {

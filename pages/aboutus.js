@@ -40,7 +40,7 @@ export default function AboutUs({ profile }) {
                                         <div className="space-y-6 lg:col-start-1 lg:col-span-1">
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
-                                                <SettingNavigationLayout index="1" />
+                                                <SettingNavigationLayout index="2" />
                                             </section>
 
                                         </div>

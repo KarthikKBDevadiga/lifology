@@ -97,7 +97,7 @@ export default function ContactUs({ profile }) {
                                         <div className="space-y-6 lg:col-start-1 lg:col-span-1">
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
-                                                <SettingNavigationLayout index="4" />
+                                                <SettingNavigationLayout index="5" />
                                             </section>
 
                                         </div>

@@ -2,6 +2,8 @@ import * as firebase from "firebase/app"
 import localforage from 'localforage'
 import { initializeApp } from "firebase/app"
 import { getMessaging, getToken } from "firebase/messaging"
+import cookies from "next-cookies";
+import Constants from "../helpers/Constants";
 
 const firebaseCloudMessaging = {
     //checking whether token is available in indexed DB
@@ -29,8 +31,8 @@ const firebaseCloudMessaging = {
             if (tokenInLocalForage !== null) {
                 return tokenInLocalForage
             }
-            //requesting notification permission from browser
-            // const status = await Notification.requestPermission()
+            // requesting notification permission from browser
+            const status = await Notification.requestPermission()
             // if (status && status === 'granted') {
             //     //getting token from FCM
             //     const fcm_token = await m.getToken()
@@ -42,17 +44,69 @@ const firebaseCloudMessaging = {
             //         return fcm_token
             //     }
             // }
-            getToken(messaging, firebaseConfig).then((currentToken) => {
-                if (currentToken) {
-                    localforage.setItem('fcm_token', currentToken)
-                    console.log('fcm token', currentToken)
-                    return currentToken
-                } else {
-                    console.log('No registration token available. Request permission to generate one.');
-                }
-            }).catch((err) => {
-                console.log('An error occurred while retrieving token. ', err);
-            });
+            if (status && status === 'granted') {
+                getToken(messaging, firebaseConfig).then((currentToken) => {
+                    if (currentToken) {
+                        localforage.getItem('token', function (err, value) {
+                            if (value) {
+                                const data = {
+                                    notification_token: currentToken,
+                                    notification_status: true,
+                                    device_type: 'web'
+                                }
+                                var formBody = [];
+                                for (var property in data) {
+                                    var encodedKey = encodeURIComponent(property);
+                                    var encodedValue = encodeURIComponent(data[property]);
+                                    formBody.push(encodedKey + "=" + encodedValue);
+                                }
+                                formBody = formBody.join("&");
+                                // var formData = new FormData()
+                                // formData.append('notification_token', currentToken)
+                                // formData.append('notification_status', true)
+                                // formData.append('device_type', 'web')
+                                fetch(Constants.baseUrl + '/api/update-device', {
+                                    method: 'POST',
+                                    body: JSON.stringify(data),
+                                    headers: new Headers({
+                                        'Authorization': 'Bearer ' + value,
+                                        'Accept': 'application/json'
+                                    })
+                                }).then(function (res) {
+                                    localforage.setItem('fcm_token', currentToken)
+                                    console.log('Log' + res)
+                                }).catch(function (error) {
+                                    console.log('error');
+                                })
+                            }
+                            // var formData = new FormData()
+                            // formData.append('notification_token', currentToken)
+                            // formData.append('notification_status', true)
+                            // formData.append('device_type', 'web')
+                            // fetch(Constants.baseUrl + '/api/update-device', {
+                            //     method: 'POST',
+                            //     body: formData,
+                            //     headers: new Headers({
+                            //         'Authorization': 'Bearer ' + value,
+                            //         'Accept': 'application/json'
+                            //     })
+                            // }).then(function (res) {
+                            //     console.log('Log' + res)
+                            // }).catch(function (error) {
+                            //     console.log('error');
+                            // })
+                        })
+                        // localforage.setItem('fcm_token', currentToken)
+                        console.log('fcm token', currentToken)
+                        return currentToken
+                    } else {
+                        console.log('No registration token available. Request permission to generate one.');
+                    }
+                }).catch((err) => {
+                    console.log('An error occurred while retrieving token. ', err);
+                });
+            }
+
         } catch (error) {
             console.error(error)
             return null

@@ -40,7 +40,7 @@ export default function PrivacyPolicy({ profile }) {
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
 
-                                                <SettingNavigationLayout index="5" />
+                                                <SettingNavigationLayout index="6" />
                                             </section>
 
                                         </div>

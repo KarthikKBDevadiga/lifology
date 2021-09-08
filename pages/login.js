@@ -14,6 +14,7 @@ import useLocalStorage from '../helpers/useLocalStorage'
 import MetaLayout from '../components/MetaLayout'
 import LoadingDialog from '../components/dialog/LoadingDialog'
 import NextNprogress from 'nextjs-progressbar';
+import localforage from "localforage"
 
 const client = new ApolloClient({
     uri: Constants.baseUrl + "/api/auth",
@@ -109,6 +110,7 @@ export default function Login({ cs }) {
                     setSuccessDialog(true)
                     setTimeout(() => {
                         setSuccessDialog(false)
+                        localforage.setItem('token', res.otpVerification.auth_token)
                         document.cookie = 'token=' + res.otpVerification.auth_token + ';expires=3600;'
                         router.push({
                             pathname: '/',

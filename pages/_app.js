@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { firebaseCloudMessaging } from '../components/WebPush'
 
 import { getMessaging, onMessage } from "firebase/messaging";
+import localforage from 'localforage';
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {

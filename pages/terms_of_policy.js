@@ -40,7 +40,7 @@ export default function TermsOfPolicy({ profile }) {
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
 
-                                                <SettingNavigationLayout index="3" />
+                                                <SettingNavigationLayout index="4" />
                                             </section>
 
                                         </div>
