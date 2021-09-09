@@ -18,6 +18,7 @@ function classNames(...classes) {
 
 const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
     const router = useRouter()
+
     return (
         <>
             <div className="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none shadow" >
@@ -64,27 +65,22 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                             <Menu.Item>
                                                 {({ active }) => (
 
-                                                    <Link
-                                                        href={{
-                                                            pathname: '/profile',
-                                                        }}>
-                                                        <a
-                                                            className={classNames(
-                                                                active ? 'bg-gray-100' : '',
-                                                                'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200 duration-500'
-                                                            )}
-                                                        >
-                                                            <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
-                                                                <g>
-                                                                    <path
-                                                                        id="path"
-                                                                        d="M 12 22 C 9.349 22 6.804 20.946 4.929 19.071 C 3.054 17.196 2 14.651 2 12 C 2 9.349 3.054 6.804 4.929 4.929 C 6.804 3.054 9.349 2 12 2 C 14.651 2 17.196 3.054 19.071 4.929 C 20.946 6.804 22 9.349 22 12 C 22 13.755 21.538 15.48 20.66 17 C 19.783 18.52 18.52 19.783 17 20.66 C 15.48 21.538 13.755 22 12 22 Z M 7 12 C 7 13.326 7.527 14.598 8.464 15.536 C 9.402 16.473 10.674 17 12 17 C 13.326 17 14.598 16.473 15.536 15.536 C 16.473 14.598 17 13.326 17 12 L 15 12 C 15 12.795 14.684 13.559 14.121 14.121 C 13.559 14.684 12.795 15 12 15 C 11.205 15 10.441 14.684 9.879 14.121 C 9.316 13.559 9 12.795 9 12 Z"
-                                                                        strokeWidth="1" />
-                                                                </g>
-                                                            </svg>
-                                                           Notification 
-                                                        </a>
-                                                    </Link>
+                                                    <div
+                                                        className={classNames(
+                                                            active ? 'bg-gray-100' : '',
+                                                            'block px-4 py-2 text-sm text-gray-700 flex hover:bg-gray-200 duration-500'
+                                                        )}
+                                                    >
+                                                        <svg className="mr-4" viewBox="0 0 24 24" width="20" height="20" fill="black">
+                                                            <g>
+                                                                <path
+                                                                    id="path"
+                                                                    d="M 12 22 C 9.349 22 6.804 20.946 4.929 19.071 C 3.054 17.196 2 14.651 2 12 C 2 9.349 3.054 6.804 4.929 4.929 C 6.804 3.054 9.349 2 12 2 C 14.651 2 17.196 3.054 19.071 4.929 C 20.946 6.804 22 9.349 22 12 C 22 13.755 21.538 15.48 20.66 17 C 19.783 18.52 18.52 19.783 17 20.66 C 15.48 21.538 13.755 22 12 22 Z M 7 12 C 7 13.326 7.527 14.598 8.464 15.536 C 9.402 16.473 10.674 17 12 17 C 13.326 17 14.598 16.473 15.536 15.536 C 16.473 14.598 17 13.326 17 12 L 15 12 C 15 12.795 14.684 13.559 14.121 14.121 C 13.559 14.684 12.795 15 12 15 C 11.205 15 10.441 14.684 9.879 14.121 C 9.316 13.559 9 12.795 9 12 Z"
+                                                                    strokeWidth="1" />
+                                                            </g>
+                                                        </svg>
+                                                        Notification
+                                                    </div>
                                                 )}
                                             </Menu.Item>
                                         </Menu.Items>
