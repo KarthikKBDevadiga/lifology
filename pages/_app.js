@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
       try {
         const token = await firebaseCloudMessaging.init()
         if (token) {
-          console.log('token', token)
+          // console.log('token', token)
           // not working
           getMessage()
         }
@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }) {
   })
 
   function getMessage() {
-    console.log('message functions')
+    // console.log('message functions')
     const messaging = getMessaging()
     onMessage(messaging, (message) => console.log('foreground ' + message))
   }

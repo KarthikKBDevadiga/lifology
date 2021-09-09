@@ -33,17 +33,6 @@ const firebaseCloudMessaging = {
             }
             // requesting notification permission from browser
             const status = await Notification.requestPermission()
-            // if (status && status === 'granted') {
-            //     //getting token from FCM
-            //     const fcm_token = await m.getToken()
-            //     if (fcm_token) {
-            //         //setting FCM token in indexed db using localforage
-            //         localforage.setItem('fcm_token', fcm_token)
-            //         console.log('fcm token', fcm_token)
-            //         //return the FCM token after saving it
-            //         return fcm_token
-            //     }
-            // }
             if (status && status === 'granted') {
                 getToken(messaging, firebaseConfig).then((currentToken) => {
                     if (currentToken) {
@@ -54,50 +43,32 @@ const firebaseCloudMessaging = {
                                     notification_status: true,
                                     device_type: 'web'
                                 }
-                                var formBody = [];
-                                for (var property in data) {
-                                    var encodedKey = encodeURIComponent(property);
-                                    var encodedValue = encodeURIComponent(data[property]);
-                                    formBody.push(encodedKey + "=" + encodedValue);
-                                }
-                                formBody = formBody.join("&");
-                                // var formData = new FormData()
-                                // formData.append('notification_token', currentToken)
-                                // formData.append('notification_status', true)
-                                // formData.append('device_type', 'web')
-                                fetch(Constants.baseUrl + '/api/update-device', {
+
+                                var myHeaders = new Headers();
+                                myHeaders.append("Authorization", "Bearer " + value);
+                                myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+                                var urlencoded = new URLSearchParams();
+                                urlencoded.append("notification_token", currentToken);
+                                urlencoded.append("notification_status", true);
+                                urlencoded.append("device_type", "web");
+
+                                fetch("https://mobapi.lifology.com/api/update-device", {
                                     method: 'POST',
-                                    body: JSON.stringify(data),
-                                    headers: new Headers({
-                                        'Authorization': 'Bearer ' + value,
-                                        'Accept': 'application/json'
-                                    })
-                                }).then(function (res) {
-                                    localforage.setItem('fcm_token', currentToken)
-                                    console.log('Log' + res)
-                                }).catch(function (error) {
-                                    console.log('error');
+                                    headers: myHeaders,
+                                    body: urlencoded,
                                 })
+                                    .then(response => {
+                                        return response.json()
+                                    })
+                                    .then(result => {
+                                        console.log(result)
+                                        localforage.setItem('fcm_token', currentToken)
+                                    })
+                                    .catch(error => console.log('error', error));
+
                             }
-                            // var formData = new FormData()
-                            // formData.append('notification_token', currentToken)
-                            // formData.append('notification_status', true)
-                            // formData.append('device_type', 'web')
-                            // fetch(Constants.baseUrl + '/api/update-device', {
-                            //     method: 'POST',
-                            //     body: formData,
-                            //     headers: new Headers({
-                            //         'Authorization': 'Bearer ' + value,
-                            //         'Accept': 'application/json'
-                            //     })
-                            // }).then(function (res) {
-                            //     console.log('Log' + res)
-                            // }).catch(function (error) {
-                            //     console.log('error');
-                            // })
                         })
-                        // localforage.setItem('fcm_token', currentToken)
-                        console.log('fcm token', currentToken)
                         return currentToken
                     } else {
                         console.log('No registration token available. Request permission to generate one.');

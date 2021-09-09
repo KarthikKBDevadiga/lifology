@@ -812,6 +812,7 @@ export async function getServerSideProps(context) {
   }
 
 
+
   const profileClient = new ApolloClient({
     uri: Constants.baseUrl + "/api/user",
     cache: new InMemoryCache(),
