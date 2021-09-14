@@ -57,7 +57,7 @@ export default function Service({ profile, services, id }) {
                 <NavigationLayout index="3" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="MTI Report" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Service" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
                         <Breadcrumbs pages={pages} />

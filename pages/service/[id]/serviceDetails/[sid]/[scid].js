@@ -183,21 +183,24 @@ export default function Profile({ profile, serviceDetails }) {
                                                 {
                                                     content.magazines.map((video) => (
                                                         <div className="keen-slider__slide">
-                                                            <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
-                                                                <div>
-                                                                    <img className="rounded-t group-hover:filter-none duration-500 w-full h-32 object-cover" src={video.thumbnail} />
-                                                                    {/* <img className=" rounded-t " src={card.thumbnail} /> */}
-                                                                    <div className="flex-1 flex items-center justify-between truncate">
-                                                                        <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                            <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
-                                                                                {video.title}
+                                                            <Link href={'/career_explorer/magazine/' + video.id} key={video.id}>
+                                                                <a>
+                                                                    <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
+                                                                        <div>
+                                                                            <img className="rounded-t group-hover:filter-none duration-500 w-full h-32 object-cover" src={video.thumbnail} />
+                                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
+                                                                            <div className="flex-1 flex items-center justify-between truncate">
+                                                                                <div className="flex-1 px-4 py-2 text-sm truncate ">
+                                                                                    <div className="mt-2 w-full text-gray-900 font-medium text-sm hover:text-gray-600 overflow-hidden overflow-ellipsis">
+                                                                                        {video.title}
+                                                                                    </div>
+                                                                                    <div className="text-gray-500 mt-2 w-full text-xs overflow-hidden overflow-hidden overflow-ellipsis">{video.description}</div>
+                                                                                </div>
                                                                             </div>
-                                                                            <div className="text-gray-500 mt-2 w-full overflow-hidden">{video.description}</div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-
+                                                                </a>
+                                                            </Link>
                                                         </div>
                                                     ))
                                                 }

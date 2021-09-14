@@ -4,8 +4,16 @@ import { XCircleIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/so
 
 import classNames from '/helpers/classNames'
 
+import { signIn, signOut, useSession } from "next-auth/client";
+
 const PhoneNumberTab = ({ submit, error, setError, countries, selectedCountry, setSelectedCountry }) => {
     const [openFilter, setOpenFilter] = useState(false)
+    const [session, loading] = useSession();
+    if (session) {
+        console.log('Logged In')
+        console.log(session)
+    }
+
     return (
 
         <div className="mt-6">
@@ -375,7 +383,7 @@ const PhoneNumberTab = ({ submit, error, setError, countries, selectedCountry, s
                     </div>
                 </div>
 
-                {/* <div>
+                <div>
                     <div className="mt-6 relative">
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
                             <div className="w-full border-t border-gray-300" />
@@ -405,21 +413,24 @@ const PhoneNumberTab = ({ submit, error, setError, countries, selectedCountry, s
                             </div>
 
                             <div>
-                                <a
+                                <div
                                     href="#"
-                                    className="w-full rounded-full border border-gray-200 bg-gray-100 inline-flex px-4 py-2 justify-center text-gray-400 hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
+                                    className="cursor-pointer w-full rounded-full border border-gray-200 bg-gray-100 inline-flex px-4 py-2 justify-center text-gray-400 hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
+                                    onClick={() =>
+                                        signIn("google", { callbackUrl: "http://localhost:3000/login" })
+                                    }
                                 >
                                     <span className="sr-only">Sign in with Twitter</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 640 640" className="self-center w-4 h-4" >
                                         <path d="M326.331 274.255v109.761h181.49c-7.37 47.115-54.886 138.002-181.49 138.002-109.242 0-198.369-90.485-198.369-202.006 0-111.509 89.127-201.995 198.369-201.995 62.127 0 103.761 26.516 127.525 49.359l86.883-83.635C484.99 31.512 412.741-.012 326.378-.012 149.494-.012 6.366 143.116 6.366 320c0 176.884 143.128 320.012 320.012 320.012 184.644 0 307.256-129.876 307.256-312.653 0-21-2.244-36.993-5.008-52.997l-302.248-.13-.047.024z" />
                                     </svg>
                                     <p className="ml-4" >Google</p>
-                                </a>
+                                </div>
                             </div>
 
                         </div>
                     </div>
-                </div> */}
+                </div>
             </form>
         </div>
 

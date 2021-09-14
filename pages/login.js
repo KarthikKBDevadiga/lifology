@@ -15,6 +15,7 @@ import MetaLayout from '../components/MetaLayout'
 import LoadingDialog from '../components/dialog/LoadingDialog'
 import NextNprogress from 'nextjs-progressbar';
 import localforage from "localforage"
+import { signIn, signOut, useSession } from "next-auth/client";
 
 const client = new ApolloClient({
     uri: Constants.baseUrl + "/api/auth",
@@ -22,6 +23,8 @@ const client = new ApolloClient({
 });
 
 export default function Login({ cs }) {
+    console.log(process.env.BASE_URL)
+    const [session, loading] = useSession();
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [successDialog, setSuccessDialog] = useState(false)
@@ -379,7 +382,7 @@ export default function Login({ cs }) {
 export async function getServerSideProps(context) {
     const cs = await fetch('https://restcountries.eu/rest/v2/all')
         .then(response => response.json())
-        .then(data => (data));
+        .then(data => (data))
     return {
         props: { cs }
     }

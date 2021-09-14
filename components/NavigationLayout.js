@@ -11,7 +11,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen , isPackagePurhased }) => {
+const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhased }) => {
     const router = useRouter()
     return (
         <>
@@ -115,7 +115,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen , isPackagePurhas
                                             My Child
                                         </a>
                                     </Link>
-                                    {/* <Link
+                                    <Link
                                         href="/services">
                                         <a
                                             className={classNames(
@@ -133,8 +133,8 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen , isPackagePurhas
                                             </svg>
                                             Services
                                         </a>
-                                    </Link> */}
-                                    <Link
+                                    </Link>
+                                    {/* <Link
                                         href={{
                                             pathname: '/career_explorer',
                                         }}>
@@ -154,7 +154,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen , isPackagePurhas
                                             </svg>
                                             Career Explorer
                                         </a>
-                                    </Link>
+                                    </Link> */}
                                     {/* <Link
                                         href="#">
                                         <a
@@ -218,7 +218,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen , isPackagePurhas
                         </div>
                         <nav className="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto relative" aria-label="Sidebar">
                             <div className="px-4 space-y-1 mt-4">
-                                
+
                                 <Link
                                     href="/">
                                     <a
@@ -272,7 +272,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen , isPackagePurhas
                                         Services
                                     </a>
                                 </Link>
-                                <Link
+                                {/* <Link
                                     href={{
                                         pathname: '/career_explorer',
                                     }}>
@@ -290,7 +290,7 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen , isPackagePurhas
                                         </svg>
                                         Career Explorer
                                     </a>
-                                </Link>
+                                </Link> */}
                                 {/* <Link
                                     href="#">
                                     <a

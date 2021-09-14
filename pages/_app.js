@@ -11,7 +11,6 @@ import localforage from 'localforage';
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
     setToken()
-    // this is working
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.addEventListener('message', (event) => console.log('event for the service worker', event))
     }
@@ -19,8 +18,6 @@ function MyApp({ Component, pageProps }) {
       try {
         const token = await firebaseCloudMessaging.init()
         if (token) {
-          // console.log('token', token)
-          // not working
           getMessage()
         }
       } catch (error) {
@@ -30,7 +27,6 @@ function MyApp({ Component, pageProps }) {
   })
 
   function getMessage() {
-    // console.log('message functions')
     const messaging = getMessaging()
     onMessage(messaging, (message) => console.log('foreground ' + message))
   }
