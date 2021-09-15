@@ -200,7 +200,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     </Link>
                                                 )}
                                             </Menu.Item>
-                                            <Menu.Item>
+                                            {/* <Menu.Item>
                                                 {({ active }) => (
                                                     <Link
                                                         href={{
@@ -222,7 +222,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                     </Link>
 
                                                 )}
-                                            </Menu.Item>
+                                            </Menu.Item> */}
                                             {/* <Menu.Item>
                                             {({ active }) => (
                                                 <Link
@@ -248,7 +248,7 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                                 {({ active }) => (
                                                     <Link
                                                         href={{
-                                                            pathname: '/aboutus',
+                                                            pathname: '/settings/notification',
                                                         }}>
                                                         <a
                                                             className={classNames(

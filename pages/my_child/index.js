@@ -17,16 +17,6 @@ import { SchemeGetAssessments } from '/helpers/GraphQLSchemes'
 import Breadcrumbs from '../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
-const cards = [
-    { title: 'Face', subtitle: 'Core Behaviour', href: '#', bg: '/img/my_child/face.png' },
-    { title: 'MIO', subtitle: 'Intelligence Orientation', href: '#', bg: '/img/my_child/mio.png' },
-    { title: 'MTI', subtitle: 'Environmental Interaction', href: '/my_child/mti_assessment', bg: '/img/my_child/mti.png' },
-    { title: 'VAK', subtitle: 'Learning Style', href: '#', bg: '/img/my_child/vak.png' },
-    { title: 'Care', subtitle: 'Learning Preferences', href: '#', bg: '/img/my_child/care.png' },
-    { title: 'GRIT', subtitle: 'Passion & Perseverence', href: '#', bg: '/img/my_child/grit.png' },
-    { title: 'Competancy', subtitle: '21st Century Skills', href: '#', bg: '/img/my_child/competancy.png' },
-    // More items...
-]
 const pages = [
     {
         name: 'My Child', href: '#', current: true
@@ -73,7 +63,7 @@ export default function MyChild({ profile, assessments, isCF, isLS, token }) {
                                                                     <div className="mt-4 w-0 h-0.5 rounded bg-white group-hover:w-3/4 duration-500"></div>
                                                                 </div>
                                                                 <div className="flex absolute bottom-4 right-4 scale-0 group-hover:scale-100 duration-500 translate-x-full group-hover:translate-x-0">
-                                                                    <div className="self-center font-medium text-lg text-white">{card.assessment_type == 3 ? '' : card.total_questions > 0 ? card.attempted_questions > 0 ? 'Continue' : 'Start' : 'View Report'}</div>
+                                                                    <div className="self-center font-medium text-lg text-white">{card.assessment_type == 3 ? 'View Report' : card.total_questions > 0 ? card.attempted_questions > 0 ? 'Continue' : 'Start' : 'View Report'}</div>
 
                                                                     <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="white">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

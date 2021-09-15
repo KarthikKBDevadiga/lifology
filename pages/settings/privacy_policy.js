@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import MetaLayout from '../components/MetaLayout'
-import SettingNavigationLayout from '../components/SettingNavigationLayout'
+import MetaLayout from '/components/MetaLayout'
+import SettingNavigationLayout from '/components/SettingNavigationLayout'
 
 import "react-multi-carousel/lib/styles.css";
 import cookies from 'next-cookies'

@@ -17,6 +17,8 @@ import { useRouter } from 'next/router';
 
 import ProgressBar from '/components/ProgressBar'
 import PhoneNumberDialog from '/components/dialog/PhoneNumberDialog'
+import VideoItem from '../components/item/VideoItem';
+import MagazineItem from '../components/item/MagazineItem';
 
 const breakpoints = {
   "(min-width: 464px)": {
@@ -47,7 +49,17 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
     breakpoints,
   })
   const [articlesSliderRef, articlesSlider] = useKeenSlider({
-    breakpoints,
+    breakpoints: {
+      "(min-width: 464px)": {
+        slidesPerView: 1,
+      },
+      "(min-width: 768px)": {
+        slidesPerView: 2,
+      },
+      "(min-width: 1200px)": {
+        slidesPerView: 3,
+      },
+    },
   })
   const [universitySliderRef, universitySlider] = useKeenSlider({
     breakpoints,
@@ -247,14 +259,14 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                                 <div key={video.id} className='keen-slider__slide rounded-lg'>
                                   <Link href={`/career_explorer/career_video/${video.id}`}>
                                     <a href={`/career_explorer/career_video/${video.id}`}>
-                                      <div className='my-4 mx-2 p-4 group relative rounded-lg bg-white shadow hover:shadow-xl hover:scale-105 duration-200'>
+                                      <div className='my-4 mx-2 p-4 group relative rounded bg-white shadow hover:shadow-xl hover:scale-105 duration-200'>
                                         <div className='h-3/4 relative'>
-                                          <img src={video.thumbnail} className='h-full w-full rounded-lg' />
-                                          <img src='/img/play-yellow.svg' className='absolute h-6 w-6 -bottom-4 -right-3' />
+                                          <img src={video.thumbnail} className='h-full w-full rounded-t' />
+                                          <img src='/img/play-yellow.svg' className='absolute h-6 w-6 -bottom-4 -right-2' />
                                         </div>
-                                        <div className='pt-3'>
+                                        <div className='pt-3 truncate'>
                                           <div className='text-xs text-gray-400'>Author</div>
-                                          <div className='font-bold text-sm mt-1'>{video.title}</div>
+                                          <div className='font-bold text-sm mt-1 overflow-hidden overflow-ellipsis '>{video.title}</div>
                                         </div>
                                       </div>
                                     </a>
@@ -382,12 +394,13 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             <div className='keen-slider navigation-wrapper' ref={videosSliderRef}>
                               {home.watch_videos?.map(video => (
                                 <div key={video.id} className='keen-slider__slide rounded-lg'>
-                                  <Link href={`/career_explorer/career_video/${video.id}`}>
+                                  <VideoItem video={video} />
+
+                                  {/* <Link href={`/career_explorer/career_video/${video.id}`}>
                                     <a>
                                       <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
                                         <div>
                                           <img className="rounded-t group-hover:filter-none duration-500 w-full h-32 object-cover" src={video.thumbnail} />
-                                          {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                                           <div className="flex-1 flex items-center justify-between truncate">
                                             <div className="flex-1 px-4 py-2 text-sm truncate">
                                               <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
@@ -399,7 +412,8 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                                         </div>
                                       </div>
                                     </a>
-                                  </Link>
+                                  </Link> */}
+
                                 </div>
                               ))}
                             </div>
@@ -491,7 +505,8 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             <div className='keen-slider navigation-wrapper' ref={articlesSliderRef}>
                               {home.articles?.map(article => (
                                 <div key={article.id} className='keen-slider__slide'>
-                                  <Link href={`/career_explorer/magazine/${article.id}`}>
+                                  <MagazineItem magazine={article} />
+                                  {/* <Link href={`/career_explorer/magazine/${article.id}`}>
                                     <a href={`/career_explorer/magazine/${article.id}`}>
                                       <div className='mx-2 my-4 group relative rounded-lg bg-white shadow hover:shadow-lg hover:scale-105 duration-200'>
                                         <div className='h-1/2'>
@@ -502,7 +517,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                                         </div>
                                       </div>
                                     </a>
-                                  </Link>
+                                  </Link> */}
                                 </div>
                               ))}
                             </div>

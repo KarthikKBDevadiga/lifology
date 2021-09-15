@@ -25,6 +25,7 @@ import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
 import YoutubeDialog from '../../../components/dialog/YoutubeDialog'
+import VideoItem from '../../../components/item/VideoItem'
 
 const headerSlide = [
     {
@@ -243,7 +244,7 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
                                                         onChange={(e) => setSearchText(e.target.value)}
 
                                                     />
-                                                    <button className="flex p-2 w-max absolute right-0 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
+                                                    <button className="flex p-2 w-max absolute right-0 items-center bg-lblue rounded-r sm:text-sm text-white" aria-hidden="true"
                                                         onClick={search}>
                                                         <SearchIcon className="h-5 w-5" aria-hidden="true" />
                                                     </button>
@@ -406,25 +407,7 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
                                                                 {
                                                                     videoCat.videos.map((video) => (
                                                                         <div className="keen-slider__slide">
-                                                                            <Link href={'/career_explorer/career_video/' + video.id} key={video.id}>
-                                                                                <a>
-                                                                                    <div className="group relative shadow mx-2 my-4 rounded m-1 hover:shadow-xl hover:scale-105 duration-500" style={{}}>
-                                                                                        <div>
-                                                                                            <img className="rounded-t group-hover:filter-none duration-500 w-full h-32 object-cover" src={video.thumbnail} />
-                                                                                            {/* <img className=" rounded-t " src={card.thumbnail} /> */}
-                                                                                            <div className="flex-1 flex items-center justify-between truncate">
-                                                                                                <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                                                    <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
-                                                                                                        {video.title}
-                                                                                                    </div>
-                                                                                                    <div className="text-gray-500 mt-2 w-full overflow-hidden">{video.description}</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </a>
-                                                                            </Link>
-
+                                                                            <VideoItem video={video} />
                                                                         </div>
                                                                     ))
                                                                 }

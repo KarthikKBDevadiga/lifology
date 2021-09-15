@@ -15,7 +15,7 @@ const SettingNavigationLayout = ({ index }) => {
             </h2>
             <div className="space-y-1 mt-4">
                 <Link
-                    href="/notification_settings">
+                    href="/settings/notification">
                     <a
                         className={classNames(
                             index == 1 ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100 hover:text-lblue',
@@ -29,7 +29,7 @@ const SettingNavigationLayout = ({ index }) => {
                     </a>
                 </Link>
                 <Link
-                    href="/aboutus">
+                    href="/settings/aboutus">
                     <a
                         className={classNames(
                             index == 2 ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100 hover:text-lblue',
@@ -65,7 +65,7 @@ const SettingNavigationLayout = ({ index }) => {
                     </svg>
                     Guinness Record
                 </a>
-                <Link href="/terms_of_policy">
+                <Link href="/settings/terms_of_policy">
                     <a
                         className={classNames(
                             index == 4 ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100 hover:text-lblue',
@@ -82,7 +82,7 @@ const SettingNavigationLayout = ({ index }) => {
                         Terms of Policy
                     </a>
                 </Link>
-                <Link href="/contactus">
+                <Link href="/settings/contactus">
                     <a
                         className={classNames(
                             index == 5 ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100 hover:text-lblue',
@@ -99,7 +99,7 @@ const SettingNavigationLayout = ({ index }) => {
                         Contact Us
                     </a>
                 </Link>
-                <Link href="/privacy_policy">
+                <Link href="/settings/privacy_policy">
                     <a
                         className={classNames(
                             index == 6 ? 'text-white bg-lblue' : 'text-black bg-white hover:bg-indigo-100 hover:text-lblue',

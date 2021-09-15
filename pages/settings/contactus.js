@@ -10,12 +10,12 @@ import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import MetaLayout from '../components/MetaLayout'
+import MetaLayout from '/components/MetaLayout'
 
 import { Listbox, Transition, Dialog } from '@headlessui/react'
 
 import "react-multi-carousel/lib/styles.css";
-import SettingNavigationLayout from '../components/SettingNavigationLayout'
+import SettingNavigationLayout from '/components/SettingNavigationLayout'
 import cookies from 'next-cookies'
 
 function classNames(...classes) {

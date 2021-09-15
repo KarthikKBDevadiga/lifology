@@ -77,7 +77,7 @@ const Bookmarks = props => {
         {universities.map(university => (
           <Link key={university.id} href={`/career_explorer/course_and_university/${university.id}`}>
             <div className={'rounded-md shadow relative overflow-x-hidden cursor-pointer text-sm text-white'}>
-              <img src={university.logo} className={'h-48 rounded-md w-full'} />
+              <img src={Constants.baseUrlImage + university.logo} className={'h-48 rounded-md w-full'} />
               <div className={'absolute bottom-0 w-full p-2 px-3 bg-black opacity-50'}>{university.name}</div>
               <div className={'absolute bottom-0 w-full p-2 px-3'}>{university.name}</div>
             </div>

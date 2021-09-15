@@ -58,7 +58,7 @@ export default function Assessment({ profile, assessment, questions, token }) {
             name: 'My Child', href: '/my_child/', current: false
         },
         {
-            name: assessment.title + 'Assignment', href: '#', current: true
+            name: assessment.title + ' Assignment', href: '#', current: true
         },
     ]
 

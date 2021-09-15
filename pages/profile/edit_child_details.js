@@ -68,6 +68,9 @@ export default function EditChildDetails({ profile, grades, token }) {
             }, SchemeEditProfile)
             .then((res) => {
                 console.log('Response' + res)
+                router.replace({
+                    pathname: '/profile',
+                })
             }).catch((networkErr) => {
                 console.log('error')
             });
@@ -217,7 +220,9 @@ export default function EditChildDetails({ profile, grades, token }) {
                                                 </button>
                                                 <button
                                                     onClick={(event) => {
-                                                        router.back()
+                                                        router.replace({
+                                                            pathname: '/profile',
+                                                        })
                                                     }}
                                                     type="button"
                                                     className="mt-3 ml-auto inline-flex justify-center rounded-full border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"

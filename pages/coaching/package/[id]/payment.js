@@ -24,7 +24,7 @@ import { SchemeCreateOrder } from '../../../../helpers/GraphQLSchemes'
 import { CheckIcon, ExclamationIcon } from '@heroicons/react/outline'
 import Head from 'next/head'
 
-export default function Payment({ profile, token, coachPackage }) {
+export default function Payment({ profile, token, coachPackage, id }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -261,6 +261,10 @@ export default function Payment({ profile, token, coachPackage }) {
                                 <button
                                     onClick={(event) => {
                                         router.back()
+                                        router.replace({
+                                            pathname: '/coaching/package/' + id,
+                                            query: { pid: post.id },
+                                        })
                                     }}
                                     type="button"
                                     className="ml-4 inline-flex items-center px-8 py-2 border border-lgrey-border shadow-sm font-medium rounded-full bg-lgrey hover:bg-lgrey-border focus:outline-none sm:text-sm duration-500"
@@ -411,6 +415,6 @@ export async function getServerSideProps(context) {
             return {};
         });
     return {
-        props: { profile, token, coachPackage }
+        props: { profile, token, coachPackage, id: context.params.id }
     }
 }

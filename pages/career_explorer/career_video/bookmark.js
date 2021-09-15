@@ -24,13 +24,13 @@ import { useKeenSlider } from 'keen-slider/react'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
+import styles from '/styles/Item.module.css'
 
-
-
-export default function CareerVideo({ token, profile }) {
+export default function CareerVideo({ token, profile, videos }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [watchLaterVideo, setWatchLaterVideo] = useState([])
+    const [watchLater, setWatchLater] = useState(videos)
 
     const client = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
@@ -59,20 +59,28 @@ export default function CareerVideo({ token, profile }) {
         getWatchLaterVideos();
     }, [])
 
-    const removeVideo = (id) => {
+    const removeVideo = (video) => {
+        const v = Array.from(watchLater)
+        const index = v.indexOf(video);
+        console.log(index)
+        if (index > -1) {
+            v.splice(index, 1);
+            setWatchLater(v)
+            console.log('Updated')
+        }
+
         mutateGraph(client,
             {
-                video_id: Number(id)
+                video_id: Number(video.id)
             }, SchemeRemoveWatchLater)
             .then((res) => {
-                // setVideoStatus(res.checkVideoStatus);
                 console.log("remove watch later api", res);
             }).catch((networkErr) => {
-
                 console.log(networkErr)
-            });
+            })
 
-        getWatchLaterVideos();
+
+        // getWatchLaterVideos();
     }
 
     return (
@@ -87,28 +95,50 @@ export default function CareerVideo({ token, profile }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos / Watch Later" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-                        <div class="grid grid-cols-1 m-5 p-5 rounded shadow gap-4 bg-white">
+                        <div className="grid grid-cols-1 m-5 p-5 rounded shadow gap-4 bg-white">
                             <p className="text-xl font-medium">Watch Later Videos</p>
 
-                            {watchLaterVideo.videosWatchLater != undefined &&
-                                watchLaterVideo.videosWatchLater.map((video, index) => (
-                                    <div className="flex">
-                                        <Link href={'/career_explorer/career_video/' + video.id}>
-                                            <div className="flex my-4 cursor-pointer " >
-                                                <div className="mr-4 mt-2 flex-shrink-0 self-start">
-                                                    <img className="w-36 rounded object-cover" src={video.thumbnail} />
-                                                </div>
-                                                <div className="self-center">
-                                                    <h4 className="text-sm font-bold">{video.title} </h4>
-                                                    <p className="mt-1 w-96 text-xs text-justify" >
-                                                        {video.description}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                        <span className="text-blue-500 ml-2 ml-auto cursor-pointer" onClick={() => removeVideo(video.id)}>Remove</span>
+                            {
+                                watchLater.length > 0 ?
+                                    watchLater.map((video, index) => (
+
+                                        <div
+                                            className=" relative w-full rounded  text-left sm:text-sm "
+                                        >
+                                            <Link href={{
+                                                pathname: '/career_explorer/career_video/' + video.id
+                                            }}>
+                                                <a>
+                                                    <div className="flex">
+                                                        <img className="rounded group-hover:filter-none duration-500 w-56 h-32 object-cover" src={video.thumbnail} />
+                                                        <div className="flex-1 flex mr-4 justify-between ">
+                                                            <div className="flex-1 px-4 py-2 text-sm ">
+                                                                <div className={styles.heading}>
+                                                                    {video.title}
+                                                                </div>
+                                                                <div className={styles.subheading}>{video.description}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </Link>
+
+                                            <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                    onClick={() => removeVideo(video)}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </span>
+                                            {
+                                                index + 1 != watchLater.length ?
+                                                    <div className="w-full h-px bg-gray-200 mt-4"></div> : <></>
+                                            }
+
+                                        </div>
+                                    ))
+                                    : <div className="text-gray-400">
+                                        No Data Found
                                     </div>
-                                ))
                             }
 
                         </div>
@@ -142,9 +172,9 @@ export async function getServerSideProps(context) {
             Authorization: "Bearer " + token,
         },
     })
-    const watchLaterVideo = await queryGraph(videosClient, {}, SchemeGetWatchLaterVideos)
+    const videos = await queryGraph(videosClient, {}, SchemeGetWatchLaterVideos)
         .then((res) => {
-            return res
+            return res.videosWatchLater
         }).catch((networkErr) => {
             return []
         })
@@ -164,7 +194,7 @@ export async function getServerSideProps(context) {
         })
 
     return {
-        props: { token, profile }
+        props: { token, videos, profile }
     }
 }
 

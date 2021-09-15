@@ -1,34 +1,26 @@
-import { Fragment, useState, useEffect } from 'react'
-import { Dialog, Transition, Switch } from '@headlessui/react'
-import {
-    SelectorIcon
-} from '@heroicons/react/solid'
+import { useState } from 'react'
+import { Switch } from '@headlessui/react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
-import MetaLayout from '../components/MetaLayout'
-
-import { Listbox, } from '@headlessui/react'
+import MetaLayout from '/components/MetaLayout'
 
 import "react-multi-carousel/lib/styles.css";
-import SettingNavigationLayout from '../components/SettingNavigationLayout'
+import SettingNavigationLayout from '/components/SettingNavigationLayout'
 import cookies from 'next-cookies'
-import { SchemeNotificationSettings, SchemeUpdateNotificationSettings } from '../helpers/GraphQLSchemes'
-import { mutateGraph } from '../helpers/GraphQLCaller'
-import LoadingDialog from '../components/dialog/LoadingDialog'
+import { SchemeNotificationSettings, SchemeUpdateNotificationSettings } from '/helpers/GraphQLSchemes'
+import { mutateGraph } from '/helpers/GraphQLCaller'
+import LoadingDialog from '/components/dialog/LoadingDialog'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-
-
-export default function NotificationSettings({ profile, notification, token }) {
+export default function Notification({ profile, notification, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [loadingDialog, setLoadingDialog] = useState(false)
@@ -328,11 +320,12 @@ export default function NotificationSettings({ profile, notification, token }) {
 
 
                                                 </div>
-                                                <button
+                                                <div
                                                     onClick={updateNotificationSettings}
-                                                    className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
+                                                    className="ml-auto cursor-pointer w-max mt-4 px-12 flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
                                                     Apply
-                                                </button>
+                                                </div>
+
                                             </div>
 
                                         </section>

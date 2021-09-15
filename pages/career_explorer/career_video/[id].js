@@ -22,6 +22,7 @@ import Breadcrumbs from '../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
+import VideoMinItem from '../../../components/item/VideoMinItem'
 
 // function getVideoId(url) {
 //     var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
@@ -81,6 +82,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                 video_id: Number(id), bookmark_type: "WATCH_LATER"
             }, SchemeAddWatchLater)
             .then((res) => {
+                console.log(res.videosBookmark)
                 // setVideoStatus(res.checkVideoStatus);
             }).catch((networkErr) => {
 
@@ -171,37 +173,38 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
 
                                                         </iframe>
                                                     </div>
-
-                                                    <div className="sm:flex mt-4">
-                                                        <div className="font-bold mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                            {video.title}
+                                                    <div className="sm:flex sm:items-start sm:justify-between mt-4">
+                                                        <div>
+                                                            <h3 className="text-base leading-6 font-bold text-gray-900">{video.title}</h3>
                                                         </div>
-                                                        <div className="self-center flex ml-auto text-xs">
-                                                            <a href="#" onClick={() => addToLike(video.id)}>
-                                                                <div className="flex">
-                                                                    <svg className="h-4 w-4 mr-2" fill={videoStatus.like_status == 1 ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor" >
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                                                                    </svg>
-                                                                    Like
-                                                                </div>
-                                                            </a>
-                                                            <a href="#" onClick={() => addToDislike(video.id)}>
-                                                                <div className="flex">
-                                                                    <svg className="h-4 w-4 mr-2 ml-4" fill={videoStatus.like_status == 0 ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
-                                                                    </svg>
-                                                                    Dislike
-                                                                </div>
-                                                            </a>
+                                                        <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
+                                                            <div className="self-center flex ml-auto text-xs">
+                                                                <a href="#" onClick={() => addToLike(video.id)}>
+                                                                    <div className="flex">
+                                                                        <svg className="h-4 w-4 mr-2" fill={videoStatus.like_status == 1 ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor" >
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                                                                        </svg>
+                                                                        Like
+                                                                    </div>
+                                                                </a>
+                                                                <a href="#" onClick={() => addToDislike(video.id)}>
+                                                                    <div className="flex">
+                                                                        <svg className="h-4 w-4 mr-2 ml-4" fill={videoStatus.like_status == 0 ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
+                                                                        </svg>
+                                                                        Dislike
+                                                                    </div>
+                                                                </a>
 
-                                                            <a href="#" onClick={() => addToWatchLater(video.id)}>
-                                                                <div className="flex" >
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 ml-4" fill={videoStatus.bookmark_status == true ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                                    </svg>
-                                                                    Watch Later
-                                                                </div>
-                                                            </a>
+                                                                <a href="#" onClick={() => addToWatchLater(video.id)}>
+                                                                    <div className="flex" >
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 ml-4" fill={videoStatus.bookmark_status == true ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                        </svg>
+                                                                        Watch Later
+                                                                    </div>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div className="w-full h-px bg-gray-200 my-4"></div>
@@ -225,23 +228,24 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     Recommended Videos
                                                 </h2>
-                                                {recommended.map((r) => (
-                                                    <Link
-                                                        href={'/career_explorer/career_video/' + r.id}>
-                                                        <a>
-                                                            <div className="flex my-4">
-                                                                <div className="mr-4 mt-2 flex-shrink-0 self-start">
-                                                                    <img className="w-20 h-12 rounded object-cover" src={r.thumbnail} />
-                                                                </div>
-                                                                <div className="self-center">
-                                                                    <h4 className="text-sm font-bold">{r.title}</h4>
-                                                                    <p className="mt-1 text-xs text-justify" >
-                                                                        {r.description}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </Link>
+                                                {recommended.map((video) => (
+                                                    <VideoMinItem video={video} />
+                                                    // <Link
+                                                    //     href={'/career_explorer/career_video/' + r.id}>
+                                                    //     <a>
+                                                    //         <div className="flex my-4">
+                                                    //             <div className="mr-4 mt-2 flex-shrink-0 self-start">
+                                                    //                 <img className="w-20 h-12 rounded object-cover" src={r.thumbnail} />
+                                                    //             </div>
+                                                    //             <div className="self-center">
+                                                    //                 <h4 className="text-sm font-bold">{r.title}</h4>
+                                                    //                 <p className="mt-1 text-xs text-justify" >
+                                                    //                     {r.description}
+                                                    //                 </p>
+                                                    //             </div>
+                                                    //         </div>
+                                                    //     </a>
+                                                    // </Link>
                                                 ))}
                                             </div>
                                         </section>

@@ -332,9 +332,9 @@ const NavigationLayout = ({ index, sidebarOpen, setSidebarOpen, isPackagePurhase
                                     <a target="_blank" href="https://play.google.com/store/apps/details?id=com.app.lifology" >
                                         <img className="mt-4 ml-auto mr-auto w-3/5" src="/img/play-store.png" />
                                     </a>
-                                    {/* <a href="#">
+                                    <a href="#">
                                         <img className="mt-4 ml-auto mr-auto w-3/5" src="/img/app-store.png" />
-                                    </a> */}
+                                    </a>
                                 </div>
                             </div>
                         </nav>

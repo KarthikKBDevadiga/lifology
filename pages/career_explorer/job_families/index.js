@@ -94,7 +94,7 @@ export default function JobFamilies({ families, profile }) {
                                                                 id="search_field"
                                                                 name="search_field"
                                                                 className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent"
-                                                                placeholder="Search University"
+                                                                placeholder="Search Job Families"
                                                                 type="search"
                                                                 value={searchText}
                                                                 onChange={(e) => setSearchText(e.target.value)}
