@@ -5,11 +5,11 @@ export default NextAuth({
     // Configure one or more authentication providers
     providers: [
         Providers.Google({
-            clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_SECRET,
+            clientId: '237059092365-gmtelru636a7o2ksuaadmrqi0n7k76um.apps.googleusercontent.com',
+            clientSecret: 'E50tMAbck-SrbHCJEwKkjvLc',
         }), Providers.Facebook({
-            clientId: process.env.FACEBOOK_ID,
-            clientSecret: process.env.FACEBOOK_SECRET,
+            clientId: '400637383938316',
+            clientSecret: 'de4631f8045588b17cbc9fa993503d71',
         }),
     ],
 

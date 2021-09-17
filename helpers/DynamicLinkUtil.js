@@ -18,7 +18,6 @@ async function createDynamicLink(url) {
         'apn': ANDROID_APPLICATION_PACKAGE,
         'ibi': IOS_BUNDLE_ID
     }
-    console.log(params)
     const dynanicLink = BASE_URL + '?' + encodeQueryData(params)
     const data = {
         "longDynamicLink": dynanicLink,
@@ -26,7 +25,6 @@ async function createDynamicLink(url) {
             "option": "SHORT"
         }
     }
-    console.log(dynanicLink)
     const shortLink = await fetch('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + ACCESS_TOKEN, {
         method: 'POST',
         body: JSON.stringify(data),
