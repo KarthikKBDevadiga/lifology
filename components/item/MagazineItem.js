@@ -10,7 +10,7 @@ const MagazineItem = ({ magazine }) => {
                         <img className="rounded-t group-hover:filter-none duration-500 w-full h-32 object-cover" src={magazine.thumbnail} />
                         {/* <img className=" rounded-t " src={card.thumbnail} /> */}
                         <div className="flex-1 flex items-center justify-between ">
-                            <div className="flex-1 px-4 py-2 text-sm  ">
+                            <div className="flex-1 px-3 pb-2 text-sm  ">
                                 <div className={styles.heading}>
                                     {magazine.title}
                                 </div>

@@ -16,6 +16,7 @@ import VideoDialog from '/components/dialog/VideoDialog'
 import styles from '/styles/CareerField.module.css'
 
 import classNames from '/helpers/classNames'
+import createDynamicLink from '/helpers/DynamicLinkUtil'
 
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
@@ -25,6 +26,7 @@ import Breadcrumbs from '../../../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
 import YoutubeDialog from '../../../../../components/dialog/YoutubeDialog'
+import VideoItem from '/components/item/VideoItem'
 
 export default function CareerFields({ profile, jobFamily, careerField, universities, dashboard }) {
     const router = useRouter()
@@ -83,7 +85,7 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                 slidesPerView: 2,
             },
             "(min-width: 1200px)": {
-                slidesPerView: 4,
+                slidesPerView: 3,
             },
         },
     })
@@ -240,25 +242,14 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                                 <h2 className="text-lg font-medium text-gray-900 mx-4 mt-4">
                                                     Recommended Videos
                                                 </h2>
-                                                <div className="navigation-wrapper w-full mb-4">
+                                                <div className="navigation-wrapper w-full">
                                                     <div ref={videoSliderRef} className="keen-slider">
-                                                        {dashboard.videos.map((card) => (
-                                                            <Link
-                                                                href={{
-                                                                    pathname: '/career_explorer/career_video/' + card.id
-                                                                }}
-                                                            >
-                                                                <a className="keen-slider__slide self-center">
-                                                                    <div className="px-2">
-                                                                        <img className="ml-auto mr-auto rounded" src={card.thumbnail} />
-                                                                    </div>
-                                                                    <h2 className="text-sm font-medium text-gray-900 px-2 mt-2 h-10 overflow-hidden" >
-                                                                        {card.title}
-                                                                    </h2>
-                                                                </a>
-                                                            </Link>
-
-                                                        ))
+                                                        {
+                                                            dashboard.videos.map((video) => (
+                                                                <div className="keen-slider__slide">
+                                                                    <VideoItem video={video} />
+                                                                </div>
+                                                            ))
                                                         }
                                                     </div>
                                                 </div>
@@ -266,31 +257,35 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
-                                                <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
-                                                    University Video
-                                                </h2>
-                                                <a href="#" onClick={(event) => { setOpenVideo(true) }}>
-                                                    <div className="group relative shadow hover:shadow-xl hover:scale-105 active:scale-100 duration-500">
-                                                        <img className="rounded mt-2 duration-500" src={jobFamily.thumbnail} />
-                                                        <svg
-                                                            className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 duration-500"
-                                                            viewBox="0 0 24 24"
-                                                            id="vector">
-                                                            <path
-                                                                id="path"
-                                                                d="M 12 2 C 6.48 2 2 6.48 2 12 C 2 17.52 6.48 22 12 22 C 17.52 22 22 17.52 22 12 C 22 6.48 17.52 2 12 2 Z"
-                                                                fill="#ffc107"
-                                                                strokeWidth="1" />
-                                                            <path
-                                                                id="path_1"
-                                                                d="M 9.5 14.67 L 9.5 9.33 C 9.5 8.54 10.38 8.06 11.04 8.49 L 15.19 11.16 C 15.8 11.55 15.8 12.45 15.19 12.84 L 11.04 15.51 C 10.38 15.94 9.5 15.46 9.5 14.67 Z"
-                                                                fill="#ffffff" />
-                                                        </svg>
+                                            {
+                                                careerField.video ?
+                                                    <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4 mb-4">
+                                                        <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
+                                                            University Video
+                                                        </h2>
+                                                        <a href="#" onClick={(event) => { setOpenVideo(true) }}>
+                                                            <div className="group relative shadow hover:shadow-xl hover:scale-105 active:scale-100 duration-500">
+                                                                <img className="rounded mt-2 duration-500" src={careerField.thumbnail} />
+                                                                <svg
+                                                                    className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 duration-500"
+                                                                    viewBox="0 0 24 24"
+                                                                    id="vector">
+                                                                    <path
+                                                                        id="path"
+                                                                        d="M 12 2 C 6.48 2 2 6.48 2 12 C 2 17.52 6.48 22 12 22 C 17.52 22 22 17.52 22 12 C 22 6.48 17.52 2 12 2 Z"
+                                                                        fill="#ffc107"
+                                                                        strokeWidth="1" />
+                                                                    <path
+                                                                        id="path_1"
+                                                                        d="M 9.5 14.67 L 9.5 9.33 C 9.5 8.54 10.38 8.06 11.04 8.49 L 15.19 11.16 C 15.8 11.55 15.8 12.45 15.19 12.84 L 11.04 15.51 C 10.38 15.94 9.5 15.46 9.5 14.67 Z"
+                                                                        fill="#ffffff" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
                                                     </div>
-                                                </a>
-                                            </div>
-                                            <div className="mt-4 bg-white p-4 shadow sm:rounded-lg">
+                                                    : <></>
+                                            }
+                                            <div className="bg-white p-4 shadow sm:rounded-lg">
 
                                                 <a
                                                     href="#"
@@ -409,8 +404,6 @@ export default function CareerFields({ profile, jobFamily, careerField, universi
                         </div>
                     </main>
                 </div>
-
-
             </div >
             <YoutubeDialog showDialog={openVideo} setShowDialog={setOpenVideo} url={careerField.video} />
         </>
@@ -424,6 +417,7 @@ const getColor = () => {
 }
 
 export async function getServerSideProps(context) {
+
     const { token } = cookies(context)
     if (token == null || token == '') {
         return {
@@ -446,6 +440,7 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {}
         })
+    // console.log(dashboard)
     const careerClient = new ApolloClient({
         uri: Constants.baseUrl + "/api/career",
         cache: new InMemoryCache(),
@@ -471,7 +466,7 @@ export async function getServerSideProps(context) {
 
     const universitiesRaw = await queryGraph(careerClient, { pool_id: parseInt(context.params.id), field_id: parseInt(context.params.cfid) }, SchemeGetUniversities)
         .then((res) => {
-            console.log(res.allUniversity)
+            // console.log(res.allUniversity)
             return res.allUniversity
         }).catch((networkErr) => {
             console.log(networkErr)
@@ -499,5 +494,3 @@ export async function getServerSideProps(context) {
         props: { profile, jobFamily, careerField, universities, dashboard }
     }
 }
-
-

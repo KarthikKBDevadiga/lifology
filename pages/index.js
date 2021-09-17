@@ -168,8 +168,6 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
       })
   }
 
-
-
   return (
 
     <>
@@ -194,7 +192,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             Total Videos Watched
                           </div>
                           <div className='mt-3'>
-                            <span className='font-bold text-3xl mr-2'>{home?.watch_videos?.length}</span>
+                            <span className='font-bold text-3xl mr-2'>{home.dashboardCounts.total_watched_videos}</span>
                             <span>Videos</span>
                           </div>
                         </div>
@@ -206,7 +204,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             Total Assessment
                           </div>
                           <div className='mt-3'>
-                            <span className='font-bold text-3xl mr-2'>{home.completed_assessment}</span>
+                            <span className='font-bold text-3xl mr-2'>{home.home.completed_assessment}</span>
                             <span>Assessment</span>
                           </div>
                         </div>
@@ -218,7 +216,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             Total Articles Read
                           </div>
                           <div className='mt-3'>
-                            <span className='font-bold text-3xl mr-2'>{home?.articles?.length}</span>
+                            <span className='font-bold text-3xl mr-2'>{home.dashboardCounts.total_read_articles}</span>
                             <span>Articles</span>
                           </div>
                         </div>
@@ -228,7 +226,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* LIFOLOGY MASTER START */}
                     {
-                      home.master_class_videos?.length > 0 ?
+                      home.home.master_class_videos?.length > 0 ?
                         <div className='bg-white shadow rounded-lg min-w-full'>
                           <div className='flex justify-between'>
                             <div className='font-bold text-base px-4 pt-4'>Watch Lifology Master Class</div>
@@ -255,7 +253,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                               </div>
                             </a>
                             <div className='navigation-wrapper keen-slider' ref={masterClassSliderRef}>
-                              {home.master_class_videos?.map(video => (
+                              {home.home.master_class_videos?.map(video => (
                                 <div key={video.id} className='keen-slider__slide rounded-lg'>
                                   <Link href={`/career_explorer/career_video/${video.id}`}>
                                     <a href={`/career_explorer/career_video/${video.id}`}>
@@ -282,7 +280,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* ASSESSMENT START */}
                     {
-                      home.assessment?.length > 0 ?
+                      home.home.assessment?.length > 0 ?
                         <div className='bg-white shadow rounded-lg  min-w-full'>
                           <div
                             className="relative w-full rounded px-4 pt-4 text-left sm:text-sm"
@@ -291,17 +289,17 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             <span className="absolute inset-y-0 right-0 top-0 flex items-center pl-2 pr-2 pt-4">
                               <div className="text-sm font-medium"
                               >
-                                {home.percentage_completed}%
+                                {home.home.percentage_completed}%
                               </div>
                               <div className="text-xs  ml-1">
                                 completed
                               </div>
                               <div className="h-2 w-36 bg-lgrey-border rounded-full ml-4">
                                 <div className="bg-lblue h-full rounded-full" style={{
-                                  width: home.percentage_completed + '%'
+                                  width: home.home.percentage_completed + '%'
                                 }}></div>
                               </div>
-                              <div className="mx-4 text-sm font-medium">{home.completed_assessment}/8</div>
+                              <div className="mx-4 text-sm font-medium">{home.home.completed_assessment}/8</div>
 
                             </span>
                           </div>
@@ -328,7 +326,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                               </div>
                             </a>
                             <div className='navigation-wrapper keen-slider' ref={assessmentSliderRef}>
-                              {home.assessment?.map(assessment => (
+                              {home.home.assessment?.map(assessment => (
                                 <div key={assessment.id} className='keen-slider__slide rounded-lg'>
                                   <Link href={
                                     assessment.assessment_type == 3 ? assessment.id == 9 ? '/my_child/' + assessment.id + '/report/la' : '/my_child/' + assessment.id + '/report/figment' : assessment.total_questions > 0 ? "/my_child/" + assessment.id + '/assessment_instructions' : "/my_child/" + assessment.id + '/report/' + assessment.title.toLowerCase()
@@ -364,7 +362,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* VIDEOS START */}
                     {
-                      home.watch_videos?.length > 0 ?
+                      home.home.watch_videos?.length > 0 ?
                         <div className='bg-white shadow rounded-lg  min-w-full'>
                           <div className='flex justify-between'>
                             <div className='font-bold text-base px-4 pt-4'>Recommended Videos</div>
@@ -392,7 +390,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                               </div>
                             </a>
                             <div className='keen-slider navigation-wrapper' ref={videosSliderRef}>
-                              {home.watch_videos?.map(video => (
+                              {home.home.watch_videos?.map(video => (
                                 <div key={video.id} className='keen-slider__slide rounded-lg'>
                                   <VideoItem video={video} />
 
@@ -425,7 +423,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* COURSE+UNI START */}
                     {
-                      home.university?.length > 0 ?
+                      home.home.university?.length > 0 ?
                         <div className='bg-white shadow rounded-lg  min-w-full'>
                           <div className='flex justify-between'>
                             <div className='font-bold text-base px-4 pt-4'>Course & University</div>
@@ -453,7 +451,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                               </div>
                             </a>
                             <div className='keen-slider navigation-wrapper' ref={universitySliderRef}>
-                              {home.university?.map(uni => (
+                              {home.home.university?.map(uni => (
                                 <div key={uni.id} className='keen-slider__slide rounded-lg'>
                                   <Link href={{
                                     pathname: '/career_explorer/course_and_university/' + uni.id,
@@ -475,7 +473,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* ARTICLES START */}
                     {
-                      home.articles?.length > 0 ?
+                      home.home.articles?.length > 0 ?
                         <div className='bg-white shadow rounded-lg min-w-full'>
                           <div className='flex justify-between'>
                             <div className='font-bold text-base px-4 pt-4'>Recommended Articles</div>
@@ -503,7 +501,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                               </div>
                             </a>
                             <div className='keen-slider navigation-wrapper' ref={articlesSliderRef}>
-                              {home.articles?.map(article => (
+                              {home.home.articles?.map(article => (
                                 <div key={article.id} className='keen-slider__slide'>
                                   <MagazineItem magazine={article} />
                                   {/* <Link href={`/career_explorer/magazine/${article.id}`}>
@@ -854,7 +852,7 @@ export async function getServerSideProps(context) {
 
   const home = await queryGraph(dashboardClient, {}, SchemeGetHomeData)
     .then((res) => {
-      return res.home
+      return res
     }).catch((networkErr) => {
       return {};
     })

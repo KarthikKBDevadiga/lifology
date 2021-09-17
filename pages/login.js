@@ -26,6 +26,7 @@ export default function Login({ cs }) {
     console.log(process.env.BASE_URL)
     const [session, loading] = useSession();
     const router = useRouter()
+    console.log(router.query)
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [successDialog, setSuccessDialog] = useState(false)
     const [successDialogString, setSuccessDialogString] = useState('Login Successful')
@@ -116,7 +117,7 @@ export default function Login({ cs }) {
                         localforage.setItem('token', res.otpVerification.auth_token)
                         document.cookie = 'token=' + res.otpVerification.auth_token + ';expires=3600;'
                         router.push({
-                            pathname: '/',
+                            pathname: router?.query?.redirect ? router?.query?.redirect : '/',
                         })
                     }, 1000)
                     setAuthToken(res.otpVerification.auth_token);
