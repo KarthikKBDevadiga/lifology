@@ -16,7 +16,9 @@ async function createDynamicLink(url) {
     const params = {
         'link': BASE_WEB_URL + url,
         'apn': ANDROID_APPLICATION_PACKAGE,
-        'ibi': IOS_BUNDLE_ID
+        'afl': BASE_WEB_URL + url,
+        'ibi': IOS_BUNDLE_ID,
+        'ifl': BASE_WEB_URL + url,
     }
     const dynanicLink = BASE_URL + '?' + encodeQueryData(params)
     const data = {
