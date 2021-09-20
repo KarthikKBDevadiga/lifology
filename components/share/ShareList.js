@@ -1,14 +1,15 @@
 import ShareButton from "./ShareButton"
 
-const ShareList = ({ url, video }) => {
+const ShareList = ({ url, video, university, magazine }) => {
+    const title = video ? video.title : university ? university.name : magazine ? magazine.title : ''
     return (
         <div className="flex">
             <ShareButton
                 href={{
                     pathname: 'mailto:',
                     query: {
-                        subject: video.title + ' - Lifology',
-                        body: 'Hello, \n\n' + video.title + '\n' + url + '\n\nRegards,'
+                        subject: title + ' - Lifology',
+                        body: 'Hello, \n\n' + title + '\n' + url + '\n\nRegards,'
                     },
                 }}
                 logo='/img/social/email.svg'
@@ -25,7 +26,7 @@ const ShareList = ({ url, video }) => {
                     pathname: 'https://www.facebook.com/sharer/sharer.php',
                     query: {
                         u: url,
-                        quote: video.title,
+                        quote: title,
                         hashtag: '#lifology'
                     },
                 }}
@@ -36,7 +37,7 @@ const ShareList = ({ url, video }) => {
                     pathname: 'https://twitter.com/share',
                     query: {
                         url: url,
-                        text: video.title,
+                        text: title,
                         hashtags: 'lifology,karthik'
                     },
                 }}
@@ -47,8 +48,8 @@ const ShareList = ({ url, video }) => {
                     pathname: 'https://linkedin.com/shareArticle',
                     query: {
                         url: url,
-                        title: video.title,
-                        summary: video.description
+                        title: title,
+                        // summary: video.description
                     },
                 }}
                 logo='/img/social/linkedin.svg'

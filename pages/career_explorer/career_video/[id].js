@@ -61,7 +61,8 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
         headers: {
             Authorization: "Bearer " + token,
         },
-    });
+    })
+
     const getVideoStatus = () => {
         mutateGraph(client,
             {
@@ -152,7 +153,6 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                 setShareUrl(res)
                 console.log(res)
             })
-        // setShareUrl(querystring)
     }
     return (
         <>
@@ -199,32 +199,24 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                                     <div className={
                                                                         classNames(
                                                                             "cursor-pointer flex hover:bg-gray-100 p-2 rounded-full duration-500 mr-2 active:scale-95",
-                                                                            videoStatus.like_status == 1 ? "text-lblue" : "text-gray-400 hover:text-lblue duration-500"
+                                                                            videoStatus.like_status == 1 ? "text-lblue bg-gray-100" : "text-gray-400 hover:text-lblue duration-500"
                                                                         )
                                                                     }>
-                                                                        {/* <svg className="h-4 w-4 mr-2" fill={videoStatus.like_status == 1 ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor" >
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                                                                        </svg> */}
                                                                         <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none" />
                                                                             <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" />
                                                                         </svg>
-                                                                        {/* Like */}
                                                                     </div>
                                                                 </div>
                                                                 <div href="#" onClick={() => addToDislike(video.id)}>
                                                                     <div className={
                                                                         classNames(
                                                                             "cursor-pointer flex hover:bg-gray-100 p-2 rounded-full duration-500 mr-2 active:scale-95",
-                                                                            videoStatus.like_status == 0 ? "text-lblue" : "text-gray-400 hover:text-lblue duration-500"
+                                                                            videoStatus.like_status == 0 ? "text-lblue bg-gray-100" : "text-gray-400 hover:text-lblue duration-500"
                                                                         )
                                                                     }>
-                                                                        {/* <svg className="h-4 w-4 mr-2 ml-4" fill={videoStatus.like_status == 0 ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
-                                                                        </svg> */}
                                                                         <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" fill="currentColor"><path d="M0 0h24v24H0z" fill="none" />
                                                                             <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z" />
                                                                         </svg>
-                                                                        {/* Dislike */}
                                                                     </div>
                                                                 </div>
 
@@ -232,7 +224,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                                     <div className={
                                                                         classNames(
                                                                             "cursor-pointer flex hover:bg-gray-100 p-2 rounded-full duration-500 mr-2 active:scale-95",
-                                                                            videoStatus.bookmark_status == true ? "text-lblue" : "text-gray-400 hover:text-lblue duration-500"
+                                                                            videoStatus.bookmark_status == true ? "text-lblue bg-gray-100" : "text-gray-400 hover:text-lblue duration-500"
                                                                         )
                                                                     } >
                                                                         <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">

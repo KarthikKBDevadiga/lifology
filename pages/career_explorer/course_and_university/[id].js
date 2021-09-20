@@ -25,6 +25,8 @@ import cookies from 'next-cookies'
 import LoadingDialog from '../../../components/dialog/LoadingDialog'
 import NotificationLayout from '../../../components/NotificationLayout'
 import classNames from '/helpers/classNames'
+import ShareDialog from '/components/dialog/ShareDialog'
+import createDynamicLink from '../../../helpers/DynamicLinkUtil'
 
 export default function University({ profile, university, token, careerPools, poolIdFilter, fieldIdFilter }) {
     const router = useRouter()
@@ -63,6 +65,18 @@ export default function University({ profile, university, token, careerPools, po
                 console.log('error')
             })
 
+    }
+
+    const [shareDialog, setShareDialog] = useState(false)
+    const [shareUrl, setShareUrl] = useState('')
+    const shareVideo = () => {
+        setShareDialog(true)
+        createDynamicLink('/career_explorer/course_and_university/' + university.id)
+            .then((res) => {
+                setShareUrl(res)
+                console.log(res)
+            })
+        // setShareUrl(querystring)
     }
 
     const pages = [
@@ -141,24 +155,42 @@ export default function University({ profile, university, token, careerPools, po
                                         <div className="lg:col-start-1 lg:col-span-2">
                                             <div className="bg-white align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg p-4">
                                                 <div className="sm:flex h-full w-full">
-                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8 self-center">
+                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 mr-4 self-center">
                                                         <img className="object-contain " src={Constants.baseUrlImage + '/' + university.logo} style={{ maxHeight: '12rem', maxWidth: '12rem' }} />
                                                     </div>
-                                                    <div className="w-full self-center text-left">
-                                                        <div className="flex text-xs relative">
-                                                            <div className="absolute left-0">
+                                                    <div className="w-full">
+                                                        <div className="sm:flex sm:items-start sm:justify-between">
+                                                            <div className="self-center">
                                                                 <div className="bg-gray-200 px-4 py-2 text-xs rounded-full cursor-pointer duration-500 hover:text-white hover:bg-lblue">University</div>
                                                             </div>
+                                                            <div className="sm:flex-shrink-0 sm:flex sm:items-center self-center">
+                                                                <div className="self-center flex ml-auto text-xs">
+                                                                    <div href="#">
+                                                                        <div className="cursor-pointer flex hover:bg-gray-100 p-2 rounded-full duration-500 mr-2 active:scale-95 text-gray-400 hover:text-lblue duration-500"
+                                                                            onClick={shareVideo}>
+                                                                            <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                                                <path d="M0 0h24v24H0z" fill="none" /><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" />
+                                                                            </svg>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div href="#" onClick={() => addToBookmark(university.id)}>
+                                                                        <div className={
+                                                                            classNames(
+                                                                                "cursor-pointer hover:bg-gray-100 p-2 rounded-full duration-500  active:scale-95",
+                                                                                bookmarkStatus == 1 ? "text-lblue" : "text-gray-400 hover:text-lblue duration-500"
+                                                                            )
+                                                                        } >
+                                                                            <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                                                                            </svg>
 
-                                                            <div onClick={() => addToBookmark(university.id)} className="flex items-center absolute right-0">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" fill={bookmarkStatus == 1 ? "lightblue" : "white"}>
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                                                                </svg>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-
                                                         </div>
-
-                                                        <div className="font-bold text-xl mt-12" >{university.name}</div>
+                                                        <div className="font-bold text-base mt-4" >{university.name}</div>
                                                         <div className="mt-2 text-sm " >{university.description}</div>
                                                     </div>
                                                 </div>
@@ -168,43 +200,123 @@ export default function University({ profile, university, token, careerPools, po
                                                 <div className="sm:flex h-full w-full">
                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8" >
                                                         <div className="self-center font-medium text-base w-full">
-                                                            <h2 className="text-xl ">Course's Offered</h2>
-                                                        </div>
-                                                    </div>
-                                                    <div className="w-full">
-                                                        <label htmlFor="search_field" className="sr-only">
-                                                            Search
-                                                        </label>
-                                                        <div className="relative w-full text-gray-400 ">
-                                                            <div className="flex absolute rounded bg-lgrey left-4  right-24 focus-within:text-gray-600 ">
-                                                                <div className="p-2 items-center pointer-events-none" aria-hidden="true">
-                                                                    <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                                                                </div>
-                                                                <input
-                                                                    id="search_field"
-                                                                    name="search_field"
-                                                                    className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent "
-                                                                    placeholder="Search University"
-                                                                    type="search"
-                                                                    value={searchText}
-                                                                    onChange={(e) => setSearchText(e.target.value)}
-
-                                                                />
-
-                                                            </div>
-
-                                                            <button className="flex p-2 w-20 absolute right-0 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
-                                                                onClick={(event) => {
-                                                                    setOpenFilter(true)
-                                                                }}>
-                                                                <div>Filter</div>
-                                                                <img className="ml-2" src="/img/filter-icon.png" />
-                                                            </button>
+                                                            <h2 className="text-base ">Course's Offered</h2>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
+
+                                                <div className="flex mt-2">
+                                                    <div className="w-full">
+                                                        <div className="flex rounded bg-lgrey focus-within:text-gray-600 ">
+                                                            <div className="p-2 items-center pointer-events-none" aria-hidden="true">
+                                                                <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                                                            </div>
+                                                            <input
+                                                                id="search_field"
+                                                                name="search_field"
+                                                                className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent "
+                                                                placeholder="Search University"
+                                                                type="search"
+                                                                value={searchText}
+                                                                onChange={(e) => setSearchText(e.target.value)}
+
+                                                            />
+
+                                                        </div>
+                                                    </div>
+                                                    <div className="ml-4 flex-shrink-0">
+                                                        <button className="flex p-2 w-20 items-center bg-lblue rounded sm:text-sm text-white" aria-hidden="true"
+                                                            onClick={(event) => {
+                                                                setOpenFilter(true)
+                                                            }}>
+                                                            <div>Filter</div>
+                                                            <img className="ml-2" src="/img/filter-icon.png" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+
                                                 <div className="mt-4">
-                                                    {university.career_courses.length > 0 && university.career_courses.filter((u) => {
+                                                    {
+                                                        university.career_courses.length > 0 && university.career_courses.filter((u) => {
+                                                            if (searchText.trim() === "") {
+                                                                return u;
+                                                            }
+                                                            if (u.name.toLowerCase().includes(searchText.toLowerCase())) {
+                                                                return u;
+                                                            }
+                                                            return "";
+                                                        }).map((u, index) => {
+                                                            var total = university.career_courses.filter((u) => {
+                                                                if (searchText.trim() === "")
+                                                                    return u
+                                                                if (u.name.toLowerCase().includes(searchText.toLowerCase()))
+                                                                    return u
+                                                                return ""
+                                                            }).length
+                                                            return (
+                                                                <>
+                                                                    <div className="sm:flex">
+                                                                        <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+                                                                            <img src="/img/university_img.jpg" alt="University" className="w-20 h-20 rounded-lg object-cover" />
+                                                                        </div>
+                                                                        <div className="self-center">
+                                                                            <h4 className="text-sm font-medium">{u.name}</h4>
+                                                                            <p className="mt-2 flex">
+                                                                                <div className="cursor-pointer mr-2 px-2 py-0.5 rounded-full bg-gray-100 hover:bg-gray-200 duration-500">
+                                                                                    <svg
+                                                                                        className="inline-block align-middle h-4"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path
+                                                                                            id="path"
+                                                                                            d="M 12.161 22.294 C 9.866 22.294 7.637 21.515 5.842 20.084 C 4.047 18.652 2.791 16.653 2.28 14.415 C 1.769 12.178 2.034 9.831 3.03 7.763 C 4.025 5.695 5.695 4.025 7.763 3.03 C 9.831 2.034 12.178 1.769 14.415 2.28 C 16.653 2.791 18.652 4.047 20.084 5.842 C 21.515 7.637 22.294 9.866 22.294 12.161 C 22.294 14.847 21.226 17.427 19.326 19.326 C 17.427 21.226 14.847 22.294 12.161 22.294 Z M 8.614 14.187 L 8.614 16.214 L 11.147 16.214 L 11.147 18.241 L 13.174 18.241 L 13.174 16.214 L 14.187 16.214 C 14.859 16.214 15.504 15.947 15.978 15.472 C 16.453 14.997 16.721 14.352 16.721 13.681 C 16.721 13.009 16.453 12.364 15.978 11.889 C 15.504 11.414 14.859 11.147 14.187 11.147 L 10.134 11.147 C 10.004 11.141 9.88 11.085 9.79 10.991 C 9.7 10.897 9.65 10.771 9.65 10.64 C 9.65 10.51 9.7 10.384 9.79 10.29 C 9.88 10.196 10.004 10.14 10.134 10.134 L 15.707 10.134 L 15.707 8.107 L 13.174 8.107 L 13.174 6.08 L 11.147 6.08 L 11.147 8.107 L 10.134 8.107 C 9.462 8.107 8.817 8.374 8.343 8.849 C 7.868 9.324 7.601 9.969 7.601 10.64 C 7.601 11.312 7.868 11.957 8.343 12.432 C 8.817 12.907 9.462 13.174 10.134 13.174 L 14.187 13.174 C 14.297 13.169 14.406 13.2 14.496 13.263 C 14.587 13.325 14.655 13.415 14.69 13.52 C 14.725 13.624 14.725 13.737 14.69 13.841 C 14.655 13.946 14.587 14.036 14.496 14.098 C 14.406 14.161 14.297 14.192 14.187 14.187 Z"
+                                                                                            fill="#30c702"
+                                                                                            strokeWidth="1" />
+                                                                                    </svg>
+                                                                                    <span className="inline-block text-xs align-middle ml-2" >${u.fee}</span>
+
+                                                                                </div>
+                                                                                <div className="cursor-pointer mr-2 px-2 py-0.5 rounded-full bg-gray-100 hover:bg-gray-200 duration-500">
+                                                                                    <svg
+                                                                                        className="inline-block align-middle h-4"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path
+                                                                                            id="path"
+                                                                                            d="M 12.161 22.294 C 9.866 22.294 7.637 21.515 5.842 20.084 C 4.047 18.652 2.791 16.653 2.28 14.415 C 1.769 12.178 2.034 9.831 3.03 7.763 C 4.025 5.695 5.695 4.025 7.763 3.03 C 9.831 2.034 12.178 1.769 14.415 2.28 C 16.653 2.791 18.652 4.047 20.084 5.842 C 21.515 7.637 22.294 9.866 22.294 12.161 C 22.294 14.847 21.226 17.427 19.326 19.326 C 17.427 21.226 14.847 22.294 12.161 22.294 Z M 13.174 12.16 L 13.174 7.094 L 11.147 7.094 L 11.147 14.187 L 17.227 14.187 L 17.227 12.161 Z"
+                                                                                            fill="#ffc400"
+                                                                                            strokeWidth="1" />
+                                                                                    </svg>
+                                                                                    <span className="inline-block align-middle ml-2 text-xs">{u.duration}</span>
+                                                                                </div>
+                                                                                <div className="cursor-pointer px-2 py-0.5 rounded-full bg-gray-100 hover:bg-gray-200 duration-500">
+                                                                                    <svg
+                                                                                        className="inline-block align-middle h-4"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path
+                                                                                            id="path"
+                                                                                            d="M 17.227 19.254 L 19.254 19.254 L 19.254 11.147 L 13.174 11.147 L 13.174 19.254 L 15.201 19.254 L 15.201 13.174 L 17.227 13.174 Z M 3.04 19.254 L 3.04 4.053 C 3.04 3.875 3.087 3.7 3.176 3.546 C 3.265 3.392 3.393 3.264 3.547 3.175 C 3.701 3.087 3.876 3.04 4.054 3.04 L 18.241 3.04 C 18.51 3.04 18.767 3.147 18.957 3.337 C 19.147 3.527 19.254 3.784 19.254 4.053 L 19.254 9.12 L 21.281 9.12 L 21.281 19.254 L 22.294 19.254 L 22.294 21.281 L 2.027 21.281 L 2.027 19.254 Z M 7.093 11.147 L 7.093 13.174 L 9.121 13.174 L 9.121 11.147 Z M 7.093 15.2 L 7.093 17.227 L 9.121 17.227 L 9.121 15.2 Z M 7.093 7.093 L 7.093 9.12 L 9.121 9.12 L 9.121 7.093 Z"
+                                                                                            fill="#000000"
+                                                                                            strokeWidth="1" />
+                                                                                    </svg>
+                                                                                    <span className="inline-block align-middle ml-2 text-xs">TOEFL: 100</span>
+                                                                                </div>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    {
+                                                                        (index + 1) != total ?
+                                                                            <div className="py-2">
+                                                                                <div className="w-full h-px bg-gray-200"></div>
+                                                                            </div>
+                                                                            : <></>
+                                                                    }
+                                                                </>
+                                                            )
+                                                        })
+                                                    }
+                                                    {/* {university.career_courses.length > 0 && university.career_courses.filter((u) => {
                                                         if (searchText.trim() === "") {
 
                                                             return u;
@@ -224,7 +336,7 @@ export default function University({ profile, university, token, careerPools, po
                                                                     <div className="flex">
                                                                         <div style={{ width: '75%' }}>
                                                                             <div className="ml-4">
-                                                                                <h4 className="p-0 text-base font-bold" >{u.name}</h4>
+                                                                                <h4 className="p-0 text-sm font-medium" >{u.name}</h4>
                                                                             </div>
                                                                         </div>
                                                                         <div style={{ width: '25%' }}>
@@ -280,7 +392,7 @@ export default function University({ profile, university, token, careerPools, po
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    ))}
+                                                    ))} */}
 
                                                 </div>
                                             </div>
@@ -313,7 +425,7 @@ export default function University({ profile, university, token, careerPools, po
                                                     </svg>
                                                     <div className="self-center ml-4">
                                                         <div className="text-xs " >Location</div>
-                                                        <div className="mt-1 text-sm font-bold " >{university.city}, {university.state}, {university.country}</div>
+                                                        <div className="mt-1 text-sm font-medium " >{university.city}, {university.state}, {university.country}</div>
                                                     </div>
                                                 </div>
                                                 <div className="flex mt-4">
@@ -334,7 +446,7 @@ export default function University({ profile, university, token, careerPools, po
                                                     </svg>
                                                     <div className="self-center ml-4">
                                                         <div className="text-xs " >Founded</div>
-                                                        <div className="mt-1 text-sm font-bold " >{university.established}</div>
+                                                        <div className="mt-1 text-sm font-medium " >{university.established}</div>
                                                     </div>
                                                 </div>
                                                 <div className="flex mt-4">
@@ -362,20 +474,20 @@ export default function University({ profile, university, token, careerPools, po
                                                     </svg>
                                                     <div className="self-center ml-4">
                                                         <div className="text-xs " >Type</div>
-                                                        <div className="mt-1 text-sm font-bold " >{university.type}</div>
+                                                        <div className="mt-1 text-sm font-medium " >{university.type}</div>
                                                     </div>
                                                 </div>
 
                                             </div>
                                             <div className="mt-4 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
-                                                <div className="text-lg font-medium text-gray-900 text-center">
+                                                <div className="text-base font-medium text-gray-900 text-center">
                                                     Get in Touch
                                                 </div>
-                                                <div className="mt-2 text-base font-medium text-gray-900 text-center">
+                                                <div className="mt-2 text-sm font-medium text-gray-900 text-center">
                                                     Book a Free Call with Advisor
                                                 </div>
                                                 <div
-                                                    className="w-max ml-auto mr-auto mt-4 py-2 px-4 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none duration-500">
+                                                    className="cursor-pointer w-max ml-auto mr-auto mt-2 py-2 px-4 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none duration-500">
                                                     Connect with an Agent
                                                 </div>
                                             </div>
@@ -589,6 +701,7 @@ export default function University({ profile, university, token, careerPools, po
                 </Dialog>
             </Transition.Root>
 
+            <ShareDialog showDialog={shareDialog} setShowDialog={setShareDialog} url={shareUrl} university={university} />
         </>
     )
     function updateCareerPools(careerPool) {
@@ -641,7 +754,7 @@ export async function getServerSideProps(context) {
 
     const university = await queryGraph(careerClient, params, SchemeGetUniversity)
         .then((res) => {
-            console.log('Hello' + res.universityDetails)
+            console.log('Hello ' + res.universityDetails)
             return res.universityDetails[0]
         }).catch((networkErr) => {
             console.log(networkErr)

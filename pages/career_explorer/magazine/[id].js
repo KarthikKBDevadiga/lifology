@@ -23,6 +23,9 @@ import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
 import { SchemeAddMagazineComment, SchemeBookmarkMagazine, SchemeMagazineLikeDislike } from '../../../helpers/GraphQLSchemes';
 import Help_and_Support from '../../../components/Help_and_Support';
+import classNames from '/helpers/classNames'
+import createDynamicLink from '../../../helpers/DynamicLinkUtil';
+import ShareDialog from '../../../components/dialog/ShareDialog';
 
 function getVideoId(url) {
   var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
@@ -40,6 +43,8 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
   const [videoStatus, setVideoStatus] = useState([]);
   const [comment, setComment] = useState('');
   const [showHelp, setShowHelp] = useState(false);
+  const [shareDialog, setShareDialog] = useState(false)
+  const [shareUrl, setShareUrl] = useState('')
   const Bookmark_Icon = !!magazine?.bookmark_status ? SolidBookmarkIcon : BookmarkIcon;
   const pages = [
     {
@@ -164,35 +169,40 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
       </div>
     </section>
   );
-
+  const shareVideo = () => {
+    setShareDialog(true)
+    createDynamicLink('/career_explorer/magazine/' + magazine.id)
+      .then((res) => {
+        setShareUrl(res)
+        console.log(res)
+      })
+  }
   const getDetailsView = () => (
     <div className="space-y-6 lg:col-start-1 lg:col-span-2">
       <section aria-labelledby="applicant-information-title" >
         <div className="bg-white shadow sm:rounded-lg p-4">
-          <div className="sm:flex sm:py-4">
-            <div className={'sm:w-1/2 w-full'}>
-              <img className={'rounded-md'} src={magazine?.thumbnail} />
+          <div className="sm:flex">
+            <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
+              <img className={'rounded-md w-48'} src={magazine?.thumbnail} />
             </div>
-            <div className={'sm:px-6 sm:mt-0 mt-4'}>
-              <div className={'font-bold text-lg flex'}>
-                <span>{magazine?.title}</span>
-                <span
-                  onClick={() => setShowHelp(!showHelp)}
-                  className='text-gray-700 hover:bg-gray-700 hover:text-white duration-100 border-2 border-gray-700 min-h-full px-3 py-0 max-h-8 rounded-full cursor-pointer'
-                >
-                  ?
-                </span>
-              </div>
-              <div className={'text-sm text-gray-400 pt-3'}>
-                {!!magazine?.created_at && formatDate(new Date(magazine.created_at))}
+            <div>
+              <div className="flex">
+                <div>
+                  <h4 className="text-base font-bold">{magazine?.title}</h4>
+                </div>
+                <div className="ml-4 flex-shrink-0 cursor-pointer hover:text-lblue duration-500" onClick={() => setShowHelp(!showHelp)}>
+                  <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92c-.5.51-.86.97-1.04 1.69-.08.32-.13.68-.13 1.14h-2v-.5c0-.46.08-.9.22-1.31.2-.58.53-1.1.95-1.52l1.24-1.26c.46-.44.68-1.1.55-1.8-.13-.72-.69-1.33-1.39-1.53-1.11-.31-2.14.32-2.47 1.27-.12.37-.43.65-.82.65h-.3C8.4 9 8 8.44 8.16 7.88c.43-1.47 1.68-2.59 3.23-2.83 1.52-.24 2.97.55 3.87 1.8 1.18 1.63.83 3.38-.19 4.4z" />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
-
           <div className="w-full h-px bg-gray-200 my-4" />
 
           <div>
-            <div className="mt-2 mb-4 text-sm text-justify flex-shrink-0 sm:mb-0 sm:mr-4">
+            <div className="mb-4 text-sm text-justify flex-shrink-0 sm:mb-0">
               {magazine?.description}
             </div>
             <div className={'mt-4'}>
@@ -206,27 +216,48 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
           <div className="w-full h-px bg-gray-200 mt-2 mb-2" />
           <div className={'flex flex-wrap max-w-full'}>
             <div className="self-center w-full flex flex-wrap text-xs">
-              <div className="flex py-2">
-                <svg onClick={handleLike} className="h-4 w-4 mr-2 cursor-pointer" fill={magazine?.like_status == 1 ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor" >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+              <div className={
+                classNames(
+                  "mr-2 flex py-2 cursor-pointer p-2 self-center rounded-full hover:bg-gray-100 duration-500",
+                  magazine?.like_status == 1 ? "text-lblue bg-gray-100  " : "text-gray-400 hover:text-lblue"
+                )
+              }
+                onClick={handleLike}>
+                <svg className="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                  <path d="M0 0h24v24H0V0z" fill="none" /><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" />
                 </svg>
                 <span>Like</span>
               </div>
-              <div className="flex py-2">
-                <svg onClick={handleDislike} className="h-4 w-4 mr-2 ml-4 cursor-pointer" fill={magazine?.like_status == 0 ? "#1171ba" : "none"} viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
+              <div className={
+                classNames(
+                  "mr-2 flex cursor-pointer p-2 self-center rounded-full hover:bg-gray-100 duration-500",
+                  magazine?.like_status == 0 ? "text-lblue bg-gray-100" : "text-gray-400 hover:text-lblue"
+                )
+              }
+                onClick={handleDislike}>
+                <svg className="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" fill="currentColor"><path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z" />
                 </svg>
                 <span>Dislike</span>
               </div>
-              <div className="flex py-2 ml-4 mr-auto">
-                <ShareIcon className={'h-4 mr-2'} />
+              <div className="flex cursor-pointer p-2 mr-auto self-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-lblue duration-500" onClick={shareVideo}>
+                {/* <ShareIcon className={'h-4 mr-2'} /> */}
+                <svg className="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                  <path d="M0 0h24v24H0z" fill="none" /><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" />
+                </svg>
                 Share
               </div>
-              <div className={'flex py-2 items-center'}>
-                <Bookmark_Icon
-                  className={'h-5 mr-2 cursor-pointer'}
-                  onClick={bookmarkMagazine}
-                />
+              <div className={
+                classNames(
+                  "mr-2 flex cursor-pointer p-2 self-center rounded-full hover:bg-gray-100 duration-500",
+                  !!magazine?.bookmark_status ? "text-lblue bg-gray-100" : "text-gray-400 hover:text-lblue"
+                )
+              }
+                onClick={bookmarkMagazine}>
+                <svg className="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                </svg>
                 <span>{!!magazine?.bookmark_status ? 'Bookmark Added' : 'Add to bookmark'}</span>
               </div>
             </div>
@@ -281,6 +312,7 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
           </main>
         </div>
       </div>
+      <ShareDialog showDialog={shareDialog} setShowDialog={setShareDialog} url={shareUrl} magazine={magazine} />
     </>
   )
 }
@@ -325,7 +357,7 @@ export async function getServerSideProps(context) {
     .then(res => res.json())
     .catch(err => console.log(err))
 
-    console.log(helpAndSupport);
+  console.log(helpAndSupport);
 
   return {
     props: {
