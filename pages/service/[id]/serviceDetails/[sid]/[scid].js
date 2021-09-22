@@ -23,7 +23,7 @@ import VideoItem from '/components/item/VideoItem'
 import ShareDialog from '/components/dialog/ShareDialog'
 import createDynamicLink from '/helpers/DynamicLinkUtil'
 
-export default function Profile({ profile, serviceDetails }) {
+export default function Profile({ profile, serviceDetails, q }) {
 
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
@@ -64,7 +64,7 @@ export default function Profile({ profile, serviceDetails }) {
 
     const shareVideo = () => {
         setShareDialog(true)
-        createDynamicLink('/career_explorer/career_video/' + video.id)
+        createDynamicLink('/service/' + q.id + '/serviceDetails/' + q.sid + '/' + q.scid)
             .then((res) => {
                 setShareUrl(res)
                 console.log(res)
@@ -269,6 +269,6 @@ export async function getServerSideProps(context) {
             return {};
         })
     return {
-        props: { profile, token, serviceDetails }
+        props: { profile, token, serviceDetails, q: context.params }
     }
 }
