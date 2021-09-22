@@ -192,7 +192,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             Total Videos Watched
                           </div>
                           <div className='mt-3'>
-                            <span className='font-bold text-3xl mr-2'>{home.dashboardCounts.total_watched_videos}</span>
+                            <span className='font-bold text-3xl mr-2'>{home.dashboardCounts?.total_watched_videos}</span>
                             <span>Videos</span>
                           </div>
                         </div>
@@ -216,7 +216,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             Total Articles Read
                           </div>
                           <div className='mt-3'>
-                            <span className='font-bold text-3xl mr-2'>{home.dashboardCounts.total_read_articles}</span>
+                            <span className='font-bold text-3xl mr-2'>{home.dashboardCounts?.total_read_articles}</span>
                             <span>Articles</span>
                           </div>
                         </div>
