@@ -15,6 +15,15 @@ query otpVerification($country_code: String!, $mobile_number: String!, $otp: Str
 }
 `;
 
+export const SchemeCheckSocial = gql`
+query checkSocial($social_id:String!, $email:String!){
+  checkSocial(social_id:$social_id,email:$email){
+   is_user_exist
+    auth_token
+  }
+}
+`;
+
 export const SchemeGetGrades = gql`
 query{
   grades{

@@ -26,6 +26,7 @@ import Help_and_Support from '../../../components/Help_and_Support';
 import classNames from '/helpers/classNames'
 import createDynamicLink from '../../../helpers/DynamicLinkUtil';
 import ShareDialog from '../../../components/dialog/ShareDialog';
+import HelpAndSupport from '../../../components/dialog/HelpAndSupport';
 
 function getVideoId(url) {
   var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
@@ -290,7 +291,8 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
 
   return (
     <>
-      {showHelp && <Help_and_Support details={helpAndSupport || {}} closeModal={() => setShowHelp(!showHelp)} />}
+      <HelpAndSupport showDialog={showHelp} setShowDialog={setShowHelp} title={helpAndSupport.msg} body={helpAndSupport.html} />
+      {/* {showHelp && <Help_and_Support details={helpAndSupport || {}} closeModal={() => setShowHelp(!showHelp)} />} */}
       <MetaLayout title={magazine?.title} description={magazine?.description} />
       <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
         <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
@@ -312,7 +314,7 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
           </main>
         </div>
       </div>
-      <ShareDialog showDialog={shareDialog} setShowDialog={setShareDialog} url={shareUrl} magazine={magazine} />
+      <ShareDialog showDialog={shareDialog} setShowDialog={setShareDialog} url={shareUrl} title={magazine.title} />
     </>
   )
 }

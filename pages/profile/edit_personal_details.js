@@ -17,6 +17,7 @@ export default function EditPersonalDetails({ profile, token }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [selectedProfile, setSelectedProfile] = useState()
 
     const submit = async (event) => {
         event.preventDefault()
@@ -85,6 +86,13 @@ export default function EditPersonalDetails({ profile, token }) {
             });
         setLoadingDialog(false)
     }
+    const selectProfilePic = (event) => {
+        if (event.target.files[0])
+            setSelectedProfile(event.target.files[0])
+
+        console.log(event.target.files[0])
+        // const file = event.target.files[0]
+    }
     return (
         <>
             <MetaLayout title="Profile" description="Profile" />
@@ -109,9 +117,10 @@ export default function EditPersonalDetails({ profile, token }) {
                                                     <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-8  " >
                                                         <div className="group relative" style={{ width: '140px', height: '140px' }}>
                                                             <div className="absolute top-2/4 left-2/4 w-full h-full" style={{ transform: 'translate(-50%,-50%)' }}>
-                                                                <img className="w-full h-full rounded-full" src={
-                                                                    (profile.profile_image == null || profile.profile_image == "") ?
-                                                                        "../img/upload.svg" : profile.profile_image
+                                                                <img className="w-full h-full rounded-full object-cover" src={
+                                                                    selectedProfile ? URL.createObjectURL(selectedProfile) :
+                                                                        (profile.profile_image == null || profile.profile_image == "") ?
+                                                                            "../img/upload.svg" : profile.profile_image
                                                                 } alt="" />
                                                             </div>
                                                             <div style={{ transform: 'translate(-50%,-50%)', }} className="absolute rounded-full top-2/4 left-2/4 w-full h-full bg-black bg-opacity-20 group-hover:bg-opacity-70 duration-500 text-black group-hover:text-white">
@@ -126,7 +135,7 @@ export default function EditPersonalDetails({ profile, token }) {
                                                                         strokeWidth="1" />
                                                                 </svg>
                                                             </div>
-                                                            <input className="absolute left-0 top-0 w-full h-full opacity-0" id="file" name="file" type="file" />
+                                                            <input className="absolute left-0 top-0 w-full h-full opacity-0" id="file" name="file" type="file" onChange={selectProfilePic} accept="image/x-png,image/jpeg" />
                                                         </div>
                                                         <div className="pt-4 text-base text-center">Upload New Photo</div>
                                                     </div>

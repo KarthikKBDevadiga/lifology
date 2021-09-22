@@ -100,32 +100,35 @@ export default function JobFamily({ profile, jobFamily, careerFields }) {
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-
-                                            <div className=" bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
-                                                <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
-                                                    Career Video
-                                                </h2>
-                                                <a href="#" onClick={(event) => { setOpenVideo(true) }}>
-                                                    <div className="group relative shadow hover:shadow-xl hover:scale-105 active:scale-100 duration-500">
-                                                        <img className="rounded mt-2 duration-500" src={jobFamily.thumbnail} />
-                                                        <svg
-                                                            className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 duration-500"
-                                                            viewBox="0 0 24 24"
-                                                            id="vector">
-                                                            <path
-                                                                id="path"
-                                                                d="M 12 2 C 6.48 2 2 6.48 2 12 C 2 17.52 6.48 22 12 22 C 17.52 22 22 17.52 22 12 C 22 6.48 17.52 2 12 2 Z"
-                                                                fill="#ffc107"
-                                                                strokeWidth="1" />
-                                                            <path
-                                                                id="path_1"
-                                                                d="M 9.5 14.67 L 9.5 9.33 C 9.5 8.54 10.38 8.06 11.04 8.49 L 15.19 11.16 C 15.8 11.55 15.8 12.45 15.19 12.84 L 11.04 15.51 C 10.38 15.94 9.5 15.46 9.5 14.67 Z"
-                                                                fill="#ffffff" />
-                                                        </svg>
+                                            {
+                                                jobFamily.thumbnail ?
+                                                    <div className="mb-4 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                                        <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
+                                                            Career Video
+                                                        </h2>
+                                                        <a href="#" onClick={(event) => { setOpenVideo(true) }}>
+                                                            <div className="group relative shadow hover:shadow-xl hover:scale-105 active:scale-100 duration-500">
+                                                                <img className="rounded mt-2 duration-500" src={jobFamily.thumbnail} />
+                                                                <svg
+                                                                    className="absolute h-12 w-12 top-1/2 left-1/2 transform -translate-x-2/4 -translate-y-2/4 duration-500"
+                                                                    viewBox="0 0 24 24"
+                                                                    id="vector">
+                                                                    <path
+                                                                        id="path"
+                                                                        d="M 12 2 C 6.48 2 2 6.48 2 12 C 2 17.52 6.48 22 12 22 C 17.52 22 22 17.52 22 12 C 22 6.48 17.52 2 12 2 Z"
+                                                                        fill="#ffc107"
+                                                                        strokeWidth="1" />
+                                                                    <path
+                                                                        id="path_1"
+                                                                        d="M 9.5 14.67 L 9.5 9.33 C 9.5 8.54 10.38 8.06 11.04 8.49 L 15.19 11.16 C 15.8 11.55 15.8 12.45 15.19 12.84 L 11.04 15.51 C 10.38 15.94 9.5 15.46 9.5 14.67 Z"
+                                                                        fill="#ffffff" />
+                                                                </svg>
+                                                            </div>
+                                                        </a>
                                                     </div>
-                                                </a>
-                                            </div>
-                                            <div className="mt-4 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                                    : <></>
+                                            }
+                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     Your Fitment
                                                 </h2>
@@ -203,6 +206,7 @@ export async function getServerSideProps(context) {
             return {}
         });
     const jobFamily = datas.filter(x => x.id == context.params.id)[0];
+    console.log(jobFamily)
     const careerFields = await queryGraph(careerClient, { pool_id: parseInt(context.params.id) }, SchemeCareerFields)
         .then((res) => {
             return res.careerFields

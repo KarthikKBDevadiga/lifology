@@ -95,23 +95,22 @@ export default function CareerVideo({ token, profile, videos }) {
                     <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer / Career Videos / Watch Later" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
-                        <div className="grid grid-cols-1 m-5 p-5 rounded shadow gap-4 bg-white">
-                            <p className="text-xl font-medium">Watch Later Videos</p>
-
+                        <div className="grid grid-cols-1 m-4 rounded shadow bg-white">
+                            <p className="text-xl font-medium m-4">Watch Later Videos</p>
                             {
                                 watchLater.length > 0 ?
                                     watchLater.map((video, index) => (
 
                                         <div
-                                            className=" relative w-full rounded  text-left sm:text-sm "
+                                            className=" relative w-full px-4 pt-4 text-left sm:text-sm hover:bg-gray-100 duration-500"
                                         >
                                             <Link href={{
                                                 pathname: '/career_explorer/career_video/' + video.id
                                             }}>
                                                 <a>
-                                                    <div className="flex">
+                                                    <div className="flex mr-8">
                                                         <img className="rounded group-hover:filter-none duration-500 w-56 h-32 object-cover" src={video.thumbnail} />
-                                                        <div className="flex-1 flex mr-4 justify-between ">
+                                                        <div className="flex-1 flex justify-between ">
                                                             <div className="flex-1 px-4 py-2 text-sm ">
                                                                 <div className={styles.heading}>
                                                                     {video.title}
@@ -123,7 +122,7 @@ export default function CareerVideo({ token, profile, videos }) {
                                                 </a>
                                             </Link>
 
-                                            <span className="absolute inset-y-0 right-0 flex items-center pl-2 pr-2 ">
+                                            <span className="absolute inset-y-0 right-0 flex items-center pl-1 pr-1 bg-red-700 h-6 w-6 rounded-full text-white top-2/4 -translate-y-1/2 right-4">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                                     onClick={() => removeVideo(video)}>
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -131,7 +130,7 @@ export default function CareerVideo({ token, profile, videos }) {
                                             </span>
                                             {
                                                 index + 1 != watchLater.length ?
-                                                    <div className="w-full h-px bg-gray-200 mt-4"></div> : <></>
+                                                    <div className="w-full mt-4 h-px bg-gray-200" /> : <div className="mt-4" />
                                             }
 
                                         </div>
@@ -140,13 +139,10 @@ export default function CareerVideo({ token, profile, videos }) {
                                         No Data Found
                                     </div>
                             }
-
                         </div>
-
                     </main>
                 </div>
             </div>
-
         </>
     )
 }

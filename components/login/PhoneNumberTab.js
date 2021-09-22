@@ -4,14 +4,16 @@ import { XCircleIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/so
 
 import classNames from '/helpers/classNames'
 
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signIn, useSession } from "next-auth/client";
 
-const PhoneNumberTab = ({ submit, error, setError, countries, selectedCountry, setSelectedCountry }) => {
+const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selectedCountry, setSelectedCountry }) => {
     const [openFilter, setOpenFilter] = useState(false)
     const [session, loading] = useSession();
+
     if (session) {
         console.log('Logged In')
         console.log(session)
+        socialLogin(session.id, session.user.email, session.user.name)
     }
 
     return (
@@ -279,25 +281,25 @@ const PhoneNumberTab = ({ submit, error, setError, countries, selectedCountry, s
                                                     static
                                                     className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                                                 >
-                                                    {countries.map((person) => (
+                                                    {countries.map((country) => (
                                                         <Listbox.Option
-                                                            key={person.id}
+                                                            key={country.callingCodes}
                                                             className={({ active }) =>
                                                                 classNames(
                                                                     active ? 'text-white bg-indigo-600' : 'text-gray-900',
                                                                     'cursor-default select-none relative py-2 pl-3 pr-9'
                                                                 )
                                                             }
-                                                            value={person}
+                                                            value={country}
                                                         >
                                                             {({ selected, active }) => (
                                                                 <>
                                                                     <div className="flex items-center">
-                                                                        <img src={person.flag} alt="" className="flex-shrink-0 h-6 w-6 rounded-full object-cover" />
+                                                                        <img src={country.flag} alt="" className="flex-shrink-0 h-6 w-6 rounded-full object-cover" />
                                                                         <span
                                                                             className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                                                                         >
-                                                                            {person.alpha2Code}
+                                                                            {country.code}
                                                                         </span>
                                                                     </div>
 

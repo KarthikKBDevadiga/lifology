@@ -1,9 +1,4 @@
-const BASE_URL = 'https://lifology.page.link/'
-const ANDROID_APPLICATION_PACKAGE = 'com.app.lifology'
-const IOS_BUNDLE_ID = 'com.septa.app.lifology'
-const ACCESS_TOKEN = 'AIzaSyBW_VPuXSDsjSjmOr2XPWbsBF_AqoDdgoI'
-// const BASE_WEB_URL = 'http://localhost:3000'
-const BASE_WEB_URL = 'https://demo.lifology.com'
+import Constants from "./Constants"
 
 function encodeQueryData(data) {
     const ret = [];
@@ -14,20 +9,20 @@ function encodeQueryData(data) {
 
 async function createDynamicLink(url) {
     const params = {
-        'link': BASE_WEB_URL + url,
-        'apn': ANDROID_APPLICATION_PACKAGE,
-        'afl': BASE_WEB_URL + url,
-        'ibi': IOS_BUNDLE_ID,
-        'ifl': BASE_WEB_URL + url,
+        'link': Constants.WEB_URL + url,
+        'apn': Constants.ANDROID_APPLICATION_PACKAGE,
+        'afl': Constants.WEB_URL + url,
+        'ibi': Constants.IOS_BUNDLE_ID,
+        'ifl': Constants.WEB_URL + url,
     }
-    const dynanicLink = BASE_URL + '?' + encodeQueryData(params)
+    const dynanicLink = Constants.FIREBASE_DYNAMIC_LINK_PREFIX + '?' + encodeQueryData(params)
     const data = {
         "longDynamicLink": dynanicLink,
         "suffix": {
             "option": "SHORT"
         }
     }
-    const shortLink = await fetch('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + ACCESS_TOKEN, {
+    const shortLink = await fetch('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + Constants.FIREBASE_ACCESS_TOKEN, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

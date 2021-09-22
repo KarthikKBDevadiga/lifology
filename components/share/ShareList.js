@@ -1,10 +1,10 @@
 import ShareButton from "./ShareButton"
 
-const ShareList = ({ url, video, university, magazine }) => {
-    const title = video ? video.title : university ? university.name : magazine ? magazine.title : ''
+const ShareList = ({ url, title }) => {
     return (
         <div className="flex">
             <ShareButton
+                loading={url === ""}
                 href={{
                     pathname: 'mailto:',
                     query: {
@@ -15,6 +15,7 @@ const ShareList = ({ url, video, university, magazine }) => {
                 logo='/img/social/email.svg'
             />
             <ShareButton
+                loading={url === ""}
                 href={{
                     pathname: 'https://api.whatsapp.com/send',
                     query: { text: url },
@@ -22,6 +23,7 @@ const ShareList = ({ url, video, university, magazine }) => {
                 logo='/img/social/whatsapp.svg'
             />
             <ShareButton
+                loading={url === ""}
                 href={{
                     pathname: 'https://www.facebook.com/sharer/sharer.php',
                     query: {
@@ -33,17 +35,19 @@ const ShareList = ({ url, video, university, magazine }) => {
                 logo='/img/social/facebook.svg'
             />
             <ShareButton
+                loading={url === ""}
                 href={{
                     pathname: 'https://twitter.com/share',
                     query: {
                         url: url,
                         text: title,
-                        hashtags: 'lifology,karthik'
+                        hashtags: 'lifology'
                     },
                 }}
                 logo='/img/social/twitter.svg'
             />
             <ShareButton
+                loading={url === ""}
                 href={{
                     pathname: 'https://linkedin.com/shareArticle',
                     query: {

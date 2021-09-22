@@ -1,22 +1,22 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
+import Constants from "../../../helpers/Constants";
 
 export default NextAuth({
     // Configure one or more authentication providers
     providers: [
         Providers.Google({
-            clientId: '237059092365-gmtelru636a7o2ksuaadmrqi0n7k76um.apps.googleusercontent.com',
-            clientSecret: 'E50tMAbck-SrbHCJEwKkjvLc',
+            clientId: Constants.GOOGLE_CLIENT_ID,
+            clientSecret: Constants.GOOGLE_CLIENT_SECRETE,
         }), Providers.Facebook({
-            clientId: '400637383938316',
-            clientSecret: 'de4631f8045588b17cbc9fa993503d71',
+            clientId: Constants.FACEBOOK_CLIENT_ID,
+            clientSecret: Constants.FACEBOOK_CLIENT_SECRET,
         }),
     ],
 
     callbacks: {
         session: async (session, user) => {
-            console.log('nextauth ' + user.id)
-            session.id = user.id
+            session.id = user.sub
             return Promise.resolve(session);
         },
     },

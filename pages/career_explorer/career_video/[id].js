@@ -195,7 +195,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                         </div>
                                                         <div className="sm:flex-shrink-0 sm:flex sm:items-center self-center">
                                                             <div className="self-center flex ml-auto text-xs">
-                                                                <div href="#" onClick={() => addToLike(video.id)}>
+                                                                <div onClick={() => addToLike(video.id)}>
                                                                     <div className={
                                                                         classNames(
                                                                             "cursor-pointer flex hover:bg-gray-100 p-2 rounded-full duration-500 mr-2 active:scale-95",
@@ -207,7 +207,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                                         </svg>
                                                                     </div>
                                                                 </div>
-                                                                <div href="#" onClick={() => addToDislike(video.id)}>
+                                                                <div onClick={() => addToDislike(video.id)}>
                                                                     <div className={
                                                                         classNames(
                                                                             "cursor-pointer flex hover:bg-gray-100 p-2 rounded-full duration-500 mr-2 active:scale-95",
@@ -220,7 +220,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                                     </div>
                                                                 </div>
 
-                                                                <div href="#" onClick={() => addToWatchLater(video.id)}>
+                                                                <div onClick={() => addToWatchLater(video.id)}>
                                                                     <div className={
                                                                         classNames(
                                                                             "cursor-pointer flex hover:bg-gray-100 p-2 rounded-full duration-500 mr-2 active:scale-95",
@@ -237,7 +237,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                                     </div>
                                                                 </div>
 
-                                                                <div href="#">
+                                                                <div>
                                                                     <div className="cursor-pointer flex hover:bg-gray-100 p-2 rounded-full duration-500 mr-2 active:scale-95 text-gray-400 hover:text-lblue duration-500"
                                                                         onClick={shareVideo}>
                                                                         <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
@@ -303,7 +303,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
 
 
             </div>
-            <ShareDialog showDialog={shareDialog} setShowDialog={setShareDialog} url={shareUrl} video={video} />
+            <ShareDialog showDialog={shareDialog} setShowDialog={setShareDialog} url={shareUrl} title={video.title} />
         </>
     )
 }

@@ -12,8 +12,8 @@ function classNames(...classes) {
 }
 
 export default function SignUpStep1() {
-    const [parentName, setParentName] = useLocalStorage("parentName", "");
-    const [parentEmail, setParentEmail] = useLocalStorage("parentEmail", "");
+    const [parentName, setParentName] = useLocalStorage("parentName", "")
+    const [parentEmail, setParentEmail] = useLocalStorage("parentEmail", "")
     const [parentNameError, setParentNameError] = useState("")
     const [parentEmailError, setParentEmailError] = useState("")
     const router = useRouter()
@@ -39,7 +39,7 @@ export default function SignUpStep1() {
             setParentEmail(event.target.email.value);
             router.push({
                 pathname: 'sign_up_step_2',
-            });
+            })
         }
 
 

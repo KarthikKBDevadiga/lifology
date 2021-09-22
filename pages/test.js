@@ -33,7 +33,7 @@ import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, 
 import TestNa from '../components/TestNa'
 
 
-export default function MIOReport({ profile }) {
+export default function MIOReport({ example }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -42,24 +42,7 @@ export default function MIOReport({ profile }) {
 
     return (
         <>
-            <MetaLayout title="MIO Assement Reports" description="MIO Assement Reports" />
-            <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
-
-                <TestNa index="0" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
-
-                <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="MIO Report" />
-
-                    <main className="flex-1 relative z-0 overflow-y-auto">
-                        <div className="m-4 ">
-                            <img src="/img/error.svg" className="text-lgrey ml-auto mr-auto" />
-
-                        </div>
-                    </main>
-                </div>
-
-
-            </div >
+            {example}
 
 
         </>
@@ -67,31 +50,11 @@ export default function MIOReport({ profile }) {
 }
 
 export async function getServerSideProps(context) {
-    const { token } = cookies(context)
-    if (token == null || token == '') {
-        return {
-            redirect: {
-                permanent: false,
-                destination: "/login"
-            }
-        }
-    }
-
-    const profileClient = new ApolloClient({
-        uri: Constants.baseUrl + "/api/user",
-        cache: new InMemoryCache(),
-        headers: {
-            Authorization: "Bearer " + token,
-        },
-    })
-    const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
-        .then((res) => {
-            return res.profile
-        }).catch((networkErr) => {
-            return {}
-        })
+    const example = await fetch(Constants.WEB_URL + '/api/countries')
+        .then(response => response.json())
+        .then(data => (data))
     return {
-        props: { profile, token }
+        props: { example }
     }
 }
 

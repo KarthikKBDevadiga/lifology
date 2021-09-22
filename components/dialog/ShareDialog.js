@@ -5,7 +5,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import ProgressBar from '../ProgressBar'
 import ShareList from '../share/ShareList'
 
-const ShareDialog = ({ url, showDialog, setShowDialog, video, university, magazine }) => {
+const ShareDialog = ({ url, title, showDialog, setShowDialog }) => {
     const textAreaRef = useRef(null)
 
     return (
@@ -49,7 +49,7 @@ const ShareDialog = ({ url, showDialog, setShowDialog, video, university, magazi
                                             <ProgressBar />
                                         </div>
                                 }
-                                <ShareList url={url} video={video} university={university} magazine={magazine} />
+                                <ShareList url={url} title={title} video={video} university={university} magazine={magazine} serviceDetails={serviceDetails} />
                                 <div className="mt-1 px-4 py-2 relative rounded-full shadow-sm bg-gray-100 border border-gray-200">
                                     <input
                                         ref={textAreaRef}

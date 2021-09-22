@@ -217,7 +217,7 @@ export default function University({ profile, university, token, careerPools, po
                                                                 id="search_field"
                                                                 name="search_field"
                                                                 className="block w-full h-full p-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm bg-transparent "
-                                                                placeholder="Search University"
+                                                                placeholder="Search Course"
                                                                 type="search"
                                                                 value={searchText}
                                                                 onChange={(e) => setSearchText(e.target.value)}
@@ -701,7 +701,7 @@ export default function University({ profile, university, token, careerPools, po
                 </Dialog>
             </Transition.Root>
 
-            <ShareDialog showDialog={shareDialog} setShowDialog={setShareDialog} url={shareUrl} university={university} />
+            <ShareDialog showDialog={shareDialog} setShowDialog={setShareDialog} url={shareUrl} title={university.name} />
         </>
     )
     function updateCareerPools(careerPool) {

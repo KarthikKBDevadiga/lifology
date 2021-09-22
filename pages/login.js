@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client"
 import Constants from '../helpers/Constants'
-import { SchemeSendOTP, SchemeVerifyOTP } from '../helpers/GraphQLSchemes'
+import { SchemeCheckSocial, SchemeSendOTP, SchemeVerifyOTP } from '../helpers/GraphQLSchemes'
 import { queryGraph, mutateGraph } from '../helpers/GraphQLCaller'
 import { useRouter } from 'next/router'
 
@@ -16,6 +16,7 @@ import LoadingDialog from '../components/dialog/LoadingDialog'
 import NextNprogress from 'nextjs-progressbar';
 import localforage from "localforage"
 import { signIn, signOut, useSession } from "next-auth/client";
+import ErrorDialog from "../components/dialog/ErrorDialog"
 
 const client = new ApolloClient({
     uri: Constants.baseUrl + "/api/auth",
@@ -23,12 +24,15 @@ const client = new ApolloClient({
 });
 
 export default function Login({ cs }) {
-    console.log(process.env.BASE_URL)
-    const [session, loading] = useSession();
+    const [session, loading] = useSession()
+
+    const [parentName, setParentName] = useLocalStorage("parentName", "")
+    const [parentEmail, setParentEmail] = useLocalStorage("parentEmail", "")
+
     const router = useRouter()
-    console.log(router.query)
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [successDialog, setSuccessDialog] = useState(false)
+    // const [exampleDialog, setExampleDialog] = useState(true)
     const [successDialogString, setSuccessDialogString] = useState('Login Successful')
     const [errorDialog, setErrorDialog] = useState(false)
     const [errorDialogString, setErrorDialogString] = useState('Login Failed')
@@ -50,7 +54,7 @@ export default function Login({ cs }) {
     useEffect(() => {
         setTimeout(() => {
             if (tab == 1) {
-                setTimeLeft(0);
+                // setTimeLeft(0);
             } else
                 if (timeLeft > 0)
                     setTimeLeft(timeLeft - 1);
@@ -64,7 +68,7 @@ export default function Login({ cs }) {
             setError('Invalid Phone Number')
             return false
         }
-        setTimeLeft(0)
+        // setTimeLeft(0)
         setPhoneNumber(event.target.phone.value)
         setLoadingDialog(true)
         mutateGraph(client, { country_code: ('91'), mobile_number: event.target.phone.value }, SchemeSendOTP)
@@ -132,9 +136,37 @@ export default function Login({ cs }) {
             });
     }
 
+    const socialLogin = (social_id, email, name) => {
+        queryGraph(client, { social_id: social_id, email: email, }, SchemeCheckSocial)
+            .then((res) => {
+                console.log(res.checkSocial)
+                if (res.checkSocial.is_user_exist) {
+                    setSuccessDialogString('Login Successful')
+                    setSuccessDialog(true)
+                    setTimeout(() => {
+                        setSuccessDialog(false)
+                        localforage.setItem('token', res.checkSocial.auth_token)
+                        document.cookie = 'token=' + res.checkSocial.auth_token + ';expires=3600;'
+                        router.push({
+                            pathname: router?.query?.redirect ? router?.query?.redirect : '/',
+                        })
+                    }, 1000)
+                    setAuthToken(res.checkSocial.auth_token)
+                } else {
+                    setParentName(name);
+                    setParentEmail(email);
+                    router.push({
+                        pathname: 'sign_up_step_2',
+                    })
+                    // signOut()
+                }
+            }).catch((networkErr) => {
+                console.log(networkErr)
+            })
+    }
+
     return (
         <>
-
             <MetaLayout title="Login" description="Login" />
             <div className="min-h-screen bg-white flex font-roboto" >
                 <div className="hidden lg:block relative w-0 flex-1 leftloginbg overflow-hidden" style={{ background: '#21AAED' }}>
@@ -147,18 +179,14 @@ export default function Login({ cs }) {
                         <p className="text-center text-white text-xl mt-8" >Building the world's best Super Parent Community</p>
                     </div>
                     <div className="text-center flex-1 flex flex-col mt-auto ml-auto mr-auto h-3/4 items-center" >
-
                         {
                             tab === 1 ?
                                 <img className="absolute glsignimg h-3/4" src="img/login-left-view.png" alt="" /> :
                                 <img className="absolute glsignimg h-3/4" src="img/otp-left-view.png" alt="" />
                         }
                     </div>
-
                 </div>
-
                 <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 h-screen">
-
                     <div className="mx-auto w-full max-w-sm lg:w-96">
                         <div>
                             <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center text-center">{tab === 1 ? 'Let’s get started' : 'Verify Your Mobile Number'}</h2>
@@ -166,22 +194,18 @@ export default function Login({ cs }) {
                                 {tab === 1 ? <span>The World's leading career guidance platform</span> : timeLeft == 0 ? <span></span> : <span>We have sent a 6-digit OTP to +91 {phoneNumber}. Enter it below.</span>}
                             </p>
                         </div>
-
                         <div className="mt-8">
                             {
                                 tab === 1 ?
                                     <PhoneNumberTab submit={sendOTP} error={error} setError={(error) => {
                                         setError(error)
-                                    }} selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} countries={cs} /> :
+                                    }} selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} countries={cs} socialLogin={socialLogin} /> :
                                     <OTPVerifyTab verifyOTP={verifyOTP} resendOTP={resendOTP} timeLeft={timeLeft} selectTab={
                                         () => {
                                             setTimeLeft(0)
                                             setTab(1)
                                         }} />
-
                             }
-
-
                         </div>
                     </div>
 
@@ -283,6 +307,7 @@ export default function Login({ cs }) {
                                         className="rounded-full inline-flex justify-center w-full border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
                                         onClick={() => {
                                             setErrorDialog(false)
+                                            setTimeLeft(0)
                                             setTab(1)
                                         }}
                                     >
@@ -377,11 +402,12 @@ export default function Login({ cs }) {
                 </Dialog>
             </Transition.Root>
 
+            <ErrorDialog showDialog={exampleDialog} setShowDialog={setExampleDialog} title="Title" description="Description" />
         </>
     )
 }
 export async function getServerSideProps(context) {
-    const cs = await fetch('https://restcountries.eu/rest/v2/all')
+    const cs = await fetch(Constants.WEB_URL + '/api/countries')
         .then(response => response.json())
         .then(data => (data))
     return {

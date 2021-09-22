@@ -1,7 +1,6 @@
 import { signIn, signOut, useSession } from "next-auth/client";
 export default function Home() {
 
-
     const handleSocialLogin = (user) => {
         console.log(user);
     };
@@ -10,8 +9,8 @@ export default function Home() {
         console.error(err);
     };
 
-
     const [session, loading] = useSession();
+    console.log(session)
     return (
         <div>
             {loading && <p>Loading..</p>}

@@ -103,8 +103,8 @@ export default function EditChildDetails({ profile, grades, token }) {
                                                     <div className="w-full">
                                                         <div className="pt-4 w-full float-right">
                                                             <div className="" >
-                                                                <label className="text-black pb-2 block text-xl">Full Name</label>
-                                                                <input id="name" name="name" type="text" placeholder="Juliana Dsoza"
+                                                                <label className="text-black pb-2 block text-xl" >Full Name</label>
+                                                                <input id="name" name="name" type="name" placeholder="Full Name" autoComplete="name"
                                                                     className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500" defaultValue={profile.child_details.child_name} />
                                                             </div>
                                                             <Listbox value={selectedGrade} onChange={(grade) => {
@@ -177,8 +177,8 @@ export default function EditChildDetails({ profile, grades, token }) {
                                                                 <input
                                                                     id="schoolName"
                                                                     name="schoolName"
-                                                                    type="name"
-                                                                    autoComplete="name"
+                                                                    type="schoolName"
+                                                                    autoComplete="schoolName"
                                                                     placeholder="School"
                                                                     required
                                                                     className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500 "
