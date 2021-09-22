@@ -10,8 +10,8 @@ const Constants = {
   ANDROID_APPLICATION_PACKAGE: 'com.app.lifology',
   IOS_BUNDLE_ID: 'com.septa.app.lifology',
 
-  // WEB_URL: 'https://demo.lifology.com',
-  WEB_URL: 'http://localhost:3000',
+  WEB_URL: 'https://demo.lifology.com',
+  // WEB_URL: 'http://localhost:3000',
 
   //Google Login
   GOOGLE_CLIENT_ID: '237059092365-gmtelru636a7o2ksuaadmrqi0n7k76um.apps.googleusercontent.com',
