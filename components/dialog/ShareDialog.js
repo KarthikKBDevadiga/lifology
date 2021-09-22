@@ -49,7 +49,7 @@ const ShareDialog = ({ url, title, showDialog, setShowDialog }) => {
                                             <ProgressBar />
                                         </div>
                                 }
-                                <ShareList url={url} title={title} video={video} university={university} magazine={magazine} serviceDetails={serviceDetails} />
+                                <ShareList url={url} title={title} />
                                 <div className="mt-1 px-4 py-2 relative rounded-full shadow-sm bg-gray-100 border border-gray-200">
                                     <input
                                         ref={textAreaRef}
