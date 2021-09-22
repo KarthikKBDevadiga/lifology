@@ -402,7 +402,7 @@ export default function Login({ cs }) {
                 </Dialog>
             </Transition.Root>
 
-            <ErrorDialog showDialog={exampleDialog} setShowDialog={setExampleDialog} title="Title" description="Description" />
+            {/* <ErrorDialog showDialog={exampleDialog} setShowDialog={setExampleDialog} title="Title" description="Description" /> */}
         </>
     )
 }
