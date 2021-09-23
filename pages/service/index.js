@@ -59,12 +59,12 @@ export default function Service({ profile, services, token }) {
     return (
         <>
 
-            <MetaLayout title="Career Explorer" description="Career Explorer" />
+            <MetaLayout title="Services" description="Services" />
             <div className="h-screen flex overflow-hidden bg-gray-100 font-roboto">
                 <NavigationLayout index="3" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Career Explorer" />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="Services" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 

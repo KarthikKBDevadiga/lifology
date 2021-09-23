@@ -4,7 +4,7 @@ import { XCircleIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/so
 
 import classNames from '/helpers/classNames'
 
-import { signIn, useSession } from "next-auth/client";
+import { signIn, signOut, useSession } from "next-auth/client";
 import Constants from '/helpers/Constants'
 
 const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selectedCountry, setSelectedCountry }) => {
@@ -12,9 +12,7 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
     const [session, loading] = useSession();
 
     if (session) {
-        console.log('Logged In')
-        console.log(session)
-        socialLogin(session.id, session.user.email, session.user.name)
+        signOut()
     }
 
     return (
@@ -399,8 +397,10 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
                         <div className="mt-4 grid grid-cols-2 gap-2">
                             <div>
                                 <a
-                                    href="#"
                                     className="w-full rounded-full border border-gray-200 bg-gray-100 inline-flex px-4 py-2 justify-center text-gray-400 hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
+                                    onClick={() =>
+                                        signIn("facebook", { callbackUrl: Constants.WEB_URL + "/auth" })
+                                    }
                                 // className={styles.socialMediaButton}
                                 >
                                     <span className="sr-only">Sign in with Facebook</span>
@@ -417,10 +417,9 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
 
                             <div>
                                 <div
-                                    href="#"
                                     className="cursor-pointer w-full rounded-full border border-gray-200 bg-gray-100 inline-flex px-4 py-2 justify-center text-gray-400 hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
                                     onClick={() =>
-                                        signIn("google", { callbackUrl: Constants.WEB_URL + "/login" })
+                                        signIn("google", { callbackUrl: Constants.WEB_URL + "/auth" })
                                     }
                                 >
                                     <span className="sr-only">Sign in with Google</span>

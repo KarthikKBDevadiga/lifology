@@ -24,7 +24,6 @@ const client = new ApolloClient({
 });
 
 export default function Login({ cs }) {
-    const [session, loading] = useSession()
 
     const [parentName, setParentName] = useLocalStorage("parentName", "")
     const [parentEmail, setParentEmail] = useLocalStorage("parentEmail", "")
