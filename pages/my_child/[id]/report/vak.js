@@ -8,8 +8,6 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 
-import "react-multi-carousel/lib/styles.css";
-
 import { PieChart } from 'react-minimal-pie-chart';
 
 import 'keen-slider/keen-slider.min.css'

@@ -1,13 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-
-import { CheckIcon, SelectorIcon, ExclamationIcon, ChevronDownIcon } from '@heroicons/react/solid'
 import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { mutateGraph, queryGraph } from '../../helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeEditProfile, SchemeGetGrades, SchemeGetProfile } from '../../helpers/GraphQLSchemes'
 import Constants from '../../helpers/Constants.js'
-import useLocalStorage from '../../helpers/useLocalStorage'
 import classNames from '/helpers/classNames'
 import { useRouter } from 'next/router'
 import NavigationLayout from '../../components/NavigationLayout'
@@ -119,7 +116,10 @@ export default function EditChildDetails({ profile, grades, token }) {
                                                                             <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-200 " >
                                                                                 <span className="block truncate">{selectedGrade.grade}</span>
                                                                                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                                    <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                                    {/* <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
+                                                                                    <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                                                        <path d="M24 24H0V0h24v24z" fill="none" opacity=".87" /><path d="M15.88 9.29L12 13.17 8.12 9.29c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41-.39-.38-1.03-.39-1.42 0z" />
+                                                                                    </svg>
                                                                                 </span>
                                                                             </Listbox.Button>
 
@@ -158,7 +158,10 @@ export default function EditChildDetails({ profile, grades, token }) {
                                                                                                                 'absolute inset-y-0 left-0 flex items-center pl-1.5'
                                                                                                             )}
                                                                                                         >
-                                                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                                                            <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                                                                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                                                                                                <path d="M9 16.2l-3.5-3.5c-.39-.39-1.01-.39-1.4 0-.39.39-.39 1.01 0 1.4l4.19 4.19c.39.39 1.02.39 1.41 0L20.3 7.7c.39-.39.39-1.01 0-1.4-.39-.39-1.01-.39-1.4 0L9 16.2z" />
+                                                                                                            </svg>
                                                                                                         </span>
                                                                                                     ) : null}
                                                                                                 </>

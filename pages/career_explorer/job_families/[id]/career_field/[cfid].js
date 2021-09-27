@@ -10,7 +10,6 @@ import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import "react-multi-carousel/lib/styles.css";
 import { SchemeCareerPools, SchemeCareerFields, SchemeGetProfile, SchemeGetUniversities, SchemeGetArticleData } from '/helpers/GraphQLSchemes'
 import VideoDialog from '/components/dialog/VideoDialog'
 import styles from '/styles/CareerField.module.css'

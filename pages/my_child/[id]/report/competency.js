@@ -9,8 +9,6 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 
-import "react-multi-carousel/lib/styles.css";
-
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
@@ -83,7 +81,7 @@ export default function VAKReport({ profile, assessment, reports, summaryDetails
                                                     {
                                                         summaryDetails.map((s) => (
                                                             <div className="flex shadow rounded p-4 my-4 bg-blue-100">
-                                                                <div>
+                                                                <div className="w-full">
                                                                     <h4 className="text-base font-bold">{s.key}</h4>
                                                                     <div className="mt-1">{s.total_score * 100 / s.max_score} %</div>
                                                                     <div className="w-full relative self-center my-2">

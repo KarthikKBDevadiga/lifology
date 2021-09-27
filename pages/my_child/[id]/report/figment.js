@@ -8,8 +8,6 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 
-import "react-multi-carousel/lib/styles.css";
-
 import classNames from '/helpers/classNames'
 import { SchemeGetFigmentReport } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'

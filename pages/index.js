@@ -40,14 +40,51 @@ const pages = [
 
 export default function Home({ profile, home, coaches, slide2Options, token }) {
   const router = useRouter()
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const [isMasterClassScrollLeft, setIsMasterClassScrollLeft] = useState(false)
+  const [isMasterClassScrollRight, setIsMasterClassScrollRight] = useState(false)
   const [masterClassSliderRef, masterClassSlider] = useKeenSlider({
-    // breakpoints: { ...breakpoints, "(min-width: 1200px)": { slidesPerView: 2.5 }, },
-    breakpoints,
+    breakpoints, slideChanged: slider => {
+      const details = slider.details()
+      if (details.size <= details.slidesPerView) {
+        setIsMasterClassScrollLeft(false)
+        setIsMasterClassScrollRight(false)
+      } else {
+        if (details.absoluteSlide == 0)
+          setIsMasterClassScrollLeft(false)
+        else
+          setIsMasterClassScrollLeft(true)
+        if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+          setIsMasterClassScrollRight(false)
+        else
+          setIsMasterClassScrollRight(true)
+      }
+    },
   })
+  const [isAssessmentScrollLeft, setIsAssessmentScrollLeft] = useState(false)
+  const [isAssessmentScrollRight, setIsAssessmentScrollRight] = useState(false)
   const [assessmentSliderRef, assessmentSlider] = useKeenSlider({
     breakpoints,
+    slideChanged: slider => {
+      const details = slider.details()
+      if (details.size <= details.slidesPerView) {
+        setIsAssessmentScrollLeft(false)
+        setIsAssessmentScrollRight(false)
+      } else {
+        if (details.absoluteSlide == 0)
+          setIsAssessmentScrollLeft(false)
+        else
+          setIsAssessmentScrollLeft(true)
+        if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+          setIsAssessmentScrollRight(false)
+        else
+          setIsAssessmentScrollRight(true)
+      }
+    },
   })
+  const [isArticleScrollLeft, setIsArticleScrollLeft] = useState(false)
+  const [isArticleScrollRight, setIsArticleScrollRight] = useState(false)
   const [articlesSliderRef, articlesSlider] = useKeenSlider({
     breakpoints: {
       "(min-width: 464px)": {
@@ -60,11 +97,47 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
         slidesPerView: 3,
       },
     },
+    slideChanged: slider => {
+      const details = slider.details()
+      if (details.size <= details.slidesPerView) {
+        setIsArticleScrollLeft(false)
+        setIsArticleScrollRight(false)
+      } else {
+        if (details.absoluteSlide == 0)
+          setIsArticleScrollLeft(false)
+        else
+          setIsArticleScrollLeft(true)
+        if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+          setIsArticleScrollRight(false)
+        else
+          setIsArticleScrollRight(true)
+      }
+    },
   })
+  const [isUniversityScrollLeft, setIsUniversityScrollLeft] = useState(false)
+  const [isUniversityScrollRight, setIsUniversityScrollRight] = useState(false)
   const [universitySliderRef, universitySlider] = useKeenSlider({
     breakpoints,
+    slideChanged: slider => {
+      const details = slider.details()
+      if (details.size <= details.slidesPerView) {
+        setIsUniversityScrollLeft(false)
+        setIsUniversityScrollRight(false)
+      } else {
+        if (details.absoluteSlide == 0)
+          setIsUniversityScrollLeft(false)
+        else
+          setIsUniversityScrollLeft(true)
+        if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+          setIsUniversityScrollRight(false)
+        else
+          setIsUniversityScrollRight(true)
+      }
+    },
   })
 
+  const [isvideosScrollLeft, setIsvideosScrollLeft] = useState(false)
+  const [isvideosScrollRight, setIsvideosScrollRight] = useState(false)
   const [videosSliderRef, videosSlider] = useKeenSlider({
     breakpoints: {
       "(min-width: 464px)": {
@@ -76,11 +149,45 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
       "(min-width: 1200px)": {
         slidesPerView: 3,
       },
-    }
+    },
+    slideChanged: slider => {
+      const details = slider.details()
+      if (details.size <= details.slidesPerView) {
+        setIsvideosScrollLeft(false)
+        setIsvideosScrollRight(false)
+      } else {
+        if (details.absoluteSlide == 0)
+          setIsvideosScrollLeft(false)
+        else
+          setIsvideosScrollLeft(true)
+        if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+          setIsvideosScrollRight(false)
+        else
+          setIsvideosScrollRight(true)
+      }
+    },
   })
 
+  const [isCoachScrollLeft, setIsCoachScrollLeft] = useState(false)
+  const [isCoachScrollRight, setIsCoachScrollRight] = useState(false)
   const [coachSliderRef, coachSlider] = useKeenSlider({
     breakpoints,
+    slideChanged: slider => {
+      const details = slider.details()
+      if (details.size <= details.slidesPerView) {
+        setIsCoachScrollLeft(false)
+        setIsCoachScrollRight(false)
+      } else {
+        if (details.absoluteSlide == 0)
+          setIsCoachScrollLeft(false)
+        else
+          setIsCoachScrollLeft(true)
+        if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+          setIsCoachScrollRight(false)
+        else
+          setIsCoachScrollRight(true)
+      }
+    },
   })
 
   const [loadingLiveTile, setLoadingLiveTile] = useState(true)
@@ -232,26 +339,32 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             <div className='font-bold text-base px-4 pt-4'>Watch Lifology Master Class</div>
                           </div>
                           <div className='relative flex items-center'>
-                            <a
-                              onClick={(event) => {
-                                masterClassSlider.prev()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                              </div>
-                            </a>
-                            <a
-                              onClick={(event) => {
-                                masterClassSlider.next()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                              </div>
-                            </a>
+                            {
+                              isMasterClassScrollLeft ?
+                                <a
+                                  onClick={(event) => {
+                                    masterClassSlider.prev()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
+                            {
+                              isMasterClassScrollRight ? <a
+                                onClick={(event) => {
+                                  masterClassSlider.next()
+                                }}>
+                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                  </svg>
+                                </div>
+                              </a> : <></>
+                            }
+
                             <div className='navigation-wrapper keen-slider' ref={masterClassSliderRef}>
                               {home.home.master_class_videos?.map(video => (
                                 <div key={video.id} className='keen-slider__slide rounded-lg'>
@@ -305,26 +418,32 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                           </div>
 
                           <div className='relative flex items-center'>
-                            <a
-                              onClick={(event) => {
-                                assessmentSlider.prev()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                              </div>
-                            </a>
-                            <a
-                              onClick={(event) => {
-                                assessmentSlider.next()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                              </div>
-                            </a>
+                            {
+                              isAssessmentScrollLeft ?
+                                <a
+                                  onClick={(event) => {
+                                    assessmentSlider.prev()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
+                            {
+                              isAssessmentScrollRight ?
+                                <a
+                                  onClick={(event) => {
+                                    assessmentSlider.next()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
                             <div className='navigation-wrapper keen-slider' ref={assessmentSliderRef}>
                               {home.home.assessment?.map(assessment => (
                                 <div key={assessment.id} className='keen-slider__slide rounded-lg'>
@@ -369,26 +488,33 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             <a href='/career_explorer/career_video' className='text-lblue font-medium px-4 pt-4 text-sm'>View All</a>
                           </div>
                           <div className='relative flex items-center'>
-                            <a
-                              onClick={(event) => {
-                                videosSlider.prev()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                              </div>
-                            </a>
-                            <a
-                              onClick={(event) => {
-                                videosSlider.next()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                              </div>
-                            </a>
+                            {
+                              isvideosScrollLeft ? <a
+                                onClick={(event) => {
+                                  videosSlider.prev()
+                                }}>
+                                <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                  </svg>
+                                </div>
+                              </a> : <></>
+                            }
+                            {
+                              isvideosScrollRight ?
+                                <a
+                                  onClick={(event) => {
+                                    videosSlider.next()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
+
+
                             <div className='keen-slider navigation-wrapper' ref={videosSliderRef}>
                               {home.home.watch_videos?.map(video => (
                                 <div key={video.id} className='keen-slider__slide rounded-lg'>
@@ -430,26 +556,34 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             <a href='/career_explorer/course_and_university' className='text-lblue font-medium px-4 pt-4 text-sm'>View All</a>
                           </div>
                           <div className='relative flex items-center'>
-                            <a
-                              onClick={(event) => {
-                                universitySlider.prev()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                              </div>
-                            </a>
-                            <a
-                              onClick={(event) => {
-                                universitySlider.next()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                              </div>
-                            </a>
+                            {
+                              isUniversityScrollLeft ?
+                                <a
+                                  onClick={(event) => {
+                                    universitySlider.prev()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
+                            {
+                              isUniversityScrollRight ?
+                                <a
+                                  onClick={(event) => {
+                                    universitySlider.next()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
+
+
                             <div className='keen-slider navigation-wrapper' ref={universitySliderRef}>
                               {home.home.university?.map(uni => (
                                 <div key={uni.id} className='keen-slider__slide rounded-lg'>
@@ -480,26 +614,34 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             <a href='/career_explorer/magazine' className='text-lblue font-medium text-sm px-4 pt-4'>View All</a>
                           </div>
                           <div className='relative flex items-center'>
-                            <a
-                              onClick={(event) => {
-                                articlesSlider.prev()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                              </div>
-                            </a>
-                            <a
-                              onClick={(event) => {
-                                articlesSlider.next()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                              </div>
-                            </a>
+                            {
+                              isArticleScrollLeft ?
+                                <a
+                                  onClick={(event) => {
+                                    articlesSlider.prev()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
+                            {
+                              isArticleScrollRight ?
+                                <a
+                                  onClick={(event) => {
+                                    articlesSlider.next()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
+
+
                             <div className='keen-slider navigation-wrapper' ref={articlesSliderRef}>
                               {home.home.articles?.map(article => (
                                 <div key={article.id} className='keen-slider__slide'>
@@ -534,26 +676,32 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             <a href='/coaching/coach/list' className='text-lblue font-medium text-sm px-4 pt-4'>View All</a>
                           </div>
                           <div className='relative flex items-center'>
-                            <a
-                              onClick={(event) => {
-                                coachSlider.prev()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                              </div>
-                            </a>
-                            <a
-                              onClick={(event) => {
-                                coachSlider.next()
-                              }}>
-                              <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                              </div>
-                            </a>
+                            {
+                              isCoachScrollLeft ?
+                                <a
+                                  onClick={(event) => {
+                                    coachSlider.prev()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
+                            {
+                              isCoachScrollRight ?
+                                <a
+                                  onClick={(event) => {
+                                    coachSlider.next()
+                                  }}>
+                                  <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                  </div>
+                                </a> : <></>
+                            }
                             <div className='keen-slider navigation-wrapper w-full' ref={coachSliderRef}>
                               {coaches.map(coach => (
                                 <div key={coach.id} className='keen-slider__slide'>

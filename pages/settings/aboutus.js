@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 
-import "react-multi-carousel/lib/styles.css";
 import MetaLayout from '/components/MetaLayout'
 import SettingNavigationLayout from '/components/SettingNavigationLayout'
 

@@ -9,13 +9,7 @@ import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 
 
-import "react-multi-carousel/lib/styles.css";
-
-
-import { PieChart } from 'react-minimal-pie-chart';
-
 import 'keen-slider/keen-slider.min.css'
-import { useKeenSlider } from 'keen-slider/react'
 import Breadcrumbs from '../../../../components/Breadcrumbs'
 import { useRouter } from 'next/router'
 import cookies from 'next-cookies'

@@ -8,7 +8,6 @@ import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import "react-multi-carousel/lib/styles.css";
 import { SchemeCareerPools } from '/helpers/GraphQLSchemes'
 import { SchemeCareerFields } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'

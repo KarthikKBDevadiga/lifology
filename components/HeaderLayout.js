@@ -3,13 +3,8 @@ import React, { useState } from 'react'
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import {
-    BellIcon,
     MenuAlt1Icon,
 } from '@heroicons/react/outline'
-import {
-    ChevronDownIcon,
-    SearchIcon,
-} from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 
 function classNames(...classes) {
@@ -45,7 +40,10 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                 <>
                                     <div>
                                         <Menu.Button className="group mr-2 max-w-xs bg-white rounded-full flex items-center text-sm outline-none focus:outline-none lg:p-2 lg:rounded-md lg:hover:bg-gray-200 lg:bg-gray-100 duration-500">
-                                            <BellIcon className="h-8 w-8 p-1 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                                            <svg className="h-8 w-8 p-1 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                                <path d="M19.29 17.29L18 16v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.9 0 1.34-1.08.71-1.71zM16 17H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6zm-4 5c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2z" />
+                                            </svg>
                                         </Menu.Button>
                                     </div>
                                     <Transition
@@ -108,10 +106,9 @@ const HeaderLayout = ({ setSidebarOpen, profile, title }) => {
                                             <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
                                                 <span className="sr-only">Open user menu for </span>{profile.name}
                                             </span>
-                                            <ChevronDownIcon
-                                                className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block"
-                                                aria-hidden="true"
-                                            />
+                                            <svg className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                <path d="M24 24H0V0h24v24z" fill="none" opacity=".87" /><path d="M15.88 9.29L12 13.17 8.12 9.29c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41-.39-.38-1.03-.39-1.42 0z" />
+                                            </svg>
                                         </Menu.Button>
                                     </div>
                                     <Transition

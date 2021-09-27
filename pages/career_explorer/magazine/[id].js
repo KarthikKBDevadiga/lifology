@@ -13,7 +13,6 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '../../../components/MetaLayout'
 
-import "react-multi-carousel/lib/styles.css";
 import { mutateGraph } from '../../../helpers/GraphQLCaller'
 import { formatDate } from '/helpers/utils'
 import NextNProgress from 'nextjs-progressbar'

@@ -11,8 +11,6 @@ import MetaLayout from '/components/MetaLayout'
 
 import classNames from '/helpers/classNames'
 
-import "react-multi-carousel/lib/styles.css";
-
 import ReactCardCarousel from 'react-card-carousel';
 import { SchemeGetAssessment, SchemeGetFACEReport, SchemeGetFACEReport2, SchemeGetMTIReport, SchemeGetSummaryDetails } from '../../../../helpers/GraphQLSchemes'
 import Breadcrumbs from '../../../../components/Breadcrumbs'

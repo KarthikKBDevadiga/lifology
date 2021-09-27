@@ -1,20 +1,15 @@
-import { Fragment, useState, useEffect } from 'react'
-import {
-    SelectorIcon
-} from '@heroicons/react/solid'
+import { Fragment, useState } from 'react'
 import { queryGraph } from '/helpers/GraphQLCaller'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { SchemeGetProfile } from '/helpers/GraphQLSchemes'
 import Constants from '/helpers/Constants.js'
-import useLocalStorage from '/helpers/useLocalStorage'
 import { useRouter } from 'next/router'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 
-import { Listbox, Transition, Dialog } from '@headlessui/react'
+import { Listbox, Transition } from '@headlessui/react'
 
-import "react-multi-carousel/lib/styles.css";
 import SettingNavigationLayout from '/components/SettingNavigationLayout'
 import cookies from 'next-cookies'
 
@@ -237,7 +232,10 @@ export default function ContactUs({ profile }) {
                                                                     <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
                                                                         <span className={classNames(selectedCountry.name ? '' : 'text-gray-400', "block truncate")}>{selectedCountry.name ? selectedCountry.name : 'Country'}</span>
                                                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                            <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                            {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
+                                                                            <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                                                <path d="M24 24H0V0h24v24z" fill="none" opacity=".87" /><path d="M15.88 9.29L12 13.17 8.12 9.29c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41-.39-.38-1.03-.39-1.42 0z" />
+                                                                            </svg>
                                                                         </span>
                                                                     </Listbox.Button>
 
@@ -303,7 +301,10 @@ export default function ContactUs({ profile }) {
                                                                     <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
                                                                         <span className={classNames(selectedQuery.name ? '' : 'text-gray-400', "block truncate")}>{selectedQuery.name ? selectedQuery.name : 'Select Query Type'}</span>
                                                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                            <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                            {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
+                                                                            <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                                                <path d="M24 24H0V0h24v24z" fill="none" opacity=".87" /><path d="M15.88 9.29L12 13.17 8.12 9.29c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41-.39-.38-1.03-.39-1.42 0z" />
+                                                                            </svg>
                                                                         </span>
                                                                     </Listbox.Button>
 
@@ -369,7 +370,10 @@ export default function ContactUs({ profile }) {
                                                                     <Listbox.Button className="relative w-full bg-gray-100 border rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default outline-none focus:outline-none focus:border-indigo-700 sm:text-sm border border-gray-300 " >
                                                                         <span className={classNames(selectedUserType.name ? '' : 'text-gray-400', "block truncate")}>{selectedUserType.name ? selectedUserType.name : 'Select User Type'}</span>
                                                                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                            <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                            {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
+                                                                            <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                                                                                <path d="M24 24H0V0h24v24z" fill="none" opacity=".87" /><path d="M15.88 9.29L12 13.17 8.12 9.29c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41-.39-.38-1.03-.39-1.42 0z" />
+                                                                            </svg>
                                                                         </span>
                                                                     </Listbox.Button>
 

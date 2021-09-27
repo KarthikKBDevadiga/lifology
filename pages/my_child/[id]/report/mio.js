@@ -19,7 +19,6 @@ import { Listbox, Transition, Dialog } from '@headlessui/react'
 import styles from '/styles/Report.module.css'
 import Expand from 'react-expand-animated';
 
-import "react-multi-carousel/lib/styles.css";
 
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import Breadcrumbs from '../../../../components/Breadcrumbs'

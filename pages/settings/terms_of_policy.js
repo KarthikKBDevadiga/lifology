@@ -10,7 +10,6 @@ import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 import SettingNavigationLayout from '/components/SettingNavigationLayout'
 
-import "react-multi-carousel/lib/styles.css";
 import cookies from 'next-cookies'
 
 export default function TermsOfPolicy({ profile }) {

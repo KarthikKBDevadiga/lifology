@@ -14,8 +14,6 @@ import MetaLayout from '/components/MetaLayout'
 
 import { Listbox, Transition, Dialog } from '@headlessui/react'
 
-import "react-multi-carousel/lib/styles.css";
-
 import classNames from '/helpers/classNames'
 
 

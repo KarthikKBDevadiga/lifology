@@ -9,7 +9,6 @@ import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
 
-import "react-multi-carousel/lib/styles.css";
 import SettingNavigationLayout from '/components/SettingNavigationLayout'
 import cookies from 'next-cookies'
 import { SchemeNotificationSettings, SchemeUpdateNotificationSettings } from '/helpers/GraphQLSchemes'

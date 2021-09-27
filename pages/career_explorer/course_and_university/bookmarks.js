@@ -15,8 +15,6 @@ import useLocalStorage from '/helpers/useLocalStorage'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import classNames from '/helpers/classNames'
 import { mutateGraph } from '../../../helpers/GraphQLCaller'
 

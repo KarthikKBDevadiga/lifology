@@ -232,7 +232,7 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: "/login"
+                destination: "/login?redirect=" + encodeURIComponent('/service/' + context.params.id + '/serviceDetails/' + context.params.sid + '/' + context.params.scid)
             }
         }
     }

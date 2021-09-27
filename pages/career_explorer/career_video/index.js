@@ -14,8 +14,6 @@ import Constants from '/helpers/Constants.js'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import classNames from '/helpers/classNames'
 
 import 'keen-slider/keen-slider.min.css'
@@ -70,6 +68,21 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
         },
     })
 
+    const [isSlider1ScrollLeft, setIsSlider1ScrollLeft] = useState(false)
+    const [isSlider1ScrollRight, setIsSlider1ScrollRight] = useState(false)
+
+    const [isSlider2ScrollLeft, setIsSlider2ScrollLeft] = useState(false)
+    const [isSlider2ScrollRight, setIsSlider2ScrollRight] = useState(false)
+
+    const [isSlider3ScrollLeft, setIsSlider3ScrollLeft] = useState(false)
+    const [isSlider3ScrollRight, setIsSlider3ScrollRight] = useState(false)
+
+    const [isSlider4ScrollLeft, setIsSlider4ScrollLeft] = useState(false)
+    const [isSlider4ScrollRight, setIsSlider4ScrollRight] = useState(false)
+
+    const [isSlider5ScrollLeft, setIsSlider5ScrollLeft] = useState(false)
+    const [isSlider5ScrollRight, setIsSlider5ScrollRight] = useState(false)
+
     const [sliderRef1, slider1] = useKeenSlider({
         breakpoints: {
             "(min-width: 464px)": {
@@ -81,6 +94,22 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
             "(min-width: 1200px)": {
                 slidesPerView: 4,
             },
+        },
+        slideChanged: slider => {
+            const details = slider.details()
+            if (details.size <= details.slidesPerView) {
+                setIsSlider1ScrollLeft(false)
+                setIsSlider1ScrollRight(false)
+            } else {
+                if (details.absoluteSlide == 0)
+                    setIsSlider1ScrollLeft(false)
+                else
+                    setIsSlider1ScrollLeft(true)
+                if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+                    setIsSlider1ScrollRight(false)
+                else
+                    setIsSlider1ScrollRight(true)
+            }
         },
     })
     const [sliderRef2, slider2] = useKeenSlider({
@@ -95,6 +124,22 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
                 slidesPerView: 4,
             },
         },
+        slideChanged: slider => {
+            const details = slider.details()
+            if (details.size <= details.slidesPerView) {
+                setIsSlider2ScrollLeft(false)
+                setIsSlider2ScrollRight(false)
+            } else {
+                if (details.absoluteSlide == 0)
+                    setIsSlider2ScrollLeft(false)
+                else
+                    setIsSlider2ScrollLeft(true)
+                if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+                    setIsSlider2ScrollRight(false)
+                else
+                    setIsSlider2ScrollRight(true)
+            }
+        },
     })
     const [sliderRef3, slider3] = useKeenSlider({
         breakpoints: {
@@ -107,6 +152,22 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
             "(min-width: 1200px)": {
                 slidesPerView: 4,
             },
+        },
+        slideChanged: slider => {
+            const details = slider.details()
+            if (details.size <= details.slidesPerView) {
+                setIsSlider3ScrollLeft(false)
+                setIsSlider3ScrollRight(false)
+            } else {
+                if (details.absoluteSlide == 0)
+                    setIsSlider3ScrollLeft(false)
+                else
+                    setIsSlider3ScrollLeft(true)
+                if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+                    setIsSlider3ScrollRight(false)
+                else
+                    setIsSlider3ScrollRight(true)
+            }
         },
     })
     const [sliderRef4, slider4] = useKeenSlider({
@@ -121,6 +182,22 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
                 slidesPerView: 4,
             },
         },
+        slideChanged: slider => {
+            const details = slider.details()
+            if (details.size <= details.slidesPerView) {
+                setIsSlider4ScrollLeft(false)
+                setIsSlider4ScrollRight(false)
+            } else {
+                if (details.absoluteSlide == 0)
+                    setIsSlider4ScrollLeft(false)
+                else
+                    setIsSlider4ScrollLeft(true)
+                if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+                    setIsSlider4ScrollRight(false)
+                else
+                    setIsSlider4ScrollRight(true)
+            }
+        },
     })
     const [sliderRef5, slider5] = useKeenSlider({
         breakpoints: {
@@ -133,6 +210,22 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
             "(min-width: 1200px)": {
                 slidesPerView: 4,
             },
+        },
+        slideChanged: slider => {
+            const details = slider.details()
+            if (details.size <= details.slidesPerView) {
+                setIsSlider5ScrollLeft(false)
+                setIsSlider5ScrollRight(false)
+            } else {
+                if (details.absoluteSlide == 0)
+                    setIsSlider5ScrollLeft(false)
+                else
+                    setIsSlider5ScrollLeft(true)
+                if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+                    setIsSlider5ScrollRight(false)
+                else
+                    setIsSlider5ScrollRight(true)
+            }
         },
     })
 
@@ -281,89 +374,13 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
                                     }
 
 
-
-
-                                    {/* <div className="relative flex items-center w-full mt-4">
-
-                                        <a
-                                            onClick={(event) => {
-                                                headerSlider.prev()
-                                            }}>
-                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                                </svg>
-                                            </div>
-                                        </a>
-                                        <a
-                                            onClick={(event) => {
-                                                headerSlider.next()
-                                            }}>
-                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </div>
-                                        </a>
-
-                                        <div className="navigation-wrapper w-full">
-                                            <div ref={headerSliderRef} className="keen-slider">
-                                                {headerSlide.map((card) => (
-                                                    <div className="keen-slider__slide">
-                                                        <div key={card.id} className="rounded bg-lblue shadow mx-4 my-px">
-                                                            <div className="py-4 px-4 align-middle min-w-full overflow-x-auto  overflow-hidden">
-                                                                <div className="sm:flex">
-                                                                    <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-                                                                        <img src={card.image} className="rounded " />
-                                                                    </div>
-                                                                    <div className="self-center w-full mr-4">
-                                                                        <h4 className="text-lg font-bold text-white text-right">{card.title}</h4>
-                                                                        <div className="flex text-base font-bold text-white text-right items-center text-lyellow mt-4 float-right"
-                                                                            onClick={(event) => {
-                                                                                setOpenVideoDialog(true)
-                                                                            }}>
-                                                                            <svg
-                                                                                className="w-6 h-6 mr-2"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                viewBox="0 0 28 28"
-                                                                                id="vector">
-                                                                                <path
-                                                                                    id="path"
-                                                                                    d="M 14 26 C 10.819 26 7.764 24.735 5.515 22.485 C 3.265 20.236 2 17.181 2 14 C 2 10.819 3.265 7.764 5.515 5.515 C 7.764 3.265 10.819 2 14 2 C 17.181 2 20.236 3.265 22.485 5.515 C 24.735 7.764 26 10.819 26 14 C 26 17.181 24.735 20.236 22.485 22.485 C 20.236 24.735 17.181 26 14 26 Z M 12.346 9.7 C 12.249 9.636 12.132 9.608 12.017 9.624 C 11.901 9.639 11.795 9.696 11.719 9.783 C 11.642 9.871 11.6 9.984 11.6 10.1 L 11.6 17.9 C 11.6 18.016 11.642 18.129 11.719 18.217 C 11.795 18.304 11.901 18.361 12.017 18.376 C 12.132 18.392 12.249 18.364 12.346 18.3 L 18.2 14.4 C 18.288 14.341 18.355 14.255 18.389 14.155 C 18.423 14.054 18.423 13.946 18.389 13.845 C 18.355 13.745 18.288 13.659 18.2 13.6 L 12.345 9.7 Z"
-                                                                                    fill="#ffc400"
-                                                                                    strokeWidth="1" />
-                                                                            </svg>
-
-                                                                            Watch Video
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                ))
-                                                }
-                                            </div>
-                                        </div>
-                                    </div> */}
                                     {
                                         videoCats.map((videoCat, index) => {
-                                            // const [sliderRef, slider] = useKeenSlider({
-                                            //     breakpoints: {
-                                            //         "(min-width: 464px)": {
-                                            //             slidesPerView: 1,
-                                            //         },
-                                            //         "(min-width: 768px)": {
-                                            //             slidesPerView: 2,
-                                            //         },
-                                            //         "(min-width: 1200px)": {
-                                            //             slidesPerView: 4,
-                                            //         },
-                                            //     },
-                                            // })
                                             const sliderRef = index == 0 ? sliderRef1 : index == 1 ? sliderRef2 : index == 2 ? sliderRef3 : index == 3 ? sliderRef4 : sliderRef5
                                             const slider = index == 0 ? slider1 : index == 1 ? slider2 : index == 2 ? slider3 : index == 3 ? slider4 : slider5
+                                            const isSliderScrollLeft = index == 0 ? isSlider1ScrollLeft : index == 1 ? isSlider2ScrollLeft : index == 2 ? isSlider3ScrollLeft : index == 3 ? isSlider4ScrollLeft : isSlider5ScrollLeft
+                                            const isSliderScrollRight = index == 0 ? isSlider1ScrollRight : index == 1 ? isSlider2ScrollRight : index == 2 ? isSlider3ScrollRight : index == 3 ? isSlider4ScrollRight : isSlider5ScrollRight
+
                                             return (
                                                 <div className="mx-4 mt-4 pt-4  align-middle  overflow-x-auto shadow overflow-hidden sm:rounded-lg 0-4 bg-white">
                                                     <div className="grid grid-cols-2 gap-2">
@@ -382,26 +399,34 @@ export default function CareerVideo({ videoCats, profile, order, q }) {
                                                         </Link>
                                                     </div>
                                                     <div className="relative flex items-center">
-                                                        <a
-                                                            onClick={(event) => {
-                                                                slider.prev()
-                                                            }}>
-                                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                                                </svg>
-                                                            </div>
-                                                        </a>
-                                                        <a
-                                                            onClick={(event) => {
-                                                                slider.next()
-                                                            }}>
-                                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                                </svg>
-                                                            </div>
-                                                        </a>
+                                                        {
+                                                            isSliderScrollLeft ?
+                                                                <a
+                                                                    onClick={(event) => {
+                                                                        slider.prev()
+                                                                    }}>
+                                                                    <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </a> : <></>
+                                                        }
+                                                        {
+                                                            isSliderScrollRight ?
+                                                                <a
+                                                                    onClick={(event) => {
+                                                                        slider.next()
+                                                                    }}>
+                                                                    <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </a> : <></>
+                                                        }
+
+
                                                         <div className="navigation-wrapper w-full">
                                                             <div ref={sliderRef} className="keen-slider">
                                                                 {

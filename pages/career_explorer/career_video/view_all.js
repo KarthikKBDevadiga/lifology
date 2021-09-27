@@ -7,7 +7,6 @@ import Constants from '/helpers/Constants.js'
 import NavigationLayout from '/components/NavigationLayout'
 import HeaderLayout from '/components/HeaderLayout'
 import MetaLayout from '/components/MetaLayout'
-import "react-multi-carousel/lib/styles.css";
 
 import 'keen-slider/keen-slider.min.css'
 import Breadcrumbs from '../../../components/Breadcrumbs'

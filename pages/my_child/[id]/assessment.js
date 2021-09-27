@@ -20,7 +20,6 @@ import LoadingDialog from '/components/dialog/LoadingDialog'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
-import { resetServerContext } from "react-beautiful-dnd";
 import Breadcrumbs from '../../../components/Breadcrumbs'
 import cookies from 'next-cookies'
 
@@ -136,7 +135,6 @@ export default function Assessment({ profile, assessment, questions, token }) {
             </div>
         )
     }
-    resetServerContext()
 
     return (
         <>

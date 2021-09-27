@@ -14,10 +14,6 @@ import MetaLayout from '/components/MetaLayout'
 
 import { Listbox, Transition, Dialog } from '@headlessui/react'
 
-import "react-multi-carousel/lib/styles.css";
-
-
-
 export default function PurpleZone({ profile, token }) {
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)

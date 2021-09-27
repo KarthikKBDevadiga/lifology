@@ -10,8 +10,6 @@ import MetaLayout from '/components/MetaLayout'
 
 import classNames from '/helpers/classNames'
 
-import "react-multi-carousel/lib/styles.css";
-
 import { SchemeGetServicesCategory } from '/helpers/GraphQLSchemes'
 import Breadcrumbs from '/components/Breadcrumbs'
 import cookies from 'next-cookies'

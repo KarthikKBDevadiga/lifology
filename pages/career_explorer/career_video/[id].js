@@ -14,7 +14,6 @@ import HeaderLayout from '/components/HeaderLayout'
 import styles from '/styles/Magazine.module.css'
 import MetaLayout from '../../../components/MetaLayout'
 
-import "react-multi-carousel/lib/styles.css";
 import { SchemeGetRecommendedVideos, SchemeGetVideo, SchemeAddWatchLater, SchemeAddLike, SchemeAddDislike, SchemeVideoStatus, SchemeNoAction } from '../../../helpers/GraphQLSchemes'
 import { mutateGraph } from '../../../helpers/GraphQLCaller'
 import NextNProgress from 'nextjs-progressbar'
