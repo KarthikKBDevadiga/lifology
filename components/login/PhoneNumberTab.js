@@ -376,10 +376,8 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
 
                     <div className="text-sm m-auto">
                         By accepting all <a href="#" onClick={(event) => { setOpenFilter(true) }} ><span className="font-medium underline text-indigo-600 hover:text-indigo-500">
-                            terms
-                        </span> and <span className="font-medium underline text-indigo-600 hover:text-indigo-500">
-                                conditions
-                            </span>
+                            terms and conditions
+                        </span>
                         </a>
                     </div>
                 </div>

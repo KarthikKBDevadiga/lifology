@@ -21,6 +21,9 @@ export default function Coaching({ profile, coaches, packages }) {
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
+    const [isCoachesScrollLeft, setIsCoachesScrollLeft] = useState(false)
+    const [isCoachesScrollRight, setIsCoachesScrollRight] = useState(false)
+
     const [coachesSliderRef, coachesSlider] = useKeenSlider({
         breakpoints: {
             "(min-width: 464px)": {
@@ -33,7 +36,27 @@ export default function Coaching({ profile, coaches, packages }) {
                 slidesPerView: 6,
             },
         },
+        slideChanged: slider => {
+            const details = slider.details()
+            if (details.size <= details.slidesPerView) {
+                setIsCoachesScrollLeft(false)
+                setIsCoachesScrollRight(false)
+            } else {
+                if (details.absoluteSlide == 0)
+                    setIsCoachesScrollLeft(false)
+                else
+                    setIsCoachesScrollLeft(true)
+                if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+                    setIsCoachesScrollRight(false)
+                else
+                    setIsCoachesScrollRight(true)
+            }
+        },
     })
+
+
+    const [isPackageScrollLeft, setIsPackageScrollLeft] = useState(false)
+    const [isPackageScrollRight, setIsPackageScrollRight] = useState(false)
 
     const [packagesSliderRef, packagesSlider] = useKeenSlider({
         breakpoints: {
@@ -46,6 +69,22 @@ export default function Coaching({ profile, coaches, packages }) {
             "(min-width: 1200px)": {
                 slidesPerView: 4,
             },
+        },
+        slideChanged: slider => {
+            const details = slider.details()
+            if (details.size <= details.slidesPerView) {
+                setIsPackageScrollLeft(false)
+                setIsPackageScrollRight(false)
+            } else {
+                if (details.absoluteSlide == 0)
+                    setIsPackageScrollLeft(false)
+                else
+                    setIsPackageScrollLeft(true)
+                if ((details.absoluteSlide + details.slidesPerView) >= details.size)
+                    setIsPackageScrollRight(false)
+                else
+                    setIsPackageScrollRight(true)
+            }
         },
     })
     const pages = [
@@ -81,26 +120,34 @@ export default function Coaching({ profile, coaches, packages }) {
                         <div className=" align-middle  overflow-x-auto  overflow-hidden sm:rounded-lg 0-4">
 
                             <div className="relative flex items-center">
-                                <a
-                                    onClick={(event) => {
-                                        packagesSlider.prev()
-                                    }}>
-                                    <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                        </svg>
-                                    </div>
-                                </a>
-                                <a
-                                    onClick={(event) => {
-                                        packagesSlider.next()
-                                    }}>
-                                    <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </a>
+                                {
+                                    isPackageScrollLeft ?
+                                        <a
+                                            onClick={(event) => {
+                                                packagesSlider.prev()
+                                            }}>
+                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                                </svg>
+                                            </div>
+                                        </a> : <></>
+                                }
+                                {
+                                    isPackageScrollRight ?
+                                        <a
+                                            onClick={(event) => {
+                                                packagesSlider.next()
+                                            }}>
+                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-500" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                </svg>
+                                            </div>
+                                        </a> : <></>
+                                }
+
+
                                 <div className="navigation-wrapper w-full">
                                     <div ref={packagesSliderRef} className="mx-2 keen-slider">
                                         {
@@ -176,26 +223,34 @@ export default function Coaching({ profile, coaches, packages }) {
                                 </Link>
                             </div>
                             <div className="relative flex items-center">
-                                <a
-                                    onClick={(event) => {
-                                        coachesSlider.prev()
-                                    }}>
-                                    <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-200" fill="none" viewBox="0 0 24 24" stroke="white">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                        </svg>
-                                    </div>
-                                </a>
-                                <a
-                                    onClick={(event) => {
-                                        coachesSlider.next()
-                                    }}>
-                                    <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-200" fill="none" viewBox="0 0 24 24" stroke="white">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </a>
+                                {
+                                    isCoachesScrollLeft ?
+                                        <a
+                                            onClick={(event) => {
+                                                coachesSlider.prev()
+                                            }}>
+                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full left-0 flex items-center duration-500 -translate-y-2/4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-200" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                                </svg>
+                                            </div>
+                                        </a> : <></>
+                                }
+                                {
+                                    isCoachesScrollRight ?
+                                        <a
+                                            onClick={(event) => {
+                                                coachesSlider.next()
+                                            }}>
+                                            <div className="cursor-pointer group absolute w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-100 z-50 rounded-full right-0 flex items-center duration-500 -translate-y-2/4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 p-2 group-hover:p-1 group-active:p-2 duration-200" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                </svg>
+                                            </div>
+                                        </a> : <></>
+                                }
+
+
                                 <div className="navigation-wrapper w-full">
                                     <div ref={coachesSliderRef} className="keen-slider">
                                         {
@@ -295,12 +350,12 @@ export async function getServerSideProps(context) {
             return []
         });
     if (isAvailablePackages) {
-        return {
-            redirect: {
-                permanent: false,
-                destination: "/coaching/package"
-            }
-        }
+        // return {
+        //     redirect: {
+        //         permanent: false,
+        //         destination: "/coaching/package"
+        //     }
+        // }
     }
     const coaches = await queryGraph(skillsClient, {}, SchemeGetCoachesList)
         .then((res) => {
