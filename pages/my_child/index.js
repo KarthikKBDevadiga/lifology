@@ -56,7 +56,7 @@ export default function MyChild({ profile, assessments, isCF, isLS, token }) {
                                                             <div key={card.name} className="group relative bg-white overflow-hidden shadow hover:shadow-xl hover:scale-105 active:scale-100 active:shadow-sm rounded bg-cover duration-500 "
                                                                 style={{ height: '200px', }}
                                                             >
-                                                                <img src={card.dash_cards_image} className="rounded w-full object-cover group-hover:scale-150 group-hover:rotate-12 group-active:rotate-0 group-active:scale-100 duration-500 bg-gray-400" style={{ height: '200px' }} />
+                                                                <img src={card.dash_cards_image ? card.dash_cards_image : 'https://cdn.lifology.com/m/dash/card_small_6.jpg'} className="rounded w-full object-cover group-hover:scale-150 group-hover:rotate-12 group-active:rotate-0 group-active:scale-100 duration-500 bg-gray-400" style={{ height: '200px' }} />
                                                                 <div className="absolute p-4 top-0 w-full">
                                                                     <div className="text-white w-9/12 font-medium text-xl ">{card.title}</div>
                                                                     <div className="text-white w-9/12 text-sm mt-2">{card.subtitle}</div>

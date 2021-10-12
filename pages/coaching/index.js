@@ -350,12 +350,12 @@ export async function getServerSideProps(context) {
             return []
         });
     if (isAvailablePackages) {
-        // return {
-        //     redirect: {
-        //         permanent: false,
-        //         destination: "/coaching/package"
-        //     }
-        // }
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/coaching/package"
+            }
+        }
     }
     const coaches = await queryGraph(skillsClient, {}, SchemeGetCoachesList)
         .then((res) => {

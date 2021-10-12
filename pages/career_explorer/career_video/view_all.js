@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 
 import cookies from 'next-cookies'
 import { SchemeGetViewAllVideos } from '../../../helpers/GraphQLSchemes'
+import VideoItem from '../../../components/item/VideoItem'
 
 const pageItemCount = 32
 export default function CareerVideoViewAll({ profile, cId, videos, videosCount, page }) {
@@ -65,28 +66,10 @@ export default function CareerVideoViewAll({ profile, cId, videos, videosCount, 
 
                                     <div className="px-4 pb-4">
                                         <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg bg-white p-4">
-                                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                                                 {
                                                     videos.map((video) => (
-                                                        <Link href={'/career_explorer/career_video/' + video.id} key={video.id}>
-                                                            <a>
-                                                                <div className="group relative shadow rounded hover:shadow-xl hover:scale-105 duration-500" style={{}}>
-                                                                    <div>
-                                                                        <img className=" rounded-t group-hover:filter-none duration-500  w-full h-32 object-cover" src={video.thumbnail} />
-                                                                        <div className="flex-1 flex items-center justify-between truncate">
-                                                                            <div className="flex-1 px-4 py-2 text-sm truncate">
-                                                                                <div className="mt-2 w-full text-gray-900 font-medium hover:text-gray-600">
-                                                                                    {video.title}
-                                                                                </div>
-                                                                                <div className="text-gray-500 mt-2 w-full overflow-hidden">{video.description}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </a>
-                                                        </Link>
+                                                        <VideoItem video={video} />
 
                                                     ))
                                                 }

@@ -123,9 +123,9 @@ export default function VAKReport({ profile, assessment, report, summaryDetails 
                                                             fontSize: '6px',
                                                         }}
                                                         data={[
-                                                            { title: 'Seeing', value: summaryDetails.VISUAL, color: 'purple' },
-                                                            { title: 'Hearing', value: summaryDetails.AUDITORY, color: 'blue' },
-                                                            { title: 'Doing', value: summaryDetails.KINESTHETIC, color: 'orange' },
+                                                            { title: 'Seeing', value: summaryDetails.SEEING, color: 'purple' },
+                                                            { title: 'Hearing', value: summaryDetails.HEARING, color: 'blue' },
+                                                            { title: 'Doing', value: summaryDetails.DOING, color: 'orange' },
                                                         ]}
                                                     />
                                                     <div className="flex text-sm items-center w-max ml-auto mr-auto mt-4">

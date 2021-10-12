@@ -114,9 +114,9 @@ export default function VAKReport({ profile, assessment, reports, summaryDetails
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-2">
                                             <div className="bg-white rounded-md shadow h-auto">
                                                 <div className="text-base font-medium pt-4 px-4">21st Century Skills</div>
-                                                <div className="text-sm font-medium pt-4 px-4">Here is the summary of you core behaviour</div>
+                                                <div className="text-sm font-medium pt-4 px-4 pb-4">Here is the summary of you core behaviour</div>
 
-                                                <div ref={sliderRef} className="keen-slider">
+                                                {/* <div ref={sliderRef} className="keen-slider">
                                                     {reports.map((card) => (
                                                         <div className="keen-slider__slide">
                                                             <div className="shadow group relative mx-16 my-4 rounded m-1 duration-500" style={{}}>
@@ -198,7 +198,7 @@ export default function VAKReport({ profile, assessment, reports, summaryDetails
                                                             </svg>
                                                         </div>
                                                     </a>
-                                                </div>
+                                                </div> */}
 
 
                                             </div>

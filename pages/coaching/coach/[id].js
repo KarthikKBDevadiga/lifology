@@ -127,21 +127,21 @@ export default function ServiceDetails({ profile, token, coachPackage, coach }) 
                                                 </div>
                                             </div>
 
-                                            <div className="bg-white align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg p-4 mt-4">
+                                            {/* <div className="bg-white align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg p-4 mt-4">
                                                 <h2 className="text-lg font-medium text-gray-900">
                                                     Skills
                                                 </h2>
-                                            </div>
+                                            </div> */}
 
                                         </div>
 
                                         <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
-                                            <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                            {/* <div className="bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                                                     Career Video
                                                 </h2>
-                                            </div>
-                                            <div className="mt-4 bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
+                                            </div> */}
+                                            {/* <div className=" bg-white px-4 py-4 shadow sm:rounded-lg sm:px-4">
                                                 <div className="text-lg font-medium text-gray-900 text-center">
                                                     Get in Touch
                                                 </div>
@@ -152,7 +152,7 @@ export default function ServiceDetails({ profile, token, coachPackage, coach }) 
                                                     className="w-max ml-auto mr-auto mt-4 py-2 px-4 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none duration-500">
                                                     Connect with an Agent
                                                 </div>
-                                            </div>
+                                            </div> */}
 
                                         </section>
                                     </div>

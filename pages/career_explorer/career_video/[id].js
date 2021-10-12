@@ -162,7 +162,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                 <NavigationLayout index="4" setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
                 <div className="flex-1 overflow-auto focus:outline-none" >
-                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title={video.title} />
+                    <HeaderLayout setSidebarOpen={setSidebarOpen} profile={profile} title="" />
 
                     <main className="flex-1 relative z-0 overflow-y-auto">
 

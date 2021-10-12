@@ -14,13 +14,13 @@ const VideoMinItem = ({ video }) => {
                         <div className={styles.heading} style={{
                             margin: '0px',
                         }}>{video.title}</div>
-                        <div className={styles.subheading} style={{
+                        {/* <div className={styles.subheading} style={{
                             margin: '0px',
                             fontSize: '0.75rem',
                             lineHeight: '1rem'
                         }}>
                             {video.description}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </a>

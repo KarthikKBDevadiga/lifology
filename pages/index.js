@@ -1004,6 +1004,7 @@ export async function getServerSideProps(context) {
     }).catch((networkErr) => {
       return {};
     })
+  console.log(home);
 
   const slide2Options = await queryGraph(dashboardClient, {}, SchemeVlSlide2Option)
     .then((res) => {
