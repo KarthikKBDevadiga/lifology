@@ -1,11 +1,11 @@
 import { Fragment, useState } from 'react'
-import { Listbox, Transition, Dialog } from '@headlessui/react'
+import { Menu, Listbox, Transition, Dialog } from '@headlessui/react'
 import { CheckIcon, SelectorIcon, ExclamationIcon, ChevronDownIcon } from '@heroicons/react/solid'
 import DownloadLayout from '../components/DownloadLayout'
 import { ApolloClient, InMemoryCache } from "@apollo/client"
 import Constants from '../helpers/Constants'
 import { queryGraph, mutateGraph } from '../helpers/GraphQLCaller'
-import { SchemeGetGrades, SchemeGetPref, SchemeSignUp } from '../helpers/GraphQLSchemes'
+import { SchemeGetGrades, SchemeGetPref, SchemeSignUp, SchemaSearchSchool } from '../helpers/GraphQLSchemes'
 import styles from '../styles/Signup.module.css'
 import { useRouter } from 'next/router'
 import Step from '../components/Step'
@@ -25,9 +25,7 @@ const prefClient = new ApolloClient({
     uri: Constants.baseUrl + '/api/category',
     cache: new InMemoryCache(),
 })
-const schools = [
 
-]
 
 export default function SignUpStep3({ grades, prefs }) {
 
@@ -48,6 +46,9 @@ export default function SignUpStep3({ grades, prefs }) {
 
     const [prefDialog, setPrefDialog] = useState(false)
 
+    const [openSearchSchool, setOpenSearchSchool] = useState(true)
+    const [schoolList, setSchoolList] = useState([])
+    const [selectedSchool, setSelectedSchool] = useState();
 
     const submit = event => {
         event.preventDefault()
@@ -108,6 +109,11 @@ export default function SignUpStep3({ grades, prefs }) {
 
         console.log(list.includes(1))
     }
+    const getSearchedSchools = async (q) => {
+        const schools = await queryGraph(client, { q: q }, SchemaSearchSchool).then(res => res.searchSchoool);
+        setSchoolList(schools);
+        console.log(schools);
+    }
 
 
 
@@ -149,7 +155,6 @@ export default function SignUpStep3({ grades, prefs }) {
                                 <form onSubmit={submit} className="mt-4" >
 
                                     <div className="mt-1">
-
                                         <div className="mt-4 font-semibold text-gray-900 text-align-center text-base">
                                             3. Add Your School
                                         </div>
@@ -162,6 +167,30 @@ export default function SignUpStep3({ grades, prefs }) {
                                             required
                                             className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500 mt-2"
                                         />
+                                    </div>
+
+                                    <div className="mt-1">
+                                        <div className="mt-4 font-semibold text-gray-900 text-align-center text-base">
+                                            3. Add Your School
+                                        </div>
+                                        <div
+                                            onClick={() => setOpenSearchSchool(true)}
+                                            id="schoolName"
+                                            name="schoolName"
+                                            type="name"
+                                            autoComplete="name"
+                                            placeholder="School"
+                                            required
+                                            className={
+                                                classNames(
+                                                    "rounded-full bg-gray-100 text-gray-400 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500 mt-2 cursor-pointer",
+                                                    selectedSchool ? 'text-gray-900' : 'text-gray-400'
+                                                )
+                                            }
+                                        >
+                                            {selectedSchool ? selectedSchool.name :
+                                                'School'}
+                                        </div>
                                     </div>
 
                                     <Listbox value={selectedGrade} onChange={(grade) => {
@@ -481,6 +510,70 @@ export default function SignUpStep3({ grades, prefs }) {
             </Transition.Root>
 
 
+            <Transition.Root show={openSearchSchool} as={Fragment}>
+                <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setOpenSearchSchool}>
+                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                        </Transition.Child>
+
+                        {/* This element is to trick the browser into centering the modal contents. */}
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                            &#8203;
+                        </span>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            enterTo="opacity-100 translate-y-0 sm:scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-top sm:max-w-lg sm:w-full">
+                                <div className="relative flex items-center pr-4">
+                                    <input
+                                        onChange={
+                                            (e) => getSearchedSchools(e.target.value)
+                                        }
+                                        placeholder="Find School..."
+                                        className="flex-auto -mr-9 appearance-none bg-transparent pl-4 pr-12 py-4 text-gray-600 text-base sm:text-sm placeholder-gray-500 focus:outline-none" />
+                                    <svg width="20" height="20" fill="none" class="flex-none text-gray-400 pointer-events-none">
+                                        <circle cx="8.5" cy="8.5" r="5.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                        <path d="M17.25 17.25L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                <div className="text-sm font-medium overflow-y-auto border-t border-gray-200 divide-y divide-gray-200 rounded-b-lg max-h-[18.375rem]">
+                                    {
+                                        schoolList.map((s, i) => {
+                                            return (
+                                                <div
+                                                    onClick={
+                                                        () => {
+                                                            setSelectedSchool(s);
+                                                            setOpenSearchSchool(false);
+                                                        }
+                                                    }
+                                                    className="p-4 border-t-2 hover:bg-gray-100 hover:text-lblue duration-500 cursor-pointer">
+                                                    {s.name}
+                                                </div>
+                                            );
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </Transition.Child>
+                    </div>
+                </Dialog>
+            </Transition.Root>
         </>
     )
 }

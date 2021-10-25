@@ -1602,8 +1602,11 @@ mutation editNotificationSettings($all_notification:Boolean!,$assessment_notific
 }
 `;
 
-// mutation editNotificationSettings($all_notification:String!,$assessment_notification:String!,$coaching_notification:String!,$video_notification:String!,$job_career_notification:String!,$course_university_notification:String!,$life_skill_notification:String!,$article_notification:String!,$lifology_hub_notification:String!,$subscription_notification:true){
-//   editNotificationSettings(settings:{all_notification:$all_notification,assessment_notification:$assessment_notification,coaching_notification:$coaching_notification,video_notification:$video_notification,job_career_notification:$job_career_notification,course_university_notification:$course_university_notification,life_skill_notification:$life_skill_notification,article_notification:$article_notification,lifology_hub_notification:$lifology_hub_notification,subscription_notification:$subscription_notification
-//     }
-//   )
-// }
+export const SchemaSearchSchool = gql`
+query searchSchoool($q:String!){
+  searchSchoool(search_keyword:$q){
+      id
+      name
+  }
+}
+`;
