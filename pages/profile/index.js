@@ -82,7 +82,7 @@ export default function Profile({ profile }) {
                                     </div>
                                     <div className="flex mt-1">
                                         <div className="text-base text-gray-400">{profile.email.toLowerCase()}</div>
-                                        <svg
+                                        {/* <svg
                                             className="ml-4 mr-2 self-center"
                                             viewBox="0 0 32 32"
                                             width="16" height="16"
@@ -98,7 +98,7 @@ export default function Profile({ profile }) {
                                                 fill="#ffffff"
                                                 strokeWidth="1" />
                                         </svg>
-                                        <span className="self-center inline-block text-sm">Verified</span>
+                                        <span className="self-center inline-block text-sm">Verified</span> */}
                                     </div>
 
                                 </div>
@@ -175,6 +175,7 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {};
         });
+    console.log(profile);
     return {
         props: { profile, token }
     }

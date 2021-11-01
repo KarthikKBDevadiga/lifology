@@ -203,7 +203,7 @@ export default function Login({ cs }) {
                                         () => {
                                             setTimeLeft(0)
                                             setTab(1)
-                                        }} />
+                                        }} loading={loadingDialog} />
                             }
                         </div>
                     </div>

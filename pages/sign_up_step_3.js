@@ -46,7 +46,7 @@ export default function SignUpStep3({ grades, prefs }) {
 
     const [prefDialog, setPrefDialog] = useState(false)
 
-    const [openSearchSchool, setOpenSearchSchool] = useState(true)
+    const [openSearchSchool, setOpenSearchSchool] = useState(false)
     const [schoolList, setSchoolList] = useState([])
     const [selectedSchool, setSelectedSchool] = useState();
 
@@ -174,22 +174,20 @@ export default function SignUpStep3({ grades, prefs }) {
                                             3. Add Your School
                                         </div>
                                         <div
-                                            onClick={() => setOpenSearchSchool(true)}
-                                            id="schoolName"
-                                            name="schoolName"
-                                            type="name"
-                                            autoComplete="name"
-                                            placeholder="School"
-                                            required
-                                            className={
-                                                classNames(
-                                                    "rounded-full bg-gray-100 text-gray-400 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500 mt-2 cursor-pointer",
-                                                    selectedSchool ? 'text-gray-900' : 'text-gray-400'
-                                                )
-                                            }
-                                        >
-                                            {selectedSchool ? selectedSchool.name :
-                                                'School'}
+                                            onClick={() => setOpenSearchSchool(true)} className="mt-2 cursor-pointer relative flex items-center border rounded-full bg-gray-100 px-3 py-2 ">
+                                            <div
+                                                className={
+                                                    classNames(
+                                                        "flex-auto -mr-9 appearance-none bg-transparent pr-12  text-base sm:text-sm focus:outline-none",
+                                                        selectedSchool ? 'text-gray-900' : 'text-gray-400'
+                                                    )
+                                                } >
+                                                {selectedSchool ? selectedSchool.name :
+                                                    'School'}
+                                            </div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 flex-none text-gray-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                            </svg>
                                         </div>
                                     </div>
 
@@ -559,6 +557,7 @@ export default function SignUpStep3({ grades, prefs }) {
                                                     onClick={
                                                         () => {
                                                             setSelectedSchool(s);
+                                                            setSchoolList([]);
                                                             setOpenSearchSchool(false);
                                                         }
                                                     }

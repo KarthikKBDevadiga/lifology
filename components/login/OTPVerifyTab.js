@@ -1,7 +1,7 @@
 import React from 'react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
-const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
+const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab, loading }) => {
     const oneRef = useRef()
     const twoRef = useRef()
     const threeRef = useRef()
@@ -10,6 +10,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
     const sixRef = useRef()
 
     const verifyRef = useRef()
+
     return (
         <div className="mt-6">
             <form onSubmit={verifyOTP} className="space-y-6">
@@ -18,12 +19,9 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                         <div className="mt-1 grid grid-cols-6 gap-2 mt-4 ml-auto mr-auto">
 
                             <input
+                                autoFocus
                                 ref={oneRef}
-                                // onKeyPress={(event) => {
-                                //     if (!/[0-9]/.test(event.key)) {
-                                //         event.preventDefault();
-                                //     }
-                                // }}
+                                disabled={loading}
                                 onKeyUp={(event) => {
                                     if (event.keyCode == 8) {
 
@@ -48,6 +46,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 pattern="[0-9]"
                             />
                             <input
+                                disabled={loading}
                                 ref={twoRef}
                                 onKeyUp={(event) => {
                                     if (event.keyCode == 8) {
@@ -71,6 +70,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 pattern="[0-9]"
                             />
                             <input
+                                disabled={loading}
                                 ref={threeRef}
                                 onKeyUp={(event) => {
                                     if (event.keyCode == 8) {
@@ -94,6 +94,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 pattern="[0-9]"
                             />
                             <input
+                                disabled={loading}
                                 ref={fourRef}
                                 onKeyUp={(event) => {
                                     if (event.keyCode == 8) {
@@ -117,6 +118,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 pattern="[0-9]"
                             />
                             <input
+                                disabled={loading}
                                 ref={fiveRef}
                                 onKeyUp={(event) => {
                                     if (event.keyCode == 8) {
@@ -140,6 +142,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                 pattern="[0-9]"
                             />
                             <input
+                                disabled={loading}
                                 ref={sixRef}
                                 onKeyUp={(event) => {
                                     if (event.keyCode == 8) {
@@ -149,7 +152,6 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab }) => {
                                             sixRef.current.value = ''
                                         else
                                             verifyRef.current.click()
-                                        // sixRef.current.focus()
                                     }
                                 }}
                                 onFocus={(event) => {
