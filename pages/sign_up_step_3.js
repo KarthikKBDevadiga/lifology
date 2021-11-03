@@ -50,6 +50,8 @@ export default function SignUpStep3({ grades, prefs }) {
     const [schoolList, setSchoolList] = useState([])
     const [selectedSchool, setSelectedSchool] = useState();
 
+    const [qSchool, setQSchool] = useState('');
+
     const submit = event => {
         event.preventDefault()
         console.log(selectedGrade.grade)
@@ -110,6 +112,7 @@ export default function SignUpStep3({ grades, prefs }) {
         console.log(list.includes(1))
     }
     const getSearchedSchools = async (q) => {
+        setQSchool(q);
         const schools = await queryGraph(client, { q: q }, SchemaSearchSchool).then(res => res.searchSchoool);
         setSchoolList(schools);
         console.log(schools);
@@ -154,7 +157,7 @@ export default function SignUpStep3({ grades, prefs }) {
 
                                 <form onSubmit={submit} className="mt-4" >
 
-                                    <div className="mt-1">
+                                    {/* <div className="mt-1">
                                         <div className="mt-4 font-semibold text-gray-900 text-align-center text-base">
                                             3. Add Your School
                                         </div>
@@ -167,7 +170,7 @@ export default function SignUpStep3({ grades, prefs }) {
                                             required
                                             className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500 mt-2"
                                         />
-                                    </div>
+                                    </div> */}
 
                                     <div className="mt-1">
                                         <div className="mt-4 font-semibold text-gray-900 text-align-center text-base">
@@ -189,6 +192,19 @@ export default function SignUpStep3({ grades, prefs }) {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                             </svg>
                                         </div>
+                                        {
+                                            (selectedSchool != null && selectedSchool.id == -1) ?
+                                                <input
+                                                    id="schoolName"
+                                                    name="schoolName"
+                                                    type="name"
+                                                    autoComplete="name"
+                                                    placeholder="School"
+                                                    required
+                                                    className="rounded-full bg-gray-100 px-3 py-2 text-sm w-full outline-none border focus:border-indigo-700 duration-500 mt-2"
+                                                /> : <></>
+                                        }
+
                                     </div>
 
                                     <Listbox value={selectedGrade} onChange={(grade) => {
@@ -551,21 +567,38 @@ export default function SignUpStep3({ grades, prefs }) {
                                 </div>
                                 <div className="text-sm font-medium overflow-y-auto border-t border-gray-200 divide-y divide-gray-200 rounded-b-lg max-h-[18.375rem]">
                                     {
-                                        schoolList.map((s, i) => {
-                                            return (
-                                                <div
-                                                    onClick={
-                                                        () => {
-                                                            setSelectedSchool(s);
-                                                            setSchoolList([]);
-                                                            setOpenSearchSchool(false);
-                                                        }
+                                        (qSchool.length > 0 && schoolList.length == 0) ?
+                                            <div
+                                                onClick={
+                                                    () => {
+                                                        setSelectedSchool({
+                                                            name: 'School Not Found',
+                                                            id: -1
+                                                        });
+                                                        setSchoolList([]);
+                                                        setOpenSearchSchool(false);
+                                                        setQSchool('');
                                                     }
-                                                    className="p-4 border-t-2 hover:bg-gray-100 hover:text-lblue duration-500 cursor-pointer">
-                                                    {s.name}
-                                                </div>
-                                            );
-                                        })
+                                                }
+                                                className="p-4 border-t-2 hover:bg-gray-100 text-gray-500 hover:text-lblue duration-500 cursor-pointer">
+                                                School Not Found
+                                            </div> :
+                                            schoolList.map((s, i) => {
+                                                return (
+                                                    <div
+                                                        onClick={
+                                                            () => {
+                                                                setSelectedSchool(s);
+                                                                setSchoolList([]);
+                                                                setOpenSearchSchool(false);
+                                                                setQSchool('');
+                                                            }
+                                                        }
+                                                        className="p-4 border-t-2 hover:bg-gray-100 hover:text-lblue duration-500 cursor-pointer">
+                                                        {s.name}
+                                                    </div>
+                                                );
+                                            })
                                     }
                                 </div>
                             </div>
