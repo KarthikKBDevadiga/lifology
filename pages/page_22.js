@@ -138,7 +138,7 @@ export default function Page22() {
 
                     </div>
                 </div>
-                <div className="hidden lg:block w-1/2 flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 h-screen bg-lblue">
+                <div className="hidden lg:block w-1/2 flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 h-screen bg-lblue" style={{ background: 'url(img/right_banner.jpeg) no-repeat center center fixed', backgroundSize: 'cover' }}>
                     <div className="mx-auto w-full max-w-md lg:w-96">
 
                     </div>
