@@ -1610,3 +1610,30 @@ query searchSchoool($q:String!){
   }
 }
 `;
+
+export const SubscriptionList = gql`
+query{
+  plans{
+    id
+    title
+    description
+    duration
+    price
+    label
+    plan_id
+    membership_benefits
+  }
+}
+`;
+
+export const SubscriptionPayment = gql`
+mutation createOrder($item_id:Int){
+  createOrder(coupon_code:null,item_id:$item_id,currency:"INR",order_type:"SUBSCRIPTION"){
+    id
+    currency
+    amount
+    discount
+    payment_req
+  }
+}
+`;

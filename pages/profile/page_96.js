@@ -211,18 +211,84 @@ export default function Page96({ profile }) {
                                             Trending Articles
 
                                         </h2>
-                                        <div className="group relative mx-2 my-4 rounded m-1 ">
+                                        <div className="px-4 py-2 flex">
+                                            <div className="mr-4 flex-shrink-0 self-center">
+                                                <svg
+                                                    className="h-16 w-16 border border-gray-300 bg-white text-gray-300"
+                                                    preserveAspectRatio="none"
+                                                    stroke="currentColor"
+                                                    fill="none"
+                                                    viewBox="0 0 200 200"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path vectorEffect="non-scaling-stroke" strokeWidth={1} d="M0 0l200 200M0 200L200 0" />
+                                                </svg>
+                                            </div>
                                             <div>
-                                                <img className="rounded-t group-hover:filter-none duration-500 w-full h-32 object-cover" src='../img/career-guidence.png' />
-                                                {/* <img className=" rounded-t " src={card.thumbnail} /> */}
-                                                <div className="flex-1 flex items-center justify-between ">
-                                                    <div className="flex-1 px-3 pb-2 text-sm  ">
-                                                        <div >
-                                                            George Aye In Surviving IDEO
-                                                        </div>
-                                                        <div >Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open</div>
-                                                    </div>
-                                                </div>
+                                                <h4 className="text-sm font-bold">George Aye In Surviving IDEO</h4>
+                                                <p className="text-xs mt-1">
+                                                    Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="px-4 py-2 flex">
+                                            <div className="mr-4 flex-shrink-0 self-center">
+                                                <svg
+                                                    className="h-16 w-16 border border-gray-300 bg-white text-gray-300"
+                                                    preserveAspectRatio="none"
+                                                    stroke="currentColor"
+                                                    fill="none"
+                                                    viewBox="0 0 200 200"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path vectorEffect="non-scaling-stroke" strokeWidth={1} d="M0 0l200 200M0 200L200 0" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-bold">George Aye In Surviving IDEO</h4>
+                                                <p className="text-xs mt-1">
+                                                    Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="px-4 py-2 flex">
+                                            <div className="mr-4 flex-shrink-0 self-center">
+                                                <svg
+                                                    className="h-16 w-16 border border-gray-300 bg-white text-gray-300"
+                                                    preserveAspectRatio="none"
+                                                    stroke="currentColor"
+                                                    fill="none"
+                                                    viewBox="0 0 200 200"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path vectorEffect="non-scaling-stroke" strokeWidth={1} d="M0 0l200 200M0 200L200 0" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-bold">George Aye In Surviving IDEO</h4>
+                                                <p className="text-xs mt-1">
+                                                    Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="px-4 py-2 flex">
+                                            <div className="mr-4 flex-shrink-0 self-center">
+                                                <svg
+                                                    className="h-16 w-16 border border-gray-300 bg-white text-gray-300"
+                                                    preserveAspectRatio="none"
+                                                    stroke="currentColor"
+                                                    fill="none"
+                                                    viewBox="0 0 200 200"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path vectorEffect="non-scaling-stroke" strokeWidth={1} d="M0 0l200 200M0 200L200 0" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-bold">George Aye In Surviving IDEO</h4>
+                                                <p className="text-xs mt-1">
+                                                    Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

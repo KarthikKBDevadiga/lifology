@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client"
-import Constants from '../helpers/Constants'
+import Constants from '../../helpers/Constants'
 
 import { useState } from 'react'
 
@@ -7,7 +7,10 @@ import { RadioGroup } from '@headlessui/react'
 
 import classNames from '/helpers/classNames'
 
-import MetaLayout from '../components/MetaLayout'
+import MetaLayout from '../../components/MetaLayout'
+import cookies from "next-cookies"
+import { mutateGraph, queryGraph } from "../../helpers/GraphQLCaller"
+import { SubscriptionList, SubscriptionPayment } from "../../helpers/GraphQLSchemes"
 
 const client = new ApolloClient({
     uri: Constants.baseUrl + "/api/auth",
@@ -25,9 +28,26 @@ const plans = [
     { name: 'Quarterly', description: 'Get unlimited access to all our programs for a quarter.', price: 'Rs. 2999/quarter' },
     { name: 'Monthly', description: 'Get unlimited access to all our programs for a month.', price: 'Rs.999/month' }
 ]
-export default function Page22() {
+export default function Page22({ plan, token }) {
 
     const [selected, setSelected] = useState(plans[0])
+
+    const proceedToPay = event => {
+
+        const client = new ApolloClient({
+            uri: Constants.baseUrl + "/razorpay/payment",
+            cache: new InMemoryCache(),
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        })
+        mutateGraph(client, { item_id: plan.id }, SubscriptionPayment)
+            .then((res) => {
+                console.log(res)
+            }).catch((networkErr) => {
+                console.log('Error')
+            })
+    }
     return (
         <>
             <MetaLayout title="Sign Up" description="Sign Up" />
@@ -37,7 +57,7 @@ export default function Page22() {
 
                     <div className="mx-auto w-full h-1/4" >
                         <div className="mt-8 ml-8 w-min flex">
-                            <img src="img/logoBlue.png" alt="Lifology" width="32px" className="ml-auto mr-auto text-lblue" />
+                            <img src="/img/logoBlue.png" alt="Lifology" width="32px" className="ml-auto mr-auto text-lblue" />
                             <span className="self-center text-white font-bold pl-4 text-xl tracking-widest text-lblue">LIFOLOGY</span>
                         </div>
                         <div className="font-bold mx-8 mt-8 text-xl">Your plan details</div>
@@ -46,10 +66,10 @@ export default function Page22() {
                             <div className="flex items-center">
                                 <div className="text-sm">
                                     <p className="font-bold text-gray-900">
-                                        Monthly
+                                        {plan.title}
                                     </p>
                                     <p as="div" className="text-gray-500">
-                                        Get unlimited access to all our programs for a month.
+                                        {plan.description}
                                     </p>
                                 </div>
                             </div>
@@ -89,12 +109,12 @@ export default function Page22() {
 
                         <div className="flex mx-10 mt-4">
                             <div className="w-1/2">Membership Charge</div>
-                            <div className="w-1/2 text-right">Rs. 1,000.00</div>
+                            <div className="w-1/2 text-right">Rs. {plan.price}</div>
                         </div>
-                        <div className="flex mx-10 mt-2">
+                        {/* <div className="flex mx-10 mt-2">
                             <div className="w-1/2">Super saver</div>
                             <div className="w-1/2 text-right">- Rs. 100.00</div>
-                        </div>
+                        </div> */}
                         <div className="flex mx-10 mt-2">
                             <div className="w-1/2">Discount</div>
                             <div className="w-1/2 text-right">- Rs. 50.00</div>
@@ -102,7 +122,7 @@ export default function Page22() {
                         <div className="border border-dashed mx-8 mt-4"></div>
                         <div className="flex mx-10 mt-2 font-bold">
                             <div className="w-1/2">Total</div>
-                            <div className="w-1/2 text-right">Rs. 850.00</div>
+                            <div className="w-1/2 text-right">Rs. {plan.price}</div>
                         </div>
 
 
@@ -122,10 +142,8 @@ export default function Page22() {
 
                                 <div>
                                     <a
-                                        className="text-sm w-full rounded-full border border-lblue bg-gray-100 inline-flex px-4 py-2 justify-center text-lblue hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
-                                        onClick={() =>
-                                            console.log('Hello')
-                                        }
+                                        className="cursor-pointer text-sm w-full rounded-full border border-lblue bg-gray-100 inline-flex px-4 py-2 justify-center text-lblue hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
+                                        onClick={() => proceedToPay()}
                                     >
                                         <p>Proceed to Pay</p>
                                     </a>
@@ -138,7 +156,7 @@ export default function Page22() {
 
                     </div>
                 </div>
-                <div className="hidden lg:block w-1/2 flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 h-screen bg-lblue" style={{ background: 'url(img/right_banner.jpeg) no-repeat center center fixed', backgroundSize: 'cover' }}>
+                <div className="hidden lg:block w-1/2 flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 h-screen bg-lblue" style={{ background: 'url(/img/right_banner.jpeg) no-repeat center center fixed', backgroundSize: 'cover' }}>
                     <div className="mx-auto w-full max-w-md lg:w-96">
 
                     </div>
@@ -148,4 +166,36 @@ export default function Page22() {
 
         </>
     )
+}
+export async function getServerSideProps(context) {
+    const { token } = cookies(context)
+
+    if (token == null || token == '') {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/login"
+            }
+        }
+    }
+    const client = new ApolloClient({
+        uri: Constants.baseUrl + "/razorpay/payment",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    })
+    const plans = await queryGraph(client, {}, SubscriptionList)
+        .then((res) => {
+            return res.plans
+        }).catch((networkErr) => {
+            return [];
+        })
+    const plan = plans.find(({ id }) => id === context.params.id)
+    console.log(plan);
+    return {
+        props: {
+            plan, token
+        },
+    };
 }
