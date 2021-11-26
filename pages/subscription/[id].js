@@ -10,7 +10,8 @@ import classNames from '/helpers/classNames'
 import MetaLayout from '../../components/MetaLayout'
 import cookies from "next-cookies"
 import { mutateGraph, queryGraph } from "../../helpers/GraphQLCaller"
-import { SubscriptionList, SubscriptionPayment } from "../../helpers/GraphQLSchemes"
+import { SubscriptionList, SubscriptionPayment, SchemeGetProfile } from "../../helpers/GraphQLSchemes"
+import LoadingDialog from "../../components/dialog/LoadingDialog"
 
 const client = new ApolloClient({
     uri: Constants.baseUrl + "/api/auth",
@@ -28,11 +29,13 @@ const plans = [
     { name: 'Quarterly', description: 'Get unlimited access to all our programs for a quarter.', price: 'Rs. 2999/quarter' },
     { name: 'Monthly', description: 'Get unlimited access to all our programs for a month.', price: 'Rs.999/month' }
 ]
-export default function Page22({ plan, token }) {
+export default function Page22({ plan, token, profile }) {
 
     const [selected, setSelected] = useState(plans[0])
+    const [loadingDialog, setLoadingDialog] = useState(false)
 
     const proceedToPay = event => {
+        setLoadingDialog(true)
 
         const client = new ApolloClient({
             uri: Constants.baseUrl + "/razorpay/payment",
@@ -41,12 +44,71 @@ export default function Page22({ plan, token }) {
                 Authorization: "Bearer " + token,
             },
         })
-        mutateGraph(client, { item_id: plan.id }, SubscriptionPayment)
+        mutateGraph(client, { item_id: parseInt(plan.id) }, SubscriptionPayment)
             .then((res) => {
                 console.log(res)
+                setLoadingDialog(false)
+                makePayment(res.createOrder);
             }).catch((networkErr) => {
                 console.log('Error')
+                setLoadingDialog(false)
             })
+    }
+
+    function loadScript(src) {
+        return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.onload = () => {
+                resolve(true);
+            };
+            script.onerror = () => {
+                resolve(false);
+            };
+            document.body.appendChild(script);
+        });
+    }
+    async function makePayment(order) {
+        const res = await loadScript(
+            "https://checkout.razorpay.com/v1/checkout.js"
+        );
+        // console.log(order.id);
+        if (!res) {
+            alert("Razorpay SDK failed to load. Are you online?");
+            return;
+        }
+        var options = {
+            description: 'Buy Subscription',
+            image: 'https://i.imgur.com/3g7nmJC.png',
+            currency: 'INR',
+            key: Constants.RAZOR_PAY_KEY,
+            amount: order.amount,
+            name: 'Lifology',
+            order_id: order.id,
+            prefill: {
+                email: profile.email,
+                contact: profile.mobile_number,
+                name: profile.name
+            },
+            handler: async function (response) {
+                setSuccessDialogString('Payment Completed Successfully')
+                setSuccessDialog(true)
+                setTimeout(() => {
+                    setSuccessDialog(false)
+                    router.push({
+                        pathname: '/subscription',
+                    })
+                }, 1000)
+            },
+            theme: { color: '#53a20e' }
+        }
+        const paymentObject = new window.Razorpay(options)
+        paymentObject.on('payment.failed', (response) => {
+            console.log('Error')
+            setErrorDialogString('Failed To Complete Payment')
+            setErrorDialog(true)
+        })
+        paymentObject.open()
     }
     return (
         <>
@@ -115,10 +177,10 @@ export default function Page22({ plan, token }) {
                             <div className="w-1/2">Super saver</div>
                             <div className="w-1/2 text-right">- Rs. 100.00</div>
                         </div> */}
-                        <div className="flex mx-10 mt-2">
+                        {/* <div className="flex mx-10 mt-2">
                             <div className="w-1/2">Discount</div>
                             <div className="w-1/2 text-right">- Rs. 50.00</div>
-                        </div>
+                        </div> */}
                         <div className="border border-dashed mx-8 mt-4"></div>
                         <div className="flex mx-10 mt-2 font-bold">
                             <div className="w-1/2">Total</div>
@@ -153,16 +215,15 @@ export default function Page22({ plan, token }) {
                         </div>
                     </div>
                     <div className="text-center flex-1 flex flex-col mt-auto ml-auto mr-auto h-3/4 items-center" >
-
                     </div>
                 </div>
                 <div className="hidden lg:block w-1/2 flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 h-screen bg-lblue" style={{ background: 'url(/img/right_banner.jpeg) no-repeat center center fixed', backgroundSize: 'cover' }}>
                     <div className="mx-auto w-full max-w-md lg:w-96">
-
                     </div>
-
                 </div>
             </div>
+
+            <LoadingDialog showDialog={loadingDialog} setShowDialog={setLoadingDialog} />
 
         </>
     )
@@ -193,9 +254,23 @@ export async function getServerSideProps(context) {
         })
     const plan = plans.find(({ id }) => id === context.params.id)
     console.log(plan);
+
+    const profileClient = new ApolloClient({
+        uri: Constants.baseUrl + "/api/user",
+        cache: new InMemoryCache(),
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    })
+    const profile = await queryGraph(profileClient, {}, SchemeGetProfile)
+        .then((res) => {
+            return res.profile
+        }).catch((networkErr) => {
+            return {};
+        });
     return {
         props: {
-            plan, token
+            plan, token, profile
         },
     };
 }

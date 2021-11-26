@@ -1627,7 +1627,7 @@ query{
 `;
 
 export const SubscriptionPayment = gql`
-mutation createOrder($item_id:Int){
+mutation createOrder($item_id:Int!){
   createOrder(coupon_code:null,item_id:$item_id,currency:"INR",order_type:"SUBSCRIPTION"){
     id
     currency

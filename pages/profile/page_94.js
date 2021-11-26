@@ -48,7 +48,7 @@ export default function Page94({ profile }) {
                                     <div className="text-sm text-gray-900 sm:truncate mt-2">Amount : 999.00</div>
                                 </div>
                                 <div className="mt-4 flex md:mt-0 md:ml-4 self-baseline">
-                                    <Link href='/profile'>
+                                    <Link href='/subscription'>
                                         <a
                                             className="py-2 px-8 border border-lblue rounded-full text-sm font-medium text-lblue bg-white hover:bg-lblue hover:text-white focus:outline-none duration-500">
                                             Edit Plan
