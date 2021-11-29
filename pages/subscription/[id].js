@@ -96,7 +96,7 @@ export default function Page22({ plan, token, profile }) {
                 setTimeout(() => {
                     setSuccessDialog(false)
                     router.push({
-                        pathname: '/subscription',
+                        pathname: '/profile/page_94',
                     })
                 }, 1000)
             },
