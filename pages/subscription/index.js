@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client"
 import Constants from '../../helpers/Constants'
-
+import Link from 'next/link'
 import { useState } from 'react'
 
 import { RadioGroup } from '@headlessui/react'
@@ -115,14 +115,19 @@ export default function Page19({ plans }) {
                                 </div>
 
                                 <div>
-                                    <a
-                                        className="cursor-pointer text-sm w-full rounded-full border border-lblue bg-gray-100 inline-flex px-4 py-2 justify-center text-lblue hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
-                                        onClick={() =>
-                                            console.log('Hello')
-                                        }
-                                    >
-                                        <p>Confirm Submission</p>
-                                    </a>
+                                    <Link href={{
+                                        pathname: "subscription/" + selected.id
+                                    }}>
+                                        <a
+                                            className="cursor-pointer text-sm w-full rounded-full border border-lblue bg-gray-100 inline-flex px-4 py-2 justify-center text-lblue hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
+                                            onClick={() =>
+                                                console.log('Hello')
+                                            }
+                                        >
+                                            <p>Confirm Submission</p>
+                                        </a>
+                                    </Link>
+
                                 </div>
 
                             </div>
