@@ -178,8 +178,9 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                         <div className="space-y-6 lg:col-start-1 lg:col-span-2">
                                             {/* Description list*/}
                                             <section aria-labelledby="applicant-information-title" >
+
                                                 <div className="bg-white shadow sm:rounded-lg p-4">
-                                                    <div className="relative h-0" style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
+                                                    <div className={classNames(video.purchase_status == 0 ? 'pointer-events-none opacity-60' : '', "relative h-0")} style={{ paddingBottom: '56.25%', paddingTop: '0px' }}>
                                                         <iframe title="vimeo-player" src=
                                                             {
                                                                 videoType == 'youtube' ? 'https://www.youtube.com/embed/' + getYoutubeVideoId(video.video) + '?autoplay=0&rel=0&showinfo=0' : videoType == 'vimeo' ?
@@ -188,7 +189,8 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
 
                                                         </iframe>
                                                     </div>
-                                                    <div className="sm:flex sm:items-start sm:justify-between py-2">
+                                                    <div
+                                                        className={classNames(video.purchase_status == 0 ? 'pointer-events-none opacity-60' : '', "sm:flex sm:items-start sm:justify-between py-2")}>
                                                         <div className="self-center">
                                                             <h3 className="text-base leading-6 font-bold text-gray-900">{video.title}</h3>
                                                         </div>
@@ -248,7 +250,7 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                         </div>
                                                     </div>
                                                     <div className="w-full h-px bg-gray-200 mb-4"></div>
-                                                    <div>
+                                                    <div className={classNames(video.purchase_status == 0 ? 'pointer-events-none opacity-60' : '')}>
                                                         <div className="font-bold mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                                                             Description
                                                         </div>
@@ -256,7 +258,30 @@ export default function CareerVideoDetail({ profile, video, recommended, token }
                                                             {video.description}
                                                         </div>
                                                     </div>
+                                                    {
+                                                        video.purchase_status == 0 ?
+                                                            <div className="mt-8 text-center">
+                                                                <div className="font-bold text-center mb-4 flex-shrink-0 sm:mb-0">
+                                                                    Keep Reading
+                                                                </div>
+                                                                <div className="mt-2 mb-4 text-sm text-center flex-shrink-0 sm:mb-0">
+                                                                    You have read all the free trail members only. get unlimted access of everything on lifology
+                                                                </div>
+                                                                <Link href="/subscription">
+                                                                    <a
+
+                                                                        className="mt-2 inline-flex justify-center rounded-full border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
+                                                                        style={{ width: 'fit-content', backgroundColor: '#085CA4' }}
+                                                                    >
+                                                                        Subscription
+                                                                    </a>
+                                                                </Link>
+                                                            </div>
+                                                            : <></>
+                                                    }
                                                 </div>
+
+
 
 
                                             </section>
@@ -354,6 +379,7 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {};
         })
+    console.log(video);
     const recommended = await queryGraph(videoClient, {}, SchemeGetRecommendedVideos)
         .then((res) => {
             return res.recommendedVideo

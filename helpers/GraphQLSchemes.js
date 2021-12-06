@@ -401,6 +401,7 @@ query videoDetails($id:Int!){
     thumbnail
     watch_later_status
     favorite_status
+    purchase_status
     chapters{
       id
       video_id
