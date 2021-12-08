@@ -183,12 +183,12 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
         <div className="bg-white shadow sm:rounded-lg p-4">
           <div className="sm:flex">
             <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-              <img className={'rounded-md w-48'} src={magazine?.thumbnail} />
+              <img className={classNames(magazine.purchase_status == 0 ? 'pointer-events-none opacity-60' : '', 'rounded-md w-48')} src={magazine?.thumbnail} />
             </div>
             <div>
               <div className="flex">
                 <div>
-                  <h4 className="text-base font-bold">{magazine?.title}</h4>
+                  <h4 className={classNames(magazine.purchase_status == 0 ? 'pointer-events-none opacity-60' : '', "text-base font-bold")}>{magazine?.title}</h4>
                 </div>
                 {/* <div className="ml-4 flex-shrink-0 cursor-pointer hover:text-lblue duration-500" onClick={() => setShowHelp(!showHelp)}>
                   <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
@@ -202,19 +202,40 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
           <div className="w-full h-px bg-gray-200 my-4" />
 
           <div>
-            <div className="mb-4 text-sm text-justify flex-shrink-0 sm:mb-0">
-              {magazine?.description}
-            </div>
-            {/* <div className={'mt-4'}>
-              <div>Tags</div>
-              <ul className={'flex mt-1 flex-wrap'}>{magazine?.tags?.map(tag => (
-                <li key={tag} className={'text-sm bg-gray-200 rounded-full max-w-min py-2 px-4 mr-3 mb-3'}>{tag}</li>
-              ))}</ul>
-            </div> */}
+
+            {
+              magazine.purchase_status == 0 ?
+                <div>
+                  <div className="pointer-events-none opacity-60 h-10 mb-4 text-sm text-justify flex-shrink-0 sm:mb-0 overflow-hidden">
+                    {magazine?.description}
+                  </div>
+                  <div className="mt-8 text-center">
+                    <div className="font-bold text-center mb-4 flex-shrink-0 sm:mb-0">
+                      Keep Reading
+                    </div>
+                    <div className="mt-2 mb-4 text-sm text-center flex-shrink-0 sm:mb-0">
+                      You have read all the free trail members only. get unlimted access of everything on lifology
+                    </div>
+                    <Link href="/subscription">
+                      <a
+
+                        className="mt-2 inline-flex justify-center rounded-full border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
+                        style={{ width: 'fit-content', backgroundColor: '#085CA4' }}
+                      >
+                        Subscription
+                      </a>
+                    </Link>
+                  </div>
+                </div>
+                :
+                <div className="mb-4 text-sm text-justify flex-shrink-0 sm:mb-0">
+                  {magazine?.description}
+                </div>
+            }
           </div>
 
           <div className="w-full h-px bg-gray-200 mt-2 mb-2" />
-          <div className={'flex flex-wrap max-w-full'}>
+          <div className={classNames(magazine.purchase_status == 0 ? 'pointer-events-none opacity-60' : '', 'flex flex-wrap max-w-full')}>
             <div className="self-center w-full flex flex-wrap text-xs">
               <div className={
                 classNames(
@@ -263,7 +284,7 @@ export default function CareerVideoDetail({ profile, magazineDetails, relatedVid
             </div>
           </div>
           <div className="w-full h-px bg-gray-200 mt-2 mb-4" />
-          <div>
+          <div className={classNames(magazine.purchase_status == 0 ? 'pointer-events-none opacity-60' : '')}>
             <div className={'text-md mb-2'}>Leave a comment</div>
             <textarea
               placeholder={'Write something...'}
@@ -340,6 +361,7 @@ export async function getServerSideProps(context) {
     }).catch((networkErr) => {
       return {};
     })
+  console.log(magazine);
   const profileClient = new ApolloClient({
     uri: Constants.baseUrl + "/api/user",
     cache: new InMemoryCache(),

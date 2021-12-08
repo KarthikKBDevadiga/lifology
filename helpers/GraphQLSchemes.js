@@ -246,6 +246,7 @@ query videos($order:String, $search_keyword:String){
     video
     thumbnail
     watch_later_status
+    purchase_status
     favorite_status
       chapters{
         id
@@ -592,6 +593,7 @@ query{
     total_questions
     attempted_questions
     questions_count
+    purchase_status
     reports{
       id
       title
@@ -1064,6 +1066,7 @@ export const SchemeGetMagazineDetails = gql`
         thumbnail
         like_status
         bookmark_status
+        purchase_status
       }
       relatedVideos{
         id
