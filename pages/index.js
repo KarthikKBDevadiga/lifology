@@ -460,13 +460,24 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                                           <div className="text-white w-9/12 text-sm mt-2">{assessment.subtitle}</div>
                                           <div className="mt-4 w-0 h-0.5 rounded bg-white group-hover:w-3/4 duration-500"></div>
                                         </div>
-                                        <div className="flex absolute bottom-4 right-4 scale-0 group-hover:scale-100 duration-500 translate-x-full group-hover:translate-x-0">
-                                          <div className="self-center font-medium text-base text-white">{assessment.assessment_type == 3 ? '' : assessment.total_questions > 0 ? assessment.attempted_questions > 0 ? 'Continue' : 'Start' : 'View Report'}</div>
+                                        {
+                                          assessment.purchase_status == 0 ?
+                                            <div className="flex p-2 absolute left-0 bottom-0 right-0 rounded-tl-xl bg-white bg-opacity-50  text-white">
+                                              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0z" fill="none" /><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
+                                              <div className="flex-1 px-3 text-xs self-center ">
+                                                <div >
+                                                  This Feature is Locked
+                                                </div>
+                                              </div>
+                                            </div> :
+                                            <div className="flex absolute bottom-4 right-4 scale-0 group-hover:scale-100 duration-500 translate-x-full group-hover:translate-x-0">
+                                              <div className="self-center font-medium text-lg text-white">{assessment.assessment_type == 3 ? 'View Report' : assessment.total_questions > 0 ? assessment.attempted_questions > 0 ? 'Continue' : 'Start' : 'View Report'}</div>
 
-                                          <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="white">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                          </svg>
-                                        </div>
+                                              <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="white">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                              </svg>
+                                            </div>
+                                        }
                                       </div>
                                     </a>
                                   </Link>

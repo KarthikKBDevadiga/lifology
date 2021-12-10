@@ -1422,6 +1422,7 @@ query{
       thumbnail
       description
       alt_thumbnail
+      purchase_status
     }
     assessment{
       id
@@ -1437,6 +1438,10 @@ query{
       total_questions
       attempted_questions
       questions_count
+      video_start
+      video_score
+      video_instructions
+      purchase_status
     }
     completed_assessment
     percentage_completed
@@ -1446,6 +1451,7 @@ query{
       video
       thumbnail
       description
+      purchase_status
     }
     university{
       id
@@ -1456,6 +1462,7 @@ query{
       city
       state
       country
+      purchase_status
     }
     articles{
       id
@@ -1467,6 +1474,7 @@ query{
       tags
       video
       thumbnail
+      purchase_status
     }
     coach
     {
@@ -1484,7 +1492,7 @@ query{
       badge_description
     }
   }
-  dashboardCounts{
+   dashboardCounts{
     total_watched_videos
     total_read_articles
   }
