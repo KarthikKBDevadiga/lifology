@@ -14,8 +14,10 @@ import ProgressBar from '/components/ProgressBar'
 import { Fragment } from 'react'
 import MetaLayout from '/components/MetaLayout'
 import cookies from 'next-cookies'
+import { SubscriptionDetails } from '../../helpers/GraphQLSchemes'
+import moment from 'moment'
 
-export default function Page94({ profile }) {
+export default function Page94({ profile, planDetails }) {
     const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -40,12 +42,12 @@ export default function Page94({ profile }) {
                                     <h2 className="text-lg font-bold leading-7 text-gray-900 sm:text-lg sm:truncate">Subscription Details</h2>
 
                                     <div className="bg-lgreen px-4 py-3 rounded mt-2 w-min">
-                                        <div className="text-sm font-bold text-white sm:truncate">Monthly</div>
-                                        <div className="text-sm text-white sm:truncate mt-2">Get unlimited access to all our programs for a month.</div>
+                                        <div className="text-sm font-bold text-white sm:truncate">{planDetails.current_plan}</div>
+                                        <div className="text-sm text-white sm:truncate mt-2">{planDetails.description}</div>
                                     </div>
 
-                                    <div className="text-sm text-gray-900 sm:truncate mt-4">Subscription will expires in 11 Nov 2021, 10:49 AM</div>
-                                    <div className="text-sm text-gray-900 sm:truncate mt-2">Amount : 999.00</div>
+                                    <div className="text-sm text-gray-900 sm:truncate mt-4">Subscription will expires in {moment(parseInt(planDetails.expire)).format('DD MMM YYYY, hh:mm A')}</div>
+                                    <div className="text-sm text-gray-900 sm:truncate mt-2">Amount : {planDetails.amount}</div>
                                 </div>
                                 <div className="mt-4 flex md:mt-0 md:ml-4 self-baseline">
                                     <Link href='/subscription'>
@@ -126,8 +128,15 @@ export async function getServerSideProps(context) {
         }).catch((networkErr) => {
             return {};
         });
-    console.log(profile);
+    const planDetails = await queryGraph(client, {}, SubscriptionDetails)
+        .then((res) => {
+            return res.planDetails
+        }).catch((networkErr) => {
+            return {};
+        });
+
+    console.log(planDetails);
     return {
-        props: { profile, token }
+        props: { profile, planDetails, token }
     }
 }

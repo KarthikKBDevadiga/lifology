@@ -1637,6 +1637,19 @@ query{
   }
 }
 `;
+export const SubscriptionDetails = gql`
+query{
+  planDetails{
+    current_plan
+    expire
+    membership_benefits
+    left_days
+    amount
+    subscription_plan_id
+    description
+  }
+}
+`;
 
 export const SubscriptionPayment = gql`
 mutation createOrder($item_id:Int!){
