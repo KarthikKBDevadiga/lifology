@@ -973,6 +973,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 }
 export async function getServerSideProps(context) {
   const { token } = cookies(context)
+  console.log(token)
 
   if (token == null || token == '') {
     return {

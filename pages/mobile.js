@@ -9,6 +9,8 @@ export default function Mobile({ token }) {
         document.cookie = 'token=' + token + ';expires=3600;'
         router.push({
             pathname: '/subscription',
+            query: { redirect: true }
+
         })
     }, [])
     return (

@@ -28,7 +28,7 @@ const client = new ApolloClient({
 //     { name: 'Quarterly', description: 'Get unlimited access to all our programs for a quarter.', price: 'Rs. 2999/quarter' },
 //     { name: 'Monthly', description: 'Get unlimited access to all our programs for a month.', price: 'Rs.999/month' }
 // ]
-export default function Page19({ plans }) {
+export default function Page19({ plans, redirect }) {
 
     const [selected, setSelected] = useState(plans[0])
     return (
@@ -116,7 +116,8 @@ export default function Page19({ plans }) {
 
                                 <div>
                                     <Link href={{
-                                        pathname: "subscription/" + selected.id
+                                        pathname: "subscription/" + selected.id,
+                                        query: { redirect: redirect },
                                     }}>
                                         <a
                                             className="cursor-pointer text-sm w-full rounded-full border border-lblue bg-gray-100 inline-flex px-4 py-2 justify-center text-lblue hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
@@ -148,7 +149,6 @@ export default function Page19({ plans }) {
 }
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
-
     if (token == null || token == '') {
         return {
             redirect: {
@@ -157,6 +157,7 @@ export async function getServerSideProps(context) {
             }
         }
     }
+    const redirect = context.query.redirect ? context.query.redirect : false;
     const client = new ApolloClient({
         uri: Constants.baseUrl + "/razorpay/payment",
         cache: new InMemoryCache(),
@@ -173,7 +174,7 @@ export async function getServerSideProps(context) {
     console.log(plans);
     return {
         props: {
-            plans
+            plans, redirect
         },
     };
 }

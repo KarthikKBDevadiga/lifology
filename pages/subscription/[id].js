@@ -31,7 +31,7 @@ const plans = [
     { name: 'Quarterly', description: 'Get unlimited access to all our programs for a quarter.', price: 'Rs. 2999/quarter' },
     { name: 'Monthly', description: 'Get unlimited access to all our programs for a month.', price: 'Rs.999/month' }
 ]
-export default function Page22({ plan, token, profile }) {
+export default function Page22({ plan, token, profile, redirect }) {
     const router = useRouter()
 
     const [selected, setSelected] = useState(plans[0])
@@ -99,13 +99,31 @@ export default function Page22({ plan, token, profile }) {
                 name: profile.name
             },
             handler: async function (response) {
+                console.log(response);
                 setSuccessDialogString('Payment Completed Successfully')
                 setSuccessDialog(true)
                 setTimeout(() => {
                     setSuccessDialog(false)
-                    router.push({
-                        pathname: '/profile/page_94',
-                    })
+                    if (redirect) {
+                        // { razorpay_payment_id: 'pay_IXeuWfyG1lDg5W', razorpay_order_id: 'order_IXeuJFYWPXmYTV', razorpay_signature: '06917a92437981f8d7597a0df032506652672c979059a8376302517d177c0c32' }
+                        const url = 'https://demo.lifology.com/paymentComplete?razorpay_payment_id=' + response['razorpay_payment_id']
+                            + '&razorpay_order_id=' + response['razorpay_order_id']
+                            + '&razorpay_signature=' + response['razorpay_signature'];
+
+                        router.push({
+                            pathname: 'https://lifology.page.link/',
+                            query: {
+                                link: url,
+                                apn: 'com.app.lifology',
+                                isi: '1574635714',
+                                ibi: 'com.septa.app.lifology'
+                            }
+                        })
+                    } else {
+                        router.push({
+                            pathname: '/profile/page_94',
+                        })
+                    }
                 }, 1000)
             },
             theme: { color: '#53a20e' }
@@ -328,6 +346,7 @@ export default function Page22({ plan, token, profile }) {
 }
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
+    const redirect = context.query.redirect
 
     if (token == null || token == '') {
         return {
@@ -368,7 +387,7 @@ export async function getServerSideProps(context) {
         });
     return {
         props: {
-            plan, token, profile
+            plan, token, profile, redirect
         },
     };
 }
