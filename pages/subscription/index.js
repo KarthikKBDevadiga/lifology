@@ -17,18 +17,7 @@ const client = new ApolloClient({
     cache: new InMemoryCache(),
 });
 
-// const plans = [
-//     { name: 'Hobby', ram: '8GB', cpus: '4 CPUs', disk: '160 GB SSD disk', price: '$40' },
-//     { name: 'Startup', ram: '12GB', cpus: '6 CPUs', disk: '256 GB SSD disk', price: '$80' },
-//     { name: 'Business', ram: '16GB', cpus: '8 CPUs', disk: '512 GB SSD disk', price: '$160' },
-//     { name: 'Enterprise', ram: '32GB', cpus: '12 CPUs', disk: '1024 GB SSD disk', price: '$240' },
-// ]
-// const plans = [
-//     { name: 'Yearly', description: 'Get unlimited access to all our programs for an year.', price: 'Rs. 7999/year' },
-//     { name: 'Quarterly', description: 'Get unlimited access to all our programs for a quarter.', price: 'Rs. 2999/quarter' },
-//     { name: 'Monthly', description: 'Get unlimited access to all our programs for a month.', price: 'Rs.999/month' }
-// ]
-export default function Page19({ plans, redirect }) {
+export default function Page19({ plans, redirect, device }) {
 
     const [selected, setSelected] = useState(plans[0])
     return (
@@ -117,7 +106,7 @@ export default function Page19({ plans, redirect }) {
                                 <div>
                                     <Link href={{
                                         pathname: "subscription/" + selected.id,
-                                        query: { redirect: redirect },
+                                        query: { redirect: redirect, device: device },
                                     }}>
                                         <a
                                             className="cursor-pointer text-sm w-full rounded-full border border-lblue bg-gray-100 inline-flex px-4 py-2 justify-center text-lblue hover:border-indigo-700 hover:bg-lblue hover:text-white duration-500"
@@ -158,6 +147,7 @@ export async function getServerSideProps(context) {
         }
     }
     const redirect = context.query.redirect ? context.query.redirect : false;
+    const device = context.query.device ? context.query.device : '';
     const client = new ApolloClient({
         uri: Constants.baseUrl + "/razorpay/payment",
         cache: new InMemoryCache(),
@@ -174,7 +164,7 @@ export async function getServerSideProps(context) {
     console.log(plans);
     return {
         props: {
-            plans, redirect
+            plans, redirect, device
         },
     };
 }

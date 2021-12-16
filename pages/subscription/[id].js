@@ -32,7 +32,7 @@ const plans = [
     { name: 'Quarterly', description: 'Get unlimited access to all our programs for a quarter.', price: 'Rs. 2999/quarter' },
     { name: 'Monthly', description: 'Get unlimited access to all our programs for a month.', price: 'Rs.999/month' }
 ]
-export default function Page22({ plan, token, profile, redirect }) {
+export default function Page22({ plan, token, profile, redirect, device }) {
     const router = useRouter()
 
     const [selected, setSelected] = useState(plans[0])
@@ -109,7 +109,11 @@ export default function Page22({ plan, token, profile, redirect }) {
                         + '&razorpay_order_id=' + response['razorpay_order_id']
                         + '&razorpay_signature=' + response['razorpay_signature'];
                     const data = 'https://lifology.page.link/?link=' + encodeURIComponent(url) + '&apn=com.app.lifology&isi=1574635714&ibi=com.septa.app.lifology'
-                    setRedirectUrl(data)
+                    if (device == 'ios') {
+                        setRedirectUrl('lifology://');
+                    } else {
+                        setRedirectUrl(data)
+                    }
                 } else {
                     setRedirectUrl('/profile/page_94')
                 }
@@ -310,7 +314,6 @@ export default function Page22({ plan, token, profile, redirect }) {
                                             Redirect To Application
                                         </a>
                                     </Link>
-
                                 </div>
                             </div>
                         </Transition.Child>
@@ -369,6 +372,7 @@ export default function Page22({ plan, token, profile, redirect }) {
 export async function getServerSideProps(context) {
     const { token } = cookies(context)
     const redirect = context.query.redirect
+    const device = context.query.device ? context.query.device : '';
 
     if (token == null || token == '') {
         return {
@@ -409,7 +413,7 @@ export async function getServerSideProps(context) {
         });
     return {
         props: {
-            plan, token, profile, redirect
+            plan, token, profile, redirect, device
         },
     };
 }
