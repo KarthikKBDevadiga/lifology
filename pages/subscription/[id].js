@@ -6,6 +6,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 
 import classNames from '/helpers/classNames'
+import Link from 'next/link'
 
 import MetaLayout from '../../components/MetaLayout'
 import cookies from "next-cookies"
@@ -41,6 +42,7 @@ export default function Page22({ plan, token, profile, redirect }) {
     const [successDialogString, setSuccessDialogString] = useState('')
     const [errorDialog, setErrorDialog] = useState(false)
     const [errorDialogString, setErrorDialogString] = useState('')
+    const [redirecetUrl, setRedirectUrl] = useState('')
 
     const proceedToPay = event => {
         setLoadingDialog(true)
@@ -102,29 +104,41 @@ export default function Page22({ plan, token, profile, redirect }) {
                 console.log(response);
                 setSuccessDialogString('Payment Completed Successfully')
                 setSuccessDialog(true)
-                setTimeout(() => {
-                    setSuccessDialog(false)
-                    if (redirect) {
-                        // { razorpay_payment_id: 'pay_IXeuWfyG1lDg5W', razorpay_order_id: 'order_IXeuJFYWPXmYTV', razorpay_signature: '06917a92437981f8d7597a0df032506652672c979059a8376302517d177c0c32' }
-                        const url = 'https://demo.lifology.com/paymentComplete?razorpay_payment_id=' + response['razorpay_payment_id']
-                            + '&razorpay_order_id=' + response['razorpay_order_id']
-                            + '&razorpay_signature=' + response['razorpay_signature'];
-
-                        router.push({
-                            pathname: 'https://lifology.page.link/',
-                            query: {
-                                link: url,
-                                apn: 'com.app.lifology',
-                                isi: '1574635714',
-                                ibi: 'com.septa.app.lifology'
-                            }
-                        })
-                    } else {
-                        router.push({
-                            pathname: '/profile/page_94',
-                        })
-                    }
-                }, 1000)
+                if (redirect) {
+                    const url = 'https://demo.lifology.com/paymentComplete?razorpay_payment_id=' + response['razorpay_payment_id']
+                        + '&razorpay_order_id=' + response['razorpay_order_id']
+                        + '&razorpay_signature=' + response['razorpay_signature'];
+                    const data = 'https://lifology.page.link/?link=' + encodeURIComponent(url) + '&apn=com.app.lifology&isi=1574635714&ibi=com.septa.app.lifology'
+                    setRedirectUrl(data)
+                } else {
+                    setRedirectUrl('/profile/page_94')
+                }
+                // setTimeout(() => {
+                //     setSuccessDialog(false)
+                //     if (redirect) {
+                //         // { razorpay_payment_id: 'pay_IXeuWfyG1lDg5W', razorpay_order_id: 'order_IXeuJFYWPXmYTV', razorpay_signature: '06917a92437981f8d7597a0df032506652672c979059a8376302517d177c0c32' }
+                //         const url = 'https://demo.lifology.com/paymentComplete?razorpay_payment_id=' + response['razorpay_payment_id']
+                //             + '&razorpay_order_id=' + response['razorpay_order_id']
+                //             + '&razorpay_signature=' + response['razorpay_signature'];
+                //         const data = 'https://lifology.page.link/?link=' + encodeURIComponent(url) + '&apn=com.app.lifology&isi=1574635714&ibi=com.septa.app.lifology'
+                //         console.log(data);
+                //         window.open(data)
+                //         // router.push({
+                //         //     pathname: 'https://lifology.page.link',
+                //         //     query: {
+                //         //         link: url,
+                //         //         apn: 'com.app.lifology',
+                //         //         isi: '1574635714',
+                //         //         ibi: 'com.septa.app.lifology'
+                //         //     }
+                //         // })
+                //     } else {
+                //         setRedirectUrl('/profile/page_94')
+                //         // router.push({
+                //         //     pathname: '/profile/page_94',
+                //         // })
+                //     }
+                // }, 1000)
             },
             theme: { color: '#53a20e' }
         }
@@ -289,6 +303,14 @@ export default function Page22({ plan, token, profile, redirect }) {
                                         </Dialog.Title>
                                         <button className="absolute h-0 w-0 overflow-hidden" />
                                     </div>
+                                </div>
+                                <div className="mt-5 sm:mt-6">
+                                    <Link href={redirecetUrl}>
+                                        <a className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
+                                            Redirect To Application
+                                        </a>
+                                    </Link>
+
                                 </div>
                             </div>
                         </Transition.Child>
