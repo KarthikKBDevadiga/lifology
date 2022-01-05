@@ -311,7 +311,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
                             Total Assessment
                           </div>
                           <div className='mt-3'>
-                            <span className='font-bold text-3xl mr-2'>{home.home.completed_assessment}</span>
+                            <span className='font-bold text-3xl mr-2'>{home.home?.completed_assessment}</span>
                             <span>Assessment</span>
                           </div>
                         </div>
@@ -333,7 +333,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* LIFOLOGY MASTER START */}
                     {
-                      home.home.master_class_videos?.length > 0 ?
+                      home.home?.master_class_videos?.length > 0 ?
                         <div className='bg-white shadow rounded-lg min-w-full'>
                           <div className='flex justify-between'>
                             <div className='font-bold text-base px-4 pt-4'>Watch Lifology Master Class</div>
@@ -393,7 +393,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* ASSESSMENT START */}
                     {
-                      home.home.assessment?.length > 0 ?
+                      home.home?.assessment?.length > 0 ?
                         <div className='bg-white shadow rounded-lg  min-w-full'>
                           <div
                             className="relative w-full rounded px-4 pt-4 text-left sm:text-sm"
@@ -492,7 +492,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* VIDEOS START */}
                     {
-                      home.home.watch_videos?.length > 0 ?
+                      home.home?.watch_videos?.length > 0 ?
                         <div className='bg-white shadow rounded-lg  min-w-full'>
                           <div className='flex justify-between'>
                             <div className='font-bold text-base px-4 pt-4'>Recommended Videos</div>
@@ -560,7 +560,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* COURSE+UNI START */}
                     {
-                      home.home.university?.length > 0 ?
+                      home.home?.university?.length > 0 ?
                         <div className='bg-white shadow rounded-lg  min-w-full'>
                           <div className='flex justify-between'>
                             <div className='font-bold text-base px-4 pt-4'>Course & University</div>
@@ -618,7 +618,7 @@ export default function Home({ profile, home, coaches, slide2Options, token }) {
 
                     {/* ARTICLES START */}
                     {
-                      home.home.articles?.length > 0 ?
+                      home.home?.articles?.length > 0 ?
                         <div className='bg-white shadow rounded-lg min-w-full'>
                           <div className='flex justify-between'>
                             <div className='font-bold text-base px-4 pt-4'>Recommended Articles</div>
