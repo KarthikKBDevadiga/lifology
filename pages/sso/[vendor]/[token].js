@@ -1,6 +1,7 @@
-import localforage from 'localforage';
-import cookies from 'next-cookies';
-import { useRouter } from 'next/router';
+
+import { useRouter } from 'next/router'
+
+import localforage from "localforage"
 import { useEffect } from 'react';
 
 var FormData = require('form-data');
@@ -13,19 +14,25 @@ var FormData = require('form-data');
 //     return ''
 // }
 
-export default function CareerVideoDetail({ auth_token }) {
+export default function CareerVideoDetail({ auth_token, is_new_user }) {
 
   const router = useRouter()
-  console.log(auth_token)
+  console.log('Hllo ' + auth_token)
   useEffect(() => {
-    setTimeout(() => {
+    const doMyAxiosCall = async () => {
       localforage.setItem('token', auth_token)
-      document.cookie = 'token=' + auth_token + ';expires=3600;'
-      router.push({
-        pathname: router?.query?.redirect ? router?.query?.redirect : '/',
-      })
-    }, 1000);
-  });
+      document.cookie = 'token=' + auth_token + ';expires=3600;path=/'
+      if (is_new_user)
+        router.push({ pathname: '/preference' })
+      else
+        router.push({
+          pathname: '/',
+        })
+    }
+    doMyAxiosCall();
+
+    // setAuthToken(auth_token)
+  }, [])
   return (
     <>
     </>
@@ -33,9 +40,6 @@ export default function CareerVideoDetail({ auth_token }) {
 }
 
 export async function getServerSideProps(context) {
-  console.log(context.params.vendor);
-  console.log(context.params.token)
-
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -50,19 +54,17 @@ export async function getServerSideProps(context) {
     redirect: 'follow'
   };
 
-  const data = await fetch("https://api-sandbox.lifology.com/api/sso-verification", requestOptions)
+  const data = await fetch("https://api.lifology.com/api/sso-verification", requestOptions)
     .then(response => {
       return response.json()
     })
     .then(result => {
-      console.log(result)
       return result
-      // localforage.setItem('fcm_token', currentToken)
     })
     .catch(error => console.log('error', error));
 
   return {
-    props: { auth_token: data.auth_token }
+    props: { auth_token: data.auth_token, is_new_user: data.is_new_user }
   }
 }
 
