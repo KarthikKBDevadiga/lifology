@@ -24,10 +24,19 @@ export default function CareerVideoDetail({ auth_token, is_new_user }) {
       document.cookie = 'token=' + auth_token + ';expires=3600;path=/'
       if (is_new_user)
         router.push({ pathname: '/preference' })
-      else
+      else {
+        let pathname = '/'
+        if (router?.query?.redirect != null)
+          switch (router?.query?.redirect) {
+            case 'dashboard': pathname = '/'
+              break
+            case 'subscription': pathname = '/subscription'
+              break
+          }
         router.push({
-          pathname: '/',
+          pathname
         })
+      }
     }
     doMyAxiosCall();
 

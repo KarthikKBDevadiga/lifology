@@ -173,6 +173,12 @@ mutation removeVideoBookmark($video_id: Int!){
 }
 `;
 
+export const SchemeUpdatePreference = gql`
+mutation updatePreferences($preferences: [int]){
+  updatePreferences(preferences:$preferences)
+}
+`;
+
 export const SchemeGetProfile = gql`
 query{
   profile{

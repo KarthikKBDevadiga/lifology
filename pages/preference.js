@@ -2,37 +2,50 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { Dialog } from '@headlessui/react';
 import Constants from '../helpers/Constants';
 import { queryGraph, mutateGraph } from '../helpers/GraphQLCaller'
-import { SchemeGetPref } from '../helpers/GraphQLSchemes';
+import { SchemeGetPref, SchemeUpdatePreference } from '../helpers/GraphQLSchemes';
 import styles from '../styles/Signup.module.css'
 import { Fragment, useState } from 'react'
+import cookies from 'next-cookies';
 
 const prefClient = new ApolloClient({
   uri: Constants.baseUrl + '/api/category',
   cache: new InMemoryCache(),
 })
 
-export default function Preference({ prefs }) {
+export default function Preference({ prefs, token }) {
   const [prefsList, setPrefsList] = useState([])
   const signup = event => {
     event.preventDefault()
-    // console.log(selectedGrade.grade)
-    // console.log(selectedStream.stream)
-    // setPrefDialog(true)
+    const client = new ApolloClient({
+      uri: Constants.baseUrl + '/api/dashboard',
+      cache: new InMemoryCache(),
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    console.log('Here')
+    mutateGraph(client,
+      {
+        preferences: prefsList
+      }, SchemeUpdatePreference)
+      .then((res) => {
+        console.log(res);
+      }).catch((networkErr) => {
+        console.log(networkErr)
+      })
   }
   const onChangePref = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     var list = prefsList;
-    console.log(value);
-    if (list.includes(target.id) && !value) {
-
-      var index = list.indexOf(target.id);
+    if (list.includes(parseInt(target.id)) && !value) {
+      var index = list.indexOf(parseInt(target.id));
       if (index > -1) {
         list.splice(index, 1)
       }
-    } else if (!list.includes(target.id) && value) {
-      list.push(target.id)
+    } else if (!list.includes(parseInt(target.id)) && value) {
+      list.push(parseInt(target.id))
     }
     setPrefsList(list)
 
@@ -70,9 +83,9 @@ export default function Preference({ prefs }) {
             {prefs.map((card) => (
               <div className={styles.checkvalue}>
 
-                <div class="flex-1">
+                <div className="flex-1">
                   <input type="checkbox" id={card.id} name="prefs" onChange={onChangePref} />
-                  <label for={card.id}>
+                  <label htmlFor={card.id}>
                     <img className={styles.checkimg} src={card.image} alt="" />
                     <div className={styles.labelwr}>
                       {card.title} <span>{card.description}</span>
@@ -112,6 +125,7 @@ export default function Preference({ prefs }) {
 }
 
 export async function getServerSideProps(context) {
+  const { token } = cookies(context)
   const prefs = await queryGraph(prefClient, {}, SchemeGetPref)
     .then((res) => {
       return res.preferences;
@@ -121,7 +135,7 @@ export async function getServerSideProps(context) {
   console.log(prefs)
   return {
     props: {
-      prefs
+      prefs, token
     }
   };
 }
