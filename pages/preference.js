@@ -7,6 +7,7 @@ import styles from '../styles/Signup.module.css'
 import { Fragment, useState } from 'react'
 import cookies from 'next-cookies';
 import LoadingDialog from '../components/dialog/LoadingDialog';
+import { useRouter } from 'next/router';
 
 const prefClient = new ApolloClient({
   uri: Constants.baseUrl + '/api/category',
