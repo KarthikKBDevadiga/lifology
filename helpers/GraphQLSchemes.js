@@ -174,7 +174,7 @@ mutation removeVideoBookmark($video_id: Int!){
 `;
 
 export const SchemeUpdatePreference = gql`
-mutation updatePreferences($preferences: [int]){
+mutation updatePreferences($preferences: [Int!]!){
   updatePreferences(preferences:$preferences)
 }
 `;

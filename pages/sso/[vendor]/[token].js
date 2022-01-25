@@ -22,8 +22,13 @@ export default function CareerVideoDetail({ auth_token, is_new_user }) {
     const doMyAxiosCall = async () => {
       localforage.setItem('token', auth_token)
       document.cookie = 'token=' + auth_token + ';expires=3600;path=/'
+
+
       if (is_new_user)
-        router.push({ pathname: '/preference' })
+        router.push({
+          pathname: '/preference',
+          query: { redirect: router?.query?.redirect }
+        })
       else {
         let pathname = '/'
         if (router?.query?.redirect != null)
@@ -72,6 +77,7 @@ export async function getServerSideProps(context) {
     })
     .catch(error => console.log('error', error));
 
+  console.log(data)
   return {
     props: { auth_token: data.auth_token, is_new_user: data.is_new_user }
   }
