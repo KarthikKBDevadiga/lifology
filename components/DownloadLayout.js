@@ -1,9 +1,9 @@
 import React from 'react'
 
-const DownloadLayout = () => {
+const DownloadLayout = ({ locale }) => {
     return (
         <div className="text-center mt-auto ml-auto mr-auto pt-8">
-            <span className="px-2 bg-white text-center text-gray-900 font-bold">Download Our App</span>
+            <span className="px-2 bg-white text-center text-gray-900 font-bold">{locale.download_our_app}</span>
             <div className="grid grid-cols-1 gap-2 mt-4" style={{ width: 150 }}>
 
                 <a href="https://play.google.com/store/apps/details?id=com.app.lifology">

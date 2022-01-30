@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRef, useState } from 'react'
 
-const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab, loading }) => {
+const OTPVerifyTab = ({ locale, verifyOTP, resendOTP, timeLeft, selectTab, loading }) => {
     const oneRef = useRef()
     const twoRef = useRef()
     const threeRef = useRef()
@@ -181,7 +181,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab, loading }) =>
                                     <a
                                         onClick={resendOTP}
                                         className="font-medium text-lblue hover:text-lblue align-middle cursor-pointer">
-                                        Resend Code
+                                        {locale.resend_code}
                                     </a> : <></>
                             }
 
@@ -196,7 +196,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab, loading }) =>
                         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-lblue hover:bg-lblue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 
                     >
-                        Verify OTP
+                        {locale.verify_otp}
                     </button>
                 </div>
 
@@ -205,7 +205,7 @@ const OTPVerifyTab = ({ verifyOTP, resendOTP, timeLeft, selectTab, loading }) =>
                         onClick={selectTab}
                         className="flex cursor-pointer w-full px-4 py-2 bg-white rounded-full justify-center border border-indigo-700 text-indigo-700"
                     >
-                        Back To Login
+                        {locale.back_to_login}
                     </a>
                 </div>
             </form>

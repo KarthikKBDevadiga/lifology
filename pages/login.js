@@ -1,8 +1,9 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client"
 import Constants from '../helpers/Constants'
-import { SchemeCheckSocial, SchemeSendOTP, SchemeVerifyOTP } from '../helpers/GraphQLSchemes'
+import { SchemeCheckSocial, SchemeMyLifologyCareerPools, SchemeSendOTP, SchemeVerifyOTP } from '../helpers/GraphQLSchemes'
 import { queryGraph, mutateGraph } from '../helpers/GraphQLCaller'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
@@ -17,6 +18,9 @@ import NextNprogress from 'nextjs-progressbar';
 import localforage from "localforage"
 import { signIn, signOut, useSession } from "next-auth/client";
 import ErrorDialog from "../components/dialog/ErrorDialog"
+import { route } from "next/dist/server/router"
+
+import login from './assets/login.json';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -30,27 +34,33 @@ const client = new ApolloClient({
 const languages = [
     {
         id: 'English',
-        title: 'English'
+        title: 'English',
+        locale: 'en-US'
     },
     {
         id: 'Hindi',
-        title: 'हिन्दी,'
+        title: 'हिन्दी',
+        locale: 'hi'
     },
     {
         id: 'Tamil',
-        title: 'தமிழ்'
+        title: 'தமிழ்',
+        locale: 'ta'
     },
     {
         id: 'Telgu',
-        title: 'తెలుగు'
+        title: 'తెలుగు',
+        locale: 'te'
     },
     {
         id: 'Gujrathi',
-        title: 'ગુજરાતી'
+        title: 'ગુજરાતી',
+        locale: 'gu'
     },
     {
         id: 'Bengali',
-        title: 'বাংলা'
+        title: 'বাংলা',
+        locale: 'ben'
     },
 ]
 
@@ -59,7 +69,8 @@ export default function Login({ cs }) {
     const [parentName, setParentName] = useLocalStorage("parentName", "")
     const [parentEmail, setParentEmail] = useLocalStorage("parentEmail", "")
 
-    const router = useRouter()
+    const { push, query, locale, locales, asPath } = useRouter()
+    // const router = useRouter()
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [successDialog, setSuccessDialog] = useState(false)
     const [languageDialog, setLanguageDialog] = useState(false)
@@ -68,7 +79,7 @@ export default function Login({ cs }) {
     const [errorDialog, setErrorDialog] = useState(false)
     const [errorDialogString, setErrorDialogString] = useState('Login Failed')
     const [signupDialog, setSignupDialog] = useState(false)
-    const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+    const [selectedLanguage, setSelectedLanguage] = useState(languages.find(l => l.locale == locale));
     const [error, setError] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [tab, setTab] = useState(1)
@@ -80,9 +91,13 @@ export default function Login({ cs }) {
     const [timeLeft, setTimeLeft] = useState(0);
 
     const [selectedCountry, setSelectedCountry] = useState(cs[104])
+
+    // login.filter(l => l.locale == locale)[0]
+    const data = login.filter(l => l.locale == locale)[0]
     useEffect(() => {
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT'
     }, [])
+
     useEffect(() => {
         setTimeout(() => {
             if (tab == 1) {
@@ -152,8 +167,8 @@ export default function Login({ cs }) {
                         setSuccessDialog(false)
                         localforage.setItem('token', res.otpVerification.auth_token)
                         document.cookie = 'token=' + res.otpVerification.auth_token + ';expires=3600;'
-                        router.push({
-                            pathname: router?.query?.redirect ? router?.query?.redirect : '/',
+                        push({
+                            pathname: query?.redirect ? query?.redirect : '/',
                         })
                     }, 1000)
                     setAuthToken(res.otpVerification.auth_token);
@@ -179,7 +194,7 @@ export default function Login({ cs }) {
                         setSuccessDialog(false)
                         localforage.setItem('token', res.checkSocial.auth_token)
                         document.cookie = 'token=' + res.checkSocial.auth_token + ';expires=3600;'
-                        router.push({
+                        push({
                             pathname: router?.query?.redirect ? router?.query?.redirect : '/',
                         })
                     }, 1000)
@@ -187,7 +202,7 @@ export default function Login({ cs }) {
                 } else {
                     setParentName(name);
                     setParentEmail(email);
-                    router.push({
+                    push({
                         pathname: 'sign_up_step_2',
                     })
                     // signOut()
@@ -197,7 +212,10 @@ export default function Login({ cs }) {
             })
     }
 
+    console.log('Something ' + data.heading)
+
     return (
+
         <>
             <MetaLayout title="Login" description="Login" />
             <div className="min-h-screen bg-white flex font-roboto" >
@@ -208,7 +226,11 @@ export default function Login({ cs }) {
                             <img src="img/logoWhite.png" alt="Lifology" width="48px" className="ml-auto mr-auto" />
                             <span className="self-center text-white font-bold pl-4 text-xl tracking-widest">LIFOLOGY</span>
                         </div>
-                        <p className="text-center text-white text-xl mt-8" >Building the world's best Super Parent Community</p>
+                        <p className="text-center text-white text-xl mt-8">
+                            {
+                                data.heading
+                            }
+                        </p>
                     </div>
                     <div className="text-center flex-1 flex flex-col mt-auto ml-auto mr-auto h-3/4 items-center" >
                         {
@@ -230,18 +252,18 @@ export default function Login({ cs }) {
                             <svg className="ml-2" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none" /><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" /></svg>
                         </div>
                         <div>
-                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center text-center">{tab === 1 ? 'Let’s get started' : 'Verify Your Mobile Number'}</h2>
+                            <h2 className="mt-6 text-xl font-extrabold text-gray-900 text-align-center text-center">{tab === 1 ? data.lets_get_started : data.verify_your_mobile}</h2>
                             <p className="mt-2 text-xs text-gray-600 text-center">
-                                {tab === 1 ? <span>The World's leading career guidance platform</span> : timeLeft == 0 ? <span></span> : <span>We have sent a 6-digit OTP to +91 {phoneNumber}. Enter it below.</span>}
+                                {tab === 1 ? <span>{data.worlds_leading_career}</span> : timeLeft == 0 ? <span></span> : <span>We have sent a 6-digit OTP to +91 {phoneNumber}. Enter it below.</span>}
                             </p>
                         </div>
                         <div className="mt-8">
                             {
                                 tab === 1 ?
-                                    <PhoneNumberTab submit={sendOTP} error={error} setError={(error) => {
+                                    <PhoneNumberTab locale={data} submit={sendOTP} error={error} setError={(error) => {
                                         setError(error)
                                     }} selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} countries={cs} socialLogin={socialLogin} /> :
-                                    <OTPVerifyTab verifyOTP={verifyOTP} resendOTP={resendOTP} timeLeft={timeLeft} selectTab={
+                                    <OTPVerifyTab locale={data} verifyOTP={verifyOTP} resendOTP={resendOTP} timeLeft={timeLeft} selectTab={
                                         () => {
                                             setTimeLeft(0)
                                             setTab(1)
@@ -250,7 +272,7 @@ export default function Login({ cs }) {
                         </div>
                     </div>
 
-                    <DownloadLayout />
+                    <DownloadLayout locale={data} />
 
                 </div>
             </div>
@@ -418,7 +440,7 @@ export default function Login({ cs }) {
                                         onClick={() => {
                                             setSignupDialog(false)
                                             setMobile(phoneNumber)
-                                            router.push({
+                                            push({
                                                 pathname: 'sign_up_step_1',
                                             })
                                         }}
@@ -515,7 +537,10 @@ export default function Login({ cs }) {
                                     <button
                                         type="button"
                                         className="w-full inline-flex justify-center rounded-full border border-lblue shadow-sm px-4 py-2  text-base font-medium text-lblue hover:bg-lblue hover:text-white duration-500 sm:w-auto sm:text-sm"
-                                        onClick={() => setLanguageDialog(false)}
+                                        onClick={() => {
+                                            setLanguageDialog(false)
+                                            push(asPath, asPath, { locale: selectedLanguage.locale })
+                                        }}
                                     >
                                         Save Changes
                                     </button>

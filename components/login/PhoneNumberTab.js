@@ -7,7 +7,7 @@ import classNames from '/helpers/classNames'
 import { signIn, signOut, useSession } from "next-auth/client";
 import Constants from '/helpers/Constants'
 
-const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selectedCountry, setSelectedCountry }) => {
+const PhoneNumberTab = ({ locale, socialLogin, submit, error, setError, countries, selectedCountry, setSelectedCountry }) => {
     const [openFilter, setOpenFilter] = useState(false)
     const [session, loading] = useSession();
 
@@ -328,7 +328,7 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
                             required
                             maxLength="10"
                             className="bg-gray-100 block w-full px-3 py-2 pl-36 sm:text-sm rounded-full outline-none border focus:border-indigo-700 duration-500"
-                            placeholder="Enter Mobile number"
+                            placeholder={locale.enter_mobile_number}
                             onKeyPress={() => {
                                 setError('')
                             }}
@@ -366,17 +366,20 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
                     <button
                         type="submit"
                         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-lblue  focus:outline-none">
-                        Login with OTP
+                        {locale.login_with_otp}
                     </button>
                 </div>
 
                 <div className="flex items-center">
 
                     <div className="text-sm m-auto">
-                        By accepting all <a href="#" onClick={(event) => { setOpenFilter(true) }} ><span className="font-medium underline text-indigo-600 hover:text-indigo-500">
-                            terms and conditions
+                        {locale.by_accepting_all} <a href="#" onClick={(event) => { setOpenFilter(true) }} ><span className="font-medium underline text-indigo-600 hover:text-indigo-500">
+                            {locale.terms_and_condition}
                         </span>
                         </a>
+                        {/* {
+                            locale.by_accepting_all_tc
+                        } */}
                     </div>
                 </div>
 
@@ -386,7 +389,7 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
                             <div className="w-full border-t border-gray-300" />
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="px-2 bg-white text-gray-500">Or Login with</span>
+                            <span className="px-2 bg-white text-gray-500">{locale.or_login_with}</span>
                         </div>
                     </div>
                     <div className="mt-0">
@@ -407,7 +410,7 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                    <p className="ml-4" >Facebook</p>
+                                    <p className="ml-4" >{locale.facebook}</p>
                                 </a>
                             </div>
 
@@ -422,7 +425,7 @@ const PhoneNumberTab = ({ socialLogin, submit, error, setError, countries, selec
                                     <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 640 640" className="self-center w-4 h-4" >
                                         <path d="M326.331 274.255v109.761h181.49c-7.37 47.115-54.886 138.002-181.49 138.002-109.242 0-198.369-90.485-198.369-202.006 0-111.509 89.127-201.995 198.369-201.995 62.127 0 103.761 26.516 127.525 49.359l86.883-83.635C484.99 31.512 412.741-.012 326.378-.012 149.494-.012 6.366 143.116 6.366 320c0 176.884 143.128 320.012 320.012 320.012 184.644 0 307.256-129.876 307.256-312.653 0-21-2.244-36.993-5.008-52.997l-302.248-.13-.047.024z" />
                                     </svg>
-                                    <p className="ml-4" >Google</p>
+                                    <p className="ml-4" >{locale.google}</p>
                                 </div>
                             </div>
 
