@@ -90,12 +90,17 @@ export default function Login({ cs }) {
 
     const [timeLeft, setTimeLeft] = useState(0);
 
-    const [selectedCountry, setSelectedCountry] = useState(cs[104])
+    const [selectedCountry, setSelectedCountry] = useState(cs[0])
 
     // login.filter(l => l.locale == locale)[0]
     const data = login.filter(l => l.locale == locale)[0]
-    useEffect(() => {
+    useEffect(async () => {
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT'
+        const data = await fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => (data))
+        const sel = cs.find(cs => cs.callingCodes == data.country_calling_code.replace("+", ""));
+        setSelectedCountry(sel)
     }, [])
 
     useEffect(() => {
@@ -211,8 +216,6 @@ export default function Login({ cs }) {
                 console.log(networkErr)
             })
     }
-
-    console.log('Something ' + data.heading)
 
     return (
 
