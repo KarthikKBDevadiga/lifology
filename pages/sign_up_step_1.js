@@ -16,6 +16,7 @@ export default function SignUpStep1() {
     const [parentEmail, setParentEmail] = useLocalStorage("parentEmail", "")
     const [parentNameError, setParentNameError] = useState("")
     const [parentEmailError, setParentEmailError] = useState("")
+    const { push, query, locale, locales, asPath } = useRouter()
     const router = useRouter()
     const submit = event => {
         event.preventDefault()
@@ -176,7 +177,7 @@ export default function SignUpStep1() {
                     </div>
 
 
-                    <DownloadLayout />
+                    <DownloadLayout locale={locale} />
 
                 </div>
             </div>

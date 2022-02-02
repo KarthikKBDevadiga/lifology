@@ -31,7 +31,7 @@ export default function SignUpStep3({ grades, prefs }) {
 
     const [loadingDialog, setLoadingDialog] = useState(false)
     const [authToken, setAuthToken] = useLocalStorage("authToken", "");
-
+    const { push, query, locale, locales, asPath } = useRouter()
     const [parentName, setParentName] = useLocalStorage("parentName", "");
     const [parentEmail, setParentEmail] = useLocalStorage("parentEmail", "");
     const [childName, setChildName] = useLocalStorage("childName", "");

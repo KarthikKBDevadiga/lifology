@@ -19,6 +19,7 @@ export default function SignUpStep2() {
     const [childNameError, setChildNameError] = useState("")
     const [childGenderError, setChildGenderError] = useState("")
     const router = useRouter()
+    const { push, query, locale, locales, asPath } = useRouter()
 
     const submit = event => {
         event.preventDefault()
@@ -168,7 +169,7 @@ export default function SignUpStep2() {
                     </div>
 
 
-                    <DownloadLayout />
+                    <DownloadLayout locale={locale} />
 
                 </div>
             </div>
