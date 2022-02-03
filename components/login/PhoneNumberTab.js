@@ -258,10 +258,14 @@ const PhoneNumberTab = ({ locale, socialLogin, submit, error, setError, countrie
                                     <>
                                         <div className="m-px relative h-full">
                                             <Listbox.Button className="relative w-32 bg-gray-200 rounded-l-full pl-3 pr-10 py-0 h-full text-left cursor-default focus:outline-none sm:text-sm">
-                                                <span className="flex items-center">
-                                                    <img src={selectedCountry.flag} alt="" className="flex-shrink-0 h-6 w-6 rounded-full object-cover" />
-                                                    <span className="ml-3 block truncate">{selectedCountry.callingCodes}</span>
-                                                </span>
+                                                {
+                                                    selectedCountry ? <span className="flex items-center">
+
+                                                        <img src={selectedCountry.flag} alt="" className="flex-shrink-0 h-6 w-6 rounded-full object-cover" />
+                                                        <span className="ml-3 block truncate">{selectedCountry.callingCodes}</span>
+                                                    </span> : <></>
+                                                }
+
                                                 <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                                     <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                                 </span>

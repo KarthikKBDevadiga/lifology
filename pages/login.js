@@ -90,7 +90,7 @@ export default function Login({ cs }) {
 
     const [timeLeft, setTimeLeft] = useState(0);
 
-    const [selectedCountry, setSelectedCountry] = useState(cs[0])
+    const [selectedCountry, setSelectedCountry] = useState()
 
     // login.filter(l => l.locale == locale)[0]
     const data = login.filter(l => l.locale == locale)[0]
