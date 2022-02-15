@@ -300,6 +300,28 @@ query{
 }
 `;
 
+export const SchemeGetAchievements = gql`
+query{
+   myBadges{
+    my_points
+    badges{
+    id
+    title
+    image
+    min_points
+    max_points
+    }
+  }
+  certificates{
+   id
+   title
+   description
+   type
+   image
+  }
+}
+`;
+
 export const SchemeGetUniversityState = gql`
 query{
   universityState(country:"India"){

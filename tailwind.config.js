@@ -6,6 +6,19 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      flex: {
+        'l': '0 0 50%',
+        'one': '0 0 100%',
+        'two': '0 0 50%',
+        'four': '0 0 25%',
+        'five': '0 0 20%'
+      },
+      paddingTop:{
+        'full': '100%'
+      },
+      minWidth: {
+        '80': '80%',
+      },
       fontFamily: {
         roboto: ['Roboto'],
       },
