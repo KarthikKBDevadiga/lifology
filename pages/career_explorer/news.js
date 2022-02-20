@@ -5,6 +5,11 @@ import {
   SearchIcon,
   ArrowRightIcon,
   SortAscendingIcon,
+  PaperClipIcon,
+  QuestionMarkCircleIcon,
+  UserIcon,
+  ThumbUpIcon,
+  CheckIcon,
 } from "@heroicons/react/solid";
 import { Dialog, Menu, Transition, RadioGroup } from "@headlessui/react";
 import { queryGraph } from "/helpers/GraphQLCaller";
@@ -53,6 +58,54 @@ const people = [
   },
   // More people...
 ];
+const eventTypes = {
+  applied: { icon: UserIcon, bgColorClass: "bg-gray-400" },
+  advanced: { icon: ThumbUpIcon, bgColorClass: "bg-blue-500" },
+  completed: { icon: CheckIcon, bgColorClass: "bg-green-500" },
+};
+
+const timeline = [
+  {
+    id: 1,
+    type: eventTypes.applied,
+    content: "Applied to",
+    target: "Front End Developer",
+    date: "Sep 20",
+    datetime: "2020-09-20",
+  },
+  {
+    id: 2,
+    type: eventTypes.advanced,
+    content: "Advanced to phone screening by",
+    target: "Bethany Blake",
+    date: "Sep 22",
+    datetime: "2020-09-22",
+  },
+  {
+    id: 3,
+    type: eventTypes.completed,
+    content: "Completed phone screening with",
+    target: "Martha Gardner",
+    date: "Sep 28",
+    datetime: "2020-09-28",
+  },
+  {
+    id: 4,
+    type: eventTypes.advanced,
+    content: "Advanced to interview by",
+    target: "Bethany Blake",
+    date: "Sep 30",
+    datetime: "2020-09-30",
+  },
+  {
+    id: 5,
+    type: eventTypes.completed,
+    content: "Completed interview with",
+    target: "Katherine Snyder",
+    date: "Oct 4",
+    datetime: "2020-10-04",
+  },
+];
 
 export default function News({ profile }) {
   const router = useRouter();
@@ -67,6 +120,10 @@ export default function News({ profile }) {
     { name: "News", href: "#", current: true },
   ];
 
+  const attachments = [
+    { name: "resume_front_end_developer.pdf", href: "#" },
+    { name: "coverletter_front_end_developer.pdf", href: "#" },
+  ];
   return (
     <>
       <MetaLayout title="Career Videos" description="Career Videos" />
@@ -120,15 +177,20 @@ export default function News({ profile }) {
                         Trending News
                       </div>
                       <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
-                        <div className="relative mt-1 bg-gray-500 rounded-md">
-                          <input
-                            type="text"
-                            className="block w-full py-2 pl-4 pr-10 text-black bg-gray-200 border-gray-300 rounded-md sm:text-sm"
-                            placeholder="Search any news"
-                          />
-                          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <SearchIcon className="w-5 h-5 text-gray-400" />
+                        <div className="relative mt-1 rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <SearchIcon
+                              className="w-5 h-5 text-black"
+                              aria-hidden="true"
+                            />
                           </div>
+                          <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            className="block w-full py-3 pl-10 pr-4 text-black bg-gray-200 border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="you@example.com"
+                          />
                         </div>
                       </div>
                     </div>
@@ -159,6 +221,117 @@ export default function News({ profile }) {
                         </div>
                       ))}
                     </ul>
+                  </div>
+                  <div className="grid max-w-3xl grid-cols-1 gap-4 mx-auto mt-4 sm:px-4 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+                    <div className="space-y-6 lg:col-start-1 lg:col-span-2">
+                      {/* Description list*/}
+                      <section aria-labelledby="applicant-information-title">
+                        <div className="bg-white shadow sm:rounded-lg">
+                          <ul className="after:content-[''] after:block after:clear-both px-4 pt-2">
+                            <li
+                              key="all"
+                              className={classNames(
+                                "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                              )}
+                            >
+                              All
+                            </li>
+                            <li
+                              className={classNames(
+                                "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                              )}
+                            >
+                              Type 1
+                            </li>
+                            <li
+                              className={classNames(
+                                "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                              )}
+                            >
+                              Type 2
+                            </li>
+                          </ul>
+                          <div className="px-4 py-5 sm:px-6">
+                            <h2
+                              id="applicant-information-title"
+                              className="text-lg font-medium leading-6 text-gray-900"
+                            >
+                              Applicant Information
+                            </h2>
+                            <p className="max-w-2xl mt-1 text-sm text-gray-500">
+                              Personal details and application.
+                            </p>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <section
+                      aria-labelledby="timeline-title"
+                      className="lg:col-start-3 lg:col-span-1"
+                    >
+                      <div className="px-4 py-5 bg-white shadow sm:rounded-lg sm:px-6">
+                        <h2
+                          id="timeline-title"
+                          className="text-lg font-medium text-gray-900"
+                        >
+                          Discover More Topics
+                        </h2>
+                        <div className="mt-2 text-sm text-gray-500">
+                          Career Pools
+                        </div>
+                        <ul className="after:content-[''] after:block after:clear-both pt-2">
+                          <li
+                            key="all"
+                            className={classNames(
+                              "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                            )}
+                          >
+                            Data Analytics, Mathematics, & Statistics
+                          </li>
+                          <li
+                            className={classNames(
+                              "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                            )}
+                          >
+                            Architecture
+                          </li>
+                          <li
+                            className={classNames(
+                              "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                            )}
+                          >
+                            Armed Forces And Security
+                          </li>
+                        </ul>
+                        <div className="mt-2 text-sm text-gray-500">
+                          Career Pools
+                        </div>
+                        <ul className="after:content-[''] after:block after:clear-both pt-2">
+                          <li
+                            key="all"
+                            className={classNames(
+                              "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                            )}
+                          >
+                            Data Analytics, Mathematics, & Statistics
+                          </li>
+                          <li
+                            className={classNames(
+                              "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                            )}
+                          >
+                            Architecture
+                          </li>
+                          <li
+                            className={classNames(
+                              "float-left px-4 py-2 text-xs rounded-full m-1 cursor-pointer duration-500 bg-lgrey-bg border border-lgrey-border hover:bg-lblue hover:text-white"
+                            )}
+                          >
+                            Armed Forces And Security
+                          </li>
+                        </ul>
+                      </div>
+                    </section>
                   </div>
                   <div className="h-4"></div>
                 </div>
