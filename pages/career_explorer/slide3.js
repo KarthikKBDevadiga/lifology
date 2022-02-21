@@ -406,8 +406,18 @@ export default function News({ profile }) {
                                             </div>
                                         </div>
                                 </div>
-                                <div  className="px-4 py-5 bg-white shadow sm:rounded-lg sm:px-6">
-                                    hi
+                                <div className="px-4 py-5 bg-white shadow sm:rounded-lg sm:px-6 my-5 ">
+                                    <div className="text-center text-xl font-bold p-4">
+                                    Get In Touch
+                                    </div>
+                                    <div className="text-center px-4">
+                                    Book a Free Call with Advisor
+                                    </div>
+                                    <div className="flex justify-center p-4">
+                                        <button className={
+                                                    "flex py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-lblue focus:outline-none disabled:bg-gray-500 disabled:cursor-default duration-200"
+                                                }>Connect with an Agent</button>
+                                    </div>
                                 </div>
                             </section>
                         </div>
