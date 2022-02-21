@@ -357,6 +357,57 @@ export default function News({ profile }) {
                                     >
                                         More News
                                     </h2>
+                                    <div className="p-4 sm:flex">
+                                            <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
+                                                <img src="/img/test.png" className="w-24 rounded-full" />
+                                            </div>
+                                            <div>
+                                                <div className="pb-2 text-sm">George Aye In Surviving Ideo</div>
+                                                <div className="text-base font-bold">
+                                                Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open
+                                                </div>
+                                                <div className="text-gray-500 py-2 text-sm">May 25 . 5 min read</div>
+                                            </div>
+                                        </div>
+                                        <div className="p-4 sm:flex">
+                                            <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
+                                                <img src="/img/test.png" className="w-24 rounded-full" />
+                                            </div>
+                                            <div>
+                                                <div className="pb-2 text-sm">George Aye In Surviving Ideo</div>
+                                                <div className="text-base font-bold">
+                                                Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open
+                                                </div>
+                                                <div className="text-gray-500 py-2 text-sm">May 25 . 5 min read</div>
+                                            </div>
+                                        </div>
+                                        <div className="p-4 sm:flex">
+                                            <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
+                                                <img src="/img/test.png" className="w-24 rounded-full" />
+                                            </div>
+                                            <div>
+                                                <div className="pb-2 text-sm">George Aye In Surviving Ideo</div>
+                                                <div className="text-base font-bold">
+                                                Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open
+                                                </div>
+                                                <div className="text-gray-500 py-2 text-sm">May 25 . 5 min read</div>
+                                            </div>
+                                        </div>
+                                        <div className="p-4 sm:flex">
+                                            <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
+                                                <img src="/img/test.png" className="w-24 rounded-full" />
+                                            </div>
+                                            <div>
+                                                <div className="pb-2 text-sm">George Aye In Surviving Ideo</div>
+                                                <div className="text-base font-bold">
+                                                Cancan, The Internet Computer’s ‘Decentralized Tiktok,’ Is Now Open
+                                                </div>
+                                                <div className="text-gray-500 py-2 text-sm">May 25 . 5 min read</div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div  className="px-4 py-5 bg-white shadow sm:rounded-lg sm:px-6">
+                                    hi
                                 </div>
                             </section>
                         </div>
