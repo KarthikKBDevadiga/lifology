@@ -252,15 +252,55 @@ export default function News({ profile }) {
                             </li>
                           </ul>
                           <div className="px-4 py-5 sm:px-6">
-                            <h2
-                              id="applicant-information-title"
-                              className="text-lg font-medium leading-6 text-gray-900"
-                            >
-                              Applicant Information
-                            </h2>
-                            <p className="max-w-2xl mt-1 text-sm text-gray-500">
-                              Personal details and application.
-                            </p>
+                            <div className="flex flex-wrap items-center justify-between -mt-2 -ml-4 sm:flex-nowrap">
+                              <div className="mt-2 ml-4">
+                                <h3 className="font-medium leading-6 text-gray-900 ">
+                                  <div className="text-sm text-gray-500">
+                                    Zulie Rane In The Startup
+                                  </div>
+                                  <div className="mt-2 text-lg font-bold">
+                                    Cancan, The Internet Computer’s
+                                    ‘Decentralized Tiktok,’ Is Now Open
+                                  </div>
+                                  <div className="mt-2 text-sm">
+                                    I’ve Never Been Much Of A “Ritual” Person
+                                    When It Comes To Writing. If I Need To, I
+                                    Can Write Anywhere, Anytime, About Anything.
+                                  </div>
+                                  <div className="flex mt-2 text-sm text-gray-500">
+                                    <div className="w-1/2">
+                                      May 25 • 5 min read
+                                    </div>
+                                    <div className="w-1/2 ">
+                                      <div
+                                        className={classNames(
+                                          "mr-2 flex self-center w-max text-gray-500 ml-auto"
+                                        )}
+                                      >
+                                        <svg
+                                          className="w-4 h-4 mr-2"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24px"
+                                          viewBox="0 0 24 24"
+                                          width="24px"
+                                          fill="currentColor"
+                                        >
+                                          <path d="M0 0h24v24H0z" fill="none" />
+                                          <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                                        </svg>
+                                        <span>Add To Bookmark</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </h3>
+                              </div>
+                              <div className="flex-shrink-0 mt-2 ml-4">
+                                <img
+                                  className="w-full rounded-lg sm:w-56"
+                                  src="/img/test.png"
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </section>
