@@ -21,16 +21,13 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Carousel from "react-multi-carousel";
 
-import AliceCarousel from "react-alice-carousel";
-import "react-alice-carousel/lib/alice-carousel.css";
-
 export default function AboutUs({ profile, myBadges, certificates }) {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [emblaRef] = useEmblaCarousel({ loop: false });
   const [viewportRef, embla] = useEmblaCarousel({
-    align: "center",
-    skipSnaps: false,
+    // align: "center",
+    // skipSnaps: false,
   });
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
@@ -52,30 +49,6 @@ export default function AboutUs({ profile, myBadges, certificates }) {
   const handleDragStart = (e) => e.preventDefault();
 
   const items = [];
-
-  myBadges.badges.map((b) => {
-    const percentage = Math.round((b.min_points / b.max_points) * 100);
-    items.push(
-      <div className="relative m-16 rounded-lg shadow min-w-80 flex-two md:flex-five sm:flex-one">
-        <div className="relative overflow-hidden">
-          <img src={b.image} className="w-full p-4" />
-          <div className="flex w-full px-4 text-sm">
-            <div className="w-1/2">{b.min_points}</div>
-            <div className="w-1/2 text-right">{b.max_points}</div>
-          </div>
-          <div className="relative mx-4 mb-4">
-            <div className="absolute w-full h-2 bg-blue-300 rounded-full"></div>
-            <div
-              className={"absolute h-2 bg-blue-500 rounded-full "}
-              style={{
-                width: percentage + "%",
-              }}
-            ></div>
-          </div>
-        </div>
-      </div>
-    );
-  });
 
   return (
     <>
@@ -100,13 +73,37 @@ export default function AboutUs({ profile, myBadges, certificates }) {
                 <div className="w-full overflow-hidden" ref={viewportRef}>
                   <div className="flex -ml-2 select-none">
                     {myBadges.badges.map((b) => {
-                      const percentage = Math.round(
-                        (b.min_points / b.max_points) * 100
-                      );
+                      let percentage = 0;
+                      let my_points;
+                      if (myBadges.my_points >= b.max_points) percentage = 100;
+                      else if (myBadges.my_points <= b.min_points) {
+                        percentage = 0;
+                      }
+                      if (
+                        myBadges.my_points >= b.min_points &&
+                        myBadges.my_points <= b.max_points
+                      ) {
+                        my_points = myBadges.my_points;
+                        percentage =
+                          ((myBadges.my_points - b.min_points) /
+                            (b.max_points - b.min_points)) *
+                          100;
+                      }
+                      // percentage = Math.round(
+                      //   (b.min_points / b.max_points) * 100
+                      // );
                       return (
                         <div className="relative m-2 rounded-lg shadow min-w-80 flex-two md:flex-five sm:flex-one">
                           <div className="relative overflow-hidden">
                             <img src={b.image} className="w-full p-4" />
+                            {my_points ? (
+                              <div className="px-2 py-1 ml-auto mr-auto text-xs border border-gray-400 rounded-md w-min">
+                                {my_points}
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+
                             <div className="flex w-full px-4 text-sm">
                               <div className="w-1/2">{b.min_points}</div>
                               <div className="w-1/2 text-right">
@@ -134,52 +131,6 @@ export default function AboutUs({ profile, myBadges, certificates }) {
                 <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />
               </div>
 
-              <AliceCarousel
-                mouseTracking
-                items={items}
-                responsive={{
-                  0: {
-                    items: 1,
-                  },
-                  1024: {
-                    items: 4,
-                  },
-                }}
-              />
-
-              {/* <div ref={sliderRef} className="keen-slider">
-                {myBadges.badges.map((b) => {
-                  const percentage = Math.round(
-                    (b.min_points / b.max_points) * 100
-                  );
-                  return (
-                    <div className="keen-slider__slide number-slide1">
-                      <div className="relative m-2 rounded-lg shadow min-w-80 flex-two md:flex-five sm:flex-one">
-                        <div className="relative overflow-hidden">
-                          <img src={b.image} className="w-full p-4" />
-                          <div className="flex w-full px-4 text-sm">
-                            <div className="w-1/2">{b.min_points}</div>
-                            <div className="w-1/2 text-right">
-                              {b.max_points}
-                            </div>
-                          </div>
-                          <div className="relative mx-4 mb-4">
-                            <div className="absolute w-full h-2 bg-blue-300 rounded-full"></div>
-                            <div
-                              className={
-                                "absolute h-2 bg-blue-500 rounded-full "
-                              }
-                              style={{
-                                width: percentage + "%",
-                              }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div> */}
               <div className="px-2 py-4 m-4 text-lg font-bold border-t-2 border-b-2 border-gray-400">
                 My Certificates
               </div>
